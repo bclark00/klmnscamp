@@ -1,0 +1,116 @@
+﻿@model Klmsncamp.Models.RequestIssue
+
+@{
+    ViewBag.Title = "İş Onay ";
+}
+
+
+<div align="center" style="width:640px; margin-left: auto; margin-right: auto; margin-top:30px;">
+<p class="help">İş işteğinizi başarıyla aldık. İsteğinizin kayıda dönüştürülmesi için doğrulamanız gerekmektedir. Aşağıda Yazdığınız bilgileri lütfen kontrol edin; <br />
+Yanlış olduğunu düşündüğünüz kısımları değiştirmek ya da iş kaydı açmaktan vazgeçmek için ilgili linkleri kullanın.<br />
+Onay vermediğiniz İşler dikkate alınmaz. Doğrulanmamış işlemler oluşturulma tarihinden 1 hafta sonra otomatik olarak silinir.</p>
+<fieldset>
+    <legend>İş İsteği (Taslak)</legend>
+    <table style="width: 100%; margin-top:15px;">
+        <tbody>
+        <thead>
+        <th colspan="6" rowspan="2">&nbsp;</th>
+        </thead>
+        <tr>
+            <td style="width: 10%; vertical-align: middle; text-align:right;">
+                <div class="display-label">Departman :</div>
+            </td>
+            <td style="width: 40%; vertical-align: middle; text-align:left;">
+                @Html.DisplayFor(model=>model.Location.Description)
+            </td>
+            <td style="width: 10%; vertical-align: middle; text-align:left;">
+                <div class="display-label">Kullanıcı :</div>
+            </td>
+            <td colspan="3" style="width: 40%; vertical-align: middle; text-align:left;">
+                @Html.DisplayFor(model=>model.UserReq.UserName)
+            </td>
+
+        </tr>
+        <tr>
+             <td style="width: 10%; vertical-align: middle; text-align:right;">
+                <div class="display-label">İş İstenen Atölye :</div>
+            </td>
+            <td style="width: 40%; vertical-align: middle; text-align:left;">
+                @Html.DisplayFor(model => model.Workshop.Description)
+            </td>
+            <td style="width: 10%; vertical-align: middle; text-align:left;">
+                <div class="display-label">Kateg./Tipi :</div>
+            </td>
+            <td colspan="3" style="width: 40%; vertical-align: middle; text-align:left;">
+                @Html.DisplayFor(model => model.RequestType.Description)
+            </td>
+        </tr>
+        <tr>
+             <td style="width: 10%; vertical-align: middle; text-align:right;">
+                <div class="display-label">Cihaz / Envanter :</div>
+            </td>
+            <td style="vertical-align:width: 40%;  middle; text-align:left;">
+                @Html.DisplayFor(model => model.Inventory.Description)
+            </td>
+            <td style="width: 10%; vertical-align: top; text-align:left;">
+                <div class="display-label">Detaylı Açıklama :</div>
+            </td>
+            <td colspan="3" style="width: 40%; vertical-align:top; text-align:left;">
+                @Html.DisplayFor(model => model.DetailedDescription)
+            </td>
+           
+        </tr>
+       
+        <tr>
+            <td style="width: 10%; vertical-align: middle; text-align:right;">
+                <div class="display-label">Planlanan Başlangıç Tarihi :</div>
+            </td>
+            <td style="width: 40%; vertical-align: middle; text-align:left;">
+                 @Html.DisplayFor(model => model.StartDate)
+            </td>
+            <td style="width: 10%; vertical-align: middle; text-align:left;">
+                <div class="display-label">Bilgilendirmeler (Email) açık mı? :</div>
+            </td>
+            @if (Model.SendEmail == true)
+            {
+                <td colspan="3" style="width: 40%; vertical-align: middle; text-align:left;">
+                EVET
+                </td>
+            }
+            else
+            {
+                <td colspan="3" style="width: 40%; vertical-align: middle; text-align:left;">
+                HAYIR
+                </td>
+            }
+        </tr>
+        </tbody>
+        </table>
+        </fieldset>
+        
+        <div class="submit-row"> 
+        <table>
+        <tbody>
+        <tfoot>
+        <th>
+             <input type="submit"  onclick="window.location.href='/RequestIssue/Edit/@Model.RequestIssueID/'" value="Düzenle" />
+        </th>
+        <th>
+             <input type="submit"  onclick="window.location.href='/RequestIssue/'" value="Kaydı Sakla" />
+        </th>
+        <th>
+            <input type="submit"  onclick="window.location.href='/RequestIssue/Delete/@Model.RequestIssueID/'" value="Vazgeç ve Sil" />
+        </th>
+        <th>
+            <input type="submit" onclick="window.location.href='/RequestIssue/Validate/@Model.RequestIssueID/'" class="default" value="Onayla ve Gönder" />
+        </th>
+        </tfoot>
+        </tbody>
+        </table>
+        </div>
+        
+</div>
+
+    
+        
+    
