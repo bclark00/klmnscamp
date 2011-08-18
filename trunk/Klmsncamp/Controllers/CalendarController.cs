@@ -75,7 +75,7 @@ namespace Klmsncamp.Controllers
             {
                 if (rq.EndDate == null)
                 {
-                    rq.EndDate = rq.StartDate.Value.AddHours(2);
+                    rq.EndDate = rq.StartDate.AddHours(2);
                 }
 
                 //baslangic mi bitis mi?
@@ -88,8 +88,8 @@ namespace Klmsncamp.Controllers
                 }
                 else if (xtip == "S")
                 {
-                    rq.StartDate=rq.StartDate.Value.AddDays(double.Parse(xgun));
-                    rq.StartDate=rq.StartDate.Value.AddMinutes(double.Parse(xdk));
+                    rq.StartDate=rq.StartDate.AddDays(double.Parse(xgun));
+                    rq.StartDate=rq.StartDate.AddMinutes(double.Parse(xdk));
 
                     rq.EndDate=rq.EndDate.Value.AddDays(double.Parse(xgun));
                     rq.EndDate=rq.EndDate.Value.AddMinutes(double.Parse(xdk));

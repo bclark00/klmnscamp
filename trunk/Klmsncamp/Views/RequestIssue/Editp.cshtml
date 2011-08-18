@@ -138,7 +138,7 @@
                 }
                 else
                 {
-                    @Html.Telerik().DatePickerFor(model => model.StartDate).Name("StartDate")
+                    @Html.Telerik().DateTimePickerFor(model => model.StartDate).Name("StartDate")
                     @Html.ValidationMessageFor(model => model.StartDate)
                 }
                 </td>
@@ -196,7 +196,7 @@
                 }
                 else
                 {
-                    @Html.Telerik().DatePickerFor(model => model.EndDate).Name("EndDate")
+                    @Html.Telerik().DateTimePickerFor(model => model.EndDate).Name("EndDate")
                     @Html.ValidationMessageFor(model => model.EndDate)
                 }
                 </td>

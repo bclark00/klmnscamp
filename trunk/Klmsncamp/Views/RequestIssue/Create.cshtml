@@ -86,7 +86,7 @@
             @Html.LabelFor(model => model.StartDate)
         </td>
         <td style="vertical-align: middle; text-align: left;">
-            @Html.Telerik().DatePickerFor(model => model.StartDate).Name("StartDate")<br />
+            @Html.Telerik().DateTimePickerFor(model => model.StartDate).Name("StartDate").Value(DateTime.Now)<br />
             @Html.ValidationMessageFor(model => model.StartDate)
         </td>
         </tr>

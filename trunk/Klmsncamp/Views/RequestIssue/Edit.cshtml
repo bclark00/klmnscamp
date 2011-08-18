@@ -106,7 +106,7 @@
         else
         {
              <td style="vertical-align: middle; text-align: left;">
-                @Html.Telerik().DatePickerFor(model => model.StartDate).Name("StartDate")
+                @Html.Telerik().DateTimePickerFor(model => model.StartDate).Name("StartDate")
                 @Html.ValidationMessageFor(model => model.StartDate)
             </td>
         }
@@ -146,7 +146,7 @@
                 @Html.LabelFor(model => model.EndDate)
             </td>
             <td style="vertical-align: middle; text-align: left;">
-                @Html.Telerik().DatePickerFor(model => model.EndDate).Name("EndDate")
+                @Html.Telerik().DateTimePickerFor(model => model.EndDate).Name("EndDate")
                 @Html.ValidationMessageFor(model => model.EndDate)
             </td>
         </tr>

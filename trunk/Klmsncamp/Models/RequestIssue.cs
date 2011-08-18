@@ -53,11 +53,12 @@ namespace Klmsncamp.Models
         public string Note { get; set; }
 
         [Display(Name = "Planlanan Başlangıç Tarihi")]
-        [DisplayFormat(DataFormatString = "{0:d}", ApplyFormatInEditMode = true)]
-        public DateTime? StartDate { get; set; }
+        [DisplayFormat(DataFormatString = "{0:G}", ApplyFormatInEditMode = true)]
+        [Required(ErrorMessage = "Zorunlu Alan")]
+        public DateTime StartDate { get; set; }
 
         [Display(Name = "Planlanan Bitiş Tarihi")]
-        [DisplayFormat(DataFormatString = "{0:d}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:G}", ApplyFormatInEditMode = true)]
         public DateTime? EndDate { get; set; }
 
         [Display(Name="İstek Yapan")]
