@@ -1,0 +1,30 @@
+﻿@model IEnumerable<Klmsncamp.Models.InventoryOwnership>
+
+@{
+    ViewBag.Title = "Aidiyet Bilgileri Tanımlama";
+}
+<div align="center" style="width:640px; margin-left: auto; margin-right: auto; margin-top:30px;">
+   <fieldset class="module aligned ">
+    <table style="width: 100%;">
+    <tbody>
+    <thead>
+        <th>Aidiyet Bilgileri</th>
+        <th></th>
+    </thead>
+
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.ActionLink("Düzenle", "Edit", new { id = item.InventoryOwnershipID })&nbsp;|&nbsp;@Html.ActionLink("Sil", "Delete", new { id = item.InventoryOwnershipID })
+            </td>
+        </tr>
+        }
+    </tbody>       
+    </table>
+    </fieldset>
+    <div class="submit-row">
+     <p class="deletelink-box">@Html.ActionLink("Yeni Aidiyet Bilgisi Ekle", "Create")</p></div>

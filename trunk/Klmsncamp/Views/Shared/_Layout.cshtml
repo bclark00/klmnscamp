@@ -1,0 +1,120 @@
+﻿@using Telerik.Web.Mvc.UI
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head profile="http://gmpg.org/xfn/11">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>@ViewBag.Title</title>
+    
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/form.css")" />
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/base.css")" />
+     <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/klimasannavmenu.css")" /> 
+    @Html.Telerik().ScriptRegistrar()
+    @Html.Telerik().StyleSheetRegistrar().DefaultGroup(group=> group.Add("telerik.common.css").Add("telerik.default.css").Add("telerik.office2010blue.css").Add("telerik.windows7.css"))
+
+    @RenderSection("script",false)
+    <script type="text/javascript">        function gettext(txt) { return txt }</script>
+</head>
+<body>
+<div id="userx" align="right" style="font-size: 12px; margin-top:5px; margin-bottom:3px;">
+        @Html.Partial("_LogOnPartial")
+</div>
+<hr />
+<div class="menu_example">
+    <ul class="admx menu">
+        <li><a href="/" title="Ana Sayfa">Ana Sayfa</a></li>
+        <li><a href="#" title="İş İstek">İş İstek</a>
+	        <ul>
+	        <li><a href="/RequestIssue/Create">Arıza Bildir</a></li>
+	        <li><a href="/RequestIssue/?show=A&page=1">İş Listesi</a></li>
+            @if (User.IsInRole("moderators") || User.IsInRole("administrator"))
+            {
+                <li><a href="/Calendar/">Takvim</a></li>
+            }
+	        </ul>
+        </li>
+    <li><a href="#" title="Raporlama">Raporlama</a>
+	    <ul>
+	    <li><a href="/">İşler</a></li>
+	    <li><a href="/">Cihazlar/Demirbaşlar</a></li>
+	    </ul>
+    </li>
+    @if (User.IsInRole("moderators") || User.IsInRole("administrators"))
+    {
+    <li><a href="/">Sabitler Tanımlamalar</a>
+        <ul>
+	    <li><a href="/ValidationState">Geçerlilik Durumlar</a></li>
+	    <li><a href="/Workshop">Atolyeler</a></li>
+        <li><a href="/Location">Departman Tanımları</a></li>
+        <li><a href="/RequestState">İş/İstek Durumları</a></li>
+        <li><a href="/RequestType">İş/İstek Tipleri</a></li>
+        <li><a href="/InventoryOwnership">Aidiyet Bilgileri</a></li>
+        <li><a href="/Inventory">Cihaz Bilgileri</a></li>
+        <li><a href="/CorporateType">Cari Kart Tipleri</a></li>
+        <li><a href="/CorporateAccount">Cari Kart Bilgileri</a></li>
+        <li><a href="/Account/Register">Yeni Kullanıcı Oluştur</a></li>
+        </ul>
+    </li>
+    }
+    <li><a href="/">Hakkında</a></li>
+    @if (ViewContext.Controller.ValueProvider.GetValue("controller").RawValue.ToString() == "RequestIssue" &&
+        ViewContext.Controller.ValueProvider.GetValue("Action").RawValue.ToString() == "Index")
+    {
+        if (ViewBag.CurrentPage!=null || ViewBag.CurrentShow!=null)
+        {
+        <li><a href="#">|</a></li>
+        <!--ViewBag.CurrentPage = page;
+                ViewBag.PrevPageNumber = rlist.PageNumber - 1;
+                ViewBag.NextPageNumber = rlist.PageNumber + 1;
+                ViewBag.TotalPages = rlist.PageCount;
+                ViewBag.HasPrevPage = rlist.HasNextPage;
+                ViewBag.HasNextPage = rlist.HasNextPage;
+                ViewBag.isFirstPage = rlist.IsFirstPage;
+                ViewBag.isLastPage = rlist.IsLastPage;
+                ViewBag.StartIndex = rlist.FirstItemOnPage;
+                ViewBag.EndIndex = rlist.LastItemOnPage;
+                 ViewBag.TotalItems -->
+            if (ViewBag.CurrentPage != null)
+            {
+                if (ViewBag.isFirstPage == false && ViewBag.HasPrevPage)
+                {
+            <li style="background-color: #555555;" ><a href="/RequestIssue/?show=@ViewBag.Currentshow&page=1">&#060;&#060;&nbsp;En Yeni</a></li>
+                }
+                if (ViewBag.HasPrevPage)
+                {
+            <li style="background-color: #555555;"><a href="/RequestIssue/?show=@ViewBag.Currentshow&page=@ViewBag.PrevPageNumber">&#060;&nbsp;Daha Yeni</a></li>
+                }
+            <li style="background-color: #555555;"><font style="text-decoration: none;	color: #eee; padding: .4em 1em;	display: block;	position: relative;">Toplam&nbsp;@ViewBag.TotalItems&nbsp;kayıttan @ViewBag.StartIndex&nbsp;-&nbsp;@ViewBag.EndIndex arası</font></li>
+                if (ViewBag.HasNextPage)
+                {
+            <li style="background-color: #555555;"><a href="/RequestIssue/?show=@ViewBag.Currentshow&page=@ViewBag.NextPageNumber">Daha Eski&nbsp;&#062;</a></li>
+                }
+                if (ViewBag.isLastPage == false && ViewBag.HasNextPage)
+                {
+            <li style="background-color: #555555;"><a href="/RequestIssue/?show=@ViewBag.Currentshow&page=@ViewBag.TotalPages">En Eski&nbsp;&#062;&#062;</a></li>
+                }
+            }
+
+            if (ViewBag.CurrentShow!=null)
+            {
+                <li><a href="#">|</a></li>
+                <li @if (ViewBag.CurrentShow=="W") { <text>style="background-color: #FF0066;" </text>}><a href="/RequestIssue/?show=W&page=1">Bekleyenler</a></li>
+                <li ><a href="#">|</a></li>
+                <li @if (ViewBag.CurrentShow=="P") { <text>style="background-color: #FF0066;"</text> }><a href="/RequestIssue/?show=P&page=1">Sürenler</a></li>
+                <li><a href="#">|</a></li>
+                <li @if (ViewBag.CurrentShow=="C") { <text>style="background-color: #FF0066;"</text> }><a href="/RequestIssue/?show=C&page=1">Tamamlananlar</a></li>
+                <li><a href="#">|</a></li>
+                <li @if (ViewBag.CurrentShow=="A") { <text>style="background-color: #FF0066;"</text> }><a href="/RequestIssue/?show=A&page=1">Hepsi</a></li>
+            }
+           
+
+        }
+    }
+    </ul>
+</div>	
+
+        
+            @RenderBody()
+
+
+</body>
+</html>

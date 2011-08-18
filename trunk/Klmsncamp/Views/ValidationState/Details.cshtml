@@ -1,0 +1,23 @@
+﻿@model Klmsncamp.Models.ValidationState
+
+@{
+    ViewBag.Title = "Details";
+}
+@section script
+{
+
+}
+<h2>Details</h2>
+
+<fieldset>
+    <legend>ValidationState</legend>
+
+    <div class="display-label">Description</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Description)
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.ValidationStateID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

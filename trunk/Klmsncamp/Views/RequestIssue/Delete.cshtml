@@ -1,0 +1,165 @@
+﻿@model Klmsncamp.Models.RequestIssue
+
+@{
+    ViewBag.Title = "İş kaydını silme";
+}
+
+<div align="center" style="width: 650px; margin-left: auto; margin-right: auto; margin-top:30px; border: 1px solid #eee;">
+    <table style="width: 100%;">
+    <tbody>
+    <thead>
+    <th colspan="2">Aşağıdaki İş kaydını silmek istediğinize emin misiniz?</th>
+    </thead>
+    <tr>   
+     <td style="vertical-align:middle; text-align: right;">
+
+    <div class="display-label">İstek Tipi :</div></td>
+    <td style="vertical-align:middle; text-align: left;">
+        @Html.DisplayFor(model => model.RequestType.Description)
+    </td>
+    </tr>
+    <tr>
+    <td style="vertical-align:middle; text-align: right;">
+    <div class="display-label">Açıklama</div>
+    </td>
+    <td style="vertical-align:middle; text-align: left;">
+        @Html.DisplayFor(model => model.DetailedDescription)
+    </td>
+    </tr>
+    <tr>
+    <td style="vertical-align:middle; text-align: right;">
+    <div class="display-label">Departman</div>
+    </td>
+    <td style="vertical-align:middle; text-align: left;">
+        @Html.DisplayFor(model => model.Location.Description)
+    </td>
+    </tr>
+    <<tr>
+    <td style="vertical-align:middle; text-align: right;">
+    <div class="display-label">Cihaz</div>
+    </td>
+    <td style="vertical-align:middle; text-align: left;">
+        @Html.DisplayFor(model => model.Inventory.Description)
+    </td>
+    </tr>
+
+    <tr>
+    <td style="vertical-align:middle; text-align: right;">
+    <div class="display-label">Atölye</div>
+    </td>
+    <td style="vertical-align:middle; text-align: left;">
+        @Html.DisplayFor(model => model.Workshop.Description)
+    </td>
+    </tr>
+
+    <tr>
+    <td style="vertical-align:middle; text-align: right;">
+    <div class="display-label">Durumu</div>
+    </td>
+    <td style="vertical-align:middle; text-align: left;">
+        @Html.DisplayFor(model => model.RequestState.Description)
+    </td>
+    </tr>
+
+    <tr>
+    <td style="vertical-align:middle; text-align: right;">
+    <div class="display-label">Sonuç Notu</div>
+    </td>
+    <td style="vertical-align:middle; text-align: left;">
+        @Html.DisplayFor(model => model.Note)
+    </td>
+    </tr>
+
+    <tr>
+    <td style="vertical-align:middle; text-align: right;">
+    <div class="display-label">Başlama Tarihi</div>
+    </td>
+    <td style="vertical-align:middle; text-align: left;">
+        @Html.DisplayFor(model => model.StartDate)
+    </td>
+    </tr>
+
+    <tr>
+    <td style="vertical-align:middle; text-align: right;">
+    <div class="display-label">Bitiş Tarihi</div>
+    </td>
+    <td style="vertical-align:middle; text-align: left;">
+        @Html.DisplayFor(model => model.EndDate)
+    </td>
+    </tr>
+
+    <tr>
+    <td style="vertical-align:middle; text-align: right;">
+    <div class="display-label">İş İsteyen</div>
+    </td>
+    <td style="vertical-align:middle; text-align: left;">
+        @Html.DisplayFor(model => model.UserReq.FirstName)&nbsp;@Html.DisplayFor(model=>model.UserReq.LastName)
+     </td>
+    </tr>
+
+    <tr>
+    <td style="vertical-align:middle; text-align: right;">
+    <div class="display-label">Email ile bilgilendirme?</div>
+    </td>
+    <td style="vertical-align:middle; text-align: left;">
+        @Html.DisplayFor(model => model.SendEmail)
+    </td>
+    </tr>
+    
+    <tr>
+    <td style="vertical-align:middle; text-align: right;">
+    <div class="display-label">Tüm Gün?</div>
+    </td>
+    <td style="vertical-align:middle; text-align: left;">
+        @Html.DisplayFor(model => model.IsAllDay)
+    </td>
+    </tr>
+
+    <tr>
+    <td style="vertical-align:middle; text-align: right;">
+    <div class="display-label">Tarihzaman</div>
+    </td>
+    <td style="vertical-align:middle; text-align: left;">
+        @Html.DisplayFor(model => model.TimeStamp)
+    </td>
+    </tr>
+
+    <tr>
+    <td style="vertical-align:middle; text-align: right;">
+    <div class="display-label">İş Sahibi</div>
+    </td>
+    <td style="vertical-align:middle; text-align: left;">
+        @Html.DisplayFor(model => model.User.FirstName)&nbsp;@Html.DisplayFor(model=>model.User.LastName)
+    </td>
+    </tr>
+    <tr>
+    <td style="vertical-align:middle; text-align: right;">
+    <div class="display-label">Geçerlilik Durumu</div>
+    </td>
+    <td style="vertical-align:middle; text-align: left;">
+        @Html.DisplayFor(model => model.ValidationState.Description)
+    </td>
+    </tr>
+    <tfoot>
+    <td colspan="2">
+    @if (Model.IsApproved == true)
+    {
+        <h3 style="text-align: center; color: Red;">Onaylanmış Kaydı Silemezsiniz!</h3>
+    }
+    else
+    {
+        using (Html.BeginForm())
+        {
+        <p style="text-align: center;">
+            <input type="submit" value="Sil" /> |
+            @Html.ActionLink("Vazgeç ve Geri Dön", "Index")
+        </p>
+        }
+    }   
+    </td>
+    </tfoot>
+  </tbody>
+    </table>
+
+
+</div>
