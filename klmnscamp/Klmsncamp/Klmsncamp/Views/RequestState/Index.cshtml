@@ -1,0 +1,33 @@
+﻿@model IEnumerable<Klmsncamp.Models.RequestState>
+
+@{
+    ViewBag.Title = "İş / İstek Durumları Tanımlama";
+}
+
+<div align="center" style="width:640px; margin-left: auto; margin-right: auto; margin-top:30px;">
+   <fieldset class="module aligned ">
+    <table style="width: 100%;">
+    <tbody>
+    <thead>
+        <th>İş / İstek Durumları</th>
+        <th></th>
+    </thead>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Description)
+        </td>
+        <td>
+            @Html.ActionLink("Düzenle", "Edit", new { id=item.RequestStateID })&nbsp;|&nbsp;@Html.ActionLink("Sil", "Delete", new { id=item.RequestStateID })
+        </td>
+        
+    </tr>
+}
+</tbody>
+</table>
+</fieldset>
+ <div class="submit-row">
+   <p class="deletelink-box">@Html.ActionLink("Yeni İş Durum Tanımlama", "Create")</p>
+ </div>
+ </div>

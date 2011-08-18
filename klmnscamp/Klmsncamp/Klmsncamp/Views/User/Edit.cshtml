@@ -1,0 +1,171 @@
+﻿@model Klmsncamp.Models.User
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Edit</h2>
+
+<script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+
+@using (Html.BeginForm()) {
+    @Html.ValidationSummary(true)
+    <fieldset>
+        <legend>User</legend>
+
+        @Html.HiddenFor(model => model.UserId)
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.UserName)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.UserName)
+            @Html.ValidationMessageFor(model => model.UserName)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Email)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Email)
+            @Html.ValidationMessageFor(model => model.Email)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Password)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Password)
+            @Html.ValidationMessageFor(model => model.Password)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.PasswordSalt)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.PasswordSalt)
+            @Html.ValidationMessageFor(model => model.PasswordSalt)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Comments)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Comments)
+            @Html.ValidationMessageFor(model => model.Comments)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.CreatedDate)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.CreatedDate)
+            @Html.ValidationMessageFor(model => model.CreatedDate)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.LastModifiedDate)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.LastModifiedDate)
+            @Html.ValidationMessageFor(model => model.LastModifiedDate)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.LastLoginDate)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.LastLoginDate)
+            @Html.ValidationMessageFor(model => model.LastLoginDate)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.LastLoginIP)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.LastLoginIP)
+            @Html.ValidationMessageFor(model => model.LastLoginIP)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.IsActivated)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.IsActivated)
+            @Html.ValidationMessageFor(model => model.IsActivated)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.IsLockedOut)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.IsLockedOut)
+            @Html.ValidationMessageFor(model => model.IsLockedOut)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.LastLockedOutDate)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.LastLockedOutDate)
+            @Html.ValidationMessageFor(model => model.LastLockedOutDate)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.LastLockedOutReason)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.LastLockedOutReason)
+            @Html.ValidationMessageFor(model => model.LastLockedOutReason)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.NewPasswordKey)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.NewPasswordKey)
+            @Html.ValidationMessageFor(model => model.NewPasswordKey)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.NewPasswordRequested)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.NewPasswordRequested)
+            @Html.ValidationMessageFor(model => model.NewPasswordRequested)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.NewEmail)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.NewEmail)
+            @Html.ValidationMessageFor(model => model.NewEmail)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.NewEmailKey)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.NewEmailKey)
+            @Html.ValidationMessageFor(model => model.NewEmailKey)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.NewEmailRequested)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.NewEmailRequested)
+            @Html.ValidationMessageFor(model => model.NewEmailRequested)
+        </div>
+
+        <p>
+            <input type="submit" value="Save" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

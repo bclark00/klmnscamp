@@ -1,0 +1,123 @@
+﻿@model IEnumerable<Klmsncamp.Models.RequestIssue>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table>
+    <tr>
+        <th>
+            RequestType
+        </th>
+        <th>
+            DetailedDescription
+        </th>
+        <th>
+            Location
+        </th>
+        <th>
+            Inventory
+        </th>
+        <th>
+            Workshop
+        </th>
+        <th>
+            RequestState
+        </th>
+        <th>
+            Note
+        </th>
+        <th>
+            StartDate
+        </th>
+        <th>
+            EndDate
+        </th>
+        <th>
+            UserReq
+        </th>
+        <th>
+            IsApproved
+        </th>
+        <th>
+            SendEmail
+        </th>
+        <th>
+            IsAllDay
+        </th>
+        <th>
+            TimeStamp
+        </th>
+        <th>
+            User
+        </th>
+        <th>
+            ValidationState
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.RequestType.Description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DetailedDescription)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Location.Description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Inventory.Description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Workshop.Description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.RequestState.Description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Note)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.StartDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EndDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.UserReq.UserName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsApproved)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SendEmail)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsAllDay)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TimeStamp)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.User.UserName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ValidationState.Description)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.RequestIssueID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.RequestIssueID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.RequestIssueID })
+        </td>
+    </tr>
+}
+
+</table>

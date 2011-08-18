@@ -1,0 +1,42 @@
+﻿@model IEnumerable<Klmsncamp.Models.ValidationState>
+
+@{
+    ViewBag.Title = "Geçerlilik Durumlar";
+}
+@section script
+{
+
+}
+
+<div align="center" style="width:640px; margin-left: auto; margin-right: auto; margin-top:30px;">
+
+<h3 style="text-shadow: 1px 0px px #111;">Geçerlilik Durumları Tanımlama</h3><br />
+    <fieldset class="module aligned ">
+    <table style="width: 100%;">
+    <tbody>
+    <thead>
+        <th style="vertical-align: middle; padding: 5px 0px 5px 20px;" >
+            Açıklama
+        </th>
+        <th> </th>
+    </thead>
+
+    @foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.ActionLink("Düzenle", "Edit", new { id=item.ValidationStateID }) |
+                @Html.ActionLink("Sil", "Delete", new { id=item.ValidationStateID })
+            </td>
+        </tr>
+    }
+    </tbody>
+    </table>
+    </fieldset>
+    <div class="submit-row">
+        <p class="deletelink-box">@Html.ActionLink("Yeni Ekle", "Create")</p>
+     </div>
+    
+</div>

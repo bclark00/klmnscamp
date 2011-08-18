@@ -1,0 +1,135 @@
+﻿@model IEnumerable<Klmsncamp.Models.User>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table>
+    <tr>
+        <th>
+            UserName
+        </th>
+        <th>
+            Email
+        </th>
+        <th>
+            Password
+        </th>
+        <th>
+            PasswordSalt
+        </th>
+        <th>
+            Comments
+        </th>
+        <th>
+            CreatedDate
+        </th>
+        <th>
+            LastModifiedDate
+        </th>
+        <th>
+            LastLoginDate
+        </th>
+        <th>
+            LastLoginIP
+        </th>
+        <th>
+            IsActivated
+        </th>
+        <th>
+            IsLockedOut
+        </th>
+        <th>
+            LastLockedOutDate
+        </th>
+        <th>
+            LastLockedOutReason
+        </th>
+        <th>
+            NewPasswordKey
+        </th>
+        <th>
+            NewPasswordRequested
+        </th>
+        <th>
+            NewEmail
+        </th>
+        <th>
+            NewEmailKey
+        </th>
+        <th>
+            NewEmailRequested
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.UserName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Email)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Password)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PasswordSalt)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Comments)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CreatedDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LastModifiedDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LastLoginDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LastLoginIP)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsActivated)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsLockedOut)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LastLockedOutDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LastLockedOutReason)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NewPasswordKey)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NewPasswordRequested)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NewEmail)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NewEmailKey)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NewEmailRequested)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.UserId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.UserId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.UserId })
+        </td>
+    </tr>
+}
+
+</table>

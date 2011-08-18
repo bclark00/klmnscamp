@@ -1,0 +1,8 @@
+﻿@if(Request.IsAuthenticated) {
+    <text><strong>@User.Identity.Name</strong>! [ @Html.ActionLink("Çıkış", "LogOff", "Account") ]</text>
+                                                                                                                             
+    }
+else
+{
+    @:[ @Html.ActionLink("Giriş Yap", "LogOn", "Account") ]
+}
