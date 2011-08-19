@@ -1,24 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.Objects;
-using System.Data.Objects.ELinq;
-using System.Data.Objects.DataClasses;
 using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
 using System.IO;
 using System.Linq;
-using System.Web;
-using System.Web.Security;
-using System.Web.Mvc;
 using System.Net.Mail;
-using Klmsncamp.Models;
+using System.Web.Mvc;
+using System.Web.Security;
+using CrystalDecisions.CrystalReports.Engine;
+using CrystalDecisions.Shared;
 using Klmsncamp.DAL;
-using PagedList;
+using Klmsncamp.Models;
+using Klmsncamp.ViewModels;
 using NPOI.HSSF.UserModel;
+using PagedList;
 
 namespace Klmsncamp.Controllers
-{ 
+{
     public class RequestIssueController : Controller
     {
         private KlmsnContext db = new KlmsnContext();
@@ -35,7 +33,7 @@ namespace Klmsncamp.Controllers
             {
                 MembershipUser currentuser_ = new UserRepository().GetUser(User.Identity.Name);
                 int user_wherecondition = int.Parse((currentuser_.ProviderUserKey).ToString());
-                requests = requests.Where(i => i.UserReqID==user_wherecondition);//.Include(r => r.RequestType).Include(r => r.Location).Include(r => r.Inventory).Include(r => r.Workshop).Include(r => r.RequestState).Include(r => r.UserReq).Include(r => r.User).Include(r => r.ValidationState);
+                requests = requests.Where(i => i.UserReqID == user_wherecondition);//.Include(r => r.RequestType).Include(r => r.Location).Include(r => r.Inventory).Include(r => r.Workshop).Include(r => r.RequestState).Include(r => r.UserReq).Include(r => r.User).Include(r => r.ValidationState);
             }
             else
             {
@@ -44,7 +42,6 @@ namespace Klmsncamp.Controllers
 
             if (show != null)
             {
-
                 if (show == "W")
                 {
                     requests = requests.Where(i => i.IsApproved == false && i.UserID == null);
@@ -64,7 +61,7 @@ namespace Klmsncamp.Controllers
             {
                 ViewBag.CurrentShow = "A";
             }
-            requests= requests.Include(r => r.RequestType).Include(r => r.Location).Include(r => r.Inventory).Include(r => r.Workshop).Include(r => r.RequestState).Include(r => r.UserReq).Include(r => r.User).Include(r => r.ValidationState);
+            requests = requests.Include(r => r.RequestType).Include(r => r.Location).Include(r => r.Inventory).Include(r => r.Workshop).Include(r => r.RequestState).Include(r => r.UserReq).Include(r => r.User).Include(r => r.ValidationState);
 
             //enter paging:
             int pageSize = 15;
@@ -83,9 +80,6 @@ namespace Klmsncamp.Controllers
             ViewBag.EndIndex = rlist.LastItemOnPage;
             ViewBag.TotalItems = rlist.TotalItemCount;
             return View(rlist);
-            
-
-            
         }
 
         private IEnumerable<T> MakeMeEnumerable<T>(T Entity)
@@ -103,7 +97,7 @@ namespace Klmsncamp.Controllers
         }
 
         [Authorize]
-        public ActionResult Validate(int id,string show,int page)
+        public ActionResult Validate(int id, string show, int page)
         {
             RequestIssue requestissue = db.RequestIssues.Find(id);
 
@@ -116,7 +110,7 @@ namespace Klmsncamp.Controllers
                 if (requestissue.SendEmail == true)
                 {
                     MembershipUser currentuser_ = new UserRepository().GetUser(User.Identity.Name);
-                    string mailsonucstr = SendEmail(new MailAddress("musaf@klimasan.com.tr"), new MailAddress(currentuser_.Email), "[Klimasan HelpDesk] İş isteğiniz hakkında.", "İsteğiniz doğrulanarak kayıt altına alınmıştır.Tarih: "+DateTime.Now.ToString()+" - İş No: #" + (requestissue.RequestIssueID).ToString() + ". İyi çalışmalar dileriz.");
+                    string mailsonucstr = SendEmail(new MailAddress("musaf@klimasan.com.tr"), new MailAddress(currentuser_.Email), "[Klimasan HelpDesk] İş isteğiniz hakkında.", "İsteğiniz doğrulanarak kayıt altına alınmıştır.Tarih: " + DateTime.Now.ToString() + " - İş No: #" + (requestissue.RequestIssueID).ToString() + ". İyi çalışmalar dileriz.");
                     if (mailsonucstr != "OK")
                     {
                         ViewBag.Bilgilendirme = "Mail Gönderiminde Hata: " + mailsonucstr;
@@ -126,15 +120,14 @@ namespace Klmsncamp.Controllers
                         ViewBag.Bilgilendirme = "Mail Gönderimi başarılı..";
                     }
                 }
-                return RedirectToAction("Index", new { show = show, page = page});
+                return RedirectToAction("Index", new { show = show, page = page });
             }
             else
             {
                 ViewBag.Bilgilendirme = "Bu İş için doğrulama için yetkisi yok ya da zaten doğrulanmış.";
             }
-            return RedirectToAction("Index", new { show = show, page =page });
+            return RedirectToAction("Index", new { show = show, page = page });
         }
-
 
         //
         // GET: /RequestIssue/Create
@@ -148,13 +141,13 @@ namespace Klmsncamp.Controllers
             ViewBag.LocationID = new SelectList(db.Locations, "LocationID", "Description");
             ViewBag.InventoryID = new SelectList(db.Inventories, "InventoryID", "Description");
             ViewBag.WorkshopID = new SelectList(db.Workshops, "WorkshopID", "Description");
-            ViewBag.RequestStateID = new SelectList(db.RequestStates, "RequestStateID", "Description",1);
+            ViewBag.RequestStateID = new SelectList(db.RequestStates, "RequestStateID", "Description", 1);
             ViewBag.UserReqID = new SelectList(db.Users.Where(x => x.UserId == user_wherecondition), "UserId", "UserName", currentuser_.ProviderUserKey);
-            ViewBag.UserID = new SelectList(db.Users, "UserId", "UserName",currentuser_.ProviderUserKey);
+            ViewBag.UserID = new SelectList(db.Users, "UserId", "UserName", currentuser_.ProviderUserKey);
             ViewBag.ValidationStateID = new SelectList(db.ValidationStates, "ValidationStateID", "Description");
             ViewBag.timestamp = DateTime.Now;
             return View();
-        } 
+        }
 
         //
         // POST: /RequestIssue/Create
@@ -163,20 +156,18 @@ namespace Klmsncamp.Controllers
         [HttpPost]
         public ActionResult Create(RequestIssue requestıssue)
         {
-            
-            
             if (ModelState.IsValid)
             {
                 requestıssue.TimeStamp = DateTime.Now;
                 requestıssue.ValidationStateID = 2;
                 db.RequestIssues.Add(requestıssue);
                 db.SaveChanges();
-                return RedirectToAction("Details/" + requestıssue.RequestIssueID.ToString());  
+                return RedirectToAction("Details/" + requestıssue.RequestIssueID.ToString());
             }
 
             MembershipUser currentuser_ = new UserRepository().GetUser(User.Identity.Name);
             int user_wherecondition = int.Parse((currentuser_.ProviderUserKey).ToString());
-            
+
             ViewBag.RequestTypeID = new SelectList(db.RequestTypes, "RequestTypeID", "Description", requestıssue.RequestTypeID);
             ViewBag.LocationID = new SelectList(db.Locations, "LocationID", "Description", requestıssue.LocationID);
             ViewBag.InventoryID = new SelectList(db.Inventories, "InventoryID", "Description", requestıssue.InventoryID);
@@ -187,17 +178,17 @@ namespace Klmsncamp.Controllers
             ViewBag.ValidationStateID = new SelectList(db.ValidationStates, "ValidationStateID", "Description", requestıssue.ValidationStateID);
             return View(requestıssue);
         }
-        
+
         //
         // GET: /RequestIssue/Edit/5
         [Authorize]
         public ActionResult Edit(int id, string show, int page)
         {
             RequestIssue requestıssue = db.RequestIssues.Find(id);
-            
+
             if (requestıssue.ValidationStateID == 1)
             {
-               return RedirectToAction("Editp", new { id=id.ToString(),show = show, page = page });
+                return RedirectToAction("Editp", new { id = id.ToString(), show = show, page = page });
             }
 
             ViewBag.RequestTypeID = new SelectList(db.RequestTypes, "RequestTypeID", "Description", requestıssue.RequestTypeID);
@@ -225,7 +216,7 @@ namespace Klmsncamp.Controllers
                 db.Entry(requestıssue).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Validate", new { id = requestıssue.RequestIssueID, show = formCollection["show"], page = formCollection["page"] });
-             }
+            }
             ViewBag.RequestTypeID = new SelectList(db.RequestTypes, "RequestTypeID", "Description", requestıssue.RequestTypeID);
             ViewBag.LocationID = new SelectList(db.Locations, "LocationID", "Description", requestıssue.LocationID);
             ViewBag.InventoryID = new SelectList(db.Inventories, "InventoryID", "Description", requestıssue.InventoryID);
@@ -238,7 +229,7 @@ namespace Klmsncamp.Controllers
         }
 
         [Authorize]
-        public ActionResult Editp(int id,string show,int page)
+        public ActionResult Editp(int id, string show, int page)
         {
             RequestIssue rq = db.RequestIssues.Find(id);
             if (rq.ValidationStateID == 2)
@@ -247,14 +238,12 @@ namespace Klmsncamp.Controllers
             }
             else
             {
-                
-
                 ViewBag.RequestTypeID = new SelectList(db.RequestTypes, "RequestTypeID", "Description", rq.RequestTypeID);
                 ViewBag.LocationID = new SelectList(db.Locations, "LocationID", "Description", rq.LocationID);
                 ViewBag.InventoryID = new SelectList(db.Inventories, "InventoryID", "Description", rq.InventoryID);
                 ViewBag.WorkshopID = new SelectList(db.Workshops, "WorkshopID", "Description", rq.WorkshopID);
                 ViewBag.RequestStateID = new SelectList(db.RequestStates, "RequestStateID", "Description", rq.RequestStateID);
-                ViewBag.UserReqID = new SelectList(db.Users, "UserId", "UserName",rq.UserReq.UserId);
+                ViewBag.UserReqID = new SelectList(db.Users, "UserId", "UserName", rq.UserReq.UserId);
                 ViewBag.show = show;
                 ViewBag.page = page;
 
@@ -266,23 +255,20 @@ namespace Klmsncamp.Controllers
                 {
                     MembershipUser currentuser_ = new UserRepository().GetUser(User.Identity.Name);
                     int user_wherecondition = int.Parse((currentuser_.ProviderUserKey).ToString());
-                    ViewBag.UserID = new SelectList(db.Users.Where(i => i.UserId == user_wherecondition), "UserId", "UserName",rq.UserID);
+                    ViewBag.UserID = new SelectList(db.Users.Where(i => i.UserId == user_wherecondition), "UserId", "UserName", rq.UserID);
                 }
                 ViewBag.ValidationStateID = new SelectList(db.ValidationStates, "ValidationStateID", "Description", rq.ValidationStateID);
                 return View(rq);
-
             }
-                    
-            
         }
 
         [HttpPost]
         [Authorize]
-        public ActionResult Editp(int id,RequestIssue rqToUpdate, FormCollection formCollection)
+        public ActionResult Editp(int id, RequestIssue rqToUpdate, FormCollection formCollection)
         {
             var rqDBrecord = db.RequestIssues.AsNoTracking().Where(i => i.RequestIssueID == rqToUpdate.RequestIssueID).SingleOrDefault();
-            
-            if (formCollection["isApproved"]=="false" && rqDBrecord.IsApproved==true && User.IsInRole("administrators"))
+
+            if (formCollection["isApproved"] == "false" && rqDBrecord.IsApproved == true && User.IsInRole("administrators"))
             {
                 var rqToUpdatex = db.RequestIssues.Find(id);
                 rqToUpdatex.IsApproved = false;
@@ -293,15 +279,14 @@ namespace Klmsncamp.Controllers
 
             if (ModelState.IsValid)
             {
-                 
                 db.Entry(rqToUpdate).State = EntityState.Modified;
-                
+
                 db.SaveChanges();
                 bool xdurum = KlmsnExtensions.BoolPropertyDifferences(rqDBrecord, rqToUpdate);
 
                 if (rqToUpdate.SendEmail == true && xdurum == true)
                 {
-                    string mailsonucstr= SendEmail(new MailAddress("musaf@klimasan.com.tr"), new MailAddress(rqDBrecord.UserReq.Email), "[Klimasan HelpDesk] #" + rqToUpdate.RequestIssueID.ToString() + " no'lu İş isteğiniz hakkında.", "İş İsteğiniz güncellenmiştir. İsteğinizin son durumu görmek isterseniz; http:/127.0.0.1:43970/RequestIssue/Editp/" + rqToUpdate.RequestIssueID.ToString()+" adresini ziyaret ediniz. Tarih: " + DateTime.Now.ToString() + ". İyi çalışmalar dileriz.");
+                    string mailsonucstr = SendEmail(new MailAddress("musaf@klimasan.com.tr"), new MailAddress(rqDBrecord.UserReq.Email), "[Klimasan HelpDesk] #" + rqToUpdate.RequestIssueID.ToString() + " no'lu İş isteğiniz hakkında.", "İş İsteğiniz güncellenmiştir. İsteğinizin son durumu görmek isterseniz; http:/127.0.0.1:43970/RequestIssue/Editp/" + rqToUpdate.RequestIssueID.ToString() + " adresini ziyaret ediniz. Tarih: " + DateTime.Now.ToString() + ". İyi çalışmalar dileriz.");
                     if (mailsonucstr != "OK")
                     {
                         ViewBag.Bilgilendirme = "Mail Gönderiminde Hata: " + mailsonucstr;
@@ -310,9 +295,8 @@ namespace Klmsncamp.Controllers
                     {
                         ViewBag.Bilgilendirme = "Mail Başarıyla Gönderildi";
                     }
-                    
                 }
-                return RedirectToAction("Index",new {show=formCollection["show"],page=formCollection["page"]});
+                return RedirectToAction("Index", new { show = formCollection["show"], page = formCollection["page"] });
             }
             //return RedirectToAction("Editp/" + id.ToString());
 
@@ -343,7 +327,7 @@ namespace Klmsncamp.Controllers
         [Authorize(Roles = "administrators")]
         [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmed(int id)
-        {            
+        {
             RequestIssue requestıssue = db.RequestIssues.Find(id);
             db.RequestIssues.Remove(requestıssue);
             db.SaveChanges();
@@ -398,7 +382,6 @@ namespace Klmsncamp.Controllers
 
             if (filter != null)
             {
-
                 if (filter == "W")
                 {
                     requests = requests.Where(i => i.IsApproved == false && i.UserID == null);
@@ -411,10 +394,8 @@ namespace Klmsncamp.Controllers
                 {
                     requests = requests.Where(i => i.IsApproved == true);
                 }
-
-                
             }
-           
+
             requests = requests.Include(r => r.RequestType).Include(r => r.Location).Include(r => r.Inventory).Include(r => r.Workshop).Include(r => r.RequestState).Include(r => r.UserReq).Include(r => r.User).Include(r => r.ValidationState);
 
             //enter paging:
@@ -490,7 +471,66 @@ namespace Klmsncamp.Controllers
                 "GridExcelExport.xls");     //Suggested file name in the "Save as" dialog which will be displayed to the end user
         }
 
+        public ActionResult Report()
+        {
+            ViewBag.RequestTypeID = new SelectList(db.RequestTypes, "RequestTypeID", "Description");
+            ViewBag.LocationID = new SelectList(db.Locations, "LocationID", "Description");
+            ViewBag.InventoryID = new SelectList(db.Inventories, "InventoryID", "Description");
+            ViewBag.WorkshopID = new SelectList(db.Workshops, "WorkshopID", "Description");
+            ViewBag.RequestStateID = new SelectList(db.RequestStates, "RequestStateID", "Description");
+            List<IsApproveViewModel> appviewdropdown = new List<IsApproveViewModel>();
 
-      
+            appviewdropdown.Add(new IsApproveViewModel { value = true, Description = "Onaylanmışlar" });
+            appviewdropdown.Add(new IsApproveViewModel { value = false, Description = "Onaysızlar" });
+
+            ViewBag.IsApproved = new SelectList(appviewdropdown, "value", "Description");
+            ViewBag.ValidationStateID = new SelectList(db.ValidationStates, "ValidationStateID", "Description");
+            ViewBag.timestamp = DateTime.Now;
+            return View();
+        }
+
+        [HttpPost]
+
+        public ActionResult Report(RequestIssue requestıssue, FormCollection formcollection)
+        {
+            ReportClass rptH = new ReportClass();
+            rptH.FileName = Server.MapPath("~/RDLC/RequestIssueReport.rpt");
+            rptH.Load();
+
+            var value = new ParameterDiscreteValue();
+
+            value.Value = requestıssue.WorkshopID;
+            rptH.ParameterFields["Atolye"].CurrentValues.Add(value);
+
+            value.Value = requestıssue.LocationID;
+            rptH.ParameterFields["Departman"].CurrentValues.Add(value);
+
+            value.Value = requestıssue.RequestStateID ?? 0;
+
+            rptH.ParameterFields["IsDurum"].CurrentValues.Add(value);
+
+            value.Value = requestıssue.RequestTypeID;
+            rptH.ParameterFields["IsTip"].CurrentValues.Add(value);
+
+            value.Value = formcollection["IsApproved"].ToString();
+            if (value.Value.ToString() != "")
+            {
+                rptH.ParameterFields["OnayDurum"].CurrentValues.Add(value);
+            }
+            else
+            {
+                value.Value = "yok";
+                rptH.ParameterFields["OnayDurum"].CurrentValues.Add(value);
+            }
+            value.Value = requestıssue.StartDate;
+            rptH.ParameterFields["StartDate"].CurrentValues.Add(value);
+
+            value.Value = requestıssue.EndDate ?? DateTime.Today.AddYears(20);
+            rptH.ParameterFields["EndDate"].CurrentValues.Add(value);
+
+            // rptH.SetDataSource([datatable]);
+            Stream stream = rptH.ExportToStream(CrystalDecisions.Shared.ExportFormatType.PortableDocFormat);
+            return File(stream, "application/pdf");
+        }
     }
 }
