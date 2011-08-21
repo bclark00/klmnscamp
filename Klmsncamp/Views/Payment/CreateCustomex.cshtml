@@ -1,0 +1,134 @@
+﻿@using Telerik.Web.Mvc.UI
+@model Klmsncamp.Models.Payment
+@{
+    ViewBag.Title = "CreateCustomex";
+}
+@section script
+ {
+    <script type="text/javascript" language="javascript">
+        fields = 0;
+        function addInput() {
+            if (fields != 5) {
+                document.getElementById('add-file-field').innerHTML += "<input id='files-to-upload' type='file' name='file' /><br />";
+                fields += 1;
+            } else {
+                document.getElementById('add-file-field').innerHTML += "<br />En çok 5 Dosya Eklenebilir";
+                document.getElementById('addfile').disabled = true;
+            }
+        }
+    </script>
+}
+<script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+<div align="center" style="width: 640px; margin-left: auto; margin-right: auto; margin-top: 30px;">
+    @using (Html.BeginForm("CreateCustomex", "Payment",
+        FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.ValidationSummary(true)
+        <fieldset class="module aligned ">
+            <table style="width: 100%; margin-top: 15px;">
+                <tbody>
+                    <tr>
+                        <td style="vertical-align: middle; text-align: right;">
+                            @Html.LabelFor(model => model.BudgetNum)
+                        </td>
+                        <td style="vertical-align: middle; text-align: left;">
+                            @Html.EditorFor(model => model.BudgetNum)
+                            @Html.ValidationMessageFor(model => model.BudgetNum)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="vertical-align: middle; text-align: right;">
+                            @Html.LabelFor(model => model.PurchaseNum)
+                        </td>
+                        <td style="vertical-align: middle; text-align: left;">
+                            @Html.EditorFor(model => model.PurchaseNum)
+                            @Html.ValidationMessageFor(model => model.PurchaseNum)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="vertical-align: middle; text-align: right;">
+                            @Html.LabelFor(model => model.CorporateAccountID, "CorporateAccount")
+                        </td>
+                        <td style="vertical-align: middle; text-align: left;">
+                            @Html.DropDownList("CorporateAccountID", String.Empty)
+                            @Html.ValidationMessageFor(model => model.CorporateAccountID)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="vertical-align: middle; text-align: right;">
+                            @Html.LabelFor(model => model.InvoiceDate)
+                        </td>
+                        <td style="vertical-align: middle; text-align: left;">
+                            @Html.Telerik().DatePickerFor(model => model.InvoiceDate).Name("InvoiceDate")
+                            @Html.ValidationMessageFor(model => model.InvoiceDate)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="vertical-align: middle; text-align: right;">
+                            @Html.LabelFor(model => model.InvoiceNum)
+                        </td>
+                        <td style="vertical-align: middle; text-align: left;">
+                            @Html.EditorFor(model => model.InvoiceNum)
+                            @Html.ValidationMessageFor(model => model.InvoiceNum)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="vertical-align: middle; text-align: right;">
+                            @Html.LabelFor(model => model.InvoiceTotal)
+                        </td>
+                        <td style="vertical-align: middle; text-align: left;">
+                            @Html.EditorFor(model => model.InvoiceTotal)
+                            @Html.ValidationMessageFor(model => model.InvoiceTotal)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="vertical-align: middle; text-align: right;">
+                            @Html.LabelFor(model => model.PaymentDate)
+                        </td>
+                        <td style="vertical-align: middle; text-align: left;">
+                            @Html.Telerik().DatePickerFor(model => model.PaymentDate).Name("PaymentDate")
+                            @Html.ValidationMessageFor(model => model.PaymentDate)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="vertical-align: middle; text-align: right;">
+                            @Html.LabelFor(model => model.Description)
+                        </td>
+                        <td style="vertical-align: middle; text-align: left;">
+                            @Html.EditorFor(model => model.Description)
+                            @Html.ValidationMessageFor(model => model.Description)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="vertical-align: middle; text-align: right;">
+                            @Html.LabelFor(model => model.RequestIssueID, "RequestIssue")
+                        </td>
+                        <td style="vertical-align: middle; text-align: left;">
+                            @Html.DropDownList("RequestIssueID", String.Empty)
+                            @Html.ValidationMessageFor(model => model.RequestIssueID)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <input type="button" onclick="javascript: addInput();" id="addfile" value="Dosya Ekle" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <div id="add-file-field">
+                            </div>
+                            <div class='progress-bar'>
+                            </div>
+                        </td>
+                    </tr>
+                    <tfoot>
+                        <td colspan="2">
+                            <input class="default" type='submit' id="upload-files" value=' Kaydet' />
+                        </td>
+                    </tfoot>
+                </tbody>
+            </table>
+        </fieldset>
+    }
+</div>

@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
-using System.Data.Entity;
 using Klmsncamp.Models;
 
 namespace Klmsncamp.DAL
 {
-    public class KlmsnInitializer :DropCreateDatabaseIfModelChanges<KlmsnContext>
+    public class KlmsnInitializer : DropCreateDatabaseIfModelChanges<KlmsnContext>
     {
         protected override void Seed(KlmsnContext context)
         {
@@ -15,7 +15,6 @@ namespace Klmsncamp.DAL
             {
                 new ValidationState { Description = "AKTİF"  },
                 new ValidationState{ Description = "PASİF" }
-                
             };
             validationStates.ForEach(s => context.ValidationStates.Add(s));
             context.SaveChanges();
@@ -30,7 +29,6 @@ namespace Klmsncamp.DAL
             requestStates.ForEach(s => context.RequestStates.Add(s));
             context.SaveChanges();
 
-
             var requestTypes = new List<RequestType>
             {
                 new RequestType {Description = "YAZILIM"},
@@ -44,11 +42,10 @@ namespace Klmsncamp.DAL
             };
             requestTypes.ForEach(s => context.RequestTypes.Add(s));
             context.SaveChanges();
-            
+
             var workshops = new List<Workshop>
             {
                 new Workshop { Description = "BİLGİ İŞLEM", ValidationStateID=1  }
-                
             };
             workshops.ForEach(s => context.Workshops.Add(s));
             context.SaveChanges();
@@ -59,7 +56,7 @@ namespace Klmsncamp.DAL
                 new InventoryOwnership { Description = "DIŞ FİRMA"},
                 new InventoryOwnership { Description = "DİĞER"}
             };
-            invowns.ForEach(s=> context.InventoryOwnerships.Add(s));
+            invowns.ForEach(s => context.InventoryOwnerships.Add(s));
             context.SaveChanges();
 
             var corptypes = new List<CorporateType>
@@ -69,7 +66,7 @@ namespace Klmsncamp.DAL
                 new CorporateType { Description = "ŞAHIS" },
                 new CorporateType { Description = "İÇ KULLANICI"}
             };
-            corptypes.ForEach(s=> context.CorporateTypes.Add(s));
+            corptypes.ForEach(s => context.CorporateTypes.Add(s));
             context.SaveChanges();
 
             var locations = new List<Location>
@@ -119,15 +116,12 @@ namespace Klmsncamp.DAL
                 new Location { Description = "YURT İÇİ SATIŞ", ValidationStateID=1},
                 new Location { Description = "YURT İÇİ SERVİS", ValidationStateID=1},
                 new Location { Description = "6 SIGMA", ValidationStateID=1}
-
             };
             locations.ForEach(s => context.Locations.Add(s));
             context.SaveChanges();
 
             UserRepository user_ = new UserRepository();
-            var MemUser = user_.CreateUser("scully", "Musa","Fedakar","qwerty3", "musaf@klimasan.com.tr");
-            
-
+            var MemUser = user_.CreateUser("scully", "Musa", "Fedakar", "qwerty3", "musaf@klimasan.com.tr");
 
             var usergroups = new List<UserGroup>
             {
@@ -198,12 +192,10 @@ namespace Klmsncamp.DAL
                 new CorporateAccount{ Title="TETRA MÜHENDİSLİK", Address="Adresi..", Phone1="Telefonu..", CorporateTypeID=2, ValidationStateID=1 },
                 new CorporateAccount{ Title="TTNET", Address="Adresi..", Phone1="Telefonu..", CorporateTypeID=2, ValidationStateID=1 },
                 new CorporateAccount{ Title="ZAFER BÜRO MAKİNALARI", Address="Adresi..", Phone1="Telefonu..", CorporateTypeID=2, ValidationStateID=1 }
-
             };
 
             corpaccs.ForEach(s => context.CorporateAccounts.Add(s));
             context.SaveChanges();
-
 
             var invs = new List<Inventory>
             {
@@ -464,12 +456,10 @@ namespace Klmsncamp.DAL
                  new Inventory{Description="HP NC 8430", SerialNumber="--",LocationID=5,CorporateAccountID=4,BrandModel=" NC 8430", Notes="",InventoryOwnershipID=1,ValidationStateID=1},
                  new Inventory{Description="HP WORKS. Z800", SerialNumber="--",LocationID=2,CorporateAccountID=4,BrandModel=" WORKS. Z800", Notes="",InventoryOwnershipID=1,ValidationStateID=1},
                  new Inventory{Description="NO NAME PC", SerialNumber="--",LocationID=22,CorporateAccountID=null,BrandModel="", Notes="",InventoryOwnershipID=1,ValidationStateID=1},
-    
             };
 
             invs.ForEach(s => context.Inventories.Add(s));
             context.SaveChanges();
         }
-
     }
 }

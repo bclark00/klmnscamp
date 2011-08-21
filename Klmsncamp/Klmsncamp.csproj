@@ -98,6 +98,7 @@
     <Compile Include="Controllers\CalendarController.cs" />
     <Compile Include="Controllers\CorporateAccountController.cs" />
     <Compile Include="Controllers\CorporateTypeController.cs" />
+    <Compile Include="Controllers\PaymentController.cs" />
     <Compile Include="Controllers\InventoryController.cs" />
     <Compile Include="Controllers\InventoryOwnershipController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -124,6 +125,8 @@
     <Compile Include="Models\Location.cs" />
     <Compile Include="Models\MaintenanceNode.cs" />
     <Compile Include="App_Data\MyMembershipProvider.cs" />
+    <Compile Include="Models\Payment.cs" />
+    <Compile Include="Models\PaymentFile.cs" />
     <Compile Include="Models\RequestIssue.cs" />
     <Compile Include="Models\RequestState.cs" />
     <Compile Include="Models\RequestType.cs" />
@@ -140,6 +143,7 @@
     </Compile>
     <Compile Include="ViewModels\CorporateAccountViewModel.cs" />
     <Compile Include="ViewModels\IsApproveViewModel.cs" />
+    <Compile Include="ViewModels\PaymentViewModel.cs" />
     <Compile Include="ViewModels\RequestIssueCalendarViewModel.cs" />
     <Compile Include="ViewModels\RequestTypeViewModel.cs" />
     <Compile Include="Models\User.cs" />
@@ -799,6 +803,12 @@
     <Content Include="Views\RequestIssue\Editp.cshtml" />
     <Content Include="Views\Calendar\Index.cshtml" />
     <Content Include="Views\RequestIssue\Report.cshtml" />
+    <Content Include="Views\Default1\Details.cshtml" />
+    <Content Include="Views\Default1\Create.cshtml" />
+    <Content Include="Views\Payment\Edit.cshtml" />
+    <Content Include="Views\Default1\Delete.cshtml" />
+    <Content Include="Views\Payment\CreateCustomex.cshtml" />
+    <Content Include="Views\Payment\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_GlobalResources\EditorLocalization.en-US.resx">
