@@ -1,0 +1,137 @@
+﻿@using Telerik.Web.Mvc.UI
+@model Klmsncamp.Models.Payment
+@{
+    ViewBag.Title = "Ödeme Düzenleme";
+}
+
+<script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+<div align="center" style="width: 640px; margin-left: auto; margin-right: auto; margin-top: 30px;">
+    @using (Html.BeginForm())
+    {
+        @Html.ValidationSummary(true)
+        <fieldset class="module aligned ">
+            <table style="width: 100%; margin-top: 15px;">
+                <tbody>
+                    <thead>
+                        <th colspan="2">
+                            İş İstek Düzenleme
+                        </th>
+                    </thead>
+                    @Html.HiddenFor(model => model.PaymentID)
+                    <tr>
+                        <td style="vertical-align: middle; text-align: right;">
+                            @Html.LabelFor(model => model.BudgetNum)
+                        </td>
+                        <td style="vertical-align: middle; text-align: left;">
+                            @Html.EditorFor(model => model.BudgetNum)
+                            @Html.ValidationMessageFor(model => model.BudgetNum)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="vertical-align: middle; text-align: right;">
+                            @Html.LabelFor(model => model.PurchaseNum)
+                        </td>
+                        <td style="vertical-align: middle; text-align: left;">
+                            @Html.EditorFor(model => model.PurchaseNum)
+                            @Html.ValidationMessageFor(model => model.PurchaseNum)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="vertical-align: middle; text-align: right;">
+                            @Html.LabelFor(model => model.CorporateAccountID, "CorporateAccount")
+                        </td>
+                        <td style="vertical-align: middle; text-align: left;">
+                            @Html.DropDownList("CorporateAccountID", String.Empty)
+                            @Html.ValidationMessageFor(model => model.CorporateAccountID)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="vertical-align: middle; text-align: right;">
+                            @Html.LabelFor(model => model.InvoiceDate)
+                        </td>
+                        <td style="vertical-align: middle; text-align: left;">
+                            @Html.Telerik().DatePickerFor(model => model.InvoiceDate).Name("InvoiceDate")
+                            @Html.ValidationMessageFor(model => model.InvoiceDate)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="vertical-align: middle; text-align: right;">
+                            @Html.LabelFor(model => model.InvoiceNum)
+                        </td>
+                        <td style="vertical-align: middle; text-align: left;">
+                            @Html.EditorFor(model => model.InvoiceNum)
+                            @Html.ValidationMessageFor(model => model.InvoiceNum)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="vertical-align: middle; text-align: right;">
+                            @Html.LabelFor(model => model.InvoiceTotal)
+                        </td>
+                        <td style="vertical-align: middle; text-align: left;">
+                            @Html.EditorFor(model => model.InvoiceTotal)
+                            @Html.ValidationMessageFor(model => model.InvoiceTotal)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="vertical-align: middle; text-align: right;">
+                            @Html.LabelFor(model => model.PaymentDate)
+                        </td>
+                        <td style="vertical-align: middle; text-align: left;">
+                            @Html.Telerik().DatePickerFor(model => model.PaymentDate).Name("PaymentDate")
+                            @Html.ValidationMessageFor(model => model.PaymentDate)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="vertical-align: middle; text-align: right;">
+                            @Html.LabelFor(model => model.Description)
+                        </td>
+                        <td style="vertical-align: middle; text-align: left;">
+                            @Html.TextAreaFor(model => model.Description, new { cols = "50", size = "3" })
+                            @Html.ValidationMessageFor(model => model.Description)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="vertical-align: middle; text-align: right;">
+                            @Html.LabelFor(model => model.RequestIssueID, "RequestIssue")
+                        </td>
+                        <td style="vertical-align: middle; text-align: left;">
+                            @Html.DropDownList("RequestIssueID", String.Empty)
+                            @Html.ValidationMessageFor(model => model.RequestIssueID)
+                        </td>
+                    </tr>
+                    @{
+        var counter = 0;
+                    }
+                    @foreach (var file in Model.PaymentFiles)
+                    {
+                        counter++;
+                        <tr>
+                            <td style="vertical-align: middle; text-align: right;">
+                                (<a href="/Payment/Delete?id=@file.PaymentFileID.ToString()">Sil</a>)&nbsp;|&nbsp;Bağlı
+                                Dosya No# @counter
+                            </td>
+                            <td style="vertical-align: middle; text-align: left;">
+                                <a href="/Payment/Download?id=@file.PaymentFileID.ToString()">@file.PaymentFileName</a>&nbsp;(@asMb(file.PaymentFileSize) &nbsp;Kb)
+                            </td>
+                        </tr>
+                       
+                    }
+                </tbody>
+            </table>
+            
+        </fieldset>
+        <div class="submit-row"> 
+            <p class="deletelink-box">  @Html.ActionLink("Vazgeç ve Geri Dön", "Index")</p>
+            <input type="submit" value="Kaydet" />
+       </div>
+    }
+</div>
+
+@functions{
+    public string asMb(int number)
+    {
+        float number_ = number / (1024);
+        return Math.Round(number_, 2).ToString();
+    }
+}

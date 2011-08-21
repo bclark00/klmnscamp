@@ -1,0 +1,43 @@
+﻿@using Telerik.Web.Mvc.UI
+@model IEnumerable<Klmsncamp.Models.Payment>
+@{
+    ViewBag.Title = "Ödeme / Fatura Listesi";
+}
+<br />
+<div align="center" style="width: 750px; margin-left: auto; margin-right: auto; margin-top: 30px;">
+    @(Html.Telerik().Grid(Model).Name("Payment")
+                            .ToolBar(commands => commands
+                                            .Custom()
+                                                .HtmlAttributes(new { id = "export" })
+                                                .Text("Excel'e Aktar")
+                                                .Action("ExportXls", "Payment"))
+                            .Columns(columns =>
+                                {
+                                    @columns.Template(@<text> <a href="@Url.Content("/Payment/Edit/" + @item.PaymentID + "/")">
+                                        Düzenle</a>&nbsp;|&nbsp; <a href="@Url.Content("/Payment/Delete/" + @item.PaymentID + "/")">
+                                            Sil</a>
+                                    </text>).Width(75);
+                                    columns.Bound(o => o.BudgetNum).Width(75).Title("Bütçe / Ref No");
+                                    columns.Bound(o => o.PurchaseNum).Width(75).Title("SatınAlma No");
+                                    columns.Bound(o => o.CorporateAccount.Title).Width(150).Title("Firma");
+                                    columns.Bound(o => o.InvoiceDate).Width(80).Title("Fatura Tarihi");
+                                    columns.Bound(o => o.InvoiceNum).Width(75).Title("Fatura No").Groupable(false);
+                                    columns.Bound(o => o.InvoiceTotal).Width(100).Title("Fatura Toplam").Groupable(false);
+                                    columns.Bound(o => o.PaymentDate).Width(100).Title("Ödeme Tarihi").Groupable(false);
+                                    columns.Bound(o => o.Description).Width(150).Title("Açıklama").Groupable(false);
+
+                                }
+                            )
+                            .Scrollable(scrolling => scrolling.Enabled(true).Height(500))
+                            .Sortable(sorting => sorting.Enabled(true))
+                            .Filterable(filtering => filtering.Enabled(true))
+                            .Groupable(grouping => grouping.Enabled(true))
+                            .Resizable(resizing => resizing.Columns(true))
+                            .Footer(true)
+                            .Localizable("tr-TR")
+                            )
+    <div class="submit-row">
+        <p class="deletelink-box">@Html.ActionLink("Yeni Fatura/Ödeme Kaydı", "CreateCustomex")</p>
+    </div>
+</div>
+</div>
