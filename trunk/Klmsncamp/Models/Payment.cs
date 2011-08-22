@@ -34,7 +34,7 @@ namespace Klmsncamp.Models
         [StringLength(20, ErrorMessage = "{0} en az  {2} karakter uzunluğunda olmalı.", MinimumLength = 2)]
         public string InvoiceNum { get; set; }
 
-        [DisplayFormat(DataFormatString = "{0:C4}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:C}", ApplyFormatInEditMode = true)]
         [DataType(DataType.Currency)]
         [Display(Name = "Fatura Tutarı")]
         public decimal InvoiceTotal { get; set; }

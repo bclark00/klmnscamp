@@ -26,6 +26,7 @@
                     <li><a href="/RequestIssue/?show=A&page=1">İş Listesi</a></li>
                     @if (User.IsInRole("moderators") || User.IsInRole("administrator"))
                     {
+                        <li><a href="/Payment/">Ödemeler / Fatura Kaydı</a></li>
                         <li><a href="/Calendar/">Takvim</a></li>
                     }
                 </ul>
@@ -53,7 +54,7 @@
                     </ul>
                 </li>
             }
-            <li><a href="/">Hakkında</a></li>
+            <li><a href="/Home/About">Hakkında</a></li>
             @if (ViewContext.Controller.ValueProvider.GetValue("controller").RawValue.ToString() == "RequestIssue" &&
         ViewContext.Controller.ValueProvider.GetValue("Action").RawValue.ToString() == "Index")
             {
@@ -102,20 +103,20 @@
                     {
                 <li><a href="#">|</a></li>
                 <li @if (ViewBag.CurrentShow == "W")
-                    { <text>style="background-color: #FF0066;" </text>}>
-                    <a href="/RequestIssue/?show=W&page=1">Bekleyenler</a></li>
+                    { <text>style="background-color: #FF0066;" </text>}><a href="/RequestIssue/?show=W&page=1">
+                        Bekleyenler</a></li>
                 <li><a href="#">|</a></li>
                 <li @if (ViewBag.CurrentShow == "P")
-                    { <text>style="background-color: #FF0066;"</text> }>
-                    <a href="/RequestIssue/?show=P&page=1">Sürenler</a></li>
+                    { <text>style="background-color: #FF0066;"</text> }><a href="/RequestIssue/?show=P&page=1">
+                        Sürenler</a></li>
                 <li><a href="#">|</a></li>
                 <li @if (ViewBag.CurrentShow == "C")
-                    { <text>style="background-color: #FF0066;"</text> }>
-                    <a href="/RequestIssue/?show=C&page=1">Tamamlananlar</a></li>
+                    { <text>style="background-color: #FF0066;"</text> }><a href="/RequestIssue/?show=C&page=1">
+                        Tamamlananlar</a></li>
                 <li><a href="#">|</a></li>
                 <li @if (ViewBag.CurrentShow == "A")
-                    { <text>style="background-color: #FF0066;"</text> }>
-                    <a href="/RequestIssue/?show=A&page=1">Hepsi</a></li>
+                    { <text>style="background-color: #FF0066;"</text> }><a href="/RequestIssue/?show=A&page=1">
+                        Hepsi</a></li>
                     }
 
                 }

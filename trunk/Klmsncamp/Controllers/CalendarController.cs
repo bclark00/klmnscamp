@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
+using System.Net.Mail;
 using System.Web;
 using System.Web.Mvc;
-using System.Net.Mail;
 using Klmsncamp.Models;
 using Klmsncamp.ViewModels;
 
 namespace Klmsncamp.Controllers
-{ 
+{
     public class CalendarController : Controller
     {
         private KlmsnContext db = new KlmsnContext();
@@ -43,9 +43,8 @@ namespace Klmsncamp.Controllers
                         start = DateTime.Parse(item.StartDate.ToString()).ToString("yyyy-MM-ddTHH:mm:ssZ"),
                         end = DateTime.Parse(item.EndDate.ToString()).ToString("yyyy-MM-ddTHH:mm:ssZ"),
                         allDay = item.IsAllDay,
-                        url= "/RequestIssue/Editp/"+item.RequestIssueID.ToString()
+                        url = "/RequestIssue/Editp/" + item.RequestIssueID.ToString() + "?show=A&page=1"
                     });
-
                 }
                 else
                 {
@@ -62,13 +61,12 @@ namespace Klmsncamp.Controllers
             }
 
             return Json(_rjsonlist, JsonRequestBehavior.AllowGet);
-                      
         }
 
         [Authorize(Roles = "administrators,moderators")]
-        public ActionResult Update(string xisid,string xtip,string xgun, string xdk, string xtumGun)
+        public ActionResult Update(string xisid, string xtip, string xgun, string xdk, string xtumGun)
         {
-           //tarih manipualsyonu
+            //tarih manipualsyonu
             RequestIssue rq = db.RequestIssues.Find(int.Parse(xisid));
 
             try
@@ -81,20 +79,17 @@ namespace Klmsncamp.Controllers
                 //baslangic mi bitis mi?
                 if (xtip == "E")
                 {
-                    
-                        rq.EndDate=rq.EndDate.Value.AddDays(double.Parse(xgun));
-                        rq.EndDate=rq.EndDate.Value.AddMinutes(double.Parse(xdk));
-
+                    rq.EndDate = rq.EndDate.Value.AddDays(double.Parse(xgun));
+                    rq.EndDate = rq.EndDate.Value.AddMinutes(double.Parse(xdk));
                 }
                 else if (xtip == "S")
                 {
-                    rq.StartDate=rq.StartDate.AddDays(double.Parse(xgun));
-                    rq.StartDate=rq.StartDate.AddMinutes(double.Parse(xdk));
+                    rq.StartDate = rq.StartDate.AddDays(double.Parse(xgun));
+                    rq.StartDate = rq.StartDate.AddMinutes(double.Parse(xdk));
 
-                    rq.EndDate=rq.EndDate.Value.AddDays(double.Parse(xgun));
-                    rq.EndDate=rq.EndDate.Value.AddMinutes(double.Parse(xdk));
+                    rq.EndDate = rq.EndDate.Value.AddDays(double.Parse(xgun));
+                    rq.EndDate = rq.EndDate.Value.AddMinutes(double.Parse(xdk));
                 }
-
 
                 if (xtumGun == "E")
                 {
@@ -107,7 +102,7 @@ namespace Klmsncamp.Controllers
 
                 db.Entry(rq).State = EntityState.Modified;
                 db.SaveChanges();
-                
+
                 if (rq.SendEmail == true)
                 {
                     string mailsonucstr = SendEmail(new MailAddress("musaf@klimasan.com.tr"), new MailAddress(rq.UserReq.Email), "[Klimasan HelpDesk] #" + rq.RequestIssueID.ToString() + " no'lu İş isteğiniz hakkında.", "İş İsteğinizin ön görülen başlangıç ve bitiş tarihleri değiştirilmiş/güncellenmiştir. İsteğinizin son durumu görmek isterseniz; http:/127.0.0.1:43970/RequestIssue/Editp/" + rq.RequestIssueID.ToString() + " adresini ziyaret ediniz. Tarih: " + DateTime.Now.ToString() + ". İyi çalışmalar dileriz.");
@@ -122,16 +117,12 @@ namespace Klmsncamp.Controllers
                 }
 
                 return Content("<font color=\"red\">Güncelleme başarılı</font>");
-
             }
             catch
             {
                 return Content("<font color=\"red\">Hata Oluştu</font>");
-
             }
-           
         }
-
 
         protected override void Dispose(bool disposing)
         {
