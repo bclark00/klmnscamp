@@ -1,21 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Web;
 using System.Web.Security;
-using System.Security.Cryptography;
 
 namespace Klmsncamp.Models
 {
     public class UserRepository
     {
-        public MembershipUser CreateUser(string username, string firstname,string lastname,string password, string email)
+        public MembershipUser CreateUser(string username, string firstname, string lastname, string password, string email)
         {
             using (KlmsnContext db = new KlmsnContext())
             {
                 User user = new User();
 
                 user.UserName = username;
+                user.FirstName = firstname;
+                user.LastName = lastname;
                 user.Email = email;
                 user.PasswordSalt = CreateSalt();
                 user.Password = CreatePasswordHash(password, user.PasswordSalt);
@@ -41,12 +43,11 @@ namespace Klmsncamp.Models
                 if (result.Count() != 0)
                 {
                     var dbuser = result.FirstOrDefault();
-                    
+
                     return dbuser;
                 }
                 else
                 {
-                   
                     return null;
                 }
             }
@@ -61,13 +62,11 @@ namespace Klmsncamp.Models
                 if (result.Count() != 0)
                 {
                     var dbuser = result.FirstOrDefault();
-                    
+
                     return dbuser.Roles.ToList();
-                   
                 }
                 else
                 {
-                    
                     return null;
                 }
             }
@@ -83,12 +82,10 @@ namespace Klmsncamp.Models
                 {
                     var dbuser = result.FirstOrDefault();
 
-                   
                     return dbuser.UserName;
                 }
                 else
                 {
-                   
                     return "";
                 }
             }
@@ -115,7 +112,7 @@ namespace Klmsncamp.Models
                     DateTime _lastLoginDate = dbuser.LastLoginDate.GetValueOrDefault(DateTime.Now);
                     DateTime _lastActivityDate = DateTime.Now;
                     DateTime _lastPasswordChangedDate = DateTime.Now;
-                    DateTime _lastLockedOutDate = dbuser.LastLockedOutDate.GetValueOrDefault(DateTime.Now); 
+                    DateTime _lastLockedOutDate = dbuser.LastLockedOutDate.GetValueOrDefault(DateTime.Now);
 
                     MembershipUser user = new MembershipUser("CustomMembershipProvider",
                                                               _username,
@@ -132,18 +129,16 @@ namespace Klmsncamp.Models
                                                               _lastLockedOutDate
                                                               );
 
-                    
                     return user;
                 }
                 else
                 {
-                  
                     return null;
                 }
             }
         }
 
-        public bool isInRole(int userID,string roleName)
+        public bool isInRole(int userID, string roleName)
         {
             using (KlmsnContext db = new KlmsnContext())
             {
@@ -158,7 +153,6 @@ namespace Klmsncamp.Models
                 }
                 return false;
             }
-
         }
 
         private static string CreateSalt()

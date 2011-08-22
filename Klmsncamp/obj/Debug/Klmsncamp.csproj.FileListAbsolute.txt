@@ -1,4 +1,3 @@
-C:\Users\MUSAF\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\Telerik.Web.Mvc.xml
 C:\Users\MUSAF\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\Klmsncamp.dll
 C:\Users\MUSAF\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\Klmsncamp.pdb
 C:\Users\MUSAF\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\EntityFramework.dll
@@ -13,6 +12,7 @@ C:\Users\MUSAF\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\New
 C:\Users\MUSAF\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\Newtonsoft.Json.xml
 C:\Users\MUSAF\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\PagedList.xml
 C:\Users\MUSAF\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\PagedList.Mvc.xml
+C:\Users\MUSAF\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\Telerik.Web.Mvc.xml
 C:\Users\MUSAF\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\obj\Debug\ResolveAssemblyReference.cache
 C:\Users\MUSAF\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\obj\Debug\Klmsncamp.dll
 C:\Users\MUSAF\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\obj\Debug\Klmsncamp.pdb

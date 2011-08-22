@@ -332,8 +332,11 @@
     <Content Include="Content\images\icon_right.png" />
     <Content Include="Content\images\isol.png" />
     <Content Include="Content\images\liste.png" />
+    <Content Include="Content\images\microsoft-sql-server-2008.gif" />
     <Content Include="Content\images\minus.gif" />
     <Content Include="Content\images\mpicker-bg.png" />
+    <Content Include="Content\images\mvc3logo.gif" />
+    <Content Include="Content\images\vs2010.png" />
     <Content Include="Content\images\weather\01.png" />
     <Content Include="Content\images\weather\1.png" />
     <Content Include="Content\images\weather\11.png" />
@@ -803,12 +806,10 @@
     <Content Include="Views\RequestIssue\Editp.cshtml" />
     <Content Include="Views\Calendar\Index.cshtml" />
     <Content Include="Views\RequestIssue\Report.cshtml" />
-    <Content Include="Views\Default1\Details.cshtml" />
-    <Content Include="Views\Default1\Create.cshtml" />
     <Content Include="Views\Payment\Edit.cshtml" />
-    <Content Include="Views\Default1\Delete.cshtml" />
     <Content Include="Views\Payment\CreateCustomex.cshtml" />
     <Content Include="Views\Payment\Index.cshtml" />
+    <Content Include="Views\Payment\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_GlobalResources\EditorLocalization.en-US.resx">

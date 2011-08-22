@@ -1,4 +1,5 @@
 ﻿@using Telerik.Web.Mvc.UI
+@{ Html.Telerik().ScriptRegistrar().Globalization(true); }
 @model Klmsncamp.Models.Payment
 @{
     ViewBag.Title = "CreateCustomex";
@@ -12,7 +13,7 @@
                 document.getElementById('add-file-field').innerHTML += "<input id='files-to-upload' type='file' name='file' /><br />";
                 fields += 1;
             } else {
-                document.getElementById('add-file-field').innerHTML += "<br />En çok 5 Dosya Eklenebilir";
+                document.getElementById('add-file-field').innerHTML += "<br />Bir Seferde En çok 5 Dosya Eklenebilir";
                 document.getElementById('addfile').disabled = true;
             }
         }
@@ -78,7 +79,7 @@
                             @Html.LabelFor(model => model.InvoiceTotal)
                         </td>
                         <td style="vertical-align: middle; text-align: left;">
-                            @Html.EditorFor(model => model.InvoiceTotal)
+                            @Html.Telerik().CurrencyTextBoxFor(model => model.InvoiceTotal).Name("InvoiceTotal")
                             @Html.ValidationMessageFor(model => model.InvoiceTotal)
                         </td>
                     </tr>
@@ -96,7 +97,7 @@
                             @Html.LabelFor(model => model.Description)
                         </td>
                         <td style="vertical-align: middle; text-align: left;">
-                            @Html.EditorFor(model => model.Description)
+                            @Html.TextAreaFor(model => model.Description, new { cols = "50", rows = "4" })
                             @Html.ValidationMessageFor(model => model.Description)
                         </td>
                     </tr>

@@ -1,0 +1,98 @@
+﻿@model Klmsncamp.Models.Payment
+@{
+    ViewBag.Title = "Fatura / Ödeme Bilgisi Sil";
+}
+<div align="center" style="width: 650px; margin-left: auto; margin-right: auto; margin-top: 30px;
+    border: 1px solid #eee;">
+    <table style="width: 100%;">
+        <tbody>
+            <thead>
+                <th colspan="2">
+                    Aşağıdaki Fatura / Ödeme Bilgisi kaydını silmek istediğinize emin misiniz?
+                </th>
+            </thead>
+            <tr>
+                <td style="vertical-align: middle; text-align: right;">
+                    <div class="display-label">
+                        Bütçe Ref No :</div>
+                </td>
+                <td style="vertical-align: middle; text-align: left;">
+                    @Html.DisplayFor(model => model.BudgetNum)
+                </td>
+            </tr>
+            <tr>
+                <td style="vertical-align: middle; text-align: right;">
+                    <div class="display-label">
+                        Satın Alma No :</div>
+                </td>
+                <td style="vertical-align: middle; text-align: left;">
+                    @Html.DisplayFor(model => model.PurchaseNum)
+                </td>
+            </tr>
+            <tr>
+                <td style="vertical-align: middle; text-align: right;">
+                    <div class="display-label">
+                        Fatura Tarih :</div>
+                </td>
+                <td style="vertical-align: middle; text-align: left;">
+                    @Html.DisplayFor(model => model.InvoiceDate)
+                </td>
+            </tr>
+            <tr>
+                <td style="vertical-align: middle; text-align: right;">
+                    <div class="display-label">
+                        Fatura No :</div>
+                </td>
+                <td style="vertical-align: middle; text-align: left;">
+                    @Html.DisplayFor(model => model.InvoiceNum)
+                </td>
+            </tr>
+            <tr>
+                <td style="vertical-align: middle; text-align: right;">
+                    <div class="display-label">
+                        Fatura Toplam :</div>
+                </td>
+                <td style="vertical-align: middle; text-align: left;">
+                    @Html.DisplayFor(model => model.InvoiceTotal)
+                </td>
+            </tr>
+            <tr>
+                <td style="vertical-align: middle; text-align: right;">
+                    <div class="display-label">
+                        Ödeme Tarih :</div>
+                </td>
+                <td style="vertical-align: middle; text-align: left;">
+                    @Html.DisplayFor(model => model.PaymentDate)
+                </td>
+            </tr>
+            <tr>
+                <td style="vertical-align: middle; text-align: right;">
+                    <div class="display-label">
+                        Bağlı Olduğu İş :</div>
+                </td>
+                <td style="vertical-align: middle; text-align: left;">
+                    @Html.DisplayFor(model => model.RequestIssue.Location.Description)&nbsp;-&nbsp;@Html.DisplayFor(model => model.RequestIssue.DetailedDescription)
+                </td>
+            </tr>
+            @foreach (var file in Model.PaymentFiles)
+            {
+                <tr>
+                    <td colspan="2" style="text-align: center;">
+                        <a href="/Payment/Download?id=@file.PaymentFileID.ToString()">@file.PaymentFileName</a>
+                    </td>
+                </tr>
+            }
+            <tfoot>
+                <td colspan="2">
+                    @using (Html.BeginForm()) {
+                    <p style="text-align: center;">
+                        <input type="submit" value="Sil" />
+                        |
+                        @Html.ActionLink("Vazgeç ve Geri Dön", "Index")
+                    </p>
+                    }
+                </td>
+            </tfoot>
+        </tbody>
+    </table>
+</div>
