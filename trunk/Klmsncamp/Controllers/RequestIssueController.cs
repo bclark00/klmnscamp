@@ -139,6 +139,7 @@ namespace Klmsncamp.Controllers
 
             ViewBag.RequestTypeID = new SelectList(db.RequestTypes, "RequestTypeID", "Description");
             ViewBag.LocationID = new SelectList(db.Locations, "LocationID", "Description");
+            ViewBag.PersonnelID = new SelectList(db.Personnels, "PersonnelID", "FullName");
             ViewBag.InventoryID = new SelectList(db.Inventories, "InventoryID", "Description");
             ViewBag.WorkshopID = new SelectList(db.Workshops, "WorkshopID", "Description");
             ViewBag.RequestStateID = new SelectList(db.RequestStates, "RequestStateID", "Description", 1);
@@ -490,7 +491,6 @@ namespace Klmsncamp.Controllers
         }
 
         [HttpPost]
-
         public ActionResult Report(RequestIssue requestıssue, FormCollection formcollection)
         {
             ReportClass rptH = new ReportClass();

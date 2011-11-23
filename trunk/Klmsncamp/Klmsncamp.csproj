@@ -14,7 +14,7 @@
     <AssemblyName>Klmsncamp</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
-    <UseIISExpress>false</UseIISExpress>
+    <UseIISExpress>true</UseIISExpress>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -123,10 +123,12 @@
     <Compile Include="Models\Inventory.cs" />
     <Compile Include="Models\InventoryOwnership.cs" />
     <Compile Include="Models\Location.cs" />
+    <Compile Include="Models\LocationGroup.cs" />
     <Compile Include="Models\MaintenanceNode.cs" />
     <Compile Include="App_Data\MyMembershipProvider.cs" />
     <Compile Include="Models\Payment.cs" />
     <Compile Include="Models\PaymentFile.cs" />
+    <Compile Include="Models\Personnel.cs" />
     <Compile Include="Models\RequestIssue.cs" />
     <Compile Include="Models\RequestState.cs" />
     <Compile Include="Models\RequestType.cs" />
@@ -856,11 +858,10 @@
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
           <UseIIS>False</UseIIS>
-          <AutoAssignPort>True</AutoAssignPort>
+          <AutoAssignPort>False</AutoAssignPort>
           <DevelopmentServerPort>36498</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>
-          </IISUrl>
+          <IISUrl>http://localhost:36498/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

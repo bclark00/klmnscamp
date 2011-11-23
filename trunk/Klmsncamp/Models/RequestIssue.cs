@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Reflection;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Reflection;
+using System.Web;
 
 namespace Klmsncamp.Models
 {
@@ -16,6 +16,12 @@ namespace Klmsncamp.Models
         public int RequestTypeID { get; set; }
 
         public virtual RequestType RequestType { get; set; }
+
+        [Display(Name = "İşi İsteyen Personel")]
+        public int? PersonnelID { get; set; }
+
+        [Display(Name = "İşi İsteyen Personel")]
+        public virtual Personnel Personnel { get; set; }
 
         [MaxLength(500, ErrorMessage = "500 karakterden uzun olamaz")]
         [Display(Name = "Açıklama")]
@@ -48,8 +54,8 @@ namespace Klmsncamp.Models
         [Display(Name = "İş/İstek Durum")]
         public virtual RequestState RequestState { get; set; }
 
-        [MaxLength(500,ErrorMessage="500 karakterden uzun olamaz")]
-        [Display(Name="Süreç Bilgilendirme Notu")]
+        [MaxLength(500, ErrorMessage = "500 karakterden uzun olamaz")]
+        [Display(Name = "Süreç Bilgilendirme Notu")]
         public string Note { get; set; }
 
         [Display(Name = "Planlanan Başlangıç Tarihi")]
@@ -61,14 +67,14 @@ namespace Klmsncamp.Models
         [DisplayFormat(DataFormatString = "{0:G}", ApplyFormatInEditMode = true)]
         public DateTime? EndDate { get; set; }
 
-        [Display(Name="İstek Yapan")]
+        [Display(Name = "İstek Yapan")]
         [ForeignKey("UserReq")]
         public int? UserReqID { get; set; }
 
-        public virtual User UserReq{ get; set; }
+        public virtual User UserReq { get; set; }
 
         [Required(ErrorMessage = "Zorunlu Alan")]
-        [Display(Name="Onaylandı?")]
+        [Display(Name = "Onaylandı?")]
         public bool IsApproved { get; set; }
 
         [Display(Name = "Email ile bildirim yapılsın mı?")]
@@ -91,7 +97,5 @@ namespace Klmsncamp.Models
         public int ValidationStateID { get; set; }
 
         public virtual ValidationState ValidationState { get; set; }
-
-        
     }
 }
