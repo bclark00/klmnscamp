@@ -1,22 +1,19 @@
 /*
- * jDigiClock plugin 2.1
- *
- * http://www.radoslavdimov.com/jquery-plugins/jquery-plugin-digiclock/
- *
- * Copyright (c) 2009 Radoslav Dimov
- *
- * Dual licensed under the MIT and GPL licenses:
- * http://www.opensource.org/licenses/mit-license.php
- * http://www.gnu.org/licenses/gpl.html
- *
- */
-
+* jDigiClock plugin 2.1
+*
+* http://www.radoslavdimov.com/jquery-plugins/jquery-plugin-digiclock/
+*
+* Copyright (c) 2009 Radoslav Dimov
+*
+* Dual licensed under the MIT and GPL licenses:
+* http://www.opensource.org/licenses/mit-license.php
+* http://www.gnu.org/licenses/gpl.html
+*
+*/
 
 (function ($) {
     $.fn.extend({
-
         jdigiclock: function (options) {
-
             var defaults = {
                 clockImagesPath: '/content/images/clock/',
                 weatherImagesPath: '/content/images/weather/',
@@ -26,7 +23,6 @@
                 weatherMetric: 'C',
                 weatherUpdate: 0,
                 proxyType: 'asp'
-
             };
 
             var regional = [];
@@ -35,11 +31,9 @@
                 dayNames: ['Pz', 'Pzt', 'Sa', 'Car', 'Per', 'Cu', 'Cmt']
             }
 
-
             var options = $.extend(defaults, options);
 
             return this.each(function () {
-
                 var $this = $(this);
                 var o = options;
                 $this.clockImagesPath = o.clockImagesPath;
@@ -52,7 +46,6 @@
                 $this.proxyType = o.proxyType;
                 $this.currDate = '';
                 $this.timeUpdate = '';
-
 
                 var html = '<div id="plugin_container">';
                 html += '<p id="left_arrow"><img src="/content/images/icon_left.png" /></p>';
@@ -94,11 +87,9 @@
                     });
                 };
                 $('#left_arrow').bind('click', prev);
-
             });
         }
     });
-
 
     $.fn.displayClock = function (el) {
         $.fn.getTime(el);
@@ -211,7 +202,6 @@
 
         // set hours
         if (now_minutes == '00') {
-
             if (el.am_pm) {
                 if (now_hours == '00') {
                     firstHourDigit = firstHourDigit + '1';
@@ -274,7 +264,6 @@
     }
 
     $.fn.getWeather = function (el) {
-
         el.find('#weather').html('<p class="loading">Update Weather ...</p>');
         el.find('#forecast_container').html('<p class="loading">Update Weather ...</p>');
         var metric = el.weatherMetric == 1 ? 'C' : 'F';
@@ -289,9 +278,8 @@
                 break;
         }
         //alert("looooy1");
-        $.getJSON('/Home/WeatherWidget/?location=' + el.weatherLocationCode + '&metric=' + el.weatherMetric, function(data) {
-        //$.getJSON('http://127.0.0.1:8080/hastakabul/sensewidget/ajax/', function (data) {
-            
+        $.getJSON('/Home/WeatherWidget/?location=' + el.weatherLocationCode + '&metric=' + el.weatherMetric, function (data) {
+            //$.getJSON('http://127.0.0.1:8080/hastakabul/sensewidget/ajax/', function (data) {
             //alert("looooy2");
             el.find('#weather .loading, #forecast_container .loading').hide();
 
@@ -331,5 +319,4 @@
             });
         });
     }
-
 })(jQuery);

@@ -50,6 +50,10 @@ namespace Klmsncamp.Models
 
         public DbSet<PaymentFile> PaymentFiles { get; set; }
 
+        public DbSet<Personnel> Personnels { get; set; }
+
+        public DbSet<LocationGroup> LocationGroups { get; set; }
+
         public ObjectContext KlmsnObjectContext
         {
             get { return ((IObjectContextAdapter)this).ObjectContext; }
@@ -69,6 +73,8 @@ namespace Klmsncamp.Models
                         .HasRequired(a => a.Workshop)
                         .WithMany()
                         .HasForeignKey(u => u.WorkshopID).WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<RequestIssue>().HasRequired(a => a.ValidationState).WithMany().HasForeignKey(u => u.WorkshopID).WillCascadeOnDelete(false);
         }
     }
 }

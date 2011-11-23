@@ -37,6 +37,25 @@
         </tr>
         <tr>
         <td style="vertical-align: middle; text-align: right;">
+            @Html.LabelFor(model=>model.PersonnelID)
+        </td>
+        <td style="vertical-align: middle; text-align: left;">
+
+            <br />
+            @(Html.Telerik().ComboBox()
+            .Name("PersonnelID")
+            .HtmlAttributes(new { id = "ComboBox_wrapper" })
+            .AutoFill(true).HtmlAttributes(new { style = "width:210px;" }).DropDownHtmlAttributes(new { style = "width: 210px;" }).InputHtmlAttributes(new { style = "vertical-align: middle; font-size:100%; border: 1px solid; width: 200px;" })
+            .BindTo((SelectList)ViewBag.PersonnelID)
+            .Filterable(filtering => filtering.FilterMode((AutoCompleteFilterMode)Enum.Parse(typeof(AutoCompleteFilterMode), "2", false)))
+            .HighlightFirstMatch(true)
+            )
+            <br />
+
+        </td>
+        </tr>
+        <tr>
+        <td style="vertical-align: middle; text-align: right;">
             @Html.LabelFor(model => model.InventoryID, "İlgili Cihaz / Envanter")
         </td>
         <td style="vertical-align: middle; text-align: left;">
@@ -62,7 +81,7 @@
             @Html.ValidationMessageFor(model => model.DetailedDescription)
         </td>
         </tr>
-        
+
         <tr>
         <td style="vertical-align: middle; text-align: right;">
             @Html.LabelFor(model => model.RequestStateID, "İş Durumu")
@@ -126,13 +145,13 @@
             @Html.ValidationMessageFor(model => model.IsAllDay)
         </td>
         </tr>-->
-        
+
         <!--<tr>
         <td style="vertical-align: middle; text-align: right;">
             @Html.LabelFor(model => model.UserID, "İş Sahibi")
         </td>
         <td style="vertical-align: middle; text-align: left;">
-            @Html.DropDownList("UserID", String.Empty)       
+            @Html.DropDownList("UserID", String.Empty)
             @Html.ValidationMessageFor(model => model.UserID)
         </td>
         </tr>-->
@@ -145,7 +164,7 @@
             @Html.ValidationMessageFor(model => model.UserReqID)
         </td>
         </tr>
-     
+
         <!--<tr>
         <td style="vertical-align: middle; text-align: right;">
             @Html.LabelFor(model => model.TimeStamp)
@@ -167,10 +186,10 @@
         </tbody>
             </table>
         </fieldset>
-        <div class="submit-row">  
+        <div class="submit-row">
           <p class="deletelink-box">  @Html.ActionLink("Vazgeç ve Geri Dön", "Index")</p>
           <input type="submit" value="Ekle" />
-        
+
         </div>
-    
+
 }
