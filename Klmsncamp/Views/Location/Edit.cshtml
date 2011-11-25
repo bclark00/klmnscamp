@@ -14,7 +14,7 @@
     <tbody>
     <thead>
     <th colspan="2">Birim / Lokasyon Bilgileri Düzenleme</th>
-    </thead>    
+    </thead>
 
         @Html.HiddenFor(model => model.LocationID)
     <tr>
@@ -24,6 +24,12 @@
       <td style="vertical-align: middle; text-align: left;">
             @Html.EditorFor(model => model.Description)<br />
             @Html.ValidationMessageFor(model => model.Description)
+      </td>
+    </tr>
+    <tr>
+     <td style="vertical-align: middle; text-align: right;"> @Html.LabelFor(model => model.LocationGroupID, "ValidationState")
+     </td>
+     <td style="vertical-align: middle; text-align: left;"> @Html.DropDownList("LocationGroupID", String.Empty)<br />@Html.ValidationMessageFor(model => model.LocationGroupID)
       </td>
     </tr>
     <tr>
@@ -38,6 +44,6 @@
     <div class="submit-row">
             <p class="deletelink-box">@Html.ActionLink("Vazgeç ve geri dön", "Index")</p>
         <input type="submit" value="Kaydet" />
-    </div>                
-    
+    </div>
+
 }

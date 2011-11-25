@@ -28,7 +28,7 @@ namespace Klmsncamp.Models
             }
         }
 
-        public virtual string FullName { get { return this.FirstName + " " + this.LastName; } }
+        public virtual string FullName { get { return char.ToUpper(this.FirstName[0]) + (this.FirstName.ToLower()).Substring(1) + " " + char.ToUpper(this.LastName[0]) + (this.LastName.ToLower()).Substring(1); } }
 
         [Required(ErrorMessage = "Zorunlu Alan")]
         [Display(Name = "Durum")]

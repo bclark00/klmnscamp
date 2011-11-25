@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Globalization;
 using System.Linq;
+using System.Net;
 using System.Net.Mail;
 using System.Web;
 using System.Web.Mvc;
@@ -31,64 +33,111 @@ namespace Klmsncamp.Controllers
             var rq_list = db.RequestIssues.Include(r => r.RequestType).Include(r => r.Location).Include(r => r.Inventory).Include(r => r.Workshop).Include(r => r.RequestState).Include(r => r.UserReq).Include(r => r.User).Include(r => r.ValidationState).ToList();
 
             List<RequestIssueCalendarViewModel> _rjsonlist = new List<RequestIssueCalendarViewModel>();
+            string color_ = "#CCFF33";
+            string textcolor_ = "#FFFFFF";
+            bool editable_ = true;
+            TimeSpan span = new TimeSpan();
             foreach (var item in rq_list)
             {
                 if (item.EndDate != null)
                 {
+                    //DateTime xendtarihi = DateTime.ParseExact(item.EndDate.ToString(), "dd.MM.yyyy", CultureInfo.InvariantCulture);
+                    span = item.EndDate.Value.Subtract(DateTime.Now);
+                    int diff = span.Days;
+                    if (diff < 5 && diff > 2)
+                    {
+                        color_ = "#FFFF99";
+                        textcolor_ = "#000000";
+                    }
+                    else if (diff <= 2 && diff > 0)
+                    {
+                        color_ = "FF6600";
+                        textcolor_ = "#000000";
+                    }
+                    else if (diff == 0)
+                    {
+                        color_ = "#FF0000";
+                    }
+                    else if (diff < 0)
+                    {
+                        color_ = "#CC0000";
+                    }
+                    else if (diff >= 5)
+                    {
+                        color_ = "#6600FF";
+                        textcolor_ = "#FFFFFF";
+                    }
+
+                    if (item.IsApproved == true)
+                    {
+                        color_ = "#33FF66";
+                        textcolor_ = "#000000";
+                        editable_ = false;
+                    }
+
+                    //bazı değişikliklere gidiyoruz. eğer istenmemmişse sadece termin trihleri gösterilecek
+                    //ve ötelemeler sadece termin tarihleriyle alakalı olacak
+                    //2den fazla ise otelenemeyecek
+
+                    if (item.Pre1EndDate != null && item.Pre2EndDate != null)
+                    {
+                        editable_ = false;
+                    }
+
                     _rjsonlist.Add(new RequestIssueCalendarViewModel
                     {
                         id = item.RequestIssueID,
                         //title = item.Location.Description + "," + item.RequestType.Description + "," + item.DetailedDescription,
-                        title = item.Location.Description,
-                        start = DateTime.Parse(item.StartDate.ToString()).ToString("yyyy-MM-ddTHH:mm:ssZ"),
+                        title = item.Location.Description + "," + item.RequestType.Description + "," + item.User.getFullName(),
+                        start = DateTime.Parse(item.EndDate.Value.AddMilliseconds(-1).ToString()).ToString("yyyy-MM-ddTHH:mm:ssZ"),
                         end = DateTime.Parse(item.EndDate.ToString()).ToString("yyyy-MM-ddTHH:mm:ssZ"),
                         allDay = item.IsAllDay,
-                        url = "/RequestIssue/Editp/" + item.RequestIssueID.ToString() + "?show=A&page=1"
+                        url = "/RequestIssue/Editp/" + item.RequestIssueID.ToString() + "?show=A&page=1",
+                        color = color_,
+                        textColor = textcolor_,
+                        disableResizing = true,
+                        editable = editable_
                     });
                 }
-                else
-                {
-                    _rjsonlist.Add(new RequestIssueCalendarViewModel
-                    {
-                        id = item.RequestIssueID,
-                        //title = item.Location.Description + "," + item.RequestType.Description + "," + item.DetailedDescription,
-                        title = item.Location.Description,
-                        start = DateTime.Parse(item.StartDate.ToString()).ToString("yyyy-MM-ddTHH:mm:ssZ"),
-                        allDay = item.IsAllDay,
-                        url = "/RequestIssue/Editp/" + item.RequestIssueID.ToString()
-                    });
-                }
+                color_ = "#CCFF33";
+                textcolor_ = "#FFFFFF";
+                editable_ = true;
             }
 
             return Json(_rjsonlist, JsonRequestBehavior.AllowGet);
         }
 
         [Authorize(Roles = "administrators,moderators")]
-        public ActionResult Update(string xisid, string xtip, string xgun, string xdk, string xtumGun)
+        public ActionResult Update(string xisid, string xtip, string xgun, string xdk, string xtumGun, string ms)
         {
             //tarih manipualsyonu
             RequestIssue rq = db.RequestIssues.Find(int.Parse(xisid));
 
+            //değişiklikler:
+            //öteleme sadece enddate icin geçerli bi durum olacak
+
             try
             {
-                if (rq.EndDate == null)
-                {
-                    rq.EndDate = rq.StartDate.AddHours(2);
-                }
+                //baslangic mi bitis mi? <-- bu kontrol iptal. resize hiç bir zaman kullanmayacagiz.
+                // cunkü her taşımamız resize olacak zaten..
+                //rq.StartDate = rq.StartDate.AddDays(double.Parse(xgun));
+                //rq.StartDate = rq.StartDate.AddMinutes(double.Parse(xdk));
 
-                //baslangic mi bitis mi?
-                if (xtip == "E")
+                if (rq.Pre1EndDate == null)
                 {
+                    rq.Pre1EndDate = rq.EndDate;
                     rq.EndDate = rq.EndDate.Value.AddDays(double.Parse(xgun));
                     rq.EndDate = rq.EndDate.Value.AddMinutes(double.Parse(xdk));
                 }
-                else if (xtip == "S")
+                else if (rq.Pre2EndDate == null)
                 {
-                    rq.StartDate = rq.StartDate.AddDays(double.Parse(xgun));
-                    rq.StartDate = rq.StartDate.AddMinutes(double.Parse(xdk));
-
+                    rq.Pre2EndDate = rq.EndDate;
                     rq.EndDate = rq.EndDate.Value.AddDays(double.Parse(xgun));
                     rq.EndDate = rq.EndDate.Value.AddMinutes(double.Parse(xdk));
+                }
+                else
+                {
+                    return Content("Termin Oteleme Limiti Dolmustur");
                 }
 
                 if (xtumGun == "E")
@@ -116,11 +165,11 @@ namespace Klmsncamp.Controllers
                     }
                 }
 
-                return Content("<font color=\"red\">Güncelleme başarılı</font>");
+                return Content("Güncelleme başarılı");
             }
             catch
             {
-                return Content("<font color=\"red\">Hata Oluştu</font>");
+                return Content("Hata Oluştu");
             }
         }
 
@@ -142,6 +191,7 @@ namespace Klmsncamp.Controllers
                 };
 
                 var client = new SmtpClient("KLMSNEVS.klimasan.msft");
+                client.Credentials = new NetworkCredential("MUSAF@klimasan.com.tr", "1212");
                 client.Send(message);
 
                 return "OK";

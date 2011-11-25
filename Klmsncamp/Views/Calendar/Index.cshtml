@@ -1,181 +1,213 @@
 ﻿@{
     ViewBag.Title = "Takvim Görüntüsü";
-    }
-   
+}
 <script src="../../Scripts/fullcalendar.js" type="text/javascript"></script>
 <script src="../../Scripts/jquery-ui-1.8.11.min.js" type="text/javascript"></script>
-<link rel="stylesheet" type="text/css" href="@Url.Content("/Content/fullcalendar.css")" /> 
+<link rel="stylesheet" type="text/css" href="@Url.Content("/Content/fullcalendar.css")" />
 @section script
 {
+    <script type='text/javascript' language="Javascript">
 
-<script type='text/javascript' language="Javascript">
+        $(document).ready(function () {
 
-	$(document).ready(function() {
+            var date = new Date();
+            var d = date.getDate();
+            var m = date.getMonth();
+            var y = date.getFullYear();
+            var xdurum;
+            $('#calendar').fullCalendar({
 
-		var date = new Date();
-		var d = date.getDate();
-		var m = date.getMonth();
-		var y = date.getFullYear();
-	
-		$('#calendar').fullCalendar({
+                header: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'month,agendaWeek,agendaDay'
+                },
+                editable: true,
+                events: '/Calendar/Json',
+                eventDrop: function (event, dayDelta, minuteDelta, allDay, revertFunc) {
 
-			header: {
-			     left: 'prev,next today',
-                 center: 'title',
-			    right: 'month,agendaWeek,agendaDay'
-			},
-            editable: true,
-            events: '/Calendar/Json',
-            eventDrop: function(event,dayDelta,minuteDelta,allDay,revertFunc) {
+                    //                    alert(
+                    //                                event.title + "( " + event.id + " ) iş " +
+                    //                    	            dayDelta + " gün ve " +
+                    //                    		            minuteDelta + " dakika ötelenecek..");
 
-		       
-		            alert(
-		            event.title + "( " + event.id + " ) was moved " +
-		            dayDelta + " days and " +
-		            minuteDelta + " minutes.");
-                
-		        if (allDay) {
-		           // alert("Event is now all-day");
-			           xallDay = "E";
-		        }else{
-		           // alert("Event has a time-of-day");
-			           xallDay = "H";
-		        }
+                    if (allDay) {
+                        // alert("Event is now all-day");
+                        xallDay = "E";
+                    } else {
+                        // alert("Event has a time-of-day");
+                        xallDay = "H";
+                    }
 
-		      /*  if (!confirm("Güncellensin mi?")) {
-		            revertFunc();
-		        }
-		        else
-		        {*/
-		        	ajanda_guncelle(event.id,'S',dayDelta,minuteDelta,xallDay);
-		        //}
+                    // if (!confirm("Güncellensin mi?")) {
+                    // revertFunc();
 
-		    },
-					
-			eventResize: function(event,dayDelta,minuteDelta,revertFunc) {
+                    //alert("termin:" + event.end + "," + event.end.getTime());
 
-		        /*alert(
-		            "The end date of " + event.title + "( "+event.id+ " ) has been moved " +
-		            dayDelta + " days and " +
-		            minuteDelta + " minutes."
-		        );
-				*/
-		      /*  if (!confirm("Güncellensin mi??")) {
-		            revertFunc();
-		        }
-		        else 
-		        {*/
-		           	ajanda_guncelle(event.id,'E',dayDelta,minuteDelta,'H');
-		              	
-		        //}
+                    ajanda_guncelle(event.id, "S", dayDelta, minuteDelta, xallDay);
 
-		    },
-					
-			
-			loading: function(bool) {
-		    	var xelement = document.getElementById("ajaxloading");
-				if (bool) { $('#ajaxloading').show(); xelement.innerHTML="yüklüyor.."; }
-				else { $('#ajaxloading').hide(); }
-			}
-			
-		});
+                    //                    var xelement = document.getElementById("ajaxloading");
+                    //                    //alert(xelement.innerHTML.toString());
+                    //                    sleep(600);
+                    //
 
-		
-		
-		
-	});
+                    //}
+                    //alert("daydelta:" + dayDelta + ", " + "mindelta:" + minuteDelta);
+                    //                    sleep(1000);
+                    //                    $('#calendar').fullCalendar('refetchEvents');
+                    var d1_bugun = new Date();
 
-</script>
-<script type="text/javascript" language="Javascript">
-    function AJAX() {
-        var ajax = false;
-        // Internet Explorer (5.0+)
-        try {
-            ajax = new ActiveXObject("Msxml2.XMLHTTP");  // yeni versiyon xmlhttp
-        } catch (e) {
+                    var day = 1000 * 60 * 60 * 24;
+                    //alert("bugun:" + d1_bugun + "," + d1_bugun.getTime());
+                    var diff = Math.ceil((event.end.getTime() - d1_bugun.getTime()) / (day));
+                    //alert(diff);
+                    if (diff < 5 && diff > 2) {
+                        event.color = "#FFFF99";
+                        event.textColor = "#000000";
+                    }
+                    else if (diff <= 2 && diff > 0) {
+                        event.color = "FF6600";
+                        event.textColor = "#000000";
+                    }
+                    else if (diff == 0) {
+                        event.color = "#FF0000";
+                    }
+                    else if (diff < 0) {
+                        event.color = "#CC0000";
+                    }
+                    else if (diff >= 5) {
+                        event.color = "#6600FF";
+                        event.textColor = "#FFFFFF";
+                    }
+
+                },
+
+                //                eventResize: function (event, dayDelta, minuteDelta, revertFunc) {
+
+                //                    /*alert(
+                //                    "The end date of " + event.title + "( "+event.id+ " ) has been moved " +
+                //                    dayDelta + " days and " +
+                //                    minuteDelta + " minutes."
+                //                    );
+                //                    */
+                //                    /*  if (!confirm("Güncellensin mi??")) {
+                //                    revertFunc();
+                //                    }
+                //                    else
+                //                    {*/
+                //                    ajanda_guncelle(event.id, "E", dayDelta, minuteDelta, "H");
+
+                //                    //}
+
+                //                },
+
+                loading: function (bool) {
+                    var xelement = document.getElementById("ajaxloading");
+                    if (bool) { $('#ajaxloading').show(); xelement.innerHTML = "yüklüyor.."; }
+                    else { $('#ajaxloading').hide(); }
+                }
+
+            });
+
+        });
+
+    </script>
+    <script type="text/javascript" language="Javascript">
+        function AJAX() {
+            var ajax = false;
+            // Internet Explorer (5.0+)
             try {
-                ajax = new ActiveXObject("Microsoft.XMLHTTP");  // eski versiyon xmlhttp
+                ajax = new ActiveXObject("Msxml2.XMLHTTP");  // yeni versiyon xmlhttp
             } catch (e) {
-                ajax = false;
+                try {
+                    ajax = new ActiveXObject("Microsoft.XMLHTTP");  // eski versiyon xmlhttp
+                } catch (e) {
+
+                    ajax = false;
+                }
             }
-        }
-        // Mozilla ve Safari
-        if (!ajax && typeof XMLHttpRequest != 'undefined') {
-            try {
-                ajax = new XMLHttpRequest();
-            } catch (e) {
-                ajax = false;
+            // Mozilla ve Safari
+            if (!ajax && typeof XMLHttpRequest != 'undefined') {
+                try {
+                    ajax = new XMLHttpRequest();
+                } catch (e) {
+                    ajax = false;
+                }
             }
-        }
-        // Diger
-        if (!ajax && window.createRequest) {
-            try {
-                ajax = window.createRequest();
-            } catch (e) {
-                ajax = false;
+            // Diger
+            if (!ajax && window.createRequest) {
+                try {
+                    ajax = window.createRequest();
+                } catch (e) {
+                    ajax = false;
+                }
             }
-        }
-        return ajax;
-    }
-
-
-    var deneme = 0;
-    function removeSpaces(string) {
-        return string.split(' ').join('');
-    }
-
-    function ajanda_guncelle(xisid, xtip, xgun, xdk, xtumgun) {
-        //alert("/Calendar/Update?isid=" + xisid + "&tip=" + xtip + "&gun=" + xgun + "&dk=" + xdk + "&tumGun=" + xtumgun);
-        ajax = new AJAX();
-
-        var xelement = document.getElementById("ajaxloading");
-        //var hidden_element= document.getElementById("sonucx");
-        //element.innerHTML=random_num;
-
-        ajax.open("GET", "/Calendar/Update/?xisid=" + xisid + "&xtip=" + xtip + "&xgun=" + xgun + "&xdk=" + xdk + "&xtumGun=" + xtumgun, true);
-        ajax.onreadystatechange = function () {
-            if (ajax.readyState < 4) {
-                $("#ajaxloading").fadeIn('slow');
-
-                xelement.innerHTML = "Lutfen Bekleyiniz ...";
-            }
-
-            if (ajax.readyState == 4 && ajax.status == 200) {
-
-
-
-                xelement.innerHTML = ajax.responseText;
-
-                $("#ajaxloading").fadeOut('slow');
-
-
-            }
-
+            return ajax;
         }
 
-        ajax.send(null);
+        var deneme = 0;
+        function removeSpaces(string) {
+            return string.split(' ').join('');
+        }
 
-    }
+        function ajanda_guncelle(xisid, xtip, xgun, xdk, xtumgun) {
+            //alert("/Calendar/Update?isid=" + xisid + "&tip=" + xtip + "&gun=" + xgun + "&dk=" + xdk + "&tumGun=" + xtumgun);
+            var ajax = new AJAX();
 
-    
-</script>
-<style type='text/css'>
+            var xelement = document.getElementById("ajaxloading");
+            //var hidden_element= document.getElementById("sonucx");
+            //element.innerHTML=random_num;
+            var xreturn = true;
+            ajax.open("GET", "/Calendar/Update/?xisid=" + xisid + "&xtip=" + xtip + "&xgun=" + xgun + "&xdk=" + xdk + "&xtumGun=" + xtumgun + "&ms=" + new Date().getTime(), true);
+            ajax.onreadystatechange = function () {
+                if (ajax.readyState < 4) {
+                    $("#ajaxloading").fadeIn('slow');
 
-	#loading {
-		position: absolute;
-		top: 5px;
-		right: 300px;
-		z-index:2;
-		background-color: yellow;
-		}
+                    xelement.innerHTML = "Lutfen Bekleyiniz ...";
+                }
 
-	
-    #calendar {
-		width: 816px;
-		margin: 30px auto;
-		}
-        
-</style>
+                if (ajax.readyState == 4 && ajax.status == 200) {
+
+                    xelement.innerHTML = ajax.responseText;
+
+                    if (ajax.responseText == "Termin Oteleme Limiti Dolmustur") {
+                        alert(ajax.responseText);
+                        $('#calendar').fullCalendar('refetchEvents');
+                    }
+                    $("#ajaxloading").fadeOut(1600, "linear");
+
+                }
+
+            }
+
+            ajax.send(null);
+
+        }
+        function sleep(ms) {
+            var dt = new Date();
+            dt.setTime(dt.getTime() + ms);
+            while (new Date().getTime() < dt.getTime());
+        }
+    </script>
+    <style type='text/css'>
+        #loading
+        {
+            position: absolute;
+            top: 5px;
+            right: 300px;
+            z-index: 2;
+            background-color: yellow;
+        }
+
+        #calendar
+        {
+            width: 816px;
+            margin: 30px auto;
+        }
+    </style>
 }
-<div id='ajaxloading' style="position: absolute; top: 5px; right: 130px; z-index:2; background-color: yellow;" ></div>
-<div id='calendar' style="font-size:13px;"></div>
+<div id='ajaxloading' style="border: 1px solid maroon; padding: 5px; font-size: x-large;
+    color: Black; position: absolute; top: 15px; right: 130px; z-index: 2; background-color: yellow;">
+</div>
+<div id='calendar' style="font-size: 13px;">
+</div>

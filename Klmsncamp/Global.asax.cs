@@ -37,8 +37,8 @@ namespace Klmsncamp
 
             RegisterGlobalFilters(GlobalFilters.Filters);
             RegisterRoutes(RouteTable.Routes);
-            Database.SetInitializer<KlmsnContext>(new KlmsnInitializer());
-            //Database.SetInitializer<KlmsnContext>(null);
+            //Database.SetInitializer<KlmsnContext>(new KlmsnInitializer());
+            Database.SetInitializer<KlmsnContext>(null);
         }
     }
 }

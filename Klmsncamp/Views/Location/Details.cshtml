@@ -1,25 +1,28 @@
 ﻿@model Klmsncamp.Models.Location
-
 @{
     ViewBag.Title = "Details";
 }
-
-<h2>Details</h2>
-
+<h2>
+    Details</h2>
 <fieldset>
     <legend>Location</legend>
-
-    <div class="display-label">Description</div>
+    <div class="display-label">
+        Description</div>
     <div class="display-field">
         @Html.DisplayFor(model => model.Description)
     </div>
-
-    <div class="display-label">ValidationState</div>
+    <div class="display-label">
+        Location Group</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.LocationGroup.Description)
+    </div>
+    <div class="display-label">
+        ValidationState</div>
     <div class="display-field">
         @Html.DisplayFor(model => model.ValidationState.Description)
     </div>
 </fieldset>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id=Model.LocationID }) |
+    @Html.ActionLink("Edit", "Edit", new { id = Model.LocationID }) |
     @Html.ActionLink("Back to List", "Index")
 </p>
