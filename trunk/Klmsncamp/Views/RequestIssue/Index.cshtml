@@ -1,62 +1,58 @@
 ﻿@using Telerik.Web.Mvc.UI
 @model IEnumerable<Klmsncamp.Models.RequestIssue>
-
 @{
     ViewBag.Title = "Index";
 }
 @section script
 {
-<script src="/Scripts/jquery.tooltip.js" type="text/javascript"></script>
-<script type="text/javascript" language="javascript">
-    $(document).ready(function () {
-        $("tbody tr").each(function () {
-            //alert("aaa");
-            var sTitle;
-            var nTds = $("td", this);
-            var sAck = $(nTds[9]).text();
-            //alert(sAck);
-            sTitle = sAck
+    <script src="/Scripts/jquery.tooltip.js" type="text/javascript"></script>
+    <script type="text/javascript" language="javascript">
+        $(document).ready(function () {
+            $("tbody tr").each(function () {
+                //alert("aaa");
+                var sTitle;
+                var nTds = $("td", this);
+                var sAck = $(nTds[9]).text();
+                //alert(sAck);
+                sTitle = sAck
 
-            this.setAttribute('title', sTitle);
+                this.setAttribute('title', sTitle);
+            });
+
+            /* Apply the tooltips */
+            $("tbody tr[title]").tooltip({
+                "delay": 0,
+                "track": true,
+                "fade": 250
+            });
         });
 
-        /* Apply the tooltips */
-        $("tbody tr[title]").tooltip({
-            "delay": 0,
-            "track": true,
-            "fade": 250
-        });
-    });
+    </script>
+    <style type="text/css">
+        .t-grid .t-grid-header .t-header, .t-grid .t-grid-header .t-last-header
+        {
+            height: auto;
+            white-space: normal;
+        }
 
-    
-</script>
-<style type="text/css">
- 
-.t-grid .t-grid-header .t-header,
-.t-grid .t-grid-header .t-last-header 
-{
-     height: auto;
-    white-space: normal;
-}
-
-#tooltip{
-	position: absolute;
-	display: none;
-	border: 1px solid #333;
-	background: #BDCDFF;
-	padding: 5px 20px;
-	color: #333;
-	font-size: 10px;
-	
-	border-radius: 2px;
-	-webkit-border-radius: 2px;
-	-moz-border-radius: 2px;
-}
-</style>
+        #tooltip
+        {
+            position: absolute;
+            display: none;
+            border: 1px solid #333;
+            background: #BDCDFF;
+            padding: 5px 20px;
+            color: #333;
+            font-size: 10px;
+            border-radius: 2px;
+            -webkit-border-radius: 2px;
+            -moz-border-radius: 2px;
+        }
+    </style>
 }
 <br />
-<div align="center" style="width:816px; margin-left: auto; margin-right: auto; margin-top:30px;">
-@(Html.Telerik().Grid(Model).Name("Inventory")
+<div align="center" style="width: 820px; margin-left: auto; margin-right: auto; margin-top: 30px;">
+    @(Html.Telerik().Grid(Model).Name("Inventory")
                                 .ToolBar(commands => commands
                                             .Custom()
                                                 .HtmlAttributes(new { id = "export" })
@@ -65,51 +61,49 @@
                                                 {
                                                     page = ViewBag.Currentpage,
                                                     orderBy = "~",
-                                                    filter =  ViewBag.CurrentShow
+                                                    filter = ViewBag.CurrentShow
                                                 }))
                             .Columns(columns =>
                                 {
                                     @columns.Template(
-                                        @<text>
-                                        <a href="@Url.Content("/RequestIssue/Edit/" + @item.RequestIssueID + "?show="+ViewBag.CurrentShow+"&page="+ViewBag.CurrentPage)">Düzenle</a>&nbsp;|&nbsp;<a href="@Url.Content("/RequestIssue/Delete/" + @item.RequestIssueID + "/")">Sil</a>
-                                        </text>
+                                        @<text> <a href="@Url.Content("/RequestIssue/Edit/" + @item.RequestIssueID + "?show=" + ViewBag.CurrentShow + "&page=" + ViewBag.CurrentPage)">
+                                            Düzenle</a>&nbsp;|&nbsp;<a href="@Url.Content("/RequestIssue/Delete/" + @item.RequestIssueID + "/")">Sil</a>
+    </text>
                                     ).Width(80);
                                     columns.Bound(o => o.StartDate).Width(80).Title("Baş.Tarihi");
                                     @columns.Template(@<text>
-                                        @item.UserReq.getFullName()
-                                        </text>).Width(80).Title("İş İsteyen");
-                                    columns.Bound(o => o.Workshop.Description).Width(80).Title("Atölye");
+    @item.UserReq.getFullName()
+    </text>).Width(80).Title("Kaydı Açan");
                                     columns.Bound(o => o.Location.Description).Width(80).Title("Bulunduğu Departman");
+                                    columns.Bound(o => o.Personnel.FullName).Width(80).Title("İş İsteyen");
                                     columns.Bound(o => o.RequestState.Description).Width(80).Title("Durumu");
                                     columns.Bound(o => o.Note).Width(210).Title("Sonuç Notu").Filterable(false).Groupable(false).Sortable(false);
                                     @columns.Template(@<text>
-                                        @try
-                                        {
-                                         @item.User.getFullName()
-                                        }
-                                        catch
-                                        {
-                                            <i>Henüz Atanmamış..</i>
-                                            
-                                        }
-                                       </text>).Width(50).Title("İlgili Kullanıcı");
+    @try
+    {
+        @item.User.getFullName()
+    }
+    catch
+    {
+        <i>Henüz Atanmamış..</i>
+
+    }
+    </text>).Width(50).Title("İlgili Kullanıcı");
                                     @columns.Template(
                                             @<text>
-                                                @if (item.IsApproved == false || item.IsApproved == null)
-                                                {
-                                                    <img src="/Content/images/delete.png" />
-                                                }
-                                                else
-                                                {
-                                                    <img src="/Content/images/checked.gif" />
-                                                }
-
-                                            </text>
+    @if (item.IsApproved == false || item.IsApproved == null)
+    {
+        <img src="/Content/images/delete.png" />
+    }
+    else
+    {
+        <img src="/Content/images/checked.gif" />
+    }
+    </text>
                                         ).Width(50).Title("Durum");
                                     columns.Bound(o => o.DetailedDescription).Hidden();
                                     //columns.Bound(o => o.IsApproved).Hidden();
                                     //columns.Bound(o => o.ValidationStateID).Hidden();
-
 
                                 }
                                                                                                                                                                         )
@@ -123,8 +117,8 @@
                                         {
                                             row.HtmlAttributes["style"] = "background: #FFCCFF;";
                                         }
-                            
-                            })
+
+                                    })
                             .Scrollable(scrolling => scrolling.Enabled(true).Height(500))
                                                                                 .Sortable(sorting => sorting.Enabled(true).OrderBy(o => { o.Add("StartDate").Descending(); }))
                             .Filterable(filtering => filtering.Enabled(true))
@@ -133,5 +127,4 @@
                             .Footer(true)
                             .Localizable("tr-TR")
                             )
-
 </div>

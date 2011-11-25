@@ -4,6 +4,7 @@ using System.Data;
 using System.Data.Entity;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Net.Mail;
 using System.Web.Mvc;
 using System.Web.Security;
@@ -61,7 +62,7 @@ namespace Klmsncamp.Controllers
             {
                 ViewBag.CurrentShow = "A";
             }
-            requests = requests.Include(r => r.RequestType).Include(r => r.Location).Include(r => r.Inventory).Include(r => r.Workshop).Include(r => r.RequestState).Include(r => r.UserReq).Include(r => r.User).Include(r => r.ValidationState);
+            requests = requests.Include(r => r.RequestType).Include(r => r.Location).Include(r => r.Personnel).Include(r => r.Inventory).Include(r => r.Workshop).Include(r => r.RequestState).Include(r => r.UserReq).Include(r => r.User).Include(r => r.ValidationState);
 
             //enter paging:
             int pageSize = 15;
@@ -143,8 +144,8 @@ namespace Klmsncamp.Controllers
             ViewBag.InventoryID = new SelectList(db.Inventories, "InventoryID", "Description");
             ViewBag.WorkshopID = new SelectList(db.Workshops, "WorkshopID", "Description");
             ViewBag.RequestStateID = new SelectList(db.RequestStates, "RequestStateID", "Description", 1);
-            ViewBag.UserReqID = new SelectList(db.Users.Where(x => x.UserId == user_wherecondition), "UserId", "UserName", currentuser_.ProviderUserKey);
-            ViewBag.UserID = new SelectList(db.Users, "UserId", "UserName", currentuser_.ProviderUserKey);
+            ViewBag.UserReqID = new SelectList(db.Users.Where(x => x.UserId == user_wherecondition), "UserId", "FullName", currentuser_.ProviderUserKey);
+            ViewBag.UserID = new SelectList(db.Users, "UserId", "FullName", currentuser_.ProviderUserKey);
             ViewBag.ValidationStateID = new SelectList(db.ValidationStates, "ValidationStateID", "Description");
             ViewBag.timestamp = DateTime.Now;
             return View();
@@ -171,11 +172,12 @@ namespace Klmsncamp.Controllers
 
             ViewBag.RequestTypeID = new SelectList(db.RequestTypes, "RequestTypeID", "Description", requestıssue.RequestTypeID);
             ViewBag.LocationID = new SelectList(db.Locations, "LocationID", "Description", requestıssue.LocationID);
+            ViewBag.PersonnelID = new SelectList(db.Personnels, "PersonnelID", "FullName", requestıssue.PersonnelID);
             ViewBag.InventoryID = new SelectList(db.Inventories, "InventoryID", "Description", requestıssue.InventoryID);
             ViewBag.WorkshopID = new SelectList(db.Workshops, "WorkshopID", "Description", requestıssue.WorkshopID);
             ViewBag.RequestStateID = new SelectList(db.RequestStates, "RequestStateID", "Description", requestıssue.RequestStateID);
-            ViewBag.UserReqID = new SelectList(db.Users.Where(x => x.UserId == user_wherecondition), "UserId", "UserName", requestıssue.UserReqID);
-            ViewBag.UserID = new SelectList(db.Users, "UserId", "UserName", requestıssue.UserID);
+            ViewBag.UserReqID = new SelectList(db.Users.Where(x => x.UserId == user_wherecondition), "UserId", "FullName", requestıssue.UserReqID);
+            ViewBag.UserID = new SelectList(db.Users, "UserId", "FullName", requestıssue.UserID);
             ViewBag.ValidationStateID = new SelectList(db.ValidationStates, "ValidationStateID", "Description", requestıssue.ValidationStateID);
             return View(requestıssue);
         }
@@ -220,6 +222,7 @@ namespace Klmsncamp.Controllers
             }
             ViewBag.RequestTypeID = new SelectList(db.RequestTypes, "RequestTypeID", "Description", requestıssue.RequestTypeID);
             ViewBag.LocationID = new SelectList(db.Locations, "LocationID", "Description", requestıssue.LocationID);
+            ViewBag.PersonnelID = new SelectList(db.Locations, "PersonnelID", "FullName", requestıssue.PersonnelID);
             ViewBag.InventoryID = new SelectList(db.Inventories, "InventoryID", "Description", requestıssue.InventoryID);
             ViewBag.WorkshopID = new SelectList(db.Workshops, "WorkshopID", "Description", requestıssue.WorkshopID);
             ViewBag.RequestStateID = new SelectList(db.RequestStates, "RequestStateID", "Description", requestıssue.RequestStateID);
@@ -241,22 +244,23 @@ namespace Klmsncamp.Controllers
             {
                 ViewBag.RequestTypeID = new SelectList(db.RequestTypes, "RequestTypeID", "Description", rq.RequestTypeID);
                 ViewBag.LocationID = new SelectList(db.Locations, "LocationID", "Description", rq.LocationID);
+                ViewBag.PersonnelID = new SelectList(db.Personnels, "PersonnelID", "FullName", rq.PersonnelID);
                 ViewBag.InventoryID = new SelectList(db.Inventories, "InventoryID", "Description", rq.InventoryID);
                 ViewBag.WorkshopID = new SelectList(db.Workshops, "WorkshopID", "Description", rq.WorkshopID);
                 ViewBag.RequestStateID = new SelectList(db.RequestStates, "RequestStateID", "Description", rq.RequestStateID);
-                ViewBag.UserReqID = new SelectList(db.Users, "UserId", "UserName", rq.UserReq.UserId);
+                ViewBag.UserReqID = new SelectList(db.Users, "UserId", "FullName", rq.UserReq.UserId);
                 ViewBag.show = show;
                 ViewBag.page = page;
 
                 if (User.IsInRole("administrators"))
                 {
-                    ViewBag.UserID = new SelectList(db.Users, "UserId", "UserName");
+                    ViewBag.UserID = new SelectList(db.Users, "UserId", "FullName");
                 }
                 else
                 {
                     MembershipUser currentuser_ = new UserRepository().GetUser(User.Identity.Name);
                     int user_wherecondition = int.Parse((currentuser_.ProviderUserKey).ToString());
-                    ViewBag.UserID = new SelectList(db.Users.Where(i => i.UserId == user_wherecondition), "UserId", "UserName", rq.UserID);
+                    ViewBag.UserID = new SelectList(db.Users.Where(i => i.UserId == user_wherecondition), "UserId", "FullName", rq.UserID);
                 }
                 ViewBag.ValidationStateID = new SelectList(db.ValidationStates, "ValidationStateID", "Description", rq.ValidationStateID);
                 return View(rq);
@@ -303,11 +307,12 @@ namespace Klmsncamp.Controllers
 
             ViewBag.RequestTypeID = new SelectList(db.RequestTypes, "RequestTypeID", "Description", rqToUpdate.RequestTypeID);
             ViewBag.LocationID = new SelectList(db.Locations, "LocationID", "Description", rqToUpdate.LocationID);
+            ViewBag.PersonnelID = new SelectList(db.Personnels, "PersonnelID", "FullName", rqToUpdate.PersonnelID);
             ViewBag.InventoryID = new SelectList(db.Inventories, "InventoryID", "Description", rqToUpdate.InventoryID);
             ViewBag.WorkshopID = new SelectList(db.Workshops, "WorkshopID", "Description", rqToUpdate.WorkshopID);
             ViewBag.RequestStateID = new SelectList(db.RequestStates, "RequestStateID", "Description", rqToUpdate.RequestStateID);
-            ViewBag.UserReqID = new SelectList(db.Users, "UserId", "UserName", rqToUpdate.UserReqID);
-            ViewBag.UserID = new SelectList(db.Users, "UserId", "UserName", rqToUpdate.UserID);
+            ViewBag.UserReqID = new SelectList(db.Users, "UserId", "FullName", rqToUpdate.UserReqID);
+            ViewBag.UserID = new SelectList(db.Users, "UserId", "FullName", rqToUpdate.UserID);
             ViewBag.ValidationStateID = new SelectList(db.ValidationStates, "ValidationStateID", "Description", rqToUpdate.ValidationStateID);
             ViewBag.show = formCollection["show"];
             ViewBag.page = formCollection["page"];
@@ -353,6 +358,7 @@ namespace Klmsncamp.Controllers
                 };
 
                 var client = new SmtpClient("KLMSNEVS.klimasan.msft");
+                client.Credentials = new NetworkCredential("MUSAF@klimasan.com.tr", "1212");
                 client.Send(message);
                 return "OK";
             }
@@ -397,7 +403,7 @@ namespace Klmsncamp.Controllers
                 }
             }
 
-            requests = requests.Include(r => r.RequestType).Include(r => r.Location).Include(r => r.Inventory).Include(r => r.Workshop).Include(r => r.RequestState).Include(r => r.UserReq).Include(r => r.User).Include(r => r.ValidationState);
+            requests = requests.Include(r => r.RequestType).Include(r => r.Location).Include(r => r.Personnel).Include(r => r.Inventory).Include(r => r.Workshop).Include(r => r.RequestState).Include(r => r.UserReq).Include(r => r.User).Include(r => r.ValidationState);
 
             //enter paging:
             //int pageSize = 15;

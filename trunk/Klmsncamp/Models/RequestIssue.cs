@@ -67,6 +67,14 @@ namespace Klmsncamp.Models
         [DisplayFormat(DataFormatString = "{0:G}", ApplyFormatInEditMode = true)]
         public DateTime? EndDate { get; set; }
 
+        [Display(Name = "Planlanan Bitiş Tarihi")]
+        [DisplayFormat(DataFormatString = "{0:G}", ApplyFormatInEditMode = true)]
+        public DateTime? Pre1EndDate { get; set; }
+
+        [Display(Name = "Planlanan Bitiş Tarihi")]
+        [DisplayFormat(DataFormatString = "{0:G}", ApplyFormatInEditMode = true)]
+        public DateTime? Pre2EndDate { get; set; }
+
         [Display(Name = "İstek Yapan")]
         [ForeignKey("UserReq")]
         public int? UserReqID { get; set; }

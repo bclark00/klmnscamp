@@ -17,21 +17,22 @@
         <thead>
         <th colspan="2">İş-Arıza Bilgileri </th>
         </thead>
-        <tr>
-        <td style="vertical-align: middle; text-align: right;">
-            @Html.LabelFor(model => model.WorkshopID, "İş Bildirilen Atölye")
-        </td>
-        <td style="vertical-align: middle; text-align: left;">
-            @Html.DropDownList("WorkshopID", String.Empty)<br />
-            @Html.ValidationMessageFor(model => model.WorkshopID)
-        </td>
-        </tr>
+        @Html.Hidden("WorkshopID",(int)1)
         <tr>
         <td style="vertical-align: middle; text-align: right;">
             @Html.LabelFor(model => model.LocationID, "İş-Arıza Bildirim Yeri")
         </td>
         <td style="vertical-align: middle; text-align: left;">
-            @Html.DropDownList("LocationID", String.Empty)<br />
+            <br />
+            @(Html.Telerik().ComboBox()
+            .Name("LocationID")
+            .HtmlAttributes(new { id = "ComboBox_wrapper_location" })
+            .AutoFill(true).HtmlAttributes(new { style = "width:210px;" }).DropDownHtmlAttributes(new { style = "width: 210px;" }).InputHtmlAttributes(new { style = "vertical-align: middle; font-size:100%; border: 1px solid; width: 200px;" })
+            .BindTo((SelectList)ViewBag.LocationID)
+            .Filterable(filtering => filtering.FilterMode((AutoCompleteFilterMode)Enum.Parse(typeof(AutoCompleteFilterMode), "2", false)))
+            .HighlightFirstMatch(true)
+            )
+            <br />
             @Html.ValidationMessageFor(model => model.LocationID)
         </td>
         </tr>
@@ -44,14 +45,14 @@
             <br />
             @(Html.Telerik().ComboBox()
             .Name("PersonnelID")
-            .HtmlAttributes(new { id = "ComboBox_wrapper" })
+            .HtmlAttributes(new { id = "ComboBox_wrapper_personnel" })
             .AutoFill(true).HtmlAttributes(new { style = "width:210px;" }).DropDownHtmlAttributes(new { style = "width: 210px;" }).InputHtmlAttributes(new { style = "vertical-align: middle; font-size:100%; border: 1px solid; width: 200px;" })
             .BindTo((SelectList)ViewBag.PersonnelID)
             .Filterable(filtering => filtering.FilterMode((AutoCompleteFilterMode)Enum.Parse(typeof(AutoCompleteFilterMode), "2", false)))
             .HighlightFirstMatch(true)
             )
             <br />
-
+            @Html.ValidationMessageFor(model=>model.PersonnelID)
         </td>
         </tr>
         <tr>

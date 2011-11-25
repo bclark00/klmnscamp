@@ -8,7 +8,7 @@ using System.Web.Mvc;
 using Klmsncamp.Models;
 
 namespace Klmsncamp.Controllers
-{ 
+{
     public class LocationController : Controller
     {
         private KlmsnContext db = new KlmsnContext();
@@ -18,7 +18,7 @@ namespace Klmsncamp.Controllers
 
         public ViewResult Index()
         {
-            var locations = db.Locations.Include(l => l.ValidationState);
+            var locations = db.Locations.Include(l => l.LocationGroup).Include(l => l.ValidationState);
             return View(locations.ToList());
         }
 
@@ -36,9 +36,10 @@ namespace Klmsncamp.Controllers
 
         public ActionResult Create()
         {
+            ViewBag.LocationGroupID = new SelectList(db.LocationGroups, "LocationGroupID", "Description");
             ViewBag.ValidationStateID = new SelectList(db.ValidationStates, "ValidationStateID", "Description");
             return View();
-        } 
+        }
 
         //
         // POST: /Location/Create
@@ -50,19 +51,21 @@ namespace Klmsncamp.Controllers
             {
                 db.Locations.Add(location);
                 db.SaveChanges();
-                return RedirectToAction("Index");  
+                return RedirectToAction("Index");
             }
 
+            ViewBag.LocationGroupID = new SelectList(db.LocationGroups, "LocationGroupID", "Description", location.LocationGroupID);
             ViewBag.ValidationStateID = new SelectList(db.ValidationStates, "ValidationStateID", "Description", location.ValidationStateID);
             return View(location);
         }
-        
+
         //
         // GET: /Location/Edit/5
- 
+
         public ActionResult Edit(int id)
         {
             Location location = db.Locations.Find(id);
+            ViewBag.LocationGroupID = new SelectList(db.LocationGroups, "LocationGroupID", "Description", location.LocationGroupID);
             ViewBag.ValidationStateID = new SelectList(db.ValidationStates, "ValidationStateID", "Description", location.ValidationStateID);
             return View(location);
         }
@@ -79,13 +82,15 @@ namespace Klmsncamp.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+
+            ViewBag.LocationGroupID = new SelectList(db.LocationGroups, "LocationGroupID", "Description", location.LocationGroupID);
             ViewBag.ValidationStateID = new SelectList(db.ValidationStates, "ValidationStateID", "Description", location.ValidationStateID);
             return View(location);
         }
 
         //
         // GET: /Location/Delete/5
- 
+
         public ActionResult Delete(int id)
         {
             Location location = db.Locations.Find(id);
@@ -97,7 +102,7 @@ namespace Klmsncamp.Controllers
 
         [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmed(int id)
-        {            
+        {
             Location location = db.Locations.Find(id);
             db.Locations.Remove(location);
             db.SaveChanges();
