@@ -36,10 +36,11 @@ namespace Klmsncamp.Controllers
                 int user_wherecondition = int.Parse((currentuser_.ProviderUserKey).ToString());
                 requests = requests.Where(i => i.UserReqID == user_wherecondition);//.Include(r => r.RequestType).Include(r => r.Location).Include(r => r.Inventory).Include(r => r.Workshop).Include(r => r.RequestState).Include(r => r.UserReq).Include(r => r.User).Include(r => r.ValidationState);
             }
-            else
-            {
-                requests = requests.Where(i => i.ValidationStateID == 1);//.Include(r => r.RequestType).Include(r => r.Location).Include(r => r.Inventory).Include(r => r.Workshop).Include(r => r.RequestState).Include(r => r.UserReq).Include(r => r.User).Include(r => r.ValidationState);
-            }
+
+            //else
+            //{
+            //    requests = requests.Where(i => i.ValidationStateID == 1);//.Include(r => r.RequestType).Include(r => r.Location).Include(r => r.Inventory).Include(r => r.Workshop).Include(r => r.RequestState).Include(r => r.UserReq).Include(r => r.User).Include(r => r.ValidationState);
+            //}
 
             if (show != null)
             {
@@ -196,11 +197,12 @@ namespace Klmsncamp.Controllers
 
             ViewBag.RequestTypeID = new SelectList(db.RequestTypes, "RequestTypeID", "Description", requestıssue.RequestTypeID);
             ViewBag.LocationID = new SelectList(db.Locations, "LocationID", "Description", requestıssue.LocationID);
+            ViewBag.PersonnelID = new SelectList(db.Personnels, "PersonnelID", "FullName", requestıssue.PersonnelID);
             ViewBag.InventoryID = new SelectList(db.Inventories, "InventoryID", "Description", requestıssue.InventoryID);
             ViewBag.WorkshopID = new SelectList(db.Workshops, "WorkshopID", "Description", requestıssue.WorkshopID);
             ViewBag.RequestStateID = new SelectList(db.RequestStates, "RequestStateID", "Description", requestıssue.RequestStateID);
-            ViewBag.UserReqID = new SelectList(db.Users, "UserId", "UserName", requestıssue.UserReqID);
-            ViewBag.UserID = new SelectList(db.Users, "UserId", "UserName", requestıssue.UserID);
+            ViewBag.UserReqID = new SelectList(db.Users.Where(i => i.UserId == requestıssue.UserReqID), "UserId", "FullName", requestıssue.UserReqID);
+            ViewBag.UserID = new SelectList(db.Users, "UserId", "FullName", requestıssue.UserID);
             ViewBag.ValidationStateID = new SelectList(db.ValidationStates, "ValidationStateID", "Description", requestıssue.ValidationStateID);
             ViewBag.show = show;
             ViewBag.page = page;
@@ -222,13 +224,15 @@ namespace Klmsncamp.Controllers
             }
             ViewBag.RequestTypeID = new SelectList(db.RequestTypes, "RequestTypeID", "Description", requestıssue.RequestTypeID);
             ViewBag.LocationID = new SelectList(db.Locations, "LocationID", "Description", requestıssue.LocationID);
-            ViewBag.PersonnelID = new SelectList(db.Locations, "PersonnelID", "FullName", requestıssue.PersonnelID);
+            ViewBag.PersonnelID = new SelectList(db.Personnels, "PersonnelID", "FullName", requestıssue.PersonnelID);
             ViewBag.InventoryID = new SelectList(db.Inventories, "InventoryID", "Description", requestıssue.InventoryID);
             ViewBag.WorkshopID = new SelectList(db.Workshops, "WorkshopID", "Description", requestıssue.WorkshopID);
             ViewBag.RequestStateID = new SelectList(db.RequestStates, "RequestStateID", "Description", requestıssue.RequestStateID);
-            ViewBag.UserReqID = new SelectList(db.Users, "UserId", "UserName", requestıssue.UserReqID);
-            ViewBag.UserID = new SelectList(db.Users, "UserId", "UserName", requestıssue.UserID);
+            ViewBag.UserReqID = new SelectList(db.Users, "UserId", "FullName", requestıssue.UserReqID);
+            ViewBag.UserID = new SelectList(db.Users, "UserId", "FullName", requestıssue.UserID);
             ViewBag.ValidationStateID = new SelectList(db.ValidationStates, "ValidationStateID", "Description", requestıssue.ValidationStateID);
+            ViewBag.show = formCollection["show"];
+            ViewBag.page = formCollection["page"];
             return View(requestıssue);
         }
 
@@ -252,9 +256,9 @@ namespace Klmsncamp.Controllers
                 ViewBag.show = show;
                 ViewBag.page = page;
 
-                if (User.IsInRole("administrators"))
+                if (User.IsInRole("administrators") || User.IsInRole("moderators"))
                 {
-                    ViewBag.UserID = new SelectList(db.Users, "UserId", "FullName");
+                    ViewBag.UserID = new SelectList(db.Users, "UserId", "FullName", rq.UserID);
                 }
                 else
                 {
@@ -263,6 +267,22 @@ namespace Klmsncamp.Controllers
                     ViewBag.UserID = new SelectList(db.Users.Where(i => i.UserId == user_wherecondition), "UserId", "FullName", rq.UserID);
                 }
                 ViewBag.ValidationStateID = new SelectList(db.ValidationStates, "ValidationStateID", "Description", rq.ValidationStateID);
+
+                //loglari göstermece
+                IList<LogRequestIssue> MyLogs = new List<LogRequestIssue>();
+                foreach (LogRequestIssue log_item in db.LogRequestIssues.Where(i => i.RequestIssueID == id).ToList())
+                {
+                    foreach (LogRequestIssueDetail logdetail_item in db.LogRequestIssueDetails.Where(s => s.LogRequestIssueID == log_item.LogRequestIssueID).ToList())
+                    {
+                        log_item.LogRequestIssueDetails.Add(logdetail_item);
+                    }
+                    if (log_item.LogRequestIssueDetails.Count() > 0)
+                    {
+                        MyLogs.Add(log_item);
+                    }
+                }
+                ViewBag.TheLogs = MyLogs;
+
                 return View(rq);
             }
         }
@@ -271,6 +291,9 @@ namespace Klmsncamp.Controllers
         [Authorize]
         public ActionResult Editp(int id, RequestIssue rqToUpdate, FormCollection formCollection)
         {
+            MembershipUser currentuser_ = new UserRepository().GetUser(User.Identity.Name);
+            int user_wherecondition = int.Parse((currentuser_.ProviderUserKey).ToString());
+
             var rqDBrecord = db.RequestIssues.AsNoTracking().Where(i => i.RequestIssueID == rqToUpdate.RequestIssueID).SingleOrDefault();
 
             if (formCollection["isApproved"] == "false" && rqDBrecord.IsApproved == true && User.IsInRole("administrators"))
@@ -279,8 +302,20 @@ namespace Klmsncamp.Controllers
                 rqToUpdatex.IsApproved = false;
                 db.Entry(rqToUpdatex).State = EntityState.Modified;
                 db.SaveChanges();
+                //log
+                LogRequestIssue mylog = new LogRequestIssue { RequestIssueID = id, Action = "Güncelleme", ModifyTime = DateTime.Now, UserID = user_wherecondition };
+                db.LogRequestIssues.Add(mylog);
+                db.SaveChanges();
+                LogRequestIssueDetail mylogdetail = new LogRequestIssueDetail { LogRequestIssueID = mylog.LogRequestIssueID, PropertyName = "isApproved", PropertyOldValue = "True", PropertyNewValue = "False" };
+                db.LogRequestIssueDetails.Add(mylogdetail);
+                db.SaveChanges();
+                mylog.LogRequestIssueDetails.Add(mylogdetail);
+                db.SaveChanges();
+                //log biter
                 return RedirectToAction("Editp", new { id = rqToUpdatex.RequestIssueID.ToString(), show = formCollection["show"], page = formCollection["page"] });
             }
+
+            //bool _enddatepostpone = CheckEndDateIfCanBeUpdated(rqToUpdate);
 
             if (ModelState.IsValid)
             {
@@ -301,10 +336,33 @@ namespace Klmsncamp.Controllers
                         ViewBag.Bilgilendirme = "Mail Başarıyla Gönderildi";
                     }
                 }
+
+                //logging mate
+                if (xdurum == true)
+                {
+                    var Logs = KlmsnExtensions.LogPropertyDifferences(rqDBrecord, rqToUpdate);
+
+                    LogRequestIssue mylog = new LogRequestIssue { RequestIssueID = id, Action = "Güncelleme", ModifyTime = DateTime.Now, UserID = user_wherecondition };
+                    db.LogRequestIssues.Add(mylog);
+                    db.SaveChanges();
+                    foreach (LogRequestIssueViewModel log in Logs)
+                    {
+                        LogRequestIssueDetail mylogdetail = new LogRequestIssueDetail { LogRequestIssueID = mylog.LogRequestIssueID, PropertyName = log.PropertyName, PropertyOldValue = log.OldValue, PropertyNewValue = log.NewValue };
+                        db.LogRequestIssueDetails.Add(mylogdetail);
+                        db.SaveChanges();
+                        mylog.LogRequestIssueDetails.Add(mylogdetail);
+                        db.SaveChanges();
+                    }
+                }
                 return RedirectToAction("Index", new { show = formCollection["show"], page = formCollection["page"] });
             }
-            //return RedirectToAction("Editp/" + id.ToString());
 
+            //if (_enddatepostpone == false)
+            //{
+            //    ViewBag.EndDatePostponeErr = "Bu iş daha önce 2 defa ertelenmiş. Bitiş Tarihi değiştirilemez";
+            //}
+            //return RedirectToAction("Editp/" + id.ToString());
+            rqToUpdate.IsApproved = false;
             ViewBag.RequestTypeID = new SelectList(db.RequestTypes, "RequestTypeID", "Description", rqToUpdate.RequestTypeID);
             ViewBag.LocationID = new SelectList(db.Locations, "LocationID", "Description", rqToUpdate.LocationID);
             ViewBag.PersonnelID = new SelectList(db.Personnels, "PersonnelID", "FullName", rqToUpdate.PersonnelID);
@@ -317,6 +375,18 @@ namespace Klmsncamp.Controllers
             ViewBag.show = formCollection["show"];
             ViewBag.page = formCollection["page"];
             return View(rqToUpdate);
+        }
+
+        public bool CheckEndDateIfCanBeUpdated(RequestIssue my_model)
+        {
+            if (my_model.Pre1EndDate != null && my_model.Pre2EndDate != null)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
         }
 
         //
@@ -335,8 +405,21 @@ namespace Klmsncamp.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             RequestIssue requestıssue = db.RequestIssues.Find(id);
+            MembershipUser currentuser_ = new UserRepository().GetUser(User.Identity.Name);
+            int user_wherecondition = int.Parse((currentuser_.ProviderUserKey).ToString());
+
+            var xuser = db.Users.AsNoTracking().Where(i => i.UserId == user_wherecondition).Single();
+            if (requestıssue.SendEmail == true)
+            {
+                string mailsonucstr = SendEmail(new MailAddress("musaf@klimasan.com.tr"), new MailAddress(requestıssue.UserReq.Email), "[Klimasan HelpDesk] #" + requestıssue.RequestIssueID.ToString() + " no'lu İş isteğiniz hakkında.", "İş İsteğiniz " + xuser.FullName + " silinmiştir. Tarih: " + DateTime.Now.ToString() + ". İyi çalışmalar dileriz.");
+            }
             db.RequestIssues.Remove(requestıssue);
             db.SaveChanges();
+
+            LogRequestIssue mylog = new LogRequestIssue { RequestIssueID = id, Action = "Silme", ModifyTime = DateTime.Now, UserID = user_wherecondition };
+            db.LogRequestIssues.Add(mylog);
+            db.SaveChanges();
+
             return RedirectToAction("Index");
         }
 
@@ -482,9 +565,13 @@ namespace Klmsncamp.Controllers
         {
             ViewBag.RequestTypeID = new SelectList(db.RequestTypes, "RequestTypeID", "Description");
             ViewBag.LocationID = new SelectList(db.Locations, "LocationID", "Description");
+            ViewBag.LocationGroupID = new SelectList(db.LocationGroups, "LocationGroupID", "Description");
             ViewBag.InventoryID = new SelectList(db.Inventories, "InventoryID", "Description");
-            ViewBag.WorkshopID = new SelectList(db.Workshops, "WorkshopID", "Description");
+            ViewBag.PersonnelID = new SelectList(db.Personnels, "PersonnelID", "FullName");
+            ViewBag.RequestTypeID = new SelectList(db.RequestTypes, "RequestTypeID", "Description");
+            ViewBag.WorkshopID = new SelectList(db.Workshops, "WorkshopID", "Description", 1);
             ViewBag.RequestStateID = new SelectList(db.RequestStates, "RequestStateID", "Description");
+            ViewBag.UserID = new SelectList(db.Users, "UserID", "FullName");
             List<IsApproveViewModel> appviewdropdown = new List<IsApproveViewModel>();
 
             appviewdropdown.Add(new IsApproveViewModel { value = true, Description = "Onaylanmışlar" });
@@ -500,13 +587,24 @@ namespace Klmsncamp.Controllers
         public ActionResult Report(RequestIssue requestıssue, FormCollection formcollection)
         {
             ReportClass rptH = new ReportClass();
-            rptH.FileName = Server.MapPath("~/RDLC/RequestIssueReport.rpt");
+            try
+            {
+                if (formcollection["workload"].Length > 0)
+                {
+                    rptH.FileName = Server.MapPath("~/RDLC/WorkLoadByDepVsUserReport.rpt");
+                }
+            }
+            catch
+            {
+                rptH.FileName = Server.MapPath("~/RDLC/RequestIssueReport.rpt");
+            }
+
             rptH.Load();
 
             var value = new ParameterDiscreteValue();
 
-            value.Value = requestıssue.WorkshopID;
-            rptH.ParameterFields["Atolye"].CurrentValues.Add(value);
+            //value.Value = requestıssue.WorkshopID;
+            //rptH.ParameterFields["Atolye"].CurrentValues.Add(value);
 
             value.Value = requestıssue.LocationID;
             rptH.ParameterFields["Departman"].CurrentValues.Add(value);
@@ -517,6 +615,28 @@ namespace Klmsncamp.Controllers
 
             value.Value = requestıssue.RequestTypeID;
             rptH.ParameterFields["IsTip"].CurrentValues.Add(value);
+
+            value.Value = formcollection["LocationGroupID"];
+            if (value.Value.ToString() != "")
+            {
+                rptH.ParameterFields["AnaDepartman"].CurrentValues.Add(value);
+            }
+            else
+            {
+                value.Value = 0;
+                rptH.ParameterFields["AnaDepartman"].CurrentValues.Add(value);
+            }
+
+            value.Value = formcollection["PersonnelID"].ToString();
+            if (value.Value.ToString() != "")
+            {
+                rptH.ParameterFields["IsIsteyenPersonel"].CurrentValues.Add(value);
+            }
+            else
+            {
+                value.Value = 0;
+                rptH.ParameterFields["IsIsteyenPersonel"].CurrentValues.Add(value);
+            }
 
             value.Value = formcollection["IsApproved"].ToString();
             if (value.Value.ToString() != "")

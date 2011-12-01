@@ -117,6 +117,8 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountModels.cs" />
+    <Compile Include="Models\CheckEndDatePostponeAttribute.cs" />
+    <Compile Include="Models\CheckStartDateAttribute.cs" />
     <Compile Include="Models\CorporateAccount.cs" />
     <Compile Include="Models\CorporateType.cs" />
     <Compile Include="Models\CustomPermission.cs" />
@@ -124,6 +126,8 @@
     <Compile Include="Models\InventoryOwnership.cs" />
     <Compile Include="Models\Location.cs" />
     <Compile Include="Models\LocationGroup.cs" />
+    <Compile Include="Models\LogRequestIssue.cs" />
+    <Compile Include="Models\LogRequestIssueDetail.cs" />
     <Compile Include="Models\MaintenanceNode.cs" />
     <Compile Include="App_Data\MyMembershipProvider.cs" />
     <Compile Include="Models\Payment.cs" />
@@ -137,14 +141,22 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Models\Role.cs" />
+    <Compile Include="Models\UserIsApprovedCheckAttribute.cs" />
     <Compile Include="RDLC\RequestIssueReport.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>RequestIssueReport.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="RDLC\WorkLoadByDepVsUserReport.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>WorkLoadByDepVsUserReport.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="ViewModels\CorporateAccountViewModel.cs" />
     <Compile Include="ViewModels\IsApproveViewModel.cs" />
+    <Compile Include="ViewModels\LogRequestIssueViewModel.cs" />
     <Compile Include="ViewModels\PaymentViewModel.cs" />
     <Compile Include="ViewModels\RequestIssueCalendarViewModel.cs" />
     <Compile Include="ViewModels\RequestTypeViewModel.cs" />
@@ -840,6 +852,10 @@
     <EmbeddedResource Include="RDLC\RequestIssueReport.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>RequestIssueReport.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RDLC\WorkLoadByDepVsUserReport.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>WorkLoadByDepVsUserReport.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

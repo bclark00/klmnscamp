@@ -16,14 +16,14 @@ namespace Klmsncamp.RDLC {
     using CrystalDecisions.CrystalReports.Engine;
     
     
-    public class RequestIssueReport : ReportClass {
+    public class WorkLoadByDepVsUserReport : ReportClass {
         
-        public RequestIssueReport() {
+        public WorkLoadByDepVsUserReport() {
         }
         
         public override string ResourceName {
             get {
-                return "RequestIssueReport.rpt";
+                return "WorkLoadByDepVsUserReport.rpt";
             }
             set {
                 // Do nothing
@@ -41,7 +41,7 @@ namespace Klmsncamp.RDLC {
         
         public override string FullResourceName {
             get {
-                return "Klmsncamp.RDLC.RequestIssueReport.rpt";
+                return "Klmsncamp.RDLC.WorkLoadByDepVsUserReport.rpt";
             }
             set {
                 // Do nothing
@@ -66,7 +66,7 @@ namespace Klmsncamp.RDLC {
         
         [Browsable(false)]
         [DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
-        public CrystalDecisions.CrystalReports.Engine.Section Section3 {
+        public CrystalDecisions.CrystalReports.Engine.Section GroupHeaderSection1 {
             get {
                 return this.ReportDefinition.Sections[2];
             }
@@ -74,7 +74,7 @@ namespace Klmsncamp.RDLC {
         
         [Browsable(false)]
         [DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
-        public CrystalDecisions.CrystalReports.Engine.Section Section4 {
+        public CrystalDecisions.CrystalReports.Engine.Section GroupHeaderSection2 {
             get {
                 return this.ReportDefinition.Sections[3];
             }
@@ -82,9 +82,41 @@ namespace Klmsncamp.RDLC {
         
         [Browsable(false)]
         [DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
-        public CrystalDecisions.CrystalReports.Engine.Section Section5 {
+        public CrystalDecisions.CrystalReports.Engine.Section Section3 {
             get {
                 return this.ReportDefinition.Sections[4];
+            }
+        }
+        
+        [Browsable(false)]
+        [DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
+        public CrystalDecisions.CrystalReports.Engine.Section GroupFooterSection2 {
+            get {
+                return this.ReportDefinition.Sections[5];
+            }
+        }
+        
+        [Browsable(false)]
+        [DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
+        public CrystalDecisions.CrystalReports.Engine.Section GroupFooterSection1 {
+            get {
+                return this.ReportDefinition.Sections[6];
+            }
+        }
+        
+        [Browsable(false)]
+        [DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
+        public CrystalDecisions.CrystalReports.Engine.Section Section4 {
+            get {
+                return this.ReportDefinition.Sections[7];
+            }
+        }
+        
+        [Browsable(false)]
+        [DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
+        public CrystalDecisions.CrystalReports.Engine.Section Section5 {
+            get {
+                return this.ReportDefinition.Sections[8];
             }
         }
         
@@ -114,7 +146,7 @@ namespace Klmsncamp.RDLC {
         
         [Browsable(false)]
         [DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
-        public CrystalDecisions.Shared.IParameterField Parameter_OnayDurum {
+        public CrystalDecisions.Shared.IParameterField Parameter_AnaDepartman {
             get {
                 return this.DataDefinition.ParameterFields[3];
             }
@@ -122,7 +154,7 @@ namespace Klmsncamp.RDLC {
         
         [Browsable(false)]
         [DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
-        public CrystalDecisions.Shared.IParameterField Parameter_StartDate {
+        public CrystalDecisions.Shared.IParameterField Parameter_IsIsteyenPersonel {
             get {
                 return this.DataDefinition.ParameterFields[4];
             }
@@ -130,7 +162,7 @@ namespace Klmsncamp.RDLC {
         
         [Browsable(false)]
         [DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
-        public CrystalDecisions.Shared.IParameterField Parameter_EndDate {
+        public CrystalDecisions.Shared.IParameterField Parameter_OnayDurum {
             get {
                 return this.DataDefinition.ParameterFields[5];
             }
@@ -138,7 +170,7 @@ namespace Klmsncamp.RDLC {
         
         [Browsable(false)]
         [DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
-        public CrystalDecisions.Shared.IParameterField Parameter_AnaDepartman {
+        public CrystalDecisions.Shared.IParameterField Parameter_StartDate {
             get {
                 return this.DataDefinition.ParameterFields[6];
             }
@@ -146,7 +178,7 @@ namespace Klmsncamp.RDLC {
         
         [Browsable(false)]
         [DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
-        public CrystalDecisions.Shared.IParameterField Parameter_IsIsteyenPersonel {
+        public CrystalDecisions.Shared.IParameterField Parameter_EndDate {
             get {
                 return this.DataDefinition.ParameterFields[7];
             }
@@ -154,9 +186,9 @@ namespace Klmsncamp.RDLC {
     }
     
     [System.Drawing.ToolboxBitmapAttribute(typeof(CrystalDecisions.Shared.ExportOptions), "report.bmp")]
-    public class CachedRequestIssueReport : Component, ICachedReport {
+    public class CachedWorkLoadByDepVsUserReport : Component, ICachedReport {
         
-        public CachedRequestIssueReport() {
+        public CachedWorkLoadByDepVsUserReport() {
         }
         
         [Browsable(false)]
@@ -193,7 +225,7 @@ namespace Klmsncamp.RDLC {
         }
         
         public virtual CrystalDecisions.CrystalReports.Engine.ReportDocument CreateReport() {
-            RequestIssueReport rpt = new RequestIssueReport();
+            WorkLoadByDepVsUserReport rpt = new WorkLoadByDepVsUserReport();
             rpt.Site = this.Site;
             return rpt;
         }

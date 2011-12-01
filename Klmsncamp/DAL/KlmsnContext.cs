@@ -54,6 +54,10 @@ namespace Klmsncamp.Models
 
         public DbSet<LocationGroup> LocationGroups { get; set; }
 
+        public DbSet<LogRequestIssue> LogRequestIssues { get; set; }
+
+        public DbSet<LogRequestIssueDetail> LogRequestIssueDetails { get; set; }
+
         public ObjectContext KlmsnObjectContext
         {
             get { return ((IObjectContextAdapter)this).ObjectContext; }

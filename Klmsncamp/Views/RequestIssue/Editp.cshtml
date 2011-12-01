@@ -3,14 +3,34 @@
 @{
     ViewBag.Title = "İş İstek Düzenleme";
 }
+<script type="text/javascript">
+    function TimePickerSet24h() {
+        var picker = $("#StartDate").data("tDateTimePicker");
+        picker.timeView.format = "HH:mm";
+        picker.timeView.bind();
+    }
+    function EndTimePickerSet24h() {
+        var picker = $("#EndDate").data("tDateTimePicker");
+        picker.timeView.format = "HH:mm";
+        picker.timeView.bind();
+    }
+</script>
 <script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
 <script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+@{ Html.Telerik().ScriptRegistrar()
+        .OnDocumentReady(@<text> var windowElement = $('#RequestIssueLogs'); var undoButton=
+    $('#undo'); undoButton .bind('click', function(e) { windowElement.data('tWindow').open();
+    undoButton.hide(); }) .toggle(!windowElement.is(':visible')); windowElement.bind('close',
+    function() { undoButton.show(); });
+    </text>); }
 <div align="center" style="width: 640px; margin-left: auto; margin-right: auto; margin-top: 30px;">
     @using (Html.BeginForm())
     {
         @Html.ValidationSummary(true)
         @Html.HiddenFor(model => model.RequestIssueID)
         @Html.HiddenFor(model => model.WorkshopID)
+        @Html.HiddenFor(model => model.Pre1EndDate)
+        @Html.HiddenFor(model => model.Pre2EndDate)
         <fieldset class="module aligned ">
             <table style="width: 100%; margin-top: 15px;">
                 <tbody>
@@ -27,7 +47,7 @@
                             @if (!User.IsInRole("administrators") || Model.IsApproved == true)
                             {
                                 @Html.HiddenFor(model => model.LocationID)
-                                @Model.Location.Description
+                                @Html.DisplayFor(model => model.Location.Description)
                             }
                             else
                             {
@@ -53,7 +73,7 @@
                             @if (!User.IsInRole("administrators") || Model.IsApproved == true)
                             {
                                 @Html.HiddenFor(model => model.PersonnelID)
-                                @Model.Location.Description
+                                @Html.DisplayFor(model => model.Personnel.FullName)
                             }
                             else
                             {
@@ -103,12 +123,12 @@
                             @if ((!User.IsInRole("administrators") && !User.IsInRole("moderators")) || Model.IsApproved == true)
                             {
                                 @Html.HiddenFor(model => model.RequestTypeID)
-                                @Model.RequestType.Description
+                                @Html.DisplayFor(model => model.RequestType.Description)
                             }
                             else
                             {
                                 @Html.DropDownList("RequestTypeID", String.Empty)
-                                @Html.ValidationMessageFor(model => model.InventoryID)
+                                @Html.ValidationMessageFor(model => model.RequestTypeID)
                             }
                         </td>
                     </tr>
@@ -120,7 +140,7 @@
                             @if ((!User.IsInRole("administrators") && !User.IsInRole("moderators")) || Model.IsApproved == true)
                             {
                                 @Html.HiddenFor(model => model.RequestStateID)
-                                @Model.RequestState.Description
+                                @Html.DisplayFor(model => model.RequestState.Description)
                             }
                             else
                             {
@@ -151,14 +171,14 @@
                             @Html.LabelFor(model => model.StartDate)
                         </td>
                         <td style="color: #A80000; vertical-align: middle; text-align: left;">
-                            @if ((!User.IsInRole("administrators") && !User.IsInRole("moderators")) || Model.IsApproved == true)
+                            @if (!User.IsInRole("administrators") || Model.IsApproved == true)
                             {
                                 @Html.HiddenFor(model => model.StartDate)
                                 @Model.StartDate
                             }
                             else
                             {
-                                @Html.Telerik().DateTimePickerFor(model => model.StartDate).Name("StartDate")
+                                @Html.Telerik().DateTimePickerFor(model => model.StartDate).Name("StartDate").ClientEvents(events => events.OnLoad("TimePickerSet24h"))
                                 @Html.ValidationMessageFor(model => model.StartDate)
                             }
                         </td>
@@ -209,15 +229,19 @@
                             @Html.LabelFor(model => model.EndDate)
                         </td>
                         <td style="color: #A80000; vertical-align: middle; text-align: left;">
-                            @if ((!User.IsInRole("administrators") && !User.IsInRole("moderators")) || Model.IsApproved == true)
+                            @if (!User.IsInRole("administrators") || Model.IsApproved)
                             {
                                 @Html.HiddenFor(model => model.EndDate)
                                 @Model.EndDate
                             }
                             else
                             {
-                                @Html.Telerik().DateTimePickerFor(model => model.EndDate).Name("EndDate")
+                                @Html.Telerik().DateTimePickerFor(model => model.EndDate).Name("EndDate").ClientEvents(events => events.OnLoad("EndTimePickerSet24h"))
                                 @Html.ValidationMessageFor(model => model.EndDate)
+                            }
+                            @if (ViewBag.EndDatePostponeErr != "")
+                            {
+                                <br />@ViewBag.EndDatePostponeErr
                             }
                         </td>
                     </tr>
@@ -253,7 +277,7 @@
                             @if (!User.IsInRole("administrators") || Model.IsApproved == true)
                             {
                                 @Html.HiddenFor(model => model.UserReqID)
-                                @Model.UserReq.getFullName()
+                                @Html.DisplayFor(model => model.UserReq.FullName)
                             }
                             else
                             {
@@ -295,7 +319,7 @@
                                 else
                                 {
                                 @:<img title="Açık / Çalışma Sürüyor" alt="Devam Ediyor" src="/Content/images/delete.png"/>
-                                                                                                        }
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    }
                             }
                         </td>
                     </tr>
@@ -307,11 +331,12 @@
                             @if (Model.IsApproved == true)
                             {
                                 @Html.HiddenFor(model => model.UserID)
-                                @Model.User.getFullName()
+                                @Html.DisplayFor(model => model.User.FullName)
+                                @Html.ValidationMessageFor(model => model.UserID)
                             }
                             else if (User.IsInRole("administrators") || User.IsInRole("moderators"))
                             {
-                                @Html.DropDownList("UserID", (SelectList)ViewData["UserID"], new { style = "width: 120px;" })
+                                @Html.DropDownList("UserID", String.Empty)
                                 @Html.ValidationMessageFor(model => model.UserID)
                             }
                             else
@@ -319,12 +344,12 @@
                                 @Html.HiddenFor(model => model.User)
                                 try
                                 {
-                                @Model.User.getFullName()
+                                @Html.DisplayFor(model => model.User.FullName)
                                 }
                                 catch
                                 {
                                 @: Henüz Atanmamış..
-                                                                                                        }
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    }
                             }
                         </td>
                     </tr>
@@ -341,5 +366,84 @@
             <input type="submit" value="Kaydet" />
         </div>
 
+    }
+</div>
+@helper AlternateBackground(string color)
+    {
+        if (ViewBag.count == null) { ViewBag.count = 0; }
+    <text>style="background-color:@(ViewBag.count % 2 == 1 ? color : "none")"</text>
+        ViewBag.count++;
+}
+@helper TotalDebtSummaryTemplate(WebViewPage page)
+    {
+
+    <text>
+    <div align="left">
+        <table>
+            <thead>
+                <th>
+                    TarihZaman
+                </th>
+                <th>
+                    Kullanıcı
+                </th>
+                <th>
+                    İşlemler
+                </th>
+            </thead>
+            <tbody>
+                @foreach (var Log in ViewBag.TheLogs as IList<Klmsncamp.Models.LogRequestIssue>)
+                {
+
+                    <tr @AlternateBackground("#E0E0E0")>
+                        <td>
+                            @Log.ModifyTime
+                        </td>
+                        <td>
+                            @Log.User.FullName
+                        </td>
+                        <td>
+                            @try
+                            {
+                                foreach (var logdetail in Log.LogRequestIssueDetails)
+                                {
+                                @logdetail.PropertyName <text>&nbsp;:&nbsp;</text>@logdetail.PropertyOldValue <text>&nbsp;--->&nbsp;</text> @logdetail.PropertyNewValue<br />
+                                }
+                            }
+                            catch
+                            { }
+                        </td>
+                    </tr>
+
+                }
+            </tbody>
+        </table>
+    </div>
+    </text>
+}
+<div style="position: fixed; top: 15%; right: 400px;" align="right">
+    <span id="undo" class="t-group">Güncellemeleri Göster</span>
+    @{ Html.Telerik().Window()
+                            .Name("RequestIssueLogs")
+                            .Title("Güncelleme Bilgileri")
+                            .Draggable(true)
+                            .Resizable(resizing => resizing
+                                .Enabled(false)
+
+                            )
+                            .Modal(false)
+                            .Buttons(b => b.Close())
+                            .Content(a => TotalDebtSummaryTemplate(this))
+                            .Scrollable(true)
+                            .Resizable(resizing => resizing
+                                            .Enabled(true)
+                                            .MinHeight(350)
+                                            .MinWidth(350)
+                                            .MaxHeight(800)
+                                            .MaxWidth(350)
+                                        )
+                            .Width(350)
+                            .Height(350)
+                            .Render();
     }
 </div>

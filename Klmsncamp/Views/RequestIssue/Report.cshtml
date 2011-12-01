@@ -9,7 +9,7 @@
     @using (Html.BeginForm())
     {
         @Html.ValidationSummary(true)
-        <div style="width: 540px; margin-left: auto; margin-right: auto; margin-top: 30px;">
+        <div style="width: 660px; margin-left: auto; margin-right: auto; margin-top: 30px;">
             <fieldset class="module aligned ">
                 <br />
                 <h2>
@@ -23,53 +23,70 @@
                             </td>
                         </tr>
                         <tr>
-                            <td>
+                            <td colspan="2" style="text-align: center;">
                                 <label>
-                                    Atölye</label>
-                                @Html.DropDownList("WorkshopID", String.Empty)<br />
+                                    Ana Departman&nbsp;:&nbsp;</label>
+                                @Html.DropDownList("LocationGroupID", String.Empty)<br />
                             </td>
-                            <td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: right;">
                                 <label>
-                                    Departman</label>
+                                    İş Sahibi&nbsp;:&nbsp;</label>
+                                @Html.DropDownList("UserID", String.Empty)<br />
+                            </td>
+                            <td style="text-align: left;">
+                                <label>
+                                    Departman&nbsp;:&nbsp;</label>
                                 @Html.DropDownList("LocationID", String.Empty)<br />
                             </td>
                         </tr>
                         <tr>
-                            <td rowspan="2">
+                            <td style="text-align: right;">
                                 <label>
-                                    İş Durumu</label>
+                                    İş Durumu&nbsp;:&nbsp;</label>
                                 @Html.DropDownList("RequestStateID", String.Empty)<br />
                             </td>
-                            <tr>
-                                <td colspan="2">
-                                    <label>
-                                        Onay Durumu
-                                    </label>
-                                    @Html.DropDownList("IsApproved", String.Empty)<br />
-                                </td>
-                            </tr>
-                            <tr>
-                                <td width="50%">
-                                    <label class="datetime">
-                                        Baş. Tarihi&nbsp;:</label>
-                                    @Html.Telerik().DatePickerFor(model => model.StartDate).Name("StartDate")
-                                </td>
-                                <td width="50%">
-                                    <label class="datetime">
-                                        Bitiş Tarihi&nbsp;:</label>
-                                    @Html.Telerik().DatePickerFor(model => model.EndDate).Name("EndDate")
-                                </td>
-                            </tr>
-                            <tfoot>
-                                <td colspan="2" style="vertical-align: middle;">
-                                    @Html.ActionLink("Vazgeç ve Geri Dön", "Index")&nbsp;
-                                    <input class="default" type="submit" value="Raporla" />
-                                </td>
-                            </tfoot>
+                            <td style="text-align: left;">
+                                <label>
+                                    Onay Durumu&nbsp;:&nbsp;
+                                </label>
+                                @Html.DropDownList("IsApproved", String.Empty)<br />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: right;">
+                                <label>
+                                    İş İsteyen&nbsp;:&nbsp;</label>@Html.DropDownList("PersonnelID", String.Empty)
+                            </td>
+                            <td style="text-align: left;">
+                                <label>
+                                    İş Tipi&nbsp;:&nbsp;</label>@Html.DropDownList("RequestTypeID", String.Empty)
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: right;" width="50%">
+                                <label class="datetime">
+                                    Baş. Tarihi&nbsp;:&nbsp;</label>
+                                @Html.Telerik().DatePickerFor(model => model.StartDate).Name("StartDate")
+                            </td>
+                            <td style="text-align: left;" width="50%">
+                                <label class="datetime">
+                                    Bitiş Tarihi&nbsp;:&nbsp;</label>
+                                @Html.Telerik().DatePickerFor(model => model.EndDate).Name("EndDate")
+                            </td>
+                        </tr>
                     </tbody>
                 </table>
+                <div class="submit-row">
+                    <p class="deletelink-box">
+                        @Html.ActionLink("Vazgeç ve Geri Dön", "Index")
+                    </p>
+                    <input type="submit" name="workload" value="İş Yükü Raporu" />
+                    <input class="default" name="worklist" type="submit" value="İş Listesi" />
+                </div>
             </fieldset>
-            <br>
+            <br />
             <fieldset class="module aligned ">
                 <br />
                 <h2>
