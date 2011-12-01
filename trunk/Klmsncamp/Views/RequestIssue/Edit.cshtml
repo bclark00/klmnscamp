@@ -3,11 +3,23 @@
 @{
     ViewBag.Title = "İş İstek Düzenleme";
 }
+<script type="text/javascript">
+    function TimePickerSet24h() {
+        var picker = $("#StartDate").data("tDateTimePicker");
+        picker.timeView.format = "HH:mm";
+        picker.timeView.bind();
+    }
+    function EndTimePickerSet24h() {
+        var picker = $("#EndDate").data("tDateTimePicker");
+        picker.timeView.format = "HH:mm";
+        picker.timeView.bind();
+    }
+</script>
 <script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
 <script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
 <div align="center" style="width: 640px; margin-left: auto; margin-right: auto; margin-top: 30px;">
     @using (Html.BeginForm())
-{
+    {
         @Html.ValidationSummary(true)
         @Html.HiddenFor(model => model.RequestIssueID)
         @Html.HiddenFor(model => model.WorkshopID)
@@ -24,16 +36,15 @@
                             @Html.LabelFor(model => model.LocationID)
                         </td>
                         @if (Model.ValidationStateID == 1 && User.IsInRole("moderators") == false)
-        {
+                        {
                             @Html.HiddenFor(model => model.LocationID)
                             <td style="color: #A80000; vertical-align: middle; text-align: left;">
                                 @Model.Location.Description
                             </td>
-        }
-        else
-        {
+                        }
+                        else
+                        {
                             <td style="vertical-align: middle; text-align: left;">
-                                @
                                 <br />
                                 @(Html.Telerik().ComboBox()
                 .Name("LocationID")
@@ -46,7 +57,7 @@
                                 <br />
                                 @Html.ValidationMessageFor(model => model.LocationID)
                             </td>
-        }
+                        }
                     </tr>
                     <tr>
                         <td style="vertical-align: middle; text-align: right;">
@@ -68,15 +79,6 @@
                     </tr>
                     <tr>
                         <td style="vertical-align: middle; text-align: right;">
-                            @Html.LabelFor(model => model.InventoryID)
-                        </td>
-                        <td style="vertical-align: middle; text-align: left;">
-                            @Html.DropDownList("InventoryID", String.Empty)
-                            @Html.ValidationMessageFor(model => model.InventoryID)
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="vertical-align: middle; text-align: right;">
                             @Html.LabelFor(model => model.RequestTypeID)
                         </td>
                         <td style="vertical-align: middle; text-align: left;">
@@ -86,41 +88,39 @@
                     </tr>
                     <tr>
                         <td style="vertical-align: middle; text-align: right;">
+                            @Html.LabelFor(model => model.InventoryID)
+                        </td>
+                        <td style="vertical-align: middle; text-align: left;">
+                            @Html.DropDownList("InventoryID", String.Empty)
+                            @Html.ValidationMessageFor(model => model.InventoryID)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="vertical-align: middle; text-align: right;">
                             @Html.LabelFor(model => model.DetailedDescription)
                         </td>
-                        @if (Model.ValidationStateID == 1 && User.IsInRole("moderators") == false)
-        {
-                            @Html.HiddenFor(model => model.DetailedDescription)
-                            <td style="color: #A80000; vertical-align: middle; text-align: left;">
-                                @Model.DetailedDescription
-                            </td>
-        }
-        else
-        {
-                            <td style="vertical-align: middle; text-align: left;">
-                                @Html.TextAreaFor(model => model.DetailedDescription, new { cols = "50", rows = "4" })
-                                @Html.ValidationMessageFor(model => model.DetailedDescription)
-                            </td>
-        }
+                        <td style="vertical-align: middle; text-align: left;">
+                            @Html.TextAreaFor(model => model.DetailedDescription, new { cols = "50", rows = "4" })
+                            @Html.ValidationMessageFor(model => model.DetailedDescription)
+                        </td>
                     </tr>
                     <tr>
                         <td style="vertical-align: middle; text-align: right;">
                             @Html.LabelFor(model => model.StartDate)
                         </td>
-                        @if (Model.ValidationStateID == 1 && User.IsInRole("moderators") == false)
-        {
-                            @Html.HiddenFor(model => model.StartDate)
-                            <td style="color: #A80000; vertical-align: middle; text-align: left;">
-                                @Model.StartDate
-                            </td>
-        }
-        else
-        {
-                            <td style="vertical-align: middle; text-align: left;">
-                                @Html.Telerik().DateTimePickerFor(model => model.StartDate).Name("StartDate")
-                                @Html.ValidationMessageFor(model => model.StartDate)
-                            </td>
-        }
+                        <td style="vertical-align: middle; text-align: left;">
+                            @Html.Telerik().DateTimePickerFor(model => model.StartDate).Name("StartDate").ClientEvents(events => events.OnLoad("TimePickerSet24h"))
+                            @Html.ValidationMessageFor(model => model.StartDate)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="vertical-align: middle; text-align: right;">
+                            @Html.LabelFor(model => model.EndDate)
+                        </td>
+                        <td style="vertical-align: middle; text-align: left;">
+                            @Html.Telerik().DateTimePickerFor(model => model.EndDate).Name("EndDate").ClientEvents(events => events.OnLoad("EndTimePickerSet24h"))
+                            @Html.ValidationMessageFor(model => model.EndDate)
+                        </td>
                     </tr>
                     <tr>
                         <td style="vertical-align: middle; text-align: right;">
@@ -132,7 +132,7 @@
                         </td>
                     </tr>
                     @if (User.IsInRole("moderators"))
-{
+                    {
                         <tr>
                             <td style="vertical-align: middle; text-align: right;">
                                 @Html.LabelFor(model => model.RequestStateID)
@@ -154,21 +154,23 @@
 
                         <tr>
                             <td style="vertical-align: middle; text-align: right;">
-                                @Html.LabelFor(model => model.EndDate)
-                            </td>
-                            <td style="vertical-align: middle; text-align: left;">
-                                @Html.Telerik().DateTimePickerFor(model => model.EndDate).Name("EndDate")
-                                @Html.ValidationMessageFor(model => model.EndDate)
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="vertical-align: middle; text-align: right;">
                                 @Html.LabelFor(model => model.UserReqID)
                             </td>
-                            <td style="vertical-align: middle; text-align: left;">
-                                @Html.DropDownList("UserReqID", (SelectList)ViewData["UserReqID"], new { style = "width: 120px;" })
-                                @Html.ValidationMessageFor(model => model.UserReqID)
-                            </td>
+                            @if (!User.IsInRole("administrators"))
+                            {
+                                <td style="vertical-align: middle; text-align: left;">
+                                    @Html.HiddenFor(model => model.UserReqID)
+                                    @Html.DisplayFor(model => model.UserReq.FullName)
+                                </td>
+
+                            }
+                            else
+                            {
+                                <td style="vertical-align: middle; text-align: left;">
+                                    @Html.DropDownList("UserReqID", (SelectList)ViewData["UserReqID"], new { style = "width: 120px;" })
+                                    @Html.ValidationMessageFor(model => model.UserReqID)
+                                </td>
+                            }
                         </tr>
                         <tr>
                             <td style="vertical-align: middle; text-align: right;">
@@ -179,14 +181,33 @@
                                 @Html.ValidationMessageFor(model => model.IsAllDay)
                             </td>
                         </tr>
+
                         <tr>
                             <td style="vertical-align: middle; text-align: right;">
                                 @Html.LabelFor(model => model.IsApproved)
                             </td>
-                            <td style="vertical-align: middle; text-align: left;">
-                                @Html.EditorFor(model => model.IsApproved)
-                                @Html.ValidationMessageFor(model => model.IsApproved)
-                            </td>
+                            @if (!User.IsInRole("administrators"))
+                            {
+                                <td style="vertical-align: middle; text-align: left;">
+                                    @Html.HiddenFor(model => model.IsApproved)
+                                    @if (Model.IsApproved == true)
+                                    {
+                                        @:<img title="Bu iş istek onaylanarak kapatılmıştır." alt="Tamamlandı" src="/Content/images/checked.gif"/>
+                                 }
+                                    else
+                                    {
+                                        @:<img title="Açık / Çalışma Sürüyor" alt="Devam Ediyor" src="/Content/images/delete.png"/>
+
+                                    }
+                                </td>
+                            }
+                            else
+                            {
+                                <td style="vertical-align: middle; text-align: left;">
+                                    @Html.EditorFor(model => model.IsApproved)
+                                    @Html.ValidationMessageFor(model => model.IsApproved)
+                                </td>
+                            }
                         </tr>
                         <tr>
                             <td style="vertical-align: middle; text-align: right;">
@@ -208,9 +229,9 @@
                             </td>
                         </tr>
 
-}
-else
-{
+                    }
+                    else
+                    {
                         @Html.HiddenFor(model => model.RequestStateID)
                         @Html.HiddenFor(model => model.Note)
                         @Html.HiddenFor(model => model.EndDate)
@@ -219,8 +240,8 @@ else
                         @Html.HiddenFor(model => model.IsApproved)
                         @Html.HiddenFor(model => model.UserID)
                         @Html.HiddenFor(model => model.ValidationStateID)
-}
-                    @Html.HiddenFor(model=>model.TimeStamp)
+                    }
+                    @Html.HiddenFor(model => model.TimeStamp)
                     @Html.Hidden("show", new { value = ViewBag.show })
                     @Html.Hidden("page", new { value = ViewBag.page })
                 </tbody>
@@ -232,5 +253,5 @@ else
             <input type="submit" value="Onayla ve Gönder" />
         </div>
 
-}
+    }
 </div>

@@ -30,7 +30,7 @@ namespace Klmsncamp.Controllers
         [Authorize(Roles = "administrators,moderators")]
         public ActionResult Json()
         {
-            var rq_list = db.RequestIssues.Include(r => r.RequestType).Include(r => r.Location).Include(r => r.Inventory).Include(r => r.Workshop).Include(r => r.RequestState).Include(r => r.UserReq).Include(r => r.User).Include(r => r.ValidationState).ToList();
+            var rq_list = db.RequestIssues.Include(r => r.RequestType).Include(r => r.Location).Include(r => r.Inventory).Include(r => r.Workshop).Include(r => r.RequestState).Include(r => r.UserReq).Include(r => r.User).Include(r => r.ValidationState).Where(i => i.ValidationStateID == 1).ToList();
 
             List<RequestIssueCalendarViewModel> _rjsonlist = new List<RequestIssueCalendarViewModel>();
             string color_ = "#CCFF33";
@@ -112,7 +112,6 @@ namespace Klmsncamp.Controllers
         {
             //tarih manipualsyonu
             RequestIssue rq = db.RequestIssues.Find(int.Parse(xisid));
-
             //değişiklikler:
             //öteleme sadece enddate icin geçerli bi durum olacak
 

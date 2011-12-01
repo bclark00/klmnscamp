@@ -61,10 +61,13 @@ namespace Klmsncamp.Models
         [Display(Name = "Planlanan Başlangıç Tarihi")]
         [DisplayFormat(DataFormatString = "{0:G}", ApplyFormatInEditMode = true)]
         [Required(ErrorMessage = "Zorunlu Alan")]
+        [CheckStartDate]
         public DateTime StartDate { get; set; }
 
         [Display(Name = "Planlanan Bitiş Tarihi")]
         [DisplayFormat(DataFormatString = "{0:G}", ApplyFormatInEditMode = true)]
+        [CheckEndDatePostpone]
+        [Required]
         public DateTime? EndDate { get; set; }
 
         [Display(Name = "Planlanan Bitiş Tarihi")]
@@ -75,7 +78,7 @@ namespace Klmsncamp.Models
         [DisplayFormat(DataFormatString = "{0:G}", ApplyFormatInEditMode = true)]
         public DateTime? Pre2EndDate { get; set; }
 
-        [Display(Name = "İstek Yapan")]
+        [Display(Name = "Kaydı Açan Kullanıcı")]
         [ForeignKey("UserReq")]
         public int? UserReqID { get; set; }
 
@@ -95,6 +98,8 @@ namespace Klmsncamp.Models
         public DateTime TimeStamp { get; set; }
 
         [ForeignKey("User")]
+        [Display(Name = "Kullanıcı")]
+        [UserIsApprovedCheck]
         public int? UserID { get; set; }
 
         [Display(Name = "Kullanıcı")]
