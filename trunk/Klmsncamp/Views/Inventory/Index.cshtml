@@ -1,18 +1,17 @@
 ﻿@using Telerik.Web.Mvc.UI
 @model IEnumerable<Klmsncamp.Models.Inventory>
-
 @{
     ViewBag.Title = "Envanterler Listesi";
 }
 <br />
-<div align="center" style="width:750px; margin-left: auto; margin-right: auto; margin-top:30px;">
-@(Html.Telerik().Grid(Model).Name("Inventory")
+<div align="center" style="width: 750px; margin-left: auto; margin-right: auto; margin-top: 30px;">
+    @(Html.Telerik().Grid(Model).Name("Inventory")
                             .Columns(columns =>
                                 {
                                     @columns.Template(@<text>
-                                        <a href="@Url.Content("/Inventory/Edit/" + @item.InventoryID + "/")">Düzenle</a>&nbsp;|&nbsp;
-                                        <a href="@Url.Content("/Inventory/Delete/" + @item.InventoryID + "/")">Sil</a>
-                                        </text>).Width(150);
+    @Html.ActionLink("Düzenle", "Edit", "Inventory", new { id = @item.InventoryID }, null)&nbsp;|&nbsp;
+    @Html.ActionLink("Sil", "Delete", "Inventory", new { id = @item.InventoryID }, null)
+    </text>).Width(150);
                                     columns.Bound(o => o.Description).Width(150).Groupable(false);
                                     columns.Bound(o => o.SerialNumber).Width(150).Groupable(false);
                                     columns.Bound(o => o.Location.Description).Width(150).Title("Bulunduğu Birim");
@@ -25,7 +24,7 @@
                             )
                             .RowAction(row =>
                             {
-                                if (row.DataItem.ValidationStateID==2)
+                                if (row.DataItem.ValidationStateID == 2)
                                 {
                                     row.HtmlAttributes["style"] = "background:pink;";
                                 }
@@ -38,8 +37,7 @@
                             .Footer(true)
                             .Localizable("tr-TR")
                             )
-
-<div class="submit-row">
+    <div class="submit-row">
         <p class="deletelink-box">@Html.ActionLink("Yeni Cihaz / Envanter Tanımlama", "Create")</p>
     </div>
 </div>

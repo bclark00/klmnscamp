@@ -13,10 +13,10 @@
                                                 .Action("ExportXls", "Payment"))
                             .Columns(columns =>
                                 {
-                                    @columns.Template(@<text> <a href="@Url.Content("/Payment/Edit/" + @item.PaymentID + "/")">
-                                        Düzenle</a>&nbsp;|&nbsp; <a href="@Url.Content("/Payment/Delete/" + @item.PaymentID + "/")">
-                                            Sil</a>
-                                    </text>).Width(75);
+                                    @columns.Template(@<text>
+    @Html.ActionLink("Düzenle", "Edit", "Payment", new { id = @item.PaymentID }, null)&nbsp;|&nbsp;
+    @Html.ActionLink("Sil", "Delete", "Payment", new { id = @item.PaymentID }, null)
+    </text>).Width(75);
                                     columns.Bound(o => o.BudgetNum).Width(75).Title("Bütçe / Ref No");
                                     columns.Bound(o => o.PurchaseNum).Width(75).Title("SatınAlma No");
                                     columns.Bound(o => o.CorporateAccount.Title).Width(150).Title("Firma");

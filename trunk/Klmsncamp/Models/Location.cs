@@ -15,6 +15,8 @@ namespace Klmsncamp.Models
         [MaxLength(50, ErrorMessage = "50 karakterden uzun olamaz")]
         public string Description { get; set; }
 
+        public virtual string CapitalizedDescription { get { return char.ToUpper(this.Description[0]) + this.Description.ToLower().Substring(1); } }
+
         [Display(Name = "Ana Departman")]
         public int? LocationGroupID { get; set; }
 
