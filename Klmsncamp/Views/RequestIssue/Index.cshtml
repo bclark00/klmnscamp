@@ -66,8 +66,9 @@
                             .Columns(columns =>
                                 {
                                     @columns.Template(
-                                        @<text> <a href="@Url.Content("/RequestIssue/Edit/" + @item.RequestIssueID + "?show=" + ViewBag.CurrentShow + "&page=" + ViewBag.CurrentPage)">
-                                            Düzenle</a>&nbsp;|&nbsp;<a href="@Url.Content("/RequestIssue/Delete/" + @item.RequestIssueID + "/")">Sil</a>
+                                        @<text>
+    @Html.ActionLink("Düzenle", "Edit", "RequestIssue", new { id = @item.RequestIssueID, show = @ViewBag.CurrentShow, page = @ViewBag.CurrentPage }, null)&nbsp;|&nbsp;
+    @Html.ActionLink("Sil", "Delete", "RequestIssue", new { id = @item.RequestIssueID, show = @ViewBag.CurrentShow, page = @ViewBag.CurrentPage }, null)
     </text>
                                     ).Width(80);
                                     columns.Bound(o => o.StartDate).Width(80).Title("Baş.Tarihi");

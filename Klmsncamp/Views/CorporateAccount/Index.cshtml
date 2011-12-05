@@ -1,18 +1,17 @@
 ﻿@using Telerik.Web.Mvc.UI
 @model IEnumerable<Klmsncamp.Models.CorporateAccount>
-
 @{
     ViewBag.Title = "Cari Hesap Bilgileri";
 }
 <br />
-<div align="center" style="width:750px; margin-left: auto; margin-right: auto; margin-top:30px;">
-@(Html.Telerik().Grid(Model).Name("CorporateAccount")
+<div align="center" style="width: 750px; margin-left: auto; margin-right: auto; margin-top: 30px;">
+    @(Html.Telerik().Grid(Model).Name("CorporateAccount")
                 .Columns(columns =>
                                 {
                                     @columns.Template(@<text>
-                                        <a href="@Url.Content("/CorporateAccount/Edit/" + @item.CorporateAccountID+ "/")">Düzenle</a>&nbsp;|&nbsp;
-                                        <a href="@Url.Content("/CorporateAccount/Delete/" + @item.CorporateAccountID + "/")">Sil</a>
-                                        </text>).Width(150);
+    @Html.ActionLink("Düzenle", "Edit", "CorporateAccount", new { id = @item.CorporateAccountID }, null)&nbsp;|&nbsp;
+    @Html.ActionLink("Sil", "Delete", "CorporateAccount", new { id = @item.CorporateAccountID }, null)
+    </text>).Width(150);
                                     columns.Bound(o => o.Title).Width(150).Groupable(false);
                                     columns.Bound(o => o.Phone1).Width(150).Groupable(false);
                                     columns.Bound(o => o.ContactPerson).Width(150).Title("İlgili Kişi");
@@ -37,8 +36,7 @@
                                 .Footer(true)
                                 .Localizable("tr-TR")
                                 )
-
-                <div class="submit-row">
-                        <p class="deletelink-box">@Html.ActionLink("Yeni Cari Kart Bilgisi Tanımlama", "Create")</p>
-                </div>
+    <div class="submit-row">
+        <p class="deletelink-box">@Html.ActionLink("Yeni Cari Kart Bilgisi Tanımlama", "Create")</p>
+    </div>
 </div>

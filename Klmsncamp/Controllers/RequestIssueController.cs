@@ -24,6 +24,19 @@ namespace Klmsncamp.Controllers
 
         //
         // GET: /RequestIssue/
+        [Authorize]
+        public ActionResult Find(int? Rqid)
+        {
+            try
+            {
+                RequestIssue rq = db.RequestIssues.Find(Rqid);
+                return RedirectToAction("Edit", new { id = rq.RequestIssueID });
+            }
+            catch
+            {
+                return Redirect("/?err=404");
+            }
+        }
 
         [Authorize]
         public ViewResult Index(string show, int? page)
@@ -319,6 +332,10 @@ namespace Klmsncamp.Controllers
 
             if (ModelState.IsValid)
             {
+                if (rqToUpdate.IsApproved)
+                {
+                    rqToUpdate.RequestStateID = 5;
+                }
                 db.Entry(rqToUpdate).State = EntityState.Modified;
 
                 db.SaveChanges();
@@ -374,6 +391,22 @@ namespace Klmsncamp.Controllers
             ViewBag.ValidationStateID = new SelectList(db.ValidationStates, "ValidationStateID", "Description", rqToUpdate.ValidationStateID);
             ViewBag.show = formCollection["show"];
             ViewBag.page = formCollection["page"];
+
+            //loglari göstermece
+            IList<LogRequestIssue> MyLogs = new List<LogRequestIssue>();
+            foreach (LogRequestIssue log_item in db.LogRequestIssues.Where(i => i.RequestIssueID == id).ToList())
+            {
+                foreach (LogRequestIssueDetail logdetail_item in db.LogRequestIssueDetails.Where(s => s.LogRequestIssueID == log_item.LogRequestIssueID).ToList())
+                {
+                    log_item.LogRequestIssueDetails.Add(logdetail_item);
+                }
+                if (log_item.LogRequestIssueDetails.Count() > 0)
+                {
+                    MyLogs.Add(log_item);
+                }
+            }
+            ViewBag.TheLogs = MyLogs;
+
             return View(rqToUpdate);
         }
 
@@ -636,6 +669,17 @@ namespace Klmsncamp.Controllers
             {
                 value.Value = 0;
                 rptH.ParameterFields["IsIsteyenPersonel"].CurrentValues.Add(value);
+            }
+
+            value.Value = formcollection["UserID"].ToString();
+            if (value.Value.ToString() != "")
+            {
+                rptH.ParameterFields["IsSahibi"].CurrentValues.Add(value);
+            }
+            else
+            {
+                value.Value = 0;
+                rptH.ParameterFields["IsSahibi"].CurrentValues.Add(value);
             }
 
             value.Value = formcollection["IsApproved"].ToString();

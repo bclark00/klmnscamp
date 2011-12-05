@@ -24,7 +24,8 @@ namespace Klmsncamp.DAL
                 new RequestState { Description = "SERVİS BEKLİYOR" },
                 new RequestState { Description = "FİRMA BEKLİYOR" },
                 new RequestState { Description = "PARÇA BEKLİYOR" },
-                new RequestState { Description = "PLANLANDI" }
+                new RequestState { Description = "PLANLANDI" },
+                new RequestState { Description = "TAMAMLANDI" }
             };
             requestStates.ForEach(s => context.RequestStates.Add(s));
             context.SaveChanges();
