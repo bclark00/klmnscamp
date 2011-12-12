@@ -19,42 +19,42 @@
     <hr />
     <div class="menu_example">
         <ul class="admx menu">
-            <li><a href="/" title="Ana Sayfa">Ana Sayfa</a></li>
+            <li><a href="/HelpDesk/" title="Ana Sayfa">Ana Sayfa</a></li>
             <li><a href="#" title="İş İstek">İş İstek</a>
                 <ul>
-                    <li><a href="/RequestIssue/Create">Arıza Bildir</a></li>
-                    <li><a href="/RequestIssue/?show=A&page=1">İş Listesi</a></li>
+                    <li><a href="/HelpDesk/RequestIssue/Create">Arıza Bildir</a></li>
+                    <li><a href="/HelpDesk/RequestIssue/?show=A&page=1">İş Listesi</a></li>
                     @if (User.IsInRole("moderators") || User.IsInRole("administrator"))
                     {
-                        <li><a href="/Payment/">Ödemeler / Fatura Kaydı</a></li>
-                        <li><a href="/Calendar/">Takvim</a></li>
+                        <li><a href="/HelpDesk/Payment/">Ödemeler / Fatura Kaydı</a></li>
+                        <li><a href="/HelpDesk/Calendar/">Takvim</a></li>
                     }
                 </ul>
             </li>
             <li><a href="#" title="Raporlama">Raporlama</a>
                 <ul>
-                    <li><a href="/RequestIssue/Report/">İşler</a></li>
-                    <li><a href="/">Cihazlar/Demirbaşlar</a></li>
+                    <li><a href="/HelpDesk/RequestIssue/Report/">İşler</a></li>
+                    <li><a href="/HelpDesk/">Cihazlar/Demirbaşlar</a></li>
                 </ul>
             </li>
             @if (User.IsInRole("moderators") || User.IsInRole("administrators"))
             {
-                <li><a href="/">Sabitler Tanımlamalar</a>
+                <li><a href="/HelpDesk/">Sabitler Tanımlamalar</a>
                     <ul>
-                        <li><a href="/ValidationState">Geçerlilik Durumlar</a></li>
-                        <li><a href="/Workshop">Atolyeler</a></li>
-                        <li><a href="/Location">Departman Tanımları</a></li>
-                        <li><a href="/RequestState">İş/İstek Durumları</a></li>
-                        <li><a href="/RequestType">İş/İstek Tipleri</a></li>
-                        <li><a href="/InventoryOwnership">Aidiyet Bilgileri</a></li>
-                        <li><a href="/Inventory">Cihaz Bilgileri</a></li>
-                        <li><a href="/CorporateType">Cari Kart Tipleri</a></li>
-                        <li><a href="/CorporateAccount">Cari Kart Bilgileri</a></li>
-                        <li><a href="/Account/Register">Yeni Kullanıcı Oluştur</a></li>
+                        <li><a href="/HelpDesk/ValidationState">Geçerlilik Durumlar</a></li>
+                        <li><a href="/HelpDesk/Workshop">Atolyeler</a></li>
+                        <li><a href="/HelpDesk/Location">Departman Tanımları</a></li>
+                        <li><a href="/HelpDesk/RequestState">İş/İstek Durumları</a></li>
+                        <li><a href="/HelpDesk/RequestType">İş/İstek Tipleri</a></li>
+                        <li><a href="/HelpDesk/InventoryOwnership">Aidiyet Bilgileri</a></li>
+                        <li><a href="/HelpDesk/Inventory">Cihaz Bilgileri</a></li>
+                        <li><a href="/HelpDesk/CorporateType">Cari Kart Tipleri</a></li>
+                        <li><a href="/HelpDesk/CorporateAccount">Cari Kart Bilgileri</a></li>
+                        <li><a href="/HelpDesk/Account/Register">Yeni Kullanıcı Oluştur</a></li>
                     </ul>
                 </li>
             }
-            <li><a href="/Home/About">Hakkında</a></li>
+            <li><a href="/HelpDesk/Home/About">Hakkında</a></li>
             @if (ViewContext.Controller.ValueProvider.GetValue("controller").RawValue.ToString() == "RequestIssue" &&
         ViewContext.Controller.ValueProvider.GetValue("Action").RawValue.ToString() == "Index")
             {
@@ -76,12 +76,12 @@
                     {
                         if (ViewBag.isFirstPage == false && ViewBag.HasPrevPage)
                         {
-                <li style="background-color: #555555;"><a href="/RequestIssue/?show=@ViewBag.Currentshow&page=1">
+                <li style="background-color: #555555;"><a href="/HelpDesk/RequestIssue/?show=@ViewBag.Currentshow&page=1">
                     &#060;&#060;&nbsp;En Yeni</a></li>
                         }
                         if (ViewBag.HasPrevPage)
                         {
-                <li style="background-color: #555555;"><a href="/RequestIssue/?show=@ViewBag.Currentshow&page=@ViewBag.PrevPageNumber">
+                <li style="background-color: #555555;"><a href="/HelpDesk/RequestIssue/?show=@ViewBag.Currentshow&page=@ViewBag.PrevPageNumber">
                     &#060;&nbsp;Daha Yeni</a></li>
                         }
                 <li style="background-color: #555555;"><font style="text-decoration: none; color: #eee;
@@ -89,12 +89,12 @@
                     @ViewBag.StartIndex&nbsp;-&nbsp;@ViewBag.EndIndex arası</font></li>
                         if (ViewBag.HasNextPage)
                         {
-                <li style="background-color: #555555;"><a href="/RequestIssue/?show=@ViewBag.Currentshow&page=@ViewBag.NextPageNumber">
+                <li style="background-color: #555555;"><a href="/HelpDesk/RequestIssue/?show=@ViewBag.Currentshow&page=@ViewBag.NextPageNumber">
                     Daha Eski&nbsp;&#062;</a></li>
                         }
                         if (ViewBag.isLastPage == false && ViewBag.HasNextPage)
                         {
-                <li style="background-color: #555555;"><a href="/RequestIssue/?show=@ViewBag.Currentshow&page=@ViewBag.TotalPages">
+                <li style="background-color: #555555;"><a href="/HelpDesk/RequestIssue/?show=@ViewBag.Currentshow&page=@ViewBag.TotalPages">
                     En Eski&nbsp;&#062;&#062;</a></li>
                         }
                     }
@@ -103,19 +103,19 @@
                     {
                 <li><a href="#">|</a></li>
                 <li @if (ViewBag.CurrentShow == "W")
-                    { <text>style="background-color: #FF0066;" </text>}><a href="/RequestIssue/?show=W&page=1">
+                    { <text>style="background-color: #FF0066;" </text>}><a href="/HelpDesk/RequestIssue/?show=W&page=1">
                         Bekleyenler</a></li>
                 <li><a href="#">|</a></li>
                 <li @if (ViewBag.CurrentShow == "P")
-                    { <text>style="background-color: #FF0066;"</text> }><a href="/RequestIssue/?show=P&page=1">
+                    { <text>style="background-color: #FF0066;"</text> }><a href="/HelpDesk/RequestIssue/?show=P&page=1">
                         Sürenler</a></li>
                 <li><a href="#">|</a></li>
                 <li @if (ViewBag.CurrentShow == "C")
-                    { <text>style="background-color: #FF0066;"</text> }><a href="/RequestIssue/?show=C&page=1">
+                    { <text>style="background-color: #FF0066;"</text> }><a href="/HelpDesk/RequestIssue/?show=C&page=1">
                         Tamamlananlar</a></li>
                 <li><a href="#">|</a></li>
                 <li @if (ViewBag.CurrentShow == "A")
-                    { <text>style="background-color: #FF0066;"</text> }><a href="/RequestIssue/?show=A&page=1">
+                    { <text>style="background-color: #FF0066;"</text> }><a href="/HelpDesk/RequestIssue/?show=A&page=1">
                         Hepsi</a></li>
                     }
 
