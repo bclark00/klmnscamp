@@ -233,7 +233,7 @@ namespace Klmsncamp.Controllers
             {
                 db.Entry(requestıssue).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Validate", new { id = requestıssue.RequestIssueID, show = formCollection["show"], page = formCollection["page"] });
+                return RedirectToAction("Validate", "RequestIssue", new { id = requestıssue.RequestIssueID, show = formCollection["show"], page = formCollection["page"] });
             }
             ViewBag.RequestTypeID = new SelectList(db.RequestTypes, "RequestTypeID", "Description", requestıssue.RequestTypeID);
             ViewBag.LocationID = new SelectList(db.Locations, "LocationID", "Description", requestıssue.LocationID);

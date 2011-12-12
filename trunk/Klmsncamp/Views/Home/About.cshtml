@@ -1,15 +1,14 @@
 ﻿@{
     ViewBag.Title = "Hakkında";
 }
-
 <br />
-
-    <marquee behavior="scroll" direction="up" scrollamount="3" height="250" style="text-align: center;">
+<marquee behavior="scroll" direction="up" scrollamount="3" height="250" style="text-align: center;">
 
         <h3>KLIMASAN Bilgi İşlem - 2011</h3>
         <br />
-        <img src="../../Content/images/microsoft-sql-server-2008.gif" />
-        <img src="../../Content/images/mvc3logo.gif" />
-        <img src="../../Content/images/vs2010.png" />
+        <img src="@Url.Content("~/Content/images/microsoft-sql-server-2008.gif")" />
+        <img src="@Url.Content("~/Content/images/mvc3logo.gif")" />
+        <img src="@Url.Content("~/Content/images/vs2010.png")" />
+
 </marquee>
 <hr />

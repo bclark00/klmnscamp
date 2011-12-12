@@ -94,11 +94,11 @@
                                             @<text>
     @if (item.IsApproved == false || item.IsApproved == null)
     {
-        <img src="/Content/images/delete.png" />
+        <img alt="onaysiz" src="@Url.Content("~/Content/images/delete.png")" />
     }
     else
     {
-        <img src="/Content/images/checked.gif" />
+        <img alt="onayli" src="@Url.Content("~/Content/images/checked.gif")" />
     }
     </text>
                                         ).Width(50).Title("Durum");
