@@ -438,19 +438,35 @@ namespace Klmsncamp.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             RequestIssue requestıssue = db.RequestIssues.Find(id);
+
+            //logları siliyoruz
+            try
+            {
+                LogRequestIssue logsingle = db.LogRequestIssues.Include(i => i.LogRequestIssueDetails).Where(i => i.RequestIssueID == id).Single();
+
+                var logdetail_list = logsingle.LogRequestIssueDetails.ToList();
+
+                foreach (LogRequestIssueDetail xlogdetail in logdetail_list)
+                {
+                    db.LogRequestIssueDetails.Remove(xlogdetail);
+                }
+
+                db.LogRequestIssues.Remove(logsingle);
+                db.SaveChanges();
+            }
+            catch
+            {
+            }
+
             MembershipUser currentuser_ = new UserRepository().GetUser(User.Identity.Name);
             int user_wherecondition = int.Parse((currentuser_.ProviderUserKey).ToString());
 
             var xuser = db.Users.AsNoTracking().Where(i => i.UserId == user_wherecondition).Single();
             if (requestıssue.SendEmail == true)
             {
-                string mailsonucstr = SendEmail(new MailAddress("musaf@klimasan.com.tr"), new MailAddress(requestıssue.UserReq.Email), "[Klimasan HelpDesk] #" + requestıssue.RequestIssueID.ToString() + " no'lu İş isteğiniz hakkında.", "İş İsteğiniz " + xuser.FullName + " silinmiştir. Tarih: " + DateTime.Now.ToString() + ". İyi çalışmalar dileriz.");
+                string mailsonucstr = SendEmail(new MailAddress("musa.fedakar@klimasan.com.tr"), new MailAddress(requestıssue.UserReq.Email), "[Klimasan HelpDesk] #" + requestıssue.RequestIssueID.ToString() + " no'lu İş isteğiniz hakkında.", "İş İsteğiniz " + xuser.FullName + " silinmiştir. Tarih: " + DateTime.Now.ToString() + ". İyi çalışmalar dileriz.");
             }
             db.RequestIssues.Remove(requestıssue);
-            db.SaveChanges();
-
-            LogRequestIssue mylog = new LogRequestIssue { RequestIssueID = id, Action = "Silme", ModifyTime = DateTime.Now, UserID = user_wherecondition };
-            db.LogRequestIssues.Add(mylog);
             db.SaveChanges();
 
             return RedirectToAction("Index");

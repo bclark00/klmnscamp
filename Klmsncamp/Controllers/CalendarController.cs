@@ -84,15 +84,24 @@ namespace Klmsncamp.Controllers
                         editable_ = false;
                     }
 
+                    string x_issahibi = "";
+                    try
+                    {
+                        x_issahibi = item.User.FullName;
+                    }
+                    catch
+                    {
+                        x_issahibi = "--";
+                    }
                     _rjsonlist.Add(new RequestIssueCalendarViewModel
                     {
                         id = item.RequestIssueID,
                         //title = item.Location.Description + "," + item.RequestType.Description + "," + item.DetailedDescription,
-                        title = item.Location.Description + "," + item.RequestType.Description + "," + item.User.getFullName(),
+                        title = item.Location.Description + "," + item.RequestType.Description + "," + x_issahibi,
                         start = DateTime.Parse(item.EndDate.Value.AddMilliseconds(-1).ToString()).ToString("yyyy-MM-ddTHH:mm:ssZ"),
                         end = DateTime.Parse(item.EndDate.ToString()).ToString("yyyy-MM-ddTHH:mm:ssZ"),
                         allDay = item.IsAllDay,
-                        url = "/RequestIssue/Editp/" + item.RequestIssueID.ToString() + "?show=A&page=1",
+                        url = "/HelpDesk/RequestIssue/Editp/" + item.RequestIssueID.ToString() + "?show=A&page=1",
                         color = color_,
                         textColor = textcolor_,
                         disableResizing = true,
