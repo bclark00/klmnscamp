@@ -17,10 +17,10 @@ namespace Klmsncamp.Models
 
         public virtual RequestType RequestType { get; set; }
 
-        [Display(Name = "İşi İsteyen Personel")]
+        [Display(Name = "Arıza Bildirimi Yapan")]
         public int? PersonnelID { get; set; }
 
-        [Display(Name = "İşi İsteyen Personel")]
+        [Display(Name = "Arıza Bildirimi Yapan")]
         public virtual Personnel Personnel { get; set; }
 
         [MaxLength(500, ErrorMessage = "500 karakterden uzun olamaz")]
@@ -98,11 +98,11 @@ namespace Klmsncamp.Models
         public DateTime TimeStamp { get; set; }
 
         [ForeignKey("User")]
-        [Display(Name = "Kullanıcı")]
+        [Display(Name = "İş Sahibi")]
         [UserIsApprovedCheck]
         public int? UserID { get; set; }
 
-        [Display(Name = "Kullanıcı")]
+        [Display(Name = "İş Sahibi")]
         public virtual User User { get; set; }
 
         [Required(ErrorMessage = "Zorunlu Alan")]

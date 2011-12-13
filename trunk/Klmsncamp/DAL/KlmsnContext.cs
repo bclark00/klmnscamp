@@ -68,6 +68,8 @@ namespace Klmsncamp.Models
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
             //modelBuilder.Conventions.Remove<IncludeMetadataConvention>();
 
+            modelBuilder.Entity<RequestIssue>().HasRequired(a => a.RequestType).WithMany().HasForeignKey(u => u.RequestTypeID).WillCascadeOnDelete(false);
+
             modelBuilder.Entity<RequestIssue>()
                         .HasRequired(a => a.Location)
                         .WithMany()
@@ -79,6 +81,8 @@ namespace Klmsncamp.Models
                         .HasForeignKey(u => u.WorkshopID).WillCascadeOnDelete(false);
 
             modelBuilder.Entity<RequestIssue>().HasRequired(a => a.ValidationState).WithMany().HasForeignKey(u => u.WorkshopID).WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<LogRequestIssue>().HasRequired(a => a.RequestIssue).WithMany().HasForeignKey(u => u.RequestIssueID).WillCascadeOnDelete(false);
         }
     }
 }
