@@ -1,0 +1,44 @@
+﻿@using Telerik.Web.Mvc.UI
+@model IEnumerable<Klmsncamp.Models.Personnel>
+@{
+    ViewBag.Title = "Personel Tanımlama";
+}
+<div align="center" style="width: 640px; margin-left: auto; margin-right: auto; margin-top: 30px;">
+    <fieldset class="module aligned ">
+        <table style="width: 100%;">
+            <tbody>
+                <thead>
+                    <th>
+                        Adı Soyadı
+                    </th>
+                    <th>
+                        Departmanı
+                    </th>
+                    <th colspan="2">
+                        Durumu
+                    </th>
+                </thead>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.FirstName)&nbsp;@Html.DisplayFor(modelItem => item.LastName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Location.Description)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ValidationState.Description)
+                        </td>
+                        <td>
+                            @Html.ActionLink("Düzenle", "Edit", new { id = item.PersonnelID })&nbsp;|&nbsp;@Html.ActionLink("Sil", "Delete", new { id = item.PersonnelID })
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </fieldset>
+    <div class="submit-row">
+        <p class="deletelink-box">@Html.ActionLink("Yeni Personel Tanımlama", "Create")</p>
+    </div>
+</div>

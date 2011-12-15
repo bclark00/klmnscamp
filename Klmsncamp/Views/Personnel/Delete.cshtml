@@ -1,0 +1,55 @@
+﻿@model Klmsncamp.Models.Personnel
+@{
+    ViewBag.Title = "Personel Silme";
+}
+}
+<div align="center" style="width: 650px; margin-left: auto; margin-right: auto; margin-top: 30px;
+    border: 1px solid #eee;">
+    <table>
+        <tbody>
+            <thead>
+                <th>
+                    Aşağıdaki Personel kaydını silmek istediğinize emin misiniz?
+                </th>
+            </thead>
+            <tr>
+                <td>
+                    <div class="display-label">
+                        FirstName</div>
+                    <div class="display-field">
+                        @Html.DisplayFor(model => model.FirstName)
+                    </div>
+                    <div class="display-label">
+                        LastName</div>
+                    <div class="display-field">
+                        @Html.DisplayFor(model => model.LastName)
+                    </div>
+                    <div class="display-label">
+                        FullName</div>
+                    <div class="display-field">
+                        @Html.DisplayFor(model => model.FullName)
+                    </div>
+                    <div class="display-label">
+                        Location</div>
+                    <div class="display-field">
+                        @Html.DisplayFor(model => model.Location.Description)
+                    </div>
+                    <div class="display-label">
+                        ValidationState</div>
+                    <div class="display-field">
+                        @Html.DisplayFor(model => model.ValidationState.Description)
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr>
+                <th>
+                    @using (Html.BeginForm()) {
+                        <input type="submit" value="Delete" /> |
+        @Html.ActionLink("Vazgeç ve Geri Dön", "Index")
+        }
+                </th>
+            </tr>
+        </tfoot>
+    </table>

@@ -1,0 +1,57 @@
+﻿@model Klmsncamp.Models.Personnel
+@{
+    ViewBag.Title = "Yeni Personel Tanımlama";
+}
+<script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+<div align="center" style="width: 640px; margin-left: auto; margin-right: auto; margin-top: 30px;">
+    @using (Html.BeginForm())
+    {
+        @Html.ValidationSummary(true)
+        <fieldset class="module aligned ">
+            <legend>Ekle</legend>
+            <table style="width: 100%; margin-top: 15px;">
+                <tbody>
+                    <tr>
+                        <td>
+                            <div class="editor-label">
+                                @Html.LabelFor(model => model.FirstName)&nbsp; @Html.LabelFor(model => model.LastName)
+                            </div>
+                        </td>
+                        <td>
+                            @Html.EditorFor(model => model.FirstName)&nbsp;@Html.EditorFor(model => model.LastName)
+                            <br />@Html.ValidationMessageFor(model => model.FirstName)&nbsp;@Html.ValidationMessageFor(model => model.LastName)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="editor-label">
+                                @Html.LabelFor(model => model.LocationID, "Departman")
+                            </div>
+                        </td>
+                        <td>
+                            @Html.DropDownList("LocationID", String.Empty)
+                            @Html.ValidationMessageFor(model => model.LocationID)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="editor-label">
+                                @Html.LabelFor(model => model.ValidationStateID, "Durumu")
+                            </div>
+                        </td>
+                        <td>
+                            @Html.DropDownList("ValidationStateID", String.Empty)
+                            @Html.ValidationMessageFor(model => model.ValidationStateID)
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </fieldset>
+        <div class="submit-row">
+            <p class="deletelink-box">
+                @Html.ActionLink("Vazgeç ve Geri Dön", "Index")</p>
+            <input type="submit" value="Ekle" />
+        </div>
+    }
+</div>
