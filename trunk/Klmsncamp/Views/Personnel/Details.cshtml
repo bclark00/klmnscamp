@@ -1,0 +1,40 @@
+﻿@model Klmsncamp.Models.Personnel
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<fieldset>
+    <legend>Personnel</legend>
+
+    <div class="display-label">FirstName</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.FirstName)
+    </div>
+
+    <div class="display-label">LastName</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.LastName)
+    </div>
+
+    <div class="display-label">FullName</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.FullName)
+    </div>
+
+    <div class="display-label">Location</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Location.Description)
+    </div>
+
+    <div class="display-label">ValidationState</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.ValidationState.Description)
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.PersonnelID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

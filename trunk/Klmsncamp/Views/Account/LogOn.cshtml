@@ -1,64 +1,67 @@
 ﻿@model Klmsncamp.Models.LogOnModel
-
 @{
     ViewBag.Title = "Kullanıcı Girişi";
 }
-
-
 <script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
 <script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
- <div align="center" style="width:640px; margin-left: auto; margin-right: auto; margin-top:30px;">
-@Html.ValidationSummary(true, "Kullanıcı adı veya şifre Hatası. Lütfen Tekrar Deneyin")
 
+<div style="width: 640px; margin-top: 100px; position: absolute; left: 525px; top: 35px; margin: 40px auto; border: 3px solid #FFCCCC;	padding: 20px; 	-moz-border-radius: 30px; -webkit-border-radius: 30px;">
+
+	
+@Html.ValidationSummary(true, "Kullanıcı adı veya şifre Hatası. Lütfen Tekrar Deneyin")
 @using (Html.BeginForm())
 {
 
-        <fieldset class="module aligned">
-        @if (User.IsInRole("moderators") || User.IsInRole("administrators"))
-        {
+    if (User.IsInRole("moderators") || User.IsInRole("administrators"))
+    {
+
+        @:<p class="help">Yeni Kullanıcı Oluşturmak için <a href="/Account/Register/">Tıklayınız.</a></p>
+                    }
+    <div class="submit-row"> <h2 style="text-align: left;">Giriş :</h2> </div>
+    <table style="width: 100%;">
+    <tbody>
+            <tr>
+                <td style="border: #FFCCCC; vertical-align: middle; text-align: right;">
+                    <div style="font-family: Calibri, Trebuchet MS; font-weight: bolder; font-size: large;">
+                        @Html.LabelFor(m => m.UserName)&nbsp;:
+                    </div>
+                </td>
+                <td style="border: #FFCCCC; font-family: Calibri, Trebuchet MS; font-weight: bolder; font-size: large; vertical-align: middle; text-align: left;">
+                    @Html.TextBoxFor(m => m.UserName, new { style = "font-family: Calibri, Trebuchet MS; font-weight: bolder; font-size: large; padding: 3px;" })
+                    @Html.ValidationMessageFor(m => m.UserName)
+                </td>
+                <td style="border: #FFCCCC;" rowspan="3"><img src="@Url.Content("~/Content/images/unlock.png")" alt="giriş"/></td>
+            </tr>
+            <tr>
+                <td style="border: #FFCCCC; vertical-align: middle; text-align: right;">
+                    <div style="font-family: Calibri, Trebuchet MS; font-size: large; font-weight: bolder;">
+                        @Html.LabelFor(m => m.Password)&nbsp;:
+                    </div>
+                 </td>
+                 <td colspan="2" style="border: #FFCCCC; vertical-align: middle; text-align: left;font-size: large; font-family: Calibri, Trebuchet MS; font-weight: bolder;">
+                        @Html.PasswordFor(m => m.Password, new { style = "font-family: Calibri, Trebuchet MS; font-weight: bolder; font-size: large; padding: 3px;" })
+                        @Html.ValidationMessageFor(m => m.Password)
+                 </td>
+            </tr>
+            <tr>
+            <td style="border: #FFCCCC; vertical-align: middle; text-align: right;">
+                    <div style="font-family: Calibri, Trebuchet MS; font-size: large; font-weight: bolder;">
+                    @Html.LabelFor(m => m.RememberMe)&nbsp;:
+                    </div>
+                </td>
+
+               <td colspan="2" style="border: #FFCCCC; vertical-align: middle; text-align: left;font-size: large; font-family: Calibri, Trebuchet MS; font-weight: bolder;">
+                    @Html.CheckBoxFor(m => m.RememberMe)
+                   
+                </td>
+            </tr>
             
-            @:<p class="help">Yeni Kullanıcı Oluşturmak için <a href="/Account/Register/">Tıklayınız.</a></p>
-        }
-            <table>
-            <tbody>
-            <tr>
-            <td style="vertical-align: middle; text-align: right;">
-                <div class="editor-label">
-                    @Html.LabelFor(m => m.UserName)
-                </div>
-            </td>
-            <td style="vertical-align: middle; text-align: left;">
-                @Html.TextBoxFor(m => m.UserName)
-                @Html.ValidationMessageFor(m => m.UserName)
-            </td>
-            </tr>
-            <tr>
-            <td style="vertical-align: middle; text-align: right;">
-            <div class="editor-label">
-                @Html.LabelFor(m => m.Password)
-            </div>
-            <td style="vertical-align: middle; text-align: left;">
-                @Html.PasswordFor(m => m.Password)
-                @Html.ValidationMessageFor(m => m.Password)
-            </td>
-            </tr>
-            <tr>
-            <td colspan="2" style="vertical-align: middle; text-align: center;">
-                @Html.CheckBoxFor(m => m.RememberMe)
-                @Html.LabelFor(m => m.RememberMe)
-            </td>
-            </tr>
-            <tfoot>
-            <tr>
-            <td colspan="2">
-            <input type="submit" value="Giriş" />
-            </td>
-            </tr></tfoot>
-            </tbody>
-            </table>
-            </fieldset>
-           
-        
-    
+                   
+                       
+                   
+        </tbody>
+    </table>
+    <div class="submit-row"> <input type="submit" value="Giriş Yapınız" class="default"/></div>
+
 }
 </div>
