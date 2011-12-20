@@ -1,6 +1,5 @@
 ﻿@using Telerik.Web.Mvc.UI
 @model Klmsncamp.Models.RequestIssue
-
 @{
     ViewBag.Title = "Yeni İş / İstek Oluşturma";
 }
@@ -15,46 +14,59 @@
         picker.timeView.format = "HH:mm";
         picker.timeView.bind();
     }
+    function onLocationChange(e) {
+        var combo = $("#InventoryID").data("tComboBox");
+        combo.value("");
+        combo.reload();
+    }
+
+    function onInventoryDataBinding(e) {
+        var combo = $("#LocationID").data("tComboBox");
+        e.data = $.extend({}, e.data, { LocationID: combo.value() });
+    }
 </script>
 <script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
 <script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
-<div align="center" style="width:640px; margin-left: auto; margin-right: auto; margin-top:30px;">
-@using (Html.BeginForm()) {
-    @Html.ValidationSummary(true)
+<div align="center" style="width: 640px; margin-left: auto; margin-right: auto; margin-top: 30px;">
+    @using (Html.BeginForm())
+    {
+        @Html.ValidationSummary(true)
         <fieldset class="module aligned ">
-        <legend>Ekle</legend>
-        <table style="width: 100%; margin-top:15px;">
-        <tbody>
-        <thead>
-        <th colspan="2">İş-Arıza Bilgileri </th>
-        </thead>
-        @Html.Hidden("WorkshopID",(int)1)
-        <tr>
-        <td style="vertical-align: middle; text-align: right;">
-            @Html.LabelFor(model => model.LocationID, "İş-Arıza Bildirim Yeri")
-        </td>
-        <td style="vertical-align: middle; text-align: left;">
-            <br />
-            @(Html.Telerik().ComboBox()
+            <legend style="color: Maroon;">Yeni Arıza Bildirimi Ekle</legend>
+            <table style="width: 100%; margin-top: 15px;">
+                <tbody>
+                    <thead>
+                        <th colspan="2">
+                            İş-Arıza Bilgileri
+                        </th>
+                    </thead>
+                    @Html.Hidden("WorkshopID", (int)1)
+                    <tr>
+                        <td style="vertical-align: middle; text-align: right;">
+                            @Html.LabelFor(model => model.LocationID, "İş-Arıza Bildirim Yeri")
+                        </td>
+                        <td style="vertical-align: middle; text-align: left;">
+                            <br />
+                            @(Html.Telerik().ComboBox()
             .Name("LocationID")
             .HtmlAttributes(new { id = "ComboBox_wrapper_location" })
             .AutoFill(true).HtmlAttributes(new { style = "width:210px;" }).DropDownHtmlAttributes(new { style = "width: 210px;" }).InputHtmlAttributes(new { style = "vertical-align: middle; font-size:100%; border: 1px solid; width: 200px;" })
             .BindTo((SelectList)ViewBag.LocationID)
             .Filterable(filtering => filtering.FilterMode((AutoCompleteFilterMode)Enum.Parse(typeof(AutoCompleteFilterMode), "2", false)))
             .HighlightFirstMatch(true)
+            .ClientEvents(events => events.OnChange("onLocationChange"))
             )
-            <br />
-            @Html.ValidationMessageFor(model => model.LocationID)
-        </td>
-        </tr>
-        <tr>
-        <td style="vertical-align: middle; text-align: right;">
-            @Html.LabelFor(model=>model.PersonnelID)
-        </td>
-        <td style="vertical-align: middle; text-align: left;">
-
-            <br />
-            @(Html.Telerik().ComboBox()
+                            <br />
+                            @Html.ValidationMessageFor(model => model.LocationID)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="vertical-align: middle; text-align: right;">
+                            @Html.LabelFor(model => model.PersonnelID)
+                        </td>
+                        <td style="vertical-align: middle; text-align: left;">
+                            <br />
+                            @(Html.Telerik().ComboBox()
             .Name("PersonnelID")
             .HtmlAttributes(new { id = "ComboBox_wrapper_personnel" })
             .AutoFill(true).HtmlAttributes(new { style = "width:210px;" }).DropDownHtmlAttributes(new { style = "width: 210px;" }).InputHtmlAttributes(new { style = "vertical-align: middle; font-size:100%; border: 1px solid; width: 200px;" })
@@ -62,49 +74,54 @@
             .Filterable(filtering => filtering.FilterMode((AutoCompleteFilterMode)Enum.Parse(typeof(AutoCompleteFilterMode), "2", false)))
             .HighlightFirstMatch(true)
             )
-            <br />
-            @Html.ValidationMessageFor(model=>model.PersonnelID)
-        </td>
-        </tr>
-        <tr>
-        <td style="vertical-align: middle; text-align: right;">
-            @Html.LabelFor(model => model.RequestTypeID, "İş İstek Tipi")
-        </td>
-        <td style="vertical-align: middle; text-align: left;">
-            @Html.DropDownList("RequestTypeID", String.Empty)<br />
-            @Html.ValidationMessageFor(model => model.RequestTypeID)
-        </td>
-        </tr>
-        <tr>
-        <td style="vertical-align: middle; text-align: right;">
-            @Html.LabelFor(model => model.InventoryID, "İlgili Cihaz / Envanter")
-        </td>
-        <td style="vertical-align: middle; text-align: left;">
-            @Html.DropDownList("InventoryID", String.Empty)<br />
-            @Html.ValidationMessageFor(model => model.InventoryID)
-        </td>
-        </tr>
-
-        <tr>
-        <td style="vertical-align: middle; text-align: right;">
-            @Html.LabelFor(model => model.DetailedDescription)
-        </td>
-        <td style="vertical-align: middle; text-align: left;">
-            @Html.TextAreaFor(model => model.DetailedDescription, new { cols = "60", rows = "4" })<br />
-            @Html.ValidationMessageFor(model => model.DetailedDescription)
-        </td>
-        </tr>
-
-        <tr>
-        <td style="vertical-align: middle; text-align: right;">
-            @Html.LabelFor(model => model.RequestStateID, "İş Durumu")
-        </td>
-        <td style="vertical-align: middle; text-align: left;">
-            @Html.DropDownList("RequestStateID", String.Empty)<br />
-            @Html.ValidationMessageFor(model => model.RequestStateID)
-        </td>
-        </tr>
-       <!-- <tr>
+                            <br />
+                            @Html.ValidationMessageFor(model => model.PersonnelID)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="vertical-align: middle; text-align: right;">
+                            @Html.LabelFor(model => model.RequestTypeID, "İş İstek Tipi")
+                        </td>
+                        <td style="vertical-align: middle; text-align: left;">
+                            @Html.DropDownList("RequestTypeID", String.Empty)<br />
+                            @Html.ValidationMessageFor(model => model.RequestTypeID)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="vertical-align: middle; text-align: right;">
+                            @Html.LabelFor(model => model.InventoryID, "İlgili Cihaz / Envanter")
+                        </td>
+                        <td style="vertical-align: middle; text-align: left;">
+                            @(Html.Telerik().ComboBox()
+            .Name("InventoryID")
+            .HtmlAttributes(new { id = "ComboBox_wrapper_inventory" })
+            .AutoFill(true).HtmlAttributes(new { style = "width:210px;" }).DropDownHtmlAttributes(new { style = "width: 210px;" }).InputHtmlAttributes(new { style = "vertical-align: middle; font-size:100%; border: 1px solid; width: 200px;" })
+            .DataBinding(binding => binding.Ajax().Select("LoadInventoriesAjax", "Inventory"))
+            .HighlightFirstMatch(true)
+            .BindTo((SelectList)ViewBag.InventoryID)
+            .Filterable(filtering => filtering.FilterMode((AutoCompleteFilterMode)Enum.Parse(typeof(AutoCompleteFilterMode), "2", false)))
+            .ClientEvents(events => events.OnDataBinding("onInventoryDataBinding")))
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="vertical-align: middle; text-align: right;">
+                            @Html.LabelFor(model => model.DetailedDescription)
+                        </td>
+                        <td style="vertical-align: middle; text-align: left;">
+                            @Html.TextAreaFor(model => model.DetailedDescription, new { cols = "60", rows = "4" })<br />
+                            @Html.ValidationMessageFor(model => model.DetailedDescription)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="vertical-align: middle; text-align: right;">
+                            @Html.LabelFor(model => model.RequestStateID, "İş Durumu")
+                        </td>
+                        <td style="vertical-align: middle; text-align: left;">
+                            @Html.DropDownList("RequestStateID", String.Empty)<br />
+                            @Html.ValidationMessageFor(model => model.RequestStateID)
+                        </td>
+                    </tr>
+                    <!-- <tr>
         <td style="vertical-align: middle; text-align: right;">
             @Html.LabelFor(model => model.Note)
         </td>
@@ -113,25 +130,25 @@
             @Html.ValidationMessageFor(model => model.Note)
         </td>
         </tr>-->
-        <tr>
-        <td style="vertical-align: middle; text-align: right;">
-            @Html.LabelFor(model => model.StartDate)
-        </td>
-        <td style="vertical-align: middle; text-align: left;">
-            @Html.Telerik().DateTimePickerFor(model => model.StartDate).Name("StartDate").Value(DateTime.Now).ClientEvents(events=>events.OnLoad("TimePickerSet24h"))<br />
-            @Html.ValidationMessageFor(model => model.StartDate)
-        </td>
-        </tr>
-        <tr>
-        <td style="vertical-align: middle; text-align: right;">
-            @Html.LabelFor(model => model.EndDate)
-        </td>
-        <td style="vertical-align: middle; text-align: left;">
-            @Html.Telerik().DateTimePickerFor(model => model.EndDate).Name("EndDate").Value(DateTime.Now).ClientEvents(events=>events.OnLoad("EndTimePickerSet24h"))<br />
-            @Html.ValidationMessageFor(model => model.EndDate)
-        </td>
-        </tr>
-        <!--<tr>
+                    <tr>
+                        <td style="vertical-align: middle; text-align: right;">
+                            @Html.LabelFor(model => model.StartDate)
+                        </td>
+                        <td style="vertical-align: middle; text-align: left;">
+                            @Html.Telerik().DateTimePickerFor(model => model.StartDate).Name("StartDate").Value(DateTime.Now).ClientEvents(events => events.OnLoad("TimePickerSet24h"))<br />
+                            @Html.ValidationMessageFor(model => model.StartDate)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="vertical-align: middle; text-align: right;">
+                            @Html.LabelFor(model => model.EndDate)
+                        </td>
+                        <td style="vertical-align: middle; text-align: left;">
+                            @Html.Telerik().DateTimePickerFor(model => model.EndDate).Name("EndDate").Value(DateTime.Now).ClientEvents(events => events.OnLoad("EndTimePickerSet24h"))<br />
+                            @Html.ValidationMessageFor(model => model.EndDate)
+                        </td>
+                    </tr>
+                    <!--<tr>
         <td style="vertical-align: middle; text-align: right;">
             @Html.LabelFor(model => model.IsApproved)
         </td>
@@ -140,16 +157,16 @@
             @Html.ValidationMessageFor(model => model.IsApproved)
         </td>
         </tr>-->
-        <tr>
-        <td style="vertical-align: middle; text-align: right;">
-            @Html.LabelFor(model => model.SendEmail)
-        </td>
-        <td style="vertical-align: middle; text-align: left;">
-            @Html.EditorFor(model => model.SendEmail)<br />
-            @Html.ValidationMessageFor(model => model.SendEmail)
-        </td>
-        </tr>
-        <!--<tr>
+                    <tr>
+                        <td style="vertical-align: middle; text-align: right;">
+                            @Html.LabelFor(model => model.SendEmail)
+                        </td>
+                        <td style="vertical-align: middle; text-align: left;">
+                            @Html.EditorFor(model => model.SendEmail)<br />
+                            @Html.ValidationMessageFor(model => model.SendEmail)
+                        </td>
+                    </tr>
+                    <!--<tr>
         <td style="vertical-align: middle; text-align: right;">
             @Html.LabelFor(model => model.IsAllDay)
         </td>
@@ -158,36 +175,34 @@
             @Html.ValidationMessageFor(model => model.IsAllDay)
         </td>
         </tr>-->
-
-        <tr>
-        <td style="vertical-align: middle; text-align: right;">
-            @Html.LabelFor(model => model.UserID, "İş Sahibi")
-        </td>
-        <td style="vertical-align: middle; text-align: left;">
-            @Html.DropDownList("UserID", String.Empty)
-            @Html.ValidationMessageFor(model => model.UserID)
-        </td>
-        </tr>
-        <tr>
-        <td style="vertical-align: middle; text-align: right;">
-            @Html.LabelFor(model => model.UserReqID)
-        </td>
-        <td style="vertical-align: middle; text-align: left;">
-            @Html.DropDownList("UserReqID", String.Empty)<br />
-            @Html.ValidationMessageFor(model => model.UserReqID)
-        </td>
-        </tr>
-
-        <!--<tr>
+                    <tr>
+                        <td style="vertical-align: middle; text-align: right;">
+                            @Html.LabelFor(model => model.UserID, "İş Sahibi")
+                        </td>
+                        <td style="vertical-align: middle; text-align: left;">
+                            @Html.DropDownList("UserID", String.Empty)
+                            @Html.ValidationMessageFor(model => model.UserID)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="vertical-align: middle; text-align: right;">
+                            @Html.LabelFor(model => model.UserReqID)
+                        </td>
+                        <td style="vertical-align: middle; text-align: left;">
+                            @Html.DropDownList("UserReqID", String.Empty)<br />
+                            @Html.ValidationMessageFor(model => model.UserReqID)
+                        </td>
+                    </tr>
+                    <!--<tr>
         <td style="vertical-align: middle; text-align: right;">
             @Html.LabelFor(model => model.TimeStamp)
         </td>
         <td style="vertical-align: middle; text-align: left;">
-            @Html.EditorFor(model => model.TimeStamp, new { disabled = "true"})<br />
+            @Html.EditorFor(model => model.TimeStamp, new { disabled = "true" })<br />
             @Html.ValidationMessageFor(model => model.TimeStamp)
         </td>
         </tr>-->
-    <!--<tr>
+                    <!--<tr>
         <td style="vertical-align: middle; text-align: right;">
             @Html.LabelFor(model => model.ValidationStateID, "Durum")
         </td>
@@ -196,13 +211,14 @@
             @Html.ValidationMessageFor(model => model.ValidationStateID)
         </td>
         </tr>-->
-        </tbody>
+                </tbody>
             </table>
         </fieldset>
         <div class="submit-row">
-          <p class="deletelink-box">  @Html.ActionLink("Vazgeç ve Geri Dön", "Index")</p>
-          <input type="submit" value="Ekle" />
-
+            <p class="deletelink-box">
+                @Html.ActionLink("Vazgeç ve Geri Dön", "Index")</p>
+            <input type="submit" value="Ekle" />
         </div>
 
-}
+    }
+</div>

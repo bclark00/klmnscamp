@@ -168,6 +168,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LocationController.cs" />
     <Compile Include="Controllers\PersonnelController.cs" />
+    <Compile Include="Controllers\ProjectController.cs" />
     <Compile Include="Controllers\RequestIssueController.cs" />
     <Compile Include="Controllers\RequestStateController.cs" />
     <Compile Include="Controllers\RequestTypeController.cs" />
@@ -198,6 +199,7 @@
     <Compile Include="Models\Payment.cs" />
     <Compile Include="Models\PaymentFile.cs" />
     <Compile Include="Models\Personnel.cs" />
+    <Compile Include="Models\Project.cs" />
     <Compile Include="Models\RequestIssue.cs" />
     <Compile Include="Models\RequestState.cs" />
     <Compile Include="Models\RequestType.cs" />
@@ -245,6 +247,7 @@
     <Content Include="Content\Black\treeview-line.png" />
     <Content Include="Content\Black\treeview-nodes-rtl.png" />
     <Content Include="Content\Black\treeview-nodes.png" />
+    <Content Include="Content\chosen.css" />
     <Content Include="Content\Coquette\accept.png" />
     <Content Include="Content\Coquette\accept_page.png" />
     <Content Include="Content\Coquette\add.png" />
@@ -352,6 +355,7 @@
     <Content Include="Content\images\cal_plus.gif" />
     <Content Include="Content\images\cal_reverse.gif" />
     <Content Include="Content\images\checked.gif" />
+    <Content Include="Content\images\chosen-sprite.png" />
     <Content Include="Content\images\CLIPART_OF_wl.jpg" />
     <Content Include="Content\images\clock\0-1.png" />
     <Content Include="Content\images\clock\0-2.png" />
@@ -940,6 +944,7 @@
     <Content Include="Scripts\2011.2.712\telerik.upload.min.js" />
     <Content Include="Scripts\2011.2.712\telerik.window.min.js" />
     <Content Include="Scripts\actions.min.js" />
+    <Content Include="Scripts\chosen.jquery.js" />
     <Content Include="Scripts\cssHoverFix.htc" />
     <Content Include="Scripts\fullcalendar.js" />
     <Content Include="Scripts\fullcalendar.min.js" />
@@ -1081,6 +1086,11 @@
     <Content Include="Views\Personnel\Create.cshtml" />
     <Content Include="Views\Personnel\Edit.cshtml" />
     <Content Include="Views\Personnel\Delete.cshtml" />
+    <Content Include="Views\Project\Index.cshtml" />
+    <Content Include="Views\Project\Details.cshtml" />
+    <Content Include="Views\Project\Create.cshtml" />
+    <Content Include="Views\Project\Edit.cshtml" />
+    <Content Include="Views\Project\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_GlobalResources\EditorLocalization.en-US.resx">

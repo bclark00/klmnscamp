@@ -45,5 +45,7 @@ namespace Klmsncamp.Models
 
         [Display(Name = "Durum")]
         public virtual ValidationState ValidationState { get; set; }
+
+        public virtual ICollection<Project> Projects { get; set; }
     }
 }

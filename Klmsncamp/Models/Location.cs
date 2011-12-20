@@ -28,5 +28,7 @@ namespace Klmsncamp.Models
         public int ValidationStateID { get; set; }
 
         public virtual ValidationState ValidationState { get; set; }
+
+        public virtual ICollection<Project> Projects { get; set; }
     }
 }

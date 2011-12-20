@@ -30,6 +30,18 @@
                 .Content(@<text>
         <ul class="product-list">
             <li class="product">
+                <img src="@Url.Content("~/Content/Coquette/add_to_folder.png")" alt="Yeni Proje Girişi" />
+                <p>
+                    @Html.ActionLink("Yeni Proje", "Create", "Project", null, null)
+                </p>
+            </li>
+            <li class="product">
+                <img src="@Url.Content("~/Content/Coquette/folder.png")" alt="Proje Listesi" />
+                <p>
+                    @Html.ActionLink("Proje Listesi", "Index", "Project", null, null)
+                </p>
+            </li>
+            <li class="product">
                 <img src="@Url.Content("~/Content/Milky/44.png")" alt="Yeni Arıza Bildirimi" />
                 <p>
                     @Html.ActionLink("Arıza / İş Planı Oluştur", "Create", "RequestIssue", null, null)
@@ -92,8 +104,6 @@
                             </td>
                             <td>@Html.ActionLink("Geçerlilik Durumları", "Index", "ValidationState", null, null)
                             </td>
-                        </tr>
-                        <tr>
                             <td>@Html.ActionLink("Departman Tanımları", "Index", "Location", null, null)
                             </td>
                             <td>@Html.ActionLink("Personel Tanımları", "Index", "Personnel", null, null)

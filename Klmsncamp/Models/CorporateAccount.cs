@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
-using System.ComponentModel.DataAnnotations;
 
 namespace Klmsncamp.Models
 {
@@ -37,10 +37,12 @@ namespace Klmsncamp.Models
 
         [Display(Name = "Tipi")]
         public int? CorporateTypeID { get; set; }
+
         public virtual CorporateType CorporateType { get; set; }
 
         [Display(Name = "Kullanıcı mı?")]
         public int? UserID { get; set; }
+
         public virtual User User { get; set; }
 
         [Required(ErrorMessage = "Zorunlu Alan")]
@@ -49,6 +51,6 @@ namespace Klmsncamp.Models
 
         public virtual ValidationState ValidationState { get; set; }
 
-
+        public virtual ICollection<Project> Projects { get; set; }
     }
 }

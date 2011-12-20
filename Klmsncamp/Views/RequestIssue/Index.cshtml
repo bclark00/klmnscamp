@@ -1,7 +1,7 @@
 ﻿@using Telerik.Web.Mvc.UI
 @model IEnumerable<Klmsncamp.Models.RequestIssue>
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Arıza Bildirimleri";
 }
 @section script
 {
@@ -29,9 +29,13 @@
 
     </script>
     <style type="text/css">
-        .t-grid .t-grid-header .t-header, .t-grid .t-grid-header .t-last-header
+        .t-grid .t-grid-header .t-header .t-link
         {
             height: auto;
+        }
+
+        .t-grid .t-grid-header .t-header, .t-grid .t-grid-header .t-last-header
+        {
             white-space: normal;
         }
 

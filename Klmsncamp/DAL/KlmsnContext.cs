@@ -58,6 +58,8 @@ namespace Klmsncamp.Models
 
         public DbSet<LogRequestIssueDetail> LogRequestIssueDetails { get; set; }
 
+        public DbSet<Project> Projects { get; set; }
+
         public ObjectContext KlmsnObjectContext
         {
             get { return ((IObjectContextAdapter)this).ObjectContext; }
@@ -83,6 +85,8 @@ namespace Klmsncamp.Models
             modelBuilder.Entity<RequestIssue>().HasRequired(a => a.ValidationState).WithMany().HasForeignKey(u => u.WorkshopID).WillCascadeOnDelete(false);
 
             modelBuilder.Entity<LogRequestIssue>().HasRequired(a => a.RequestIssue).WithMany().HasForeignKey(u => u.RequestIssueID).WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<Project>().HasRequired(a => a.cUser).WithMany().HasForeignKey(u => u.cUserID).WillCascadeOnDelete(false);
         }
     }
 }
