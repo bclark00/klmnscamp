@@ -8,7 +8,7 @@ using System.Web.Mvc;
 using Klmsncamp.Models;
 
 namespace Klmsncamp.Controllers
-{ 
+{
     public class InventoryController : Controller
     {
         private KlmsnContext db = new KlmsnContext();
@@ -37,12 +37,12 @@ namespace Klmsncamp.Controllers
         public ActionResult Create()
         {
             ViewBag.LocationID = new SelectList(db.Locations, "LocationID", "Description");
-            ViewBag.CorporateAccountID = new SelectList(db.CorporateAccounts.Where(e=>e.CorporateTypeID==1), "CorporateAccountID", "Title");
+            ViewBag.CorporateAccountID = new SelectList(db.CorporateAccounts.Where(e => e.CorporateTypeID == 1), "CorporateAccountID", "Title");
             ViewBag.ValidationStateID = new SelectList(db.ValidationStates, "ValidationStateID", "Description");
             ViewBag.InventoryOwnershipID = new SelectList(db.InventoryOwnerships, "InventoryOwnershipID", "Description");
-            ViewBag.CorporateAccountServiceID = new SelectList(db.CorporateAccounts.Where(e=>e.CorporateTypeID==2), "CorporateAccountID", "Title");
+            ViewBag.CorporateAccountServiceID = new SelectList(db.CorporateAccounts.Where(e => e.CorporateTypeID == 2), "CorporateAccountID", "Title");
             return View();
-        } 
+        }
 
         //
         // POST: /Inventory/Create
@@ -54,7 +54,7 @@ namespace Klmsncamp.Controllers
             {
                 db.Inventories.Add(ınventory);
                 db.SaveChanges();
-                return RedirectToAction("Index");  
+                return RedirectToAction("Index");
             }
 
             ViewBag.LocationID = new SelectList(db.Locations, "LocationID", "Description", ınventory.LocationID);
@@ -64,10 +64,10 @@ namespace Klmsncamp.Controllers
             ViewBag.CorporateAccountServiceID = new SelectList(db.CorporateAccounts.Where(e => e.CorporateTypeID == 2), "CorporateAccountID", "Title", ınventory.CorporateAccountServiceID);
             return View(ınventory);
         }
-        
+
         //
         // GET: /Inventory/Edit/5
- 
+
         public ActionResult Edit(int id)
         {
             Inventory ınventory = db.Inventories.Find(id);
@@ -101,7 +101,7 @@ namespace Klmsncamp.Controllers
 
         //
         // GET: /Inventory/Delete/5
- 
+
         public ActionResult Delete(int id)
         {
             Inventory ınventory = db.Inventories.Find(id);
@@ -113,11 +113,41 @@ namespace Klmsncamp.Controllers
 
         [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmed(int id)
-        {            
+        {
             Inventory ınventory = db.Inventories.Find(id);
             db.Inventories.Remove(ınventory);
             db.SaveChanges();
             return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public ActionResult LoadInventoriesAjax(int? LocationID)
+        {
+            try
+            {
+                if (LocationID.Value > 0)
+                {
+                    // return json result of countries
+                    return new JsonResult
+                    {
+                        Data = new SelectList(db.Inventories.Where(s => s.LocationID == LocationID.Value), "InventoryID", "Description")
+                    };
+                }
+                else
+                {
+                    return new JsonResult
+                    {
+                        Data = new SelectList(db.Inventories, "InventoryID", "Description")
+                    };
+                }
+            }
+            catch
+            {
+                return new JsonResult
+                {
+                    Data = new SelectList(db.Inventories, "InventoryID", "Description")
+                };
+            }
         }
 
         protected override void Dispose(bool disposing)
