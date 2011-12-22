@@ -18,6 +18,7 @@ namespace Klmsncamp.Models
         public virtual RequestType RequestType { get; set; }
 
         [Display(Name = "Arıza Bildirimi Yapan")]
+        [ForeignKey("Personnel")]
         public int? PersonnelID { get; set; }
 
         [Display(Name = "Arıza Bildirimi Yapan")]
@@ -110,5 +111,19 @@ namespace Klmsncamp.Models
         public int ValidationStateID { get; set; }
 
         public virtual ValidationState ValidationState { get; set; }
+
+        [Display(Name = "Bağlı Olduğu Projeler")]
+        public ICollection<Project> Projects { get; set; }
+
+        [Display(Name = "İlgili Firmalar")]
+        public ICollection<CorporateAccount> CorporateAccounts { get; set; }
+
+        [Display(Name = "İlgili Departmanlar")]
+        public ICollection<Location> Locations { get; set; }
+
+        [Display(Name = "İlgili Personeller")]
+        public ICollection<Personnel> Personnels { get; set; }
+
+        public virtual ICollection<RequestIssueFile> RequestIssueFiles { get; set; }
     }
 }

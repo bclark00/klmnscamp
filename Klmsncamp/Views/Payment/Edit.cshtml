@@ -124,11 +124,12 @@
                         counter++;
                         <tr>
                             <td style="vertical-align: middle; text-align: right;">
-                                (<a href="/Payment/FileDelete?id=@file.PaymentFileID.ToString()&paymentid=@file.PaymentID.ToString()">Sil</a>)&nbsp;|&nbsp;Bağlı
+                                @Html.ActionLink("Sil","FileDelete",new { id= file.PaymentFileID.ToString()})&nbsp;|&nbsp;Bağlı
                                 Dosya No# @counter
+                               
                             </td>
                             <td style="vertical-align: middle; text-align: left;">
-                                <a href="/Payment/Download?id=@file.PaymentFileID.ToString()">@file.PaymentFileName</a>&nbsp;(@asMb(file.PaymentFileSize)
+                                @Html.ActionLink(file.PaymentFileName,"Download",new { id= file.PaymentFileID.ToString()})&nbsp;(@asMb(file.PaymentFileSize)
                                 &nbsp;Kb)
                             </td>
                         </tr>
@@ -171,9 +172,9 @@
     </fieldset>
 </div>
 @functions{
-    public string asMb(int number)
+    public string asMb(float number)
     {
-        float number_ = number / (1024);
-        return Math.Round(number_, 2).ToString();
+        float number_ = number / (1024*1024);
+        return Math.Round(number_, 3).ToString();
     }
 }
