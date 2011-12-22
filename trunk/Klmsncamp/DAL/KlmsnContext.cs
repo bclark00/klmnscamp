@@ -38,6 +38,8 @@ namespace Klmsncamp.Models
 
         public DbSet<RequestIssue> RequestIssues { get; set; }
 
+        public DbSet<RequestIssueFile> RequestIssueFiles { get; set; }
+
         public DbSet<User> Users { get; set; }
 
         public DbSet<UserGroup> UserGroups { get; set; }
@@ -82,7 +84,13 @@ namespace Klmsncamp.Models
                         .WithMany()
                         .HasForeignKey(u => u.WorkshopID).WillCascadeOnDelete(false);
 
-            modelBuilder.Entity<RequestIssue>().HasRequired(a => a.ValidationState).WithMany().HasForeignKey(u => u.WorkshopID).WillCascadeOnDelete(false);
+            modelBuilder.Entity<RequestIssue>()
+                .HasMany(c => c.Personnels).WithMany(i => i.RequestIssues)
+                .Map(t => t.MapLeftKey("RequestIssueID")
+                    .MapRightKey("PersonnelID")
+                    .ToTable("RequestIssuePersonnel"));
+
+            modelBuilder.Entity<RequestIssue>().HasRequired(a => a.ValidationState).WithMany().HasForeignKey(u => u.ValidationStateID).WillCascadeOnDelete(false);
 
             modelBuilder.Entity<LogRequestIssue>().HasRequired(a => a.RequestIssue).WithMany().HasForeignKey(u => u.RequestIssueID).WillCascadeOnDelete(false);
 

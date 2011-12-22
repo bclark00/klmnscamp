@@ -158,6 +158,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Data\MyRoleProvider.cs" />
+    <Compile Include="App_GlobalResources\UploadLocalization.tr-TR.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>UploadLocalization.tr-TR.resx</DependentUpon>
+    </Compile>
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CalendarController.cs" />
     <Compile Include="Controllers\CorporateAccountController.cs" />
@@ -201,6 +206,7 @@
     <Compile Include="Models\Personnel.cs" />
     <Compile Include="Models\Project.cs" />
     <Compile Include="Models\RequestIssue.cs" />
+    <Compile Include="Models\RequestIssueFile.cs" />
     <Compile Include="Models\RequestState.cs" />
     <Compile Include="Models\RequestType.cs" />
     <Compile Include="Models\RequestTypes.asmx.cs">
@@ -1110,6 +1116,7 @@
     </Content>
     <Content Include="App_GlobalResources\UploadLocalization.tr-TR.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>UploadLocalization.tr-TR.designer.cs</LastGenOutput>
     </Content>
   </ItemGroup>
   <ItemGroup>

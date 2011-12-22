@@ -126,7 +126,7 @@
     <comment>Retry button text</comment>
   </data>
   <data name="Select" xml:space="preserve">
-    <value>Seç</value>
+    <value>Sec</value>
     <comment>Select button text</comment>
   </data>
   <data name="Remove" xml:space="preserve">

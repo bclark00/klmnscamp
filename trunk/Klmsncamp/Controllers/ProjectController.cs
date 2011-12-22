@@ -63,44 +63,53 @@ namespace Klmsncamp.Controllers
                 db.Projects.Add(project);
                 db.SaveChanges();
 
-                foreach (var location_ in formcollection["LocationID"].ToList())
+                if (formcollection["LocationID"] != null)
                 {
-                    try
+                    foreach (var location_ in formcollection["LocationID"].Split(',').ToList())
                     {
-                        int location_index = int.Parse(location_.ToString());
-                        var x_location = db.Locations.Find(location_index);
-                        x_location.Projects.Add(project);
+                        try
+                        {
+                            int location_index = int.Parse(location_.ToString());
+                            var x_location = db.Locations.Find(location_index);
+                            x_location.Projects.Add(project);
+                        }
+                        catch
+                        { }
+                        db.SaveChanges();
                     }
-                    catch
-                    { }
-                    db.SaveChanges();
                 }
 
-                foreach (var corp_ in formcollection["CorporateAccountID"].ToList())
+                if (formcollection["CorporateAccountID"] != null)
                 {
-                    try
+                    foreach (var corp_ in formcollection["CorporateAccountID"].Split(',').ToList())
                     {
-                        int corp_index = int.Parse(corp_.ToString());
-                        var x_corp = db.CorporateAccounts.Find(corp_index);
-                        x_corp.Projects.Add(project);
-                    }
-                    catch
-                    { }
+                        try
+                        {
+                            int corp_index = int.Parse(corp_.ToString());
+                            var x_corp = db.CorporateAccounts.Find(corp_index);
+                            x_corp.Projects.Add(project);
+                        }
+                        catch
+                        { }
 
-                    db.SaveChanges();
+                        db.SaveChanges();
+                    }
                 }
 
-                foreach (var pers_ in formcollection["PersonnelID"].ToList())
+                if (formcollection["PersonnelID"] != null)
                 {
-                    try
+                    foreach (var pers_ in formcollection["PersonnelID"].Split(',').ToList())
                     {
-                        int pers_index = int.Parse(pers_.ToString());
-                        var x_pers = db.Personnels.Find(pers_index);
-                        x_pers.Projects.Add(project);
+                        try
+                        {
+                            int pers_index = int.Parse(pers_.ToString());
+                            var x_pers = db.Personnels.Find(pers_index);
+                            x_pers.Projects.Add(project);
+                        }
+                        catch
+                        { }
+                        db.SaveChanges();
                     }
-                    catch
-                    { }
-                    db.SaveChanges();
                 }
 
                 return RedirectToAction("Index");

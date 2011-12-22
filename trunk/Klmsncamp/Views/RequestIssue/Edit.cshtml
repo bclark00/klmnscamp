@@ -3,6 +3,14 @@
 @{
     ViewBag.Title = "İş İstek Düzenleme";
 }
+<script src="@Url.Content("~/Scripts/chosen.jquery.js")" type="text/javascript"></script>
+<link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/chosen.css")" />
+@{ Html.Telerik().ScriptRegistrar()
+        .OnDocumentReady(@<text> $(".chzn-choices input").live('hover', function(){
+    $('.chzn-container').css('zIndex',1); $(this).closest('.chzn-container').css('zIndex',100);
+    }); $(".chzn-select").chosen(); $(".chzn-select-deselect").chosen({ allow_single_deselect:
+    true });
+    </text>); }
 <script type="text/javascript">
     function TimePickerSet24h() {
         var picker = $("#StartDate").data("tDateTimePicker");
@@ -84,6 +92,28 @@
                         <td style="vertical-align: middle; text-align: left;">
                             @Html.DropDownList("RequestTypeID", String.Empty)<br />
                             @Html.ValidationMessageFor(model => model.RequestTypeID)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="vertical-align: middle; text-align: right;">
+                            @Html.LabelFor(model => model.Locations)
+                        </td>
+                        <td align="left" style="text-align: left;">@Html.ListBox("DetailLocationID", null, new { @class = "chzn-select", style = "width: 350px;" })
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="vertical-align: middle; text-align: right;">
+                            @Html.LabelFor(model => model.CorporateAccounts)
+                        </td>
+                        <td align="left" style="text-align: left;">
+                            @Html.ListBox("DetailCorporateAccountID", null, new { @class = "chzn-select", style = "width: 350px;" })
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="vertical-align: middle; text-align: right;">
+                            @Html.LabelFor(model => model.Locations)
+                        </td>
+                        <td align="left" style="text-align: left;">@Html.ListBox("DetailPersonnelID", null, new { @class = "chzn-select", style = "width: 350px;" })
                         </td>
                     </tr>
                     <tr>
@@ -218,7 +248,7 @@
                                 @Html.ValidationMessageFor(model => model.UserID)
                             </td>
                         </tr>
-
+                        <!--
                         <tr>
                             <td style="vertical-align: middle; text-align: right;">
                                 @Html.LabelFor(model => model.ValidationStateID)
@@ -228,7 +258,7 @@
                                 @Html.ValidationMessageFor(model => model.ValidationStateID)
                             </td>
                         </tr>
-
+                        -->
                     }
                     else
                     {
@@ -241,6 +271,7 @@
                         @Html.HiddenFor(model => model.UserID)
                         @Html.HiddenFor(model => model.ValidationStateID)
                     }
+                    @Html.HiddenFor(model => model.ValidationStateID)
                     @Html.HiddenFor(model => model.TimeStamp)
                     @Html.Hidden("show", new { value = ViewBag.show })
                     @Html.Hidden("page", new { value = ViewBag.page })

@@ -54,5 +54,7 @@ namespace Klmsncamp.Models
         public virtual User cUser { get; set; }
 
         public DateTime TimeStamp { get; set; }
+
+        public virtual ICollection<RequestIssue> RequestIssues { get; set; }
     }
 }
