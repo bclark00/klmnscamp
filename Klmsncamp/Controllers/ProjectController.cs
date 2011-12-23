@@ -19,13 +19,13 @@ namespace Klmsncamp.Controllers
 
         public ViewResult Index()
         {
-            var projects = db.Projects.Include(p => p.RequestState).Include(p => p.User).Include(p => p.cUser).Include(p => p.Locations).Include(p => p.CorporateAccounts).Include(p => p.Personnels);
+            var projects = db.Projects.Include(p => p.RequestState).Include(p => p.User).Include(p => p.cUser).Include(p => p.RequestIssues).Include(p => p.Locations).Include(p => p.CorporateAccounts).Include(p => p.Personnels);
             return View(projects.ToList());
         }
 
         //
         // GET: /Project/Details/5
-
+        [Authorize]
         public ViewResult Details(int id)
         {
             Project project = db.Projects.Find(id);
@@ -34,7 +34,7 @@ namespace Klmsncamp.Controllers
 
         //
         // GET: /Project/Create
-
+        [Authorize]
         public ActionResult Create()
         {
             ViewBag.RequestStateID = new SelectList(db.RequestStates, "RequestStateID", "Description");
@@ -126,7 +126,7 @@ namespace Klmsncamp.Controllers
 
         //
         // GET: /Project/Edit/5
-
+        [Authorize]
         public ActionResult Edit(int id)
         {
             Project project = db.Projects.Include(p => p.Locations).Include(p => p.CorporateAccounts).Include(p => p.Personnels).Where(i => i.ProjectID == id).SingleOrDefault();
@@ -142,7 +142,7 @@ namespace Klmsncamp.Controllers
 
         //
         // POST: /Project/Edit/5
-
+        [Authorize]
         [HttpPost]
         public ActionResult Edit(Project project, FormCollection formcollection)
         {
@@ -205,6 +205,11 @@ namespace Klmsncamp.Controllers
                         db.SaveChanges();
                     }
                 }
+
+                if (formcollection["AddNewRq"] != null)
+                {
+                    return RedirectToAction("Create", "RequestIssue", new { projectid = project.ProjectID });
+                }
                 return RedirectToAction("Index");
             }
             ViewBag.RequestStateID = new SelectList(db.RequestStates, "RequestStateID", "Description", project.RequestStateID);
@@ -219,7 +224,7 @@ namespace Klmsncamp.Controllers
 
         //
         // GET: /Project/Delete/5
-
+        [Authorize]
         public ActionResult Delete(int id)
         {
             Project project = db.Projects.Find(id);
@@ -228,7 +233,7 @@ namespace Klmsncamp.Controllers
 
         //
         // POST: /Project/Delete/5
-
+        [Authorize]
         [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmed(int id)
         {

@@ -30,11 +30,11 @@ namespace Klmsncamp.Controllers
             try
             {
                 RequestIssue rq = db.RequestIssues.Find(Rqid);
-                return RedirectToAction("Edit", new { id = rq.RequestIssueID });
+                return RedirectToAction("Edit", new { id = rq.RequestIssueID, show = "A", page = 1 });
             }
             catch
             {
-                return Redirect("/?err=404");
+                return RedirectToAction("Index", "Home", new { err = "404" });
             }
         }
 
@@ -147,7 +147,7 @@ namespace Klmsncamp.Controllers
         //
         // GET: /RequestIssue/Create
         [Authorize]
-        public ActionResult Create()
+        public ActionResult Create(int? projectid)
         {
             MembershipUser currentuser_ = new UserRepository().GetUser(User.Identity.Name);
             int user_wherecondition = int.Parse((currentuser_.ProviderUserKey).ToString());
@@ -161,9 +161,21 @@ namespace Klmsncamp.Controllers
             ViewBag.UserReqID = new SelectList(db.Users.Where(x => x.UserId == user_wherecondition), "UserId", "FullName", currentuser_.ProviderUserKey);
             ViewBag.UserID = new SelectList(db.Users, "UserId", "FullName", currentuser_.ProviderUserKey);
             ViewBag.ValidationStateID = new SelectList(db.ValidationStates, "ValidationStateID", "Description");
-            ViewBag.DetailLocationID = new MultiSelectList(db.Locations, "LocationID", "Description");
-            ViewBag.DetailCorporateAccountID = new MultiSelectList(db.CorporateAccounts, "CorporateAccountID", "Title");
-            ViewBag.DetailPersonnelID = new MultiSelectList(db.Personnels, "PersonnelID", "FullName");
+
+            if (projectid != null && projectid.GetType().Name == "Int32")
+            {
+                ViewBag.DetailProjectID = new MultiSelectList(db.Projects, "ProjectID", "MultiboxDescription", db.Projects.Where(i => i.ProjectID == projectid).Select(p => p.ProjectID).ToList());
+                ViewBag.DetailLocationID = new MultiSelectList(db.Locations, "LocationID", "Description", db.Projects.Include(s => s.Locations).Where(i => i.ProjectID == projectid).SingleOrDefault().Locations.Select(p => p.LocationID).ToList());
+                ViewBag.DetailCorporateAccountID = new MultiSelectList(db.CorporateAccounts, "CorporateAccountID", "Title", db.Projects.Include(s => s.CorporateAccounts).Where(i => i.ProjectID == projectid).SingleOrDefault().CorporateAccounts.Select(p => p.CorporateAccountID).ToList());
+                ViewBag.DetailPersonnelID = new MultiSelectList(db.Personnels, "PersonnelID", "FullName", db.Projects.Include(s => s.Personnels).Where(i => i.ProjectID == projectid).SingleOrDefault().Personnels.Select(p => p.PersonnelID).ToList());
+            }
+            else
+            {
+                ViewBag.DetailProjectID = new MultiSelectList(db.Projects, "ProjectID", "MultiboxDescription");
+                ViewBag.DetailLocationID = new MultiSelectList(db.Locations, "LocationID", "Description");
+                ViewBag.DetailCorporateAccountID = new MultiSelectList(db.CorporateAccounts, "CorporateAccountID", "Title");
+                ViewBag.DetailPersonnelID = new MultiSelectList(db.Personnels, "PersonnelID", "FullName");
+            }
 
             ViewBag.timestamp = DateTime.Now;
             return View();
@@ -232,6 +244,22 @@ namespace Klmsncamp.Controllers
                     }
                 }
 
+                if (formcollection["DetailProjectID"] != null)
+                {
+                    foreach (var proj_ in formcollection["DetailProjectID"].Split(',').ToList())
+                    {
+                        try
+                        {
+                            int project_index = int.Parse(proj_.ToString());
+                            var x_proj = db.Projects.Find(project_index);
+                            x_proj.RequestIssues.Add(requestıssue);
+                        }
+                        catch
+                        { }
+                        db.SaveChanges();
+                    }
+                }
+
                 int i = 0;
                 foreach (var file_ in Request.Files)
                 {
@@ -264,6 +292,7 @@ namespace Klmsncamp.Controllers
             ViewBag.UserID = new SelectList(db.Users, "UserId", "FullName", requestıssue.UserID);
             ViewBag.ValidationStateID = new SelectList(db.ValidationStates, "ValidationStateID", "Description", requestıssue.ValidationStateID);
 
+            ViewBag.DetailProjectID = new MultiSelectList(db.Locations, "ProjectID", "MultiboxDescription", requestıssue.Projects.Select(p => p.ProjectID).ToList());
             ViewBag.DetailLocationID = new MultiSelectList(db.Locations, "LocationID", "Description", requestıssue.Locations.Select(p => p.LocationID).ToList());
             ViewBag.DetailCorporateAccountID = new MultiSelectList(db.CorporateAccounts, "CorporateAccountID", "Title", requestıssue.CorporateAccounts.Select(p => p.CorporateAccountID).ToList());
             ViewBag.DetailPersonnelID = new MultiSelectList(db.Personnels, "PersonnelID", "FullName", requestıssue.Personnels.Select(p => p.PersonnelID).ToList());
@@ -276,7 +305,7 @@ namespace Klmsncamp.Controllers
         [Authorize]
         public ActionResult Edit(int id, string show, int page)
         {
-            RequestIssue requestıssue = db.RequestIssues.Include(p => p.Locations).Include(p => p.CorporateAccounts).Include(p => p.Personnels).Where(i => i.RequestIssueID == id).SingleOrDefault();
+            RequestIssue requestıssue = db.RequestIssues.Include(p => p.RequestIssueFiles).Include(p => p.Projects).Include(p => p.Locations).Include(p => p.CorporateAccounts).Include(p => p.Personnels).Where(i => i.RequestIssueID == id).SingleOrDefault();
 
             if (requestıssue.ValidationStateID == 1)
             {
@@ -293,6 +322,7 @@ namespace Klmsncamp.Controllers
             ViewBag.UserID = new SelectList(db.Users, "UserId", "FullName", requestıssue.UserID);
             ViewBag.ValidationStateID = new SelectList(db.ValidationStates, "ValidationStateID", "Description", requestıssue.ValidationStateID);
 
+            ViewBag.DetailProjectID = new MultiSelectList(db.Projects, "ProjectID", "MultiboxDescription", requestıssue.Projects.Select(p => p.ProjectID).ToList());
             ViewBag.DetailLocationID = new MultiSelectList(db.Locations, "LocationID", "Description", requestıssue.Locations.Select(p => p.LocationID).ToList());
             ViewBag.DetailCorporateAccountID = new MultiSelectList(db.CorporateAccounts, "CorporateAccountID", "Title", requestıssue.CorporateAccounts.Select(p => p.CorporateAccountID).ToList());
             ViewBag.DetailPersonnelID = new MultiSelectList(db.Personnels, "PersonnelID", "FullName", requestıssue.Personnels.Select(p => p.PersonnelID).ToList());
@@ -315,7 +345,8 @@ namespace Klmsncamp.Controllers
                 db.SaveChanges();
 
                 //locations,corps,pers bosalt
-                RequestIssue requestissue_ = db.RequestIssues.Include(p => p.Locations).Include(p => p.Personnels).Include(p => p.CorporateAccounts).Where(i => i.RequestIssueID == requestıssue.RequestIssueID).SingleOrDefault();
+                RequestIssue requestissue_ = db.RequestIssues.Include(p => p.RequestIssueFiles).Include(p => p.Projects).Include(p => p.Locations).Include(p => p.Personnels).Include(p => p.CorporateAccounts).Where(i => i.RequestIssueID == requestıssue.RequestIssueID).SingleOrDefault();
+                requestissue_.Projects.Clear();
                 requestissue_.Locations.Clear();
                 requestissue_.Personnels.Clear();
                 requestissue_.CorporateAccounts.Clear();
@@ -370,6 +401,37 @@ namespace Klmsncamp.Controllers
                     }
                 }
 
+                if (formCollection["DetailProjectID"] != null)
+                {
+                    foreach (var proj_ in formCollection["DetailProjectID"].Split(',').ToList())
+                    {
+                        try
+                        {
+                            int project_index = int.Parse(proj_.ToString());
+                            var x_proj = db.Projects.Find(project_index);
+                            x_proj.RequestIssues.Add(requestıssue);
+                        }
+                        catch
+                        { }
+                        db.SaveChanges();
+                    }
+                }
+
+                int fileindex_ = 0;
+                foreach (var file_ in Request.Files)
+                {
+                    RequestIssueFile file = RetrieveFileFromRequest(fileindex_);
+
+                    if (file.RequestIssueFileName != null
+                        && !db.RequestIssueFiles.Any(f => f.RequestIssueFileName.Equals(file.RequestIssueFileName))
+                        && file.RequestIssueFileSize > 0)
+                    {
+                        file.RequestIssue = requestıssue;
+                        db.RequestIssueFiles.Add(file);
+                        db.SaveChanges();
+                    }
+                    fileindex_++;
+                }
                 return RedirectToAction("Validate", "RequestIssue", new { id = requestıssue.RequestIssueID, show = formCollection["show"], page = formCollection["page"] });
             }
             ViewBag.RequestTypeID = new SelectList(db.RequestTypes, "RequestTypeID", "Description", requestıssue.RequestTypeID);
@@ -382,9 +444,18 @@ namespace Klmsncamp.Controllers
             ViewBag.UserID = new SelectList(db.Users, "UserId", "FullName", requestıssue.UserID);
             ViewBag.ValidationStateID = new SelectList(db.ValidationStates, "ValidationStateID", "Description", requestıssue.ValidationStateID);
 
-            ViewBag.DetailLocationID = new MultiSelectList(db.Locations, "LocationID", "Description", requestıssue.Locations.Select(p => p.LocationID).ToList());
-            ViewBag.DetailCorporateAccountID = new MultiSelectList(db.CorporateAccounts, "CorporateAccountID", "Title", requestıssue.CorporateAccounts.Select(p => p.CorporateAccountID).ToList());
-            ViewBag.DetailPersonnelID = new MultiSelectList(db.Personnels, "PersonnelID", "FullName", requestıssue.Personnels.Select(p => p.PersonnelID).ToList());
+            RequestIssue requestissue__ = db.RequestIssues.Include(p => p.RequestIssueFiles).Include(p => p.Projects).Include(p => p.Locations).Include(p => p.Personnels).Include(p => p.CorporateAccounts).Where(i => i.RequestIssueID == requestıssue.RequestIssueID).SingleOrDefault();
+
+            requestıssue.RequestIssueFiles = requestissue__.RequestIssueFiles;
+            requestıssue.Projects = requestissue__.Projects;
+            requestıssue.Locations = requestissue__.Locations;
+            requestıssue.CorporateAccounts = requestissue__.CorporateAccounts;
+            requestıssue.Personnels = requestissue__.Personnels;
+
+            ViewBag.DetailProjectID = new MultiSelectList(db.Projects, "ProjectID", "MultiboxDescription", requestissue__.Projects.Select(p => p.ProjectID).ToList());
+            ViewBag.DetailLocationID = new MultiSelectList(db.Locations, "LocationID", "Description", requestissue__.Locations.Select(p => p.LocationID).ToList());
+            ViewBag.DetailCorporateAccountID = new MultiSelectList(db.CorporateAccounts, "CorporateAccountID", "Title", requestissue__.CorporateAccounts.Select(p => p.CorporateAccountID).ToList());
+            ViewBag.DetailPersonnelID = new MultiSelectList(db.Personnels, "PersonnelID", "FullName", requestissue__.Personnels.Select(p => p.PersonnelID).ToList());
 
             ViewBag.show = formCollection["show"];
             ViewBag.page = formCollection["page"];
@@ -394,7 +465,7 @@ namespace Klmsncamp.Controllers
         [Authorize]
         public ActionResult Editp(int id, string show, int page)
         {
-            RequestIssue rq = db.RequestIssues.Include(p => p.Locations).Include(p => p.CorporateAccounts).Include(p => p.Personnels).Where(i => i.RequestIssueID == id).SingleOrDefault();
+            RequestIssue rq = db.RequestIssues.Include(p => p.RequestIssueFiles).Include(p => p.Projects).Include(p => p.Locations).Include(p => p.CorporateAccounts).Include(p => p.Personnels).Where(i => i.RequestIssueID == id).SingleOrDefault();
             if (rq.ValidationStateID == 2)
             {
                 return RedirectToAction("Edit", new { id = id.ToString(), show = show, page = page });
@@ -409,6 +480,7 @@ namespace Klmsncamp.Controllers
                 ViewBag.RequestStateID = new SelectList(db.RequestStates, "RequestStateID", "Description", rq.RequestStateID);
                 ViewBag.UserReqID = new SelectList(db.Users, "UserId", "FullName", rq.UserReq.UserId);
 
+                ViewBag.DetailProjectID = new MultiSelectList(db.Projects, "ProjectID", "MultiboxDescription", rq.Projects.Select(p => p.ProjectID).ToList());
                 ViewBag.DetailLocationID = new MultiSelectList(db.Locations, "LocationID", "Description", rq.Locations.Select(p => p.LocationID).ToList());
                 ViewBag.DetailCorporateAccountID = new MultiSelectList(db.CorporateAccounts, "CorporateAccountID", "Title", rq.CorporateAccounts.Select(p => p.CorporateAccountID).ToList());
                 ViewBag.DetailPersonnelID = new MultiSelectList(db.Personnels, "PersonnelID", "FullName", rq.Personnels.Select(p => p.PersonnelID).ToList());
@@ -488,10 +560,11 @@ namespace Klmsncamp.Controllers
                 db.SaveChanges();
 
                 //locations,corps,pers bosalt
-                RequestIssue requestissue_ = db.RequestIssues.Include(p => p.Locations).Include(p => p.Personnels).Include(p => p.CorporateAccounts).Where(i => i.RequestIssueID == id).SingleOrDefault();
+                RequestIssue requestissue_ = db.RequestIssues.Include(p => p.RequestIssueFiles).Include(p => p.Projects).Include(p => p.Locations).Include(p => p.Personnels).Include(p => p.CorporateAccounts).Where(i => i.RequestIssueID == id).SingleOrDefault();
                 requestissue_.Locations.Clear();
                 requestissue_.Personnels.Clear();
                 requestissue_.CorporateAccounts.Clear();
+                requestissue_.Projects.Clear();
                 db.SaveChanges();
 
                 if (formCollection["DetailLocationID"] != null)
@@ -541,6 +614,38 @@ namespace Klmsncamp.Controllers
                         { }
                         db.SaveChanges();
                     }
+                }
+
+                if (formCollection["DetailProjectID"] != null)
+                {
+                    foreach (var proj_ in formCollection["DetailProjectID"].Split(',').ToList())
+                    {
+                        try
+                        {
+                            int project_index = int.Parse(proj_.ToString());
+                            var x_proj = db.Projects.Find(project_index);
+                            x_proj.RequestIssues.Add(rqToUpdate);
+                        }
+                        catch
+                        { }
+                        db.SaveChanges();
+                    }
+                }
+
+                int fileindex_ = 0;
+                foreach (var file_ in Request.Files)
+                {
+                    RequestIssueFile file = RetrieveFileFromRequest(fileindex_);
+
+                    if (file.RequestIssueFileName != null
+                        && !db.RequestIssueFiles.Any(f => f.RequestIssueFileName.Equals(file.RequestIssueFileName))
+                        && file.RequestIssueFileSize > 0)
+                    {
+                        file.RequestIssue = rqToUpdate;
+                        db.RequestIssueFiles.Add(file);
+                        db.SaveChanges();
+                    }
+                    fileindex_++;
                 }
 
                 bool xdurum = KlmsnExtensions.BoolPropertyDifferences(rqDBrecord, rqToUpdate);
@@ -594,9 +699,17 @@ namespace Klmsncamp.Controllers
             ViewBag.UserID = new SelectList(db.Users, "UserId", "FullName", rqToUpdate.UserID);
             ViewBag.ValidationStateID = new SelectList(db.ValidationStates, "ValidationStateID", "Description", rqToUpdate.ValidationStateID);
 
-            ViewBag.DetailLocationID = new MultiSelectList(db.Locations, "LocationID", "Description", rqToUpdate.Locations.Select(p => p.LocationID).ToList());
-            ViewBag.DetailCorporateAccountID = new MultiSelectList(db.CorporateAccounts, "CorporateAccountID", "Title", rqToUpdate.CorporateAccounts.Select(p => p.CorporateAccountID).ToList());
-            ViewBag.DetailPersonnelID = new MultiSelectList(db.Personnels, "PersonnelID", "FullName", rqToUpdate.Personnels.Select(p => p.PersonnelID).ToList());
+            RequestIssue requestissue__ = db.RequestIssues.Include(p => p.RequestIssueFiles).Include(p => p.Projects).Include(p => p.Locations).Include(p => p.Personnels).Include(p => p.CorporateAccounts).Where(i => i.RequestIssueID == rqToUpdate.RequestIssueID).SingleOrDefault();
+            rqToUpdate.RequestIssueFiles = requestissue__.RequestIssueFiles;
+            rqToUpdate.Projects = requestissue__.Projects;
+            rqToUpdate.Locations = requestissue__.Locations;
+            rqToUpdate.CorporateAccounts = requestissue__.CorporateAccounts;
+            rqToUpdate.Personnels = requestissue__.Personnels;
+
+            ViewBag.DetailProjectID = new MultiSelectList(db.Projects, "ProjectID", "MultiboxDescription", requestissue__.Projects.Select(p => p.ProjectID).ToList());
+            ViewBag.DetailLocationID = new MultiSelectList(db.Locations, "LocationID", "Description", requestissue__.Locations.Select(p => p.LocationID).ToList());
+            ViewBag.DetailCorporateAccountID = new MultiSelectList(db.CorporateAccounts, "CorporateAccountID", "Title", requestissue__.CorporateAccounts.Select(p => p.CorporateAccountID).ToList());
+            ViewBag.DetailPersonnelID = new MultiSelectList(db.Personnels, "PersonnelID", "FullName", requestissue__.Personnels.Select(p => p.PersonnelID).ToList());
 
             ViewBag.show = formCollection["show"];
             ViewBag.page = formCollection["page"];
@@ -953,6 +1066,24 @@ namespace Klmsncamp.Controllers
                 RequestIssueFileSize = fileContents != null ? fileContents.Length : 0,
                 RequestIssueFileContents = fileContents
             };
+        }
+
+        [Authorize]
+        public ActionResult DownloadRequestIssueFile(int id)
+        {
+            var _file = db.RequestIssueFiles.Find(id);
+            byte[] _filedata = (byte[])_file.RequestIssueFileContents;
+            return File(_filedata, _file.RequestIssueFileContentType, _file.RequestIssueFileName);
+        }
+
+        [Authorize]
+        public ActionResult DeleteRequestIssueFile(int id, int rqid, string show, int page)
+        {
+            RequestIssueFile requestfile = db.RequestIssueFiles.Find(id);
+            db.RequestIssueFiles.Remove(requestfile);
+            db.SaveChanges();
+
+            return RedirectToAction("Edit", new { id = rqid, show = show, page = page });
         }
     }
 }

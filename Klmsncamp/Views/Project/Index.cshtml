@@ -2,7 +2,6 @@
 @model IEnumerable<Klmsncamp.Models.Project>
 @section script
 {
-
     <style type="text/css">
         .t-grid .t-grid-header .t-header .t-link
         {
@@ -32,9 +31,8 @@
 @{
     ViewBag.Title = "Projeler";
 }
-
-<div align="center" style="width: 820px; margin-left: auto; margin-right: auto; margin-top: 30px;">
-@{ Html.Telerik().Grid(Model).Name("Inventory")
+<div align="center" style="width: 850px; margin-left: auto; margin-right: auto; margin-top: 30px;">
+    @{ Html.Telerik().Grid(Model).Name("Inventory").HtmlAttributes(new { style = "width:820px;" })
                                 .ToolBar(commands => commands
                                             .Custom()
                                                 .HtmlAttributes(new { id = "export" })
@@ -48,16 +46,15 @@
                             .Columns(columns =>
                             {
                                 @columns.Template(
-                                    @<text>
-    @Html.ActionLink("Düzenle", "Edit", "Project", new { id = @item.ProjectID }, null)&nbsp;|&nbsp;
-    @Html.ActionLink("Sil", "Delete", "Project", new { id = @item.ProjectID }, null)
-    </text>
+        @<text>
+        @Html.ActionLink("Düzenle", "Edit", "Project", new { id = @item.ProjectID }, null)&nbsp;|&nbsp;
+        @Html.ActionLink("Sil", "Delete", "Project", new { id = @item.ProjectID }, null)
+        </text>
                                 ).Width(150);
                                 columns.Bound(o => o.Description).Width(350).Title("Açıklama");
                                 columns.Bound(o => o.StartDate).Width(80).Title("Baş.Tarihi").Format("{0:d}");
                                 columns.Bound(o => o.StartDate).Width(80).Title("Bit.Tarihi").Format("{0:d}");
                                 columns.Bound(o => o.User.FullName).Width(150).Title("Proje Sahibi");
-                                
 
                             })
                             .DetailView(detailView => detailView.Template(o =>
@@ -67,9 +64,26 @@
                                             .SelectedIndex(0)
                                             .Items(items =>
                                             {
+                                                items.Add().Text("Projeye ait açılan işler").Content(@<text>
+        @(Html.Telerik().Grid(o.RequestIssues)
+                                                                .Name("RequestIssues_" + o.ProjectID)
+                                                                .Columns(columns =>
+                                                                {
+                                                                    columns.Bound(e => e.RequestIssueID).Title("#").Width(15);
+                                                                    columns.Bound(e => e.Personnel.FullName).Title("İş İsteyen").Width(100);
+                                                                    columns.Bound(e => e.DetailedDescription).Title("Açıklama").Width(260);
+                                                                    columns.Bound(e => e.Location.CapitalizedDescription).Title("Departman").Width(100);
+                                                                    columns.Bound(e => e.RequestState.Description).Title("Durumu").Width(100);
+                                                                    columns.Bound(e => e.User.FullName).Title("İş Sahibi").Width(100);
+                                                                    columns.Bound(e => e.StartDate).Title("Pln.Bit.Tar.").Width(80);
+
+                                                                })
+                                                                .Pageable()
+
+                                                        )
+        </text>);
                                                 items.Add().Text("İlgili Departmanlar").Content(@<text>
-                                
-                                                        @(Html.Telerik().Grid(o.Locations)
+        @(Html.Telerik().Grid(o.Locations)
                                                                 .Name("Locations_" + o.ProjectID)
                                                                 .Columns(columns =>
                                                                 {
@@ -78,13 +92,11 @@
 
                                                                 })
                                                                 .Pageable()
-                                                                
+
                                                         )
-                                
-                                                </text>);
+        </text>);
                                                 items.Add().Text("İlgili Firmalar").Content(@<text>
-                                                        
-                                                        @(Html.Telerik().Grid(o.CorporateAccounts)
+        @(Html.Telerik().Grid(o.CorporateAccounts)
                                                                 .Name("CorporateAccounts_" + o.ProjectID)
                                                                 .Columns(columns =>
                                                                 {
@@ -95,12 +107,11 @@
                                                                     columns.Bound(e => e.ContactPerson).Title("Yetkili").Title("Yetkili").Width(150);
                                                                 })
                                                                 .Pageable()
-                                                                
+
                                                         )
-                                                </text>);
+        </text>);
                                                 items.Add().Text("İlgili Personel").Content(@<text>
-                                
-                                                        @(Html.Telerik().Grid(o.Personnels)
+        @(Html.Telerik().Grid(o.Personnels)
                                                                 .Name("Personnels_" + o.ProjectID)
                                                                 .Columns(columns =>
                                                                 {
@@ -111,8 +122,7 @@
                                                                 .Pageable()
 
                                                         )
-                                
-                                                </text>);
+        </text>);
 
                                             })
                                             .Render();
@@ -125,5 +135,5 @@
                                     .Footer(true)
                                     .Localizable("tr-TR")
                                     .Render();
-                                    }
+    }
 </div>

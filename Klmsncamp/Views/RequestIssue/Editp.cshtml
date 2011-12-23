@@ -40,7 +40,7 @@
     true });
     </text>); }
 <div align="center" style="width: 640px; margin-left: auto; margin-right: auto; margin-top: 30px;">
-    @using (Html.BeginForm())
+    @using (Html.BeginForm("Editp", "RequestIssue", FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
         @Html.ValidationSummary(true)
         @Html.HiddenFor(model => model.RequestIssueID)
@@ -152,6 +152,19 @@
                     {
                         <tr>
                             <td style="vertical-align: middle; text-align: right;">
+                                @Html.LabelFor(model => model.Projects)
+                            </td>
+                            <td style="color: #A80000; vertical-align: middle; text-align: left;">
+                                <ul>
+                                    @foreach (var xprojitem in this.Model.Projects)
+                                    {
+                                        <li>@xprojitem.MultiboxDescription</li>
+                                    }
+                                </ul>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align: middle; text-align: right;">
                                 @Html.LabelFor(model => model.Locations)
                             </td>
                             <td style="color: #A80000; vertical-align: middle; text-align: left;">
@@ -194,6 +207,14 @@
                     else
                     {
 
+                        <tr>
+                            <td style="vertical-align: middle; text-align: right;">
+                                @Html.LabelFor(model => model.Projects)
+                            </td>
+                            <td align="left" style="text-align: left;">
+                                @Html.ListBox("DetailProjectID", null, new { @class = "chzn-select", style = "width: 350px;" })
+                            </td>
+                        </tr>
                         <tr>
                             <td style="vertical-align: middle; text-align: right;">
                                 @Html.LabelFor(model => model.Locations)
@@ -239,12 +260,13 @@
                         {
 
                             <td style="vertical-align: middle; text-align: left;">
-                                
                                 <ul>
-                                    <li><input type="button" class="default" value="Ekle" onclick="javascript: addInput();" id="addfile"/></li>
+                                    <li>
+                                        <input type="button" class="default" value="Ekle" onclick="javascript: addInput();"
+                                            id="addfile" /></li>
                                     @foreach (var xfileitem in this.Model.RequestIssueFiles)
                                     {
-                                        <li>@Html.ActionLink("(Sil)", "DeleteRequestIssueFile", new { id = xfileitem.RequestIssueFileID })&nbsp;|&nbsp;@Html.ActionLink(xfileitem.RequestIssueFileName + " (indir)", "DownloadRequestIssueFile", new { id = xfileitem.RequestIssueFileID })&nbsp;(@asMb(xfileitem.RequestIssueFileSize)&nbsp;Mb)</li>
+                                        <li>@Html.ActionLink("(Sil)", "DeleteRequestIssueFile", new { id = xfileitem.RequestIssueFileID, rqid = this.Model.RequestIssueID, show = ViewBag.show, page = ViewBag.page })&nbsp;|&nbsp;@Html.ActionLink(xfileitem.RequestIssueFileName + " (indir)", "DownloadRequestIssueFile", new { id = xfileitem.RequestIssueFileID })&nbsp;(@asMb(xfileitem.RequestIssueFileSize)&nbsp;Mb)</li>
 
                                     }
                                 </ul>
@@ -441,7 +463,7 @@
                                 else
                                 {
                                 @:<img title="Açık / Çalışma Sürüyor" alt="Devam Ediyor" src="/Content/images/delete.png"/>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            }
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                }
                             }
                         </td>
                     </tr>
@@ -471,7 +493,7 @@
                                 catch
                                 {
                                 @: Henüz Atanmamış..
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            }
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                }
                             }
                         </td>
                     </tr>
@@ -572,7 +594,7 @@
 @functions{
     public string asMb(float number)
     {
-        float number_ = number / (1024*1024);
+        float number_ = number / (1024 * 1024);
         return Math.Round(number_, 3).ToString();
     }
 }

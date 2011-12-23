@@ -20,8 +20,12 @@ namespace Klmsncamp.Controllers
 {
     public class HomeController : Controller
     {
-        public ActionResult Index()
+        public ActionResult Index(string err)
         {
+            if (err == "404")
+            {
+                ViewBag.ErrMessage = "Aradığınız Arıza no bulunamadı..";
+            }
             return View();
         }
 

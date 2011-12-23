@@ -10,11 +10,16 @@ namespace Klmsncamp.Models
     {
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
+            var my_model = validationContext.ObjectInstance as RequestIssue;
             DateTime xpresent = DateTime.Now;
+            if (my_model.TimeStamp > DateTime.Parse("01.01.0001"))
+            {
+                xpresent = my_model.TimeStamp;
+            }
             DateTime xvalue = (DateTime)value;
             if (xpresent.AddHours(-18) > xvalue)
             {
-                string sErrorMessage = "Başlangıç Tarihi, şimdiden ( " + xpresent.ToLongDateString() + " " + xpresent.ToLongTimeString() + " ) en fazla 18 saat geri olabilir.";
+                string sErrorMessage = "Başlangıç Tarihi, Kayıt tarihinden ( " + xpresent.ToLongDateString() + " " + xpresent.ToLongTimeString() + " ) en fazla 18 saat geri olabilir.";
                 return new ValidationResult(sErrorMessage);
             }
             else

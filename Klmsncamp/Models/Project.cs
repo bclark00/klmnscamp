@@ -56,5 +56,8 @@ namespace Klmsncamp.Models
         public DateTime TimeStamp { get; set; }
 
         public virtual ICollection<RequestIssue> RequestIssues { get; set; }
+
+        [Display(Name = "Açıklama (Uzun)")]
+        public virtual string MultiboxDescription { get { int substrlen = this.Description.Length; if (substrlen > 50) { substrlen = 50; } return "#" + this.ProjectID.ToString() + ". " + this.Description.ToLower().Substring(0, substrlen) + ".. - " + this.User.FullName + " - " + this.StartDate.ToShortDateString(); } }
     }
 }

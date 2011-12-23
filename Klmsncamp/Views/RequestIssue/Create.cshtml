@@ -129,6 +129,8 @@
                             Detay Bilgileri
                         </td>
                         <td align="left" style="text-align: left;">
+                            @Html.ListBox("DetailProjectID", null, new { @class = "chzn-select", style = "width: 350px;" })
+                            <br />
                             @Html.ListBox("DetailLocationID", null, new { @class = "chzn-select", style = "width: 350px;" })
                             <br />
                             @Html.ListBox("DetailCorporateAccountID", null, new { @class = "chzn-select", style = "width: 350px;" })
