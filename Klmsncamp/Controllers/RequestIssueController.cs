@@ -292,11 +292,41 @@ namespace Klmsncamp.Controllers
             ViewBag.UserID = new SelectList(db.Users, "UserId", "FullName", requestıssue.UserID);
             ViewBag.ValidationStateID = new SelectList(db.ValidationStates, "ValidationStateID", "Description", requestıssue.ValidationStateID);
 
-            ViewBag.DetailProjectID = new MultiSelectList(db.Locations, "ProjectID", "MultiboxDescription", requestıssue.Projects.Select(p => p.ProjectID).ToList());
-            ViewBag.DetailLocationID = new MultiSelectList(db.Locations, "LocationID", "Description", requestıssue.Locations.Select(p => p.LocationID).ToList());
-            ViewBag.DetailCorporateAccountID = new MultiSelectList(db.CorporateAccounts, "CorporateAccountID", "Title", requestıssue.CorporateAccounts.Select(p => p.CorporateAccountID).ToList());
-            ViewBag.DetailPersonnelID = new MultiSelectList(db.Personnels, "PersonnelID", "FullName", requestıssue.Personnels.Select(p => p.PersonnelID).ToList());
+            if (formcollection["DetailProjectID"] != null)
+            {
+                ViewBag.DetailProjectID = new MultiSelectList(db.Projects, "ProjectID", "MultiboxDescription", formcollection["DetailProjectID"].Split(',').ToList());
+            }
+            else
+            {
+                ViewBag.DetailProjectID = new MultiSelectList(db.Projects, "ProjectID", "MultiboxDescription");
+            }
 
+            if (formcollection["DetailLocationID"] != null)
+            {
+                ViewBag.DetailLocationID = new MultiSelectList(db.Locations, "LocationID", "Description", formcollection["DetailLocationID"].Split(',').ToList());
+            }
+            else
+            {
+                ViewBag.DetailLocationID = new MultiSelectList(db.Locations, "LocationID", "Description");
+            }
+
+            if (formcollection["DetailCorporateAccountID"] != null)
+            {
+                ViewBag.DetailCorporateAccountID = new MultiSelectList(db.CorporateAccounts, "CorporateAccountID", "Title", formcollection["DetailCorporateAccountID"].Split(',').ToList());
+            }
+            else
+            {
+                ViewBag.DetailCorporateAccountID = new MultiSelectList(db.CorporateAccounts, "CorporateAccountID", "Title");
+            }
+
+            if (formcollection["DetailPersonnelID"] != null)
+            {
+                ViewBag.DetailPersonnelID = new MultiSelectList(db.Personnels, "PersonnelID", "FullName", formcollection["DetailPersonnelID"].Split(',').ToList()); ;
+            }
+            else
+            {
+                ViewBag.DetailPersonnelID = new MultiSelectList(db.Personnels, "PersonnelID", "FullName");
+            }
             return View(requestıssue);
         }
 
@@ -759,21 +789,34 @@ namespace Klmsncamp.Controllers
         [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmed(int id)
         {
-            RequestIssue requestıssue = db.RequestIssues.Find(id);
+            RequestIssue requestıssue = db.RequestIssues.Include(p => p.RequestIssueFiles).Include(p => p.Projects).Include(p => p.Locations).Include(p => p.Personnels).Include(p => p.CorporateAccounts).Where(i => i.RequestIssueID == id).SingleOrDefault();
 
             //logları siliyoruz
             try
             {
-                LogRequestIssue logsingle = db.LogRequestIssues.Include(i => i.LogRequestIssueDetails).Where(i => i.RequestIssueID == id).Single();
-
-                var logdetail_list = logsingle.LogRequestIssueDetails.ToList();
-
-                foreach (LogRequestIssueDetail xlogdetail in logdetail_list)
+                foreach (LogRequestIssue logsingle in db.LogRequestIssues.Include(i => i.LogRequestIssueDetails).Where(i => i.RequestIssueID == id).ToList())
                 {
-                    db.LogRequestIssueDetails.Remove(xlogdetail);
-                }
+                    var logdetail_list = logsingle.LogRequestIssueDetails.ToList();
 
-                db.LogRequestIssues.Remove(logsingle);
+                    foreach (LogRequestIssueDetail xlogdetail in logdetail_list)
+                    {
+                        db.LogRequestIssueDetails.Remove(xlogdetail);
+                    }
+                    db.LogRequestIssues.Remove(logsingle);
+                    db.SaveChanges();
+                }
+            }
+            catch
+            {
+            }
+
+            //Projelerden manytomany tabloolardan cikariyoruz
+            try
+            {
+                requestıssue.Locations.Clear();
+                requestıssue.Personnels.Clear();
+                requestıssue.CorporateAccounts.Clear();
+                requestıssue.Projects.Clear();
                 db.SaveChanges();
             }
             catch

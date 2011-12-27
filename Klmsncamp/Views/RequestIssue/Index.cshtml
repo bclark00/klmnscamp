@@ -54,9 +54,9 @@
         }
     </style>
 }
-<br />
-<div align="center" style="width: 820px; margin-left: auto; margin-right: auto; margin-top: 30px;">
-    @(Html.Telerik().Grid(Model).Name("Inventory")
+<br /> 
+<div align="center" style="width: 1410px; margin-left: auto; margin-right: auto; margin-top: 30px;">
+    @(Html.Telerik().Grid(Model).Name("Inventory").HtmlAttributes(new { style = "width: 1400px; margin-left: auto; margin-right: auto;" })
                                 .ToolBar(commands => commands
                                             .Custom()
                                                 .HtmlAttributes(new { id = "export" })
@@ -74,15 +74,15 @@
     @Html.ActionLink("Düzenle", "Edit", "RequestIssue", new { id = @item.RequestIssueID, show = @ViewBag.CurrentShow, page = @ViewBag.CurrentPage }, null)&nbsp;|&nbsp;
     @Html.ActionLink("Sil", "Delete", "RequestIssue", new { id = @item.RequestIssueID, show = @ViewBag.CurrentShow, page = @ViewBag.CurrentPage }, null)
     </text>
-                                    ).Width(80);
-                                    columns.Bound(o => o.StartDate).Width(80).Title("Baş.Tarihi");
+                                    ).Width(100);
+                                    columns.Bound(o => o.StartDate).Width(120).Title("Baş.Tarihi").Format("{0:d}");
                                     @columns.Template(@<text>
     @item.UserReq.getFullName()
-    </text>).Width(80).Title("Kaydı Açan");
-                                    columns.Bound(o => o.Location.Description).Width(80).Title("Bulunduğu Departman");
-                                    columns.Bound(o => o.Personnel.FullName).Width(80).Title("İş İsteyen");
-                                    columns.Bound(o => o.RequestState.Description).Width(80).Title("Durumu");
-                                    columns.Bound(o => o.Note).Width(210).Title("Sonuç Notu").Filterable(false).Groupable(false).Sortable(false);
+    </text>).Width(120).Title("Kaydı Açan");
+                                    columns.Bound(o => o.Location.CapitalizedDescription).Width(120).Title("Bulunduğu Departman");
+                                    columns.Bound(o => o.Personnel.FullName).Width(140).Title("İş İsteyen");
+                                    columns.Bound(o => o.RequestState.Description).Width(150).Title("Durumu");
+                                    columns.Bound(o => o.Note).Width(450).Title("Sonuç Notu").Filterable(false).Groupable(false).Sortable(false);
                                     @columns.Template(@<text>
     @try
     {
@@ -93,7 +93,7 @@
         <i>Henüz Atanmamış..</i>
 
     }
-    </text>).Width(50).Title("İlgili Kullanıcı");
+    </text>).Width(140).Title("İlgili Kullanıcı");
                                     @columns.Template(
                                             @<text>
     @if (item.IsApproved == false || item.IsApproved == null)

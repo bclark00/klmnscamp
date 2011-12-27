@@ -21,7 +21,7 @@ namespace Klmsncamp.DAL
 
             var requestStates = new List<RequestState>
             {
-                new RequestState { Description = "SERVİS BEKLİYOR" },
+                new RequestState { Description = "DEVAM EDİYOR" },
                 new RequestState { Description = "FİRMA BEKLİYOR" },
                 new RequestState { Description = "PARÇA BEKLİYOR" },
                 new RequestState { Description = "PLANLANDI" },

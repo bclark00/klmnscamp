@@ -56,13 +56,13 @@
                 <tbody>
                     <thead>
                         <th colspan="2">
-                            İş-Arıza Bilgileri
+                            İş-Arıza Bilgileri (<font color="maroon">*</font>) Zorunlu Alanlar
                         </th>
                     </thead>
                     @Html.Hidden("WorkshopID", (int)1)
                     <tr>
                         <td style="vertical-align: middle; text-align: right;">
-                            @Html.LabelFor(model => model.LocationID, "İş-Arıza Bildirim Yeri")
+                            @Html.LabelFor(model => model.LocationID, "İş-Arıza Bildirim Yeri")&nbsp;<font color="maroon">*</font>
                         </td>
                         <td style="vertical-align: middle; text-align: left;">
                             <br />

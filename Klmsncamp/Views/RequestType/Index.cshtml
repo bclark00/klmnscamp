@@ -39,7 +39,7 @@
         function onDataBinding2(e) {
             var treeview2 = $('#TreeView2').data('tTreeView');
             ajax = new AJAX();
-            ajax.open("GET", "/RequestType/GetJsonTree", true);
+            ajax.open("GET", "/HelpDesk/RequestType/GetJsonTree/?ms=" + new Date().getTime(), true)
             ajax.onreadystatechange = function () {
                 if (ajax.readyState < 4) {
                     null;
