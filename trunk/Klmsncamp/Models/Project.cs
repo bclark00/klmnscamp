@@ -42,6 +42,7 @@ namespace Klmsncamp.Models
 
         [ForeignKey("User")]
         [Display(Name = "Proje Sahibi")]
+        [Required(ErrorMessage = "Proje Sahibi/Yönetici Alanı Zorunludur")]
         public int UserID { get; set; }
 
         [Display(Name = "İş Sahibi")]

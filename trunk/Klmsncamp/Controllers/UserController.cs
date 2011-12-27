@@ -8,7 +8,7 @@ using System.Web.Mvc;
 using Klmsncamp.Models;
 
 namespace Klmsncamp.Controllers
-{ 
+{
     public class UserController : Controller
     {
         private KlmsnContext db = new KlmsnContext();
@@ -36,7 +36,7 @@ namespace Klmsncamp.Controllers
         public ActionResult Create()
         {
             return View();
-        } 
+        }
 
         //
         // POST: /User/Create
@@ -48,15 +48,20 @@ namespace Klmsncamp.Controllers
             {
                 db.Users.Add(user);
                 db.SaveChanges();
-                return RedirectToAction("Index");  
+
+                var moderator_role = db.Roles.Find(2);
+                moderator_role.Users.Add(user);
+                db.SaveChanges();
+
+                return RedirectToAction("Index");
             }
 
             return View(user);
         }
-        
+
         //
         // GET: /User/Edit/5
- 
+
         public ActionResult Edit(int id)
         {
             User user = db.Users.Find(id);
@@ -80,7 +85,7 @@ namespace Klmsncamp.Controllers
 
         //
         // GET: /User/Delete/5
- 
+
         public ActionResult Delete(int id)
         {
             User user = db.Users.Find(id);
@@ -92,7 +97,7 @@ namespace Klmsncamp.Controllers
 
         [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmed(int id)
-        {            
+        {
             User user = db.Users.Find(id);
             db.Users.Remove(user);
             db.SaveChanges();

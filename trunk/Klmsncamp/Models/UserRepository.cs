@@ -30,6 +30,10 @@ namespace Klmsncamp.Models
                 db.Users.Add(user);
                 db.SaveChanges();
 
+                var moderator_role = db.Roles.Find(2);
+                moderator_role.Users.Add(user);
+                db.SaveChanges();
+
                 return GetUser(username);
             }
         }

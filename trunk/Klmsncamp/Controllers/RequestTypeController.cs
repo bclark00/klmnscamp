@@ -10,7 +10,7 @@ using Klmsncamp.ViewModels;
 using Telerik.Web.Mvc.UI;
 
 namespace Klmsncamp.Controllers
-{ 
+{
     public class RequestTypeController : Controller
     {
         private KlmsnContext db = new KlmsnContext();
@@ -24,7 +24,6 @@ namespace Klmsncamp.Controllers
             _requestView _rView = new _requestView();
             foreach (var rt in rts)
             {
-
                 _rView._requestViews.Add(new _requestView
                 {
                     Text = rt.Description,
@@ -35,23 +34,21 @@ namespace Klmsncamp.Controllers
                           );
             }
 
-                    
-            return View(_rView._requestViews); 
+            return View(_rView._requestViews);
         }
 
-        public ActionResult GetJsonTree()
+        public ActionResult GetJsonTree(string ms)
         {
             _requestTypes _requests = new _requestTypes();
-            
+
             var rt_list = db.RequestTypes.Where(e => e.ParentRequestTypeId == null).ToList();
-            
-            
+
             foreach (var item in rt_list)
             {
                 _requests.Items.Add(olustur(item.RequestTypeID));
             }
 
-            return Json(_requests,JsonRequestBehavior.AllowGet);
+            return Json(_requests, JsonRequestBehavior.AllowGet);
         }
 
         public _requestTypes olustur(int rt_id)
@@ -59,26 +56,21 @@ namespace Klmsncamp.Controllers
             var item = db.RequestTypes.Find(rt_id);
             _requestTypes _requests = new _requestTypes();
 
-             _requests.Text = item.Description;
-             _requests.Value = item.RequestTypeID.ToString();
-             _requests.Expanded = true;
+            _requests.Text = item.Description;
+            _requests.Value = item.RequestTypeID.ToString();
+            _requests.Expanded = true;
 
-             if (db.RequestTypes.Where(e => e.ParentRequestTypeId == rt_id).Count() > 0)
-             {
-                 var sbz = db.RequestTypes.Where(e => e.ParentRequestTypeId == rt_id).ToList();
-                 foreach (var it in sbz)
-                 {
-                     _requests.Items.Add(olustur(it.RequestTypeID));
-                 }
+            if (db.RequestTypes.Where(e => e.ParentRequestTypeId == rt_id).Count() > 0)
+            {
+                var sbz = db.RequestTypes.Where(e => e.ParentRequestTypeId == rt_id).ToList();
+                foreach (var it in sbz)
+                {
+                    _requests.Items.Add(olustur(it.RequestTypeID));
+                }
+            }
 
-             }
-
-             return _requests;
-                
-            
+            return _requests;
         }
-
-
 
         //[AcceptVerbs(HttpVerbs.Post)]
         //public ActionResult _Index(TreeViewItem node)
@@ -98,8 +90,8 @@ namespace Klmsncamp.Controllers
 
         //    return new JsonResult { Data = nodes };
 
-        //} 
-        
+        //}
+
         //
         // GET: /RequestType/Details/5
 
@@ -115,7 +107,7 @@ namespace Klmsncamp.Controllers
         public ActionResult Create()
         {
             return View();
-        } 
+        }
 
         //
         // POST: /RequestType/Create
@@ -127,27 +119,27 @@ namespace Klmsncamp.Controllers
             {
                 db.RequestTypes.Add(requesttype);
                 db.SaveChanges();
-                return RedirectToAction("Index");  
+                return RedirectToAction("Index");
             }
 
             return View(requesttype);
         }
-        
+
         //
         // GET: /RequestType/Edit/5
- 
+
         public ActionResult Edit(int id)
         {
             //RequestType requesttype = db.RequestTypes.Find(id);
-            RequestType rt = db.RequestTypes.Where(i => i.RequestTypeID== id).Single();
-            PopulateRTData(rt,id);
+            RequestType rt = db.RequestTypes.Where(i => i.RequestTypeID == id).Single();
+            PopulateRTData(rt, id);
             return View(rt);
         }
 
-        private void PopulateRTData(RequestType instructor,int id)
+        private void PopulateRTData(RequestType instructor, int id)
         {
-            var allrequesttypes = db.RequestTypes.Where(i=>i.RequestTypeID!=id);
-            
+            var allrequesttypes = db.RequestTypes.Where(i => i.RequestTypeID != id);
+
             var viewModel = new List<RequestTypeEditViewModel>();
 
             foreach (var allrt in allrequesttypes)
@@ -156,12 +148,12 @@ namespace Klmsncamp.Controllers
                 {
                     RequestTypeID = allrt.RequestTypeID,
                     Description = allrt.Description,
-                    RequestTypeParentID =  instructor.ParentRequestTypeId.GetValueOrDefault()
-                
+                    RequestTypeParentID = instructor.ParentRequestTypeId.GetValueOrDefault()
                 });
             }
             ViewBag.ALLRT = viewModel;
         }
+
         //
         // POST: /RequestType/Edit/5
 
@@ -186,14 +178,13 @@ namespace Klmsncamp.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            
 
             return View(rtToUpdate);
         }
 
         //
         // GET: /RequestType/Delete/5
- 
+
         public ActionResult Delete(int id)
         {
             RequestType requesttype = db.RequestTypes.Find(id);
@@ -205,7 +196,7 @@ namespace Klmsncamp.Controllers
 
         [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmed(int id)
-        {            
+        {
             RequestType requesttype = db.RequestTypes.Find(id);
             db.RequestTypes.Remove(requesttype);
             db.SaveChanges();

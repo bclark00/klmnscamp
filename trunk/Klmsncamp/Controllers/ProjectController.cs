@@ -39,7 +39,7 @@ namespace Klmsncamp.Controllers
         {
             ViewBag.RequestStateID = new SelectList(db.RequestStates, "RequestStateID", "Description");
             ViewBag.UserID = new SelectList(db.Users, "UserId", "FullName");
-            ViewBag.cUserID = new SelectList(db.Users, "UserId", "UserName");
+            ViewBag.cUserID = new SelectList(db.Users, "UserId", "FullName");
             ViewBag.LocationID = new MultiSelectList(db.Locations, "LocationID", "Description");
             ViewBag.CorporateAccountID = new MultiSelectList(db.CorporateAccounts, "CorporateAccountID", "Title");
             ViewBag.PersonnelID = new MultiSelectList(db.Personnels, "PersonnelID", "FullName");
@@ -118,9 +118,33 @@ namespace Klmsncamp.Controllers
             ViewBag.RequestStateID = new SelectList(db.RequestStates, "RequestStateID", "Description", project.RequestStateID);
             ViewBag.UserID = new SelectList(db.Users, "UserId", "FullName", project.UserID);
             ViewBag.cUserID = new SelectList(db.Users, "UserId", "UserName", project.cUserID);
-            ViewBag.LocationID = new MultiSelectList(db.Locations, "LocationID", "Description", project.Locations.Select(p => p.LocationID).ToList());
-            ViewBag.CorporateAccountID = new MultiSelectList(db.CorporateAccounts, "CorporateAccountID", "Title", project.CorporateAccounts.Select(p => p.CorporateAccountID).ToList());
-            ViewBag.PersonnelID = new MultiSelectList(db.Personnels, "PersonnelID", "FullName", project.Personnels.Select(p => p.PersonnelID).ToList());
+
+            if (formcollection["LocationID"] != null)
+            {
+                ViewBag.LocationID = new MultiSelectList(db.Locations, "LocationID", "Description", formcollection["LocationID"].Split(',').ToList());
+            }
+            else
+            {
+                ViewBag.LocationID = new MultiSelectList(db.Locations, "LocationID", "Description");
+            }
+
+            if (formcollection["CorporateAccountID"] != null)
+            {
+                ViewBag.CorporateAccountID = new MultiSelectList(db.CorporateAccounts, "CorporateAccountID", "Title", formcollection["CorporateAccountID"].Split(',').ToList());
+            }
+            else
+            {
+                ViewBag.CorporateAccountID = new MultiSelectList(db.CorporateAccounts, "CorporateAccountID", "Title");
+            }
+
+            if (formcollection["PersonnelID"] != null)
+            {
+                ViewBag.PersonnelID = new MultiSelectList(db.Personnels, "PersonnelID", "FullName", formcollection["PersonnelID"].Split(',').ToList());
+            }
+            else
+            {
+                ViewBag.PersonnelID = new MultiSelectList(db.Personnels, "PersonnelID", "FullName");
+            }
             return View(project);
         }
 
@@ -131,8 +155,8 @@ namespace Klmsncamp.Controllers
         {
             Project project = db.Projects.Include(p => p.Locations).Include(p => p.CorporateAccounts).Include(p => p.Personnels).Where(i => i.ProjectID == id).SingleOrDefault();
             ViewBag.RequestStateID = new SelectList(db.RequestStates.Where(i => i.RequestStateID == 4 || i.RequestStateID == 5), "RequestStateID", "Description", project.RequestStateID);
-            ViewBag.UserID = new SelectList(db.Users, "UserId", "UserName", project.UserID);
-            ViewBag.cUserID = new SelectList(db.Users, "UserId", "UserName", project.cUserID);
+            ViewBag.UserID = new SelectList(db.Users, "UserId", "FullName", project.UserID);
+            ViewBag.cUserID = new SelectList(db.Users, "UserId", "FullName", project.cUserID);
             ViewBag.LocationID = new MultiSelectList(db.Locations, "LocationID", "Description", project.Locations.Select(p => p.LocationID).ToList());
             ViewBag.CorporateAccountID = new MultiSelectList(db.CorporateAccounts, "CorporateAccountID", "Title", project.CorporateAccounts.Select(p => p.CorporateAccountID).ToList());
             ViewBag.PersonnelID = new MultiSelectList(db.Personnels, "PersonnelID", "FullName", project.Personnels.Select(p => p.PersonnelID).ToList());
@@ -213,11 +237,18 @@ namespace Klmsncamp.Controllers
                 return RedirectToAction("Index");
             }
             ViewBag.RequestStateID = new SelectList(db.RequestStates, "RequestStateID", "Description", project.RequestStateID);
-            ViewBag.UserID = new SelectList(db.Users, "UserId", "UserName", project.UserID);
-            ViewBag.cUserID = new SelectList(db.Users, "UserId", "UserName", project.cUserID);
-            ViewBag.LocationID = new MultiSelectList(db.Locations, "LocationID", "Description", project.Locations.Select(p => p.LocationID).ToList());
-            ViewBag.CorporateAccountID = new MultiSelectList(db.CorporateAccounts, "CorporateAccountID", "Title", project.CorporateAccounts.Select(p => p.CorporateAccountID).ToList());
-            ViewBag.PersonnelID = new MultiSelectList(db.Personnels, "PersonnelID", "FullName", project.Personnels.Select(p => p.PersonnelID).ToList());
+            ViewBag.UserID = new SelectList(db.Users, "UserId", "FullName", project.UserID);
+            ViewBag.cUserID = new SelectList(db.Users, "UserId", "FullName", project.cUserID);
+
+            Project project__ = db.Projects.Include(p => p.Locations).Include(p => p.Personnels).Include(p => p.CorporateAccounts).Where(i => i.ProjectID == project.ProjectID).SingleOrDefault();
+            /*project.Locations = project__.Locations;
+            project.CorporateAccounts = project__.CorporateAccounts;
+            project.Personnels = project__.Personnels;
+            */
+
+            ViewBag.LocationID = new MultiSelectList(db.Locations, "LocationID", "Description", project__.Locations.Select(p => p.LocationID).ToList());
+            ViewBag.CorporateAccountID = new MultiSelectList(db.CorporateAccounts, "CorporateAccountID", "Title", project__.CorporateAccounts.Select(p => p.CorporateAccountID).ToList());
+            ViewBag.PersonnelID = new MultiSelectList(db.Personnels, "PersonnelID", "FullName", project__.Personnels.Select(p => p.PersonnelID).ToList());
 
             return View(project);
         }
