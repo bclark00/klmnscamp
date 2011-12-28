@@ -52,8 +52,10 @@ namespace Klmsncamp.Models
         [ForeignKey("cUser")]
         public int cUserID { get; set; }
 
+        [Display(Name = "Kaydı Açan Kullanıcı")]
         public virtual User cUser { get; set; }
 
+        [Display(Name = "Kaydı Açılma Tarihi")]
         public DateTime TimeStamp { get; set; }
 
         public virtual ICollection<RequestIssue> RequestIssues { get; set; }

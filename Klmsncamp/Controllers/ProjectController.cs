@@ -268,8 +268,21 @@ namespace Klmsncamp.Controllers
         [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmed(int id)
         {
-            Project project = db.Projects.Find(id);
-            db.Projects.Remove(project);
+            Project project_ = db.Projects.Include(p => p.Locations).Include(p => p.Personnels).Include(p => p.CorporateAccounts).Where(i => i.ProjectID == id).SingleOrDefault();
+
+            var requesttracks = new HashSet<int>(project_.RequestIssues.Select(i => i.RequestIssueID));
+            foreach (int rq_id in requesttracks)
+            {
+                db.RequestIssues.Include(s => s.Projects).Where(a => a.RequestIssueID == rq_id).SingleOrDefault().Projects.Remove(project_);
+                db.SaveChanges();
+            }
+
+            project_.Locations.Clear();
+            project_.Personnels.Clear();
+            project_.CorporateAccounts.Clear();
+            db.SaveChanges();
+
+            db.Projects.Remove(project_);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

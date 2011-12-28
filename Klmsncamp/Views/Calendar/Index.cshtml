@@ -23,7 +23,7 @@
                     right: 'month,agendaWeek,agendaDay'
                 },
                 editable: true,
-                events: '/HelpDesk/Calendar/Json',
+                events: '@ViewBag.AbsolutePATH' + '/Json?ms=' + '@DateTime.Now' + '&' + '@Html.Raw(ViewBag.ParameterString.ToString())',
                 eventDrop: function (event, dayDelta, minuteDelta, allDay, revertFunc) {
 
                     //                    alert(
@@ -204,10 +204,34 @@
             width: 816px;
             margin: 30px auto;
         }
+
+        .gradient-box
+        {
+            width: 200px;
+            height: 150px;
+            position: absolute;
+            top: 100px;
+            left: 20px;
+            z-index: 2;
+            border: 1px solid #a0a0a0;
+            background: #e0e0e0; /* for non-css3 browsers */
+            filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#e0e0e0', endColorstr='#FFFFFF'); /* for IE */
+            background: -webkit-gradient(linear, left top, left bottom, from(#e0e0e0), to(#FFFFFF)); /* for webkit browsers */
+            background: -moz-linear-gradient(top,  #e0e0e0,  #FFFFFF); /* for firefox 3.6+ */
+        }
     </style>
 }
 <div id='ajaxloading' style="border: 1px solid maroon; padding: 5px; font-size: x-large;
     color: Black; position: absolute; top: 15px; right: 130px; z-index: 2; background-color: yellow;">
 </div>
 <div id='calendar' style="font-size: 13px;">
+</div>
+<div id="gradient-box" class="gradient-box">
+    <ul style="padding: 5px 5px 10px 10px; list-style: none;">
+        <li>@Html.ActionLink("Projeleri Göster", "Index", new { show = "P" })</li>
+        <li>@Html.ActionLink("İş / Arıza Bildirimlerini Göster", "Index", new { show = "R" })</li>
+        <li>&nbsp;</li>
+        <li><font color="#000099"><b>Aktif Görüntülenenler:</b></font></li>
+        <li><b>@Html.Raw(ViewBag.ActiveFilterDescription)</b></li>
+    </ul>
 </div>
