@@ -76,7 +76,7 @@ namespace Klmsncamp.Controllers
             {
                 ViewBag.CurrentShow = "A";
             }
-            requests = requests.Include(r => r.RequestType).Include(r => r.Location).Include(r => r.Personnel).Include(r => r.Inventory).Include(r => r.Workshop).Include(r => r.RequestState).Include(r => r.UserReq).Include(r => r.User).Include(r => r.ValidationState);
+            requests = requests.Include(r => r.RequestType).Include(r => r.Location).Include(r => r.Personnel).Include(r => r.Inventory).Include(r => r.Workshop).Include(r => r.RequestState).Include(r => r.UserReq).Include(r => r.User).Include(r => r.ValidationState).OrderByDescending(o => o.RequestIssueID);
 
             //enter paging:
             int pageSize = 15;
@@ -94,6 +94,7 @@ namespace Klmsncamp.Controllers
             ViewBag.StartIndex = rlist.FirstItemOnPage;
             ViewBag.EndIndex = rlist.LastItemOnPage;
             ViewBag.TotalItems = rlist.TotalItemCount;
+            Response.AddHeader("Refresh", "25");
             return View(rlist);
         }
 
@@ -682,7 +683,9 @@ namespace Klmsncamp.Controllers
 
                 if (rqToUpdate.SendEmail == true && xdurum == true)
                 {
-                    string mailsonucstr = SendEmail(new MailAddress("musaf@klimasan.com.tr"), new MailAddress(rqDBrecord.UserReq.Email), "[Klimasan HelpDesk] #" + rqToUpdate.RequestIssueID.ToString() + " no'lu İş isteğiniz hakkında.", "İş İsteğiniz güncellenmiştir. İsteğinizin son durumu görmek isterseniz; http:/127.0.0.1:43970/RequestIssue/Editp/" + rqToUpdate.RequestIssueID.ToString() + " adresini ziyaret ediniz. Tarih: " + DateTime.Now.ToString() + ". İyi çalışmalar dileriz.");
+                    User user_from = db.Users.AsNoTracking().Where(b => b.UserId == rqToUpdate.UserID).SingleOrDefault();
+                    User userReq_to = db.Users.AsNoTracking().Where(b => b.UserId == rqToUpdate.UserReqID).SingleOrDefault();
+                    string mailsonucstr = SendEmail(new MailAddress(user_from.Email), new MailAddress(userReq_to.Email), "[Klimasan HelpDesk] #" + rqToUpdate.RequestIssueID.ToString() + " no'lu İş isteğiniz hakkında.", "İş İsteğiniz güncellenmiştir. İsteğinizin son durumu görmek isterseniz;  http://192.168.76.176/HelpDesk/RequestIssue/Editp/" + rqToUpdate.RequestIssueID.ToString() + "?show=A&page=1 adresini ziyaret ediniz. Tarih: " + DateTime.Now.ToString() + ". İyi çalışmalar dileriz.");
                     if (mailsonucstr != "OK")
                     {
                         ViewBag.Bilgilendirme = "Mail Gönderiminde Hata: " + mailsonucstr;
@@ -829,7 +832,7 @@ namespace Klmsncamp.Controllers
             var xuser = db.Users.AsNoTracking().Where(i => i.UserId == user_wherecondition).Single();
             if (requestıssue.SendEmail == true)
             {
-                string mailsonucstr = SendEmail(new MailAddress("musa.fedakar@klimasan.com.tr"), new MailAddress(requestıssue.UserReq.Email), "[Klimasan HelpDesk] #" + requestıssue.RequestIssueID.ToString() + " no'lu İş isteğiniz hakkında.", "İş İsteğiniz " + xuser.FullName + " silinmiştir. Tarih: " + DateTime.Now.ToString() + ". İyi çalışmalar dileriz.");
+                string mailsonucstr = SendEmail(new MailAddress(requestıssue.User.Email), new MailAddress(requestıssue.UserReq.Email), "[Klimasan HelpDesk] #" + requestıssue.RequestIssueID.ToString() + " no'lu İş isteğiniz hakkında.", "İş İsteğiniz " + xuser.FullName + " silinmiştir. Tarih: " + DateTime.Now.ToString() + ". İyi çalışmalar dileriz.");
             }
             db.RequestIssues.Remove(requestıssue);
             db.SaveChanges();
@@ -855,7 +858,7 @@ namespace Klmsncamp.Controllers
                 };
 
                 var client = new SmtpClient("KLMSNEVS.klimasan.msft");
-                client.Credentials = new NetworkCredential("MUSAF@klimasan.com.tr", "1212");
+                client.Credentials = new NetworkCredential("MUSAF@klimasan.com.tr", "1213");
                 client.Send(message);
                 return "OK";
             }

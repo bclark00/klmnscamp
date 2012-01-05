@@ -416,7 +416,7 @@ namespace Klmsncamp.Controllers
 
                 if (rq.SendEmail == true)
                 {
-                    string mailsonucstr = SendEmail(new MailAddress("musaf@klimasan.com.tr"), new MailAddress(rq.UserReq.Email), "[Klimasan HelpDesk] #" + rq.RequestIssueID.ToString() + " no'lu İş isteğiniz hakkında.", "İş İsteğinizin ön görülen başlangıç ve bitiş tarihleri değiştirilmiş/güncellenmiştir. İsteğinizin son durumu görmek isterseniz; http:/127.0.0.1:43970/RequestIssue/Editp/" + rq.RequestIssueID.ToString() + " adresini ziyaret ediniz. Tarih: " + DateTime.Now.ToString() + ". İyi çalışmalar dileriz.");
+                    string mailsonucstr = SendEmail(new MailAddress(rq.User.Email), new MailAddress(rq.UserReq.Email), "[Klimasan HelpDesk] #" + rq.RequestIssueID.ToString() + " no'lu İş isteğiniz hakkında.", "İş İsteğinizin ön görülen başlangıç ve bitiş tarihleri değiştirilmiş/güncellenmiştir. İsteğinizin son durumu görmek isterseniz; http://192.168.76.176/HelpDesk/RequestIssue/Editp/" + rq.RequestIssueID.ToString() + "?show=A&page=1 adresini ziyaret ediniz. Tarih: " + DateTime.Now.ToString() + ". İyi çalışmalar dileriz.");
                     if (mailsonucstr != "OK")
                     {
                         ViewBag.Bilgilendirme = "Mail Gönderiminde Hata: " + mailsonucstr;

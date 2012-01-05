@@ -375,13 +375,16 @@
                         <td style="color: #A80000; vertical-align: middle; text-align: left;">
                             @if (!User.IsInRole("administrators") || Model.IsApproved)
                             {
+                                @Html.DisplayFor(model => model.EndDate)
                                 @Html.HiddenFor(model => model.EndDate)
-                                @Model.EndDate
+
                             }
                             else
                             {
+
                                 @Html.Telerik().DateTimePickerFor(model => model.EndDate).Name("EndDate").ClientEvents(events => events.OnLoad("EndTimePickerSet24h"))
                                 @Html.ValidationMessageFor(model => model.EndDate)
+
                             }
                             @if (ViewBag.EndDatePostponeErr != "")
                             {
@@ -441,11 +444,11 @@
                                 @Html.HiddenFor(model => model.IsApproved)
                                 if (Model.IsApproved == true)
                                 {
-                                @:<img title="Bu iş istek onaylanarak kapatılmıştır." alt="Tamamlandı" src="/Content/images/checked.gif"/>
+                                @:<img title="Bu iş istek onaylanarak kapatılmıştır." alt="Tamamlandı" src="@Url.Content("~/Content/images/checked.gif")">
                      }
                                 else
                                 {
-                                @:<img title="Açık / Çalışma Sürüyor" alt="Devam Ediyor" src="/Content/images/delete.png"/>
+                                @:<img title="Açık / Çalışma Sürüyor" alt="Devam Ediyor" src="@Url.Content("~/Content/images/delete.png")"/>
                     }
 
                             }
@@ -458,12 +461,12 @@
                                 @Html.HiddenFor(model => model.IsApproved)
                                 if (Model.IsApproved == true)
                                 {
-                                @:<img title="Bu iş istek onaylanarak kapatılmıştır." alt="Tamamlandı" src="/Content/images/checked.gif"/>
+                                @:<img title="Bu iş istek onaylanarak kapatılmıştır." alt="Tamamlandı" src="@Url.Content("~/Content/images/checked.gif")"/>
                      }
                                 else
                                 {
-                                @:<img title="Açık / Çalışma Sürüyor" alt="Devam Ediyor" src="/Content/images/delete.png"/>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                }
+                                @:<img title="Açık / Çalışma Sürüyor" alt="Devam Ediyor" src="@Url.Content("~/Content/images/delete.png")"/>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        }
                             }
                         </td>
                     </tr>
@@ -493,7 +496,7 @@
                                 catch
                                 {
                                 @: Henüz Atanmamış..
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                }
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        }
                             }
                         </td>
                     </tr>
