@@ -54,36 +54,93 @@
         }
     </style>
 }
-<br /> 
-<div align="center" style="width: 1410px; margin-left: auto; margin-right: auto; margin-top: 30px;">
+<br />
+<div align="center" style="width: 1410px; margin-left: auto; margin-right: auto;
+    margin-top: 30px;">
     @(Html.Telerik().Grid(Model).Name("Inventory").HtmlAttributes(new { style = "width: 1400px; margin-left: auto; margin-right: auto;" })
-                                .ToolBar(commands => commands
-                                            .Custom()
-                                                .HtmlAttributes(new { id = "export" })
-                                                .Text("Excel'e Aktar")
-                                                .Action("ExportXls", "RequestIssue", new
-                                                {
-                                                    page = ViewBag.Currentpage,
-                                                    orderBy = "~",
-                                                    filter = ViewBag.CurrentShow
-                                                }))
+                           .ToolBar(toolBar => toolBar.Template(
+                                @<text>
+    <table>
+        <tbody>
+            <tr>
+                @if (ViewBag.CurrentPage != null || ViewBag.CurrentShow != null)
+                {
+                    if (ViewBag.CurrentPage != null || ViewBag.CurrentShow != null)
+                    {
+                        if (ViewBag.CurrentPage != null)
+                        {
+                            if (ViewBag.isFirstPage == false && ViewBag.HasPrevPage)
+                            {
+                    <td style="width: auto;">@Html.ActionLink("<< En Yeni", "Index", "RequestIssue", new { show = ViewBag.Currentshow, page = 1 }, null)
+                    </td>
+                            }
+                            if (ViewBag.HasPrevPage)
+                            {
+                    <td style="width: auto;">@Html.ActionLink("< Daha Yeni", "Index", "RequestIssue", new { show = ViewBag.Currentshow, page = ViewBag.PrevPageNumber }, null)
+                    </td>
+
+                            }
+                    <td style="width: auto;">
+                        Toplam&nbsp;@ViewBag.TotalItems&nbsp;kayıttan&nbsp;@ViewBag.StartIndex&nbsp;-&nbsp;@ViewBag.EndIndex&nbsp;arası
+                    </td>
+                            if (ViewBag.HasNextPage)
+                            {
+                    <td style="width: auto;">@Html.ActionLink("Daha Eski >", "Index", "RequestIssue", new { show = ViewBag.Currentshow, page = ViewBag.NextPageNumber }, null)
+                    </td>
+                            }
+                            if (ViewBag.isLastPage == false && ViewBag.HasNextPage)
+                            {
+                    <td style="width: auto;">@Html.ActionLink("En Eski >>", "Index", "RequestIssue", new { show = ViewBag.Currentshow, page = ViewBag.TotalPages }, null)
+                    </td>
+
+                            }
+                        }
+                    }
+
+                    if (ViewBag.CurrentShow != null)
+                    {
+
+                    <td @if (ViewBag.CurrentShow == "W")
+                        { <text>style="background-color: #CCCCFF;" </text>}>@Html.ActionLink("Bekleyenler", "Index", "RequestIssue", new { show = "W", page = 1 }, null)
+                    </td>
+
+                    <td @if (ViewBag.CurrentShow == "P")
+                        { <text>style="background-color: #CCCCFF;"</text> }>@Html.ActionLink("Sürenler", "Index", "RequestIssue", new { show = "P", page = 1 }, null)
+                    </td>
+
+                    <td @if (ViewBag.CurrentShow == "C")
+                        { <text>style="background-color: #CCCCFF;"</text> }>@Html.ActionLink("Tamamlananlar", "Index", "RequestIssue", new { show = "C", page = 1 }, null)
+                    </td>
+
+                    <td @if (ViewBag.CurrentShow == "A")
+                        { <text>style="background-color: #CCCCFF;"</text> }>@Html.ActionLink("Hepsi", "Index", "RequestIssue", new { show = "A", page = 1 }, null)
+                    </td>
+                    }
+                }
+                <td>@Html.ActionLink("Excel'e Aktar", "ExportXls", "RequestIssue", new { page = ViewBag.Currentpage, orderBy = "~", filter = ViewBag.CurrentShow }, null)
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    </text>))
+
                             .Columns(columns =>
-                                {
-                                    @columns.Template(
-                                        @<text>
+                            {
+                                @columns.Template(
+                                    @<text>
     @Html.ActionLink("Düzenle", "Edit", "RequestIssue", new { id = @item.RequestIssueID, show = @ViewBag.CurrentShow, page = @ViewBag.CurrentPage }, null)&nbsp;|&nbsp;
     @Html.ActionLink("Sil", "Delete", "RequestIssue", new { id = @item.RequestIssueID, show = @ViewBag.CurrentShow, page = @ViewBag.CurrentPage }, null)
     </text>
-                                    ).Width(100);
-                                    columns.Bound(o => o.StartDate).Width(120).Title("Baş.Tarihi").Format("{0:d}");
-                                    @columns.Template(@<text>
+                                ).Width(100);
+                                columns.Bound(o => o.StartDate).Width(120).Title("Baş.Tarihi").Format("{0:d}");
+                                @columns.Template(@<text>
     @item.UserReq.getFullName()
     </text>).Width(120).Title("Kaydı Açan");
-                                    columns.Bound(o => o.Location.CapitalizedDescription).Width(120).Title("Bulunduğu Departman");
-                                    columns.Bound(o => o.Personnel.FullName).Width(140).Title("İş İsteyen");
-                                    columns.Bound(o => o.RequestState.Description).Width(150).Title("Durumu");
-                                    columns.Bound(o => o.Note).Width(450).Title("Sonuç Notu").Filterable(false).Groupable(false).Sortable(false);
-                                    @columns.Template(@<text>
+                                columns.Bound(o => o.Location.CapitalizedDescription).Width(120).Title("Bulunduğu Departman");
+                                columns.Bound(o => o.Personnel.FullName).Width(140).Title("İş İsteyen");
+                                columns.Bound(o => o.RequestState.Description).Width(150).Title("Durumu");
+                                columns.Bound(o => o.Note).Width(450).Title("Sonuç Notu").Filterable(false).Groupable(false).Sortable(false);
+                                @columns.Template(@<text>
     @try
     {
         @item.User.getFullName()
@@ -94,8 +151,8 @@
 
     }
     </text>).Width(140).Title("İlgili Kullanıcı");
-                                    @columns.Template(
-                                            @<text>
+                                @columns.Template(
+                                        @<text>
     @if (item.IsApproved == false || item.IsApproved == null)
     {
         <img alt="onaysiz" src="@Url.Content("~/Content/images/delete.png")" />
@@ -105,27 +162,27 @@
         <img alt="onayli" src="@Url.Content("~/Content/images/checked.gif")" />
     }
     </text>
-                                        ).Width(50).Title("Durum");
-                                    columns.Bound(o => o.DetailedDescription).Hidden();
-                                    //columns.Bound(o => o.IsApproved).Hidden();
-                                    //columns.Bound(o => o.ValidationStateID).Hidden();
+                                    ).Width(50).Title("Durum");
+                                columns.Bound(o => o.DetailedDescription).Hidden();
+                                //columns.Bound(o => o.IsApproved).Hidden();
+                                //columns.Bound(o => o.ValidationStateID).Hidden();
 
-                                }
+                            }
                                                                                                                                                                         )
                                                                                                                                                                         .RowAction(row =>
-                                    {
-                                        if (row.DataItem.IsApproved == true)
-                                        {
-                                            row.HtmlAttributes["style"] = "background: #99FF99;";
-                                        }
-                                        else if (row.DataItem.ValidationStateID == 2)
-                                        {
-                                            row.HtmlAttributes["style"] = "background: #FFCCFF;";
-                                        }
+                                                                                                                                                                        {
+                                                                                                                                                                            if (row.DataItem.IsApproved == true)
+                                                                                                                                                                            {
+                                                                                                                                                                                row.HtmlAttributes["style"] = "background: #99FF99;";
+                                                                                                                                                                            }
+                                                                                                                                                                            else if (row.DataItem.ValidationStateID == 2)
+                                                                                                                                                                            {
+                                                                                                                                                                                row.HtmlAttributes["style"] = "background: #FFCCFF;";
+                                                                                                                                                                            }
 
-                                    })
+                                                                                                                                                                        })
                             .Scrollable(scrolling => scrolling.Enabled(true).Height(500))
-                                                                                .Sortable(sorting => sorting.Enabled(true).OrderBy(o => { o.Add("StartDate").Descending(); }))
+                                                                                .Sortable(sorting => sorting.Enabled(true))
                             .Filterable(filtering => filtering.Enabled(true))
                             .Groupable(grouping => grouping.Enabled(true))
                             .Resizable(resizing => resizing.Columns(true))

@@ -477,6 +477,7 @@
     <Content Include="Content\images\mpicker-bg.png" />
     <Content Include="Content\images\mvc3logo.gif" />
     <Content Include="Content\images\settings.jpg" />
+    <Content Include="Content\images\TelerikBanner.png" />
     <Content Include="Content\images\unlock.png" />
     <Content Include="Content\images\vs2010.png" />
     <Content Include="Content\images\weather\01.png" />

@@ -78,10 +78,11 @@
             <li class="product" style="width: 250px;">
                 <img src="@Url.Content("~/Content/Coquette/search.png")" alt="İş Listesi" />
                 <p style="display: inline;">
-                    @using (Html.BeginForm("Find", "PatientTransaction", FormMethod.Get, new { style = "float: left; text-align: center; width: 30px;" }))
+                    @using (Html.BeginForm("Find", "RequestIssue", FormMethod.Get, new { style = "float: left; text-align: center; width: 30px;" }))
                     {
-                        @Html.ActionLink("Arıza Kaydı Ara", "Index", "Home", null, null)<text>:&nbsp;</text>@Html.TextBox("Rqid", null, new { size = "10" })@:&nbsp;<inputtype="submit"style="margin:0;padding:0;"value="Git"name="Go"/>
-                                        }
+                        @Html.ActionLink("Arıza Kaydı Ara", "Index", "Home", null, null)<text>:&nbsp;</text>@Html.TextBox("Rqid", null, new { size = "10" })<text>&nbsp;<input
+                            type="submit" style="margin: 0; padding: 0;" value="Git" name="Go" /></text>
+                    }
                 </p>
             </li>
         </ul>
@@ -154,9 +155,9 @@
         alt="Bize Ulaşın" />
             <div>
                 <div style="top: 35px; font-size: small; font-weight: bold; z-index: 1; position: absolute;
-                    padding-left: 600px; text-align: right;">
-                    Bilgi İşlem<br />
-                    Dahili Tel: 164
+                    padding-left: 520px; text-align: right;">
+                    Klimasan &copy;Bilgi İşlem<br />
+                    2011
                 </div>
             </div>
         </div>
