@@ -11,7 +11,6 @@ namespace Klmsncamp.Controllers
 {
     public class AccountController : Controller
     {
-
         //
         // GET: /Account/LogOn
 
@@ -79,7 +78,7 @@ namespace Klmsncamp.Controllers
             {
                 // Attempt to register the user
                 MembershipCreateStatus createStatus;
-                Membership.CreateUser(model.UserName, model.Password, model.Email,model.FirstName,model.LastName, true, null, out createStatus);
+                Membership.CreateUser(model.UserName, model.Password, model.Email, model.FirstName, model.LastName, true, null, out createStatus);
 
                 if (createStatus == MembershipCreateStatus.Success)
                 {
@@ -114,14 +113,20 @@ namespace Klmsncamp.Controllers
         {
             if (ModelState.IsValid)
             {
-
                 // ChangePassword will throw an exception rather
                 // than return false in certain failure scenarios.
                 bool changePasswordSucceeded;
                 try
                 {
                     MembershipUser currentUser = Membership.GetUser(User.Identity.Name, true /* userIsOnline */);
-                    changePasswordSucceeded = currentUser.ChangePassword(model.OldPassword, model.NewPassword);
+                    if (model.NewPassword == model.ConfirmPassword)
+                    {
+                        changePasswordSucceeded = currentUser.ChangePassword(model.OldPassword, model.NewPassword);
+                    }
+                    else
+                    {
+                        changePasswordSucceeded = false;
+                    }
                 }
                 catch (Exception)
                 {
@@ -151,6 +156,7 @@ namespace Klmsncamp.Controllers
         }
 
         #region Status Codes
+
         private static string ErrorCodeToString(MembershipCreateStatus createStatus)
         {
             // See http://go.microsoft.com/fwlink/?LinkID=177550 for
@@ -188,6 +194,7 @@ namespace Klmsncamp.Controllers
                     return "An unknown error occurred. Please verify your entry and try again. If the problem persists, please contact your system administrator.";
             }
         }
-        #endregion
+
+        #endregion Status Codes
     }
 }

@@ -133,24 +133,12 @@
     </text>
                                 ).Width(100);
                                 columns.Bound(o => o.StartDate).Width(120).Title("Baş.Tarihi").Format("{0:d}");
-                                @columns.Template(@<text>
-    @item.UserReq.getFullName()
-    </text>).Width(120).Title("Kaydı Açan");
-                                columns.Bound(o => o.Location.CapitalizedDescription).Width(120).Title("Bulunduğu Departman");
+                                columns.Bound(o => o.UserReq.FullName).Width(120).Title("Kaydı Açan");
+                                columns.Bound(o => o.Location.CapitalizedDescription).Width(120).Title("Departman");
                                 columns.Bound(o => o.Personnel.FullName).Width(140).Title("İş İsteyen");
                                 columns.Bound(o => o.RequestState.Description).Width(150).Title("Durumu");
                                 columns.Bound(o => o.Note).Width(450).Title("Sonuç Notu").Filterable(false).Groupable(false).Sortable(false);
-                                @columns.Template(@<text>
-    @try
-    {
-        @item.User.getFullName()
-    }
-    catch
-    {
-        <i>Henüz Atanmamış..</i>
-
-    }
-    </text>).Width(140).Title("İlgili Kullanıcı");
+                                columns.Bound(o => o.User.FullName).Width(140).Title("İlgili Kullanıcı");
                                 @columns.Template(
                                         @<text>
     @if (item.IsApproved == false || item.IsApproved == null)

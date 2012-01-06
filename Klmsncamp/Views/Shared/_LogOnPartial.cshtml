@@ -1,7 +1,9 @@
-﻿@if(Request.IsAuthenticated) {
-    <text><strong>@User.Identity.Name</strong>! [ @Html.ActionLink("Çıkış", "LogOff", "Account") ]</text>
-                                                                                                                             
-    }
+﻿@if (Request.IsAuthenticated)
+{
+    <text><strong>@User.Identity.Name</strong>! [ @Html.ActionLink("Çıkış", "LogOff", "Account")
+    ]&nbsp;[ @Html.ActionLink("Şifre Değiştir", "ChangePassword", "Account") ]</text>
+
+}
 else
 {
     @:[ @Html.ActionLink("Giriş Yap", "LogOn", "Account") ]

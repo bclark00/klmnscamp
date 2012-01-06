@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Web;
 using System.Web.Security;
-using System.Collections.Specialized;
 using Klmsncamp.Models;
 
 public class MyMembershipProvider : MembershipProvider
@@ -46,7 +46,6 @@ public class MyMembershipProvider : MembershipProvider
         _MinRequiredPasswordLength = Convert.ToInt32(GetConfigValue(config["minRequiredPasswordLength"], "6"));
         _EnablePasswordReset = Convert.ToBoolean(GetConfigValue(config["enablePasswordReset"], "true"));
         _PasswordStrengthRegularExpression = Convert.ToString(GetConfigValue(config["passwordStrengthRegularExpression"], ""));
-
     }
 
     public override string ApplicationName
@@ -57,7 +56,9 @@ public class MyMembershipProvider : MembershipProvider
 
     public override bool ChangePassword(string username, string oldPassword, string newPassword)
     {
-        throw new NotImplementedException();
+        UserRepository _user = new UserRepository();
+
+        return _user.changePass(username, oldPassword, newPassword);
     }
 
     public override bool ChangePasswordQuestionAndAnswer(string username, string password, string newPasswordQuestion, string newPasswordAnswer)
@@ -89,7 +90,7 @@ public class MyMembershipProvider : MembershipProvider
         {
             UserRepository _user = new UserRepository();
 
-            _user.CreateUser(username, passwordQuestion,passwordAnswer,password, email);
+            _user.CreateUser(username, passwordQuestion, passwordAnswer, password, email);
             status = MembershipCreateStatus.Success;
 
             return GetUser(username, false);
@@ -154,14 +155,12 @@ public class MyMembershipProvider : MembershipProvider
         return _user.GetUser(username);
     }
 
-
     public override string GetUserNameByEmail(string email)
     {
         UserRepository _user = new UserRepository();
 
         return _user.GetUserNameByEmail(email);
     }
-
 
     public override int MaxInvalidPasswordAttempts
     {
@@ -227,7 +226,7 @@ public class MyMembershipProvider : MembershipProvider
 
     //
     // A helper function to retrieve config values from the configuration file.
-    //  
+    //
 
     private string GetConfigValue(string configValue, string defaultValue)
     {
@@ -237,4 +236,3 @@ public class MyMembershipProvider : MembershipProvider
         return configValue;
     }
 }
-

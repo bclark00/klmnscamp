@@ -259,11 +259,11 @@
                                     @Html.HiddenFor(model => model.IsApproved)
                                     @if (Model.IsApproved == true)
                                     {
-                                        @:<img title="Bu iş istek onaylanarak kapatılmıştır." alt="Tamamlandı" src="/Content/images/checked.gif"/>
+                                        @:<img title="Bu iş istek onaylanarak kapatılmıştır." alt="Tamamlandı" src="@Url.Content("~/Content/images/checked.gif")"/>
                                  }
                                     else
                                     {
-                                        @:<img title="Açık / Çalışma Sürüyor" alt="Devam Ediyor" src="/Content/images/delete.png"/>
+                                        @:<img title="Açık / Çalışma Sürüyor" alt="Devam Ediyor" src="@Url.Content("~/Content/images/delete.png")"/>
 
                                     }
                                 </td>
