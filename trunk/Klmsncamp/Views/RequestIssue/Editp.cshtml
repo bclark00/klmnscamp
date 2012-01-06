@@ -86,10 +86,17 @@
                             @Html.LabelFor(model => model.PersonnelID)
                         </td>
                         <td style="color: #A80000; vertical-align: middle; text-align: left;">
-                            @if (!User.IsInRole("administrators") || Model.IsApproved == true)
+                            @if (Model.IsApproved == true)
                             {
-                                @Html.HiddenFor(model => model.PersonnelID)
-                                @Html.DisplayFor(model => model.Personnel.FullName)
+                                try
+                                {
+                                @Model.Personnel.FullName
+                                }
+                                catch
+                                {
+                                @:--
+
+                                }
                             }
                             else
                             {
@@ -100,8 +107,7 @@
                     .AutoFill(true).HtmlAttributes(new { style = "width:210px;" }).DropDownHtmlAttributes(new { style = "width: 210px;" }).InputHtmlAttributes(new { style = "vertical-align: middle; font-size:100%; border: 1px solid; width: 200px;" })
                     .BindTo((SelectList)ViewBag.PersonnelID)
                     .Filterable(filtering => filtering.FilterMode((AutoCompleteFilterMode)Enum.Parse(typeof(AutoCompleteFilterMode), "2", false)))
-                    .HighlightFirstMatch(true)
-                    )
+                    .HighlightFirstMatch(true))
                                 <br />
                                 @Html.ValidationMessageFor(model => model.PersonnelID)
                             }
@@ -298,7 +304,7 @@
                             @Html.LabelFor(model => model.DetailedDescription)
                         </td>
                         <td style="color: #A80000; vertical-align: top; text-align: left;">
-                            @if (!User.IsInRole("administrators") || Model.IsApproved == true)
+                            @if ((!User.IsInRole("administrators") && !User.IsInRole("moderators")) || Model.IsApproved == true)
                             {
                                 @Html.HiddenFor(model => model.DetailedDescription)
                                 @Model.DetailedDescription
@@ -466,7 +472,7 @@
                                 else
                                 {
                                 @:<img title="Açık / Çalışma Sürüyor" alt="Devam Ediyor" src="@Url.Content("~/Content/images/delete.png")"/>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        }
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            }
                             }
                         </td>
                     </tr>
@@ -496,7 +502,7 @@
                                 catch
                                 {
                                 @: Henüz Atanmamış..
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        }
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            }
                             }
                         </td>
                     </tr>

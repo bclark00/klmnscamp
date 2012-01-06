@@ -117,7 +117,7 @@ namespace Klmsncamp.Controllers
         {
             RequestIssue requestissue = db.RequestIssues.Find(id);
 
-            if ((requestissue.UserReq.UserName == User.Identity.Name) && (requestissue.ValidationStateID != 1))
+            if (requestissue.ValidationStateID != 1)
             {
                 requestissue.ValidationStateID = 1;
                 db.Entry(requestissue).State = EntityState.Modified;
@@ -126,7 +126,9 @@ namespace Klmsncamp.Controllers
                 if (requestissue.SendEmail == true)
                 {
                     MembershipUser currentuser_ = new UserRepository().GetUser(User.Identity.Name);
-                    string mailsonucstr = SendEmail(new MailAddress("musaf@klimasan.com.tr"), new MailAddress(currentuser_.Email), "[Klimasan HelpDesk] İş isteğiniz hakkında.", "İsteğiniz doğrulanarak kayıt altına alınmıştır.Tarih: " + DateTime.Now.ToString() + " - İş No: #" + (requestissue.RequestIssueID).ToString() + ". İyi çalışmalar dileriz.");
+                    User user_from = db.Users.AsNoTracking().Where(b => b.UserId == requestissue.UserID).SingleOrDefault();
+
+                    string mailsonucstr = SendEmail(new MailAddress(user_from.Email), new MailAddress(currentuser_.Email), "[Klimasan HelpDesk] İş isteğiniz hakkında.", "İsteğiniz doğrulanarak kayıt altına alınmıştır.Tarih: " + DateTime.Now.ToString() + " - İş No: #" + (requestissue.RequestIssueID).ToString() + ". İyi çalışmalar dileriz.");
                     if (mailsonucstr != "OK")
                     {
                         ViewBag.Bilgilendirme = "Mail Gönderiminde Hata: " + mailsonucstr;

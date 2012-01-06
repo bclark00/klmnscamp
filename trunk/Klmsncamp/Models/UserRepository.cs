@@ -159,6 +159,26 @@ namespace Klmsncamp.Models
             }
         }
 
+        public bool changePass(string userName, string oldPass, string newPass)
+        {
+            using (KlmsnContext db = new KlmsnContext())
+            {
+                bool xdurum = ValidateUser(userName, oldPass);
+                if (xdurum && newPass.Length >= 6)
+                {
+                    User user = db.Users.Where(i => i.UserName == userName).SingleOrDefault();
+                    user.PasswordSalt = CreateSalt();
+                    user.Password = CreatePasswordHash(newPass, user.PasswordSalt);
+                    db.SaveChanges();
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        }
+
         private static string CreateSalt()
         {
             RNGCryptoServiceProvider rng = new RNGCryptoServiceProvider();
