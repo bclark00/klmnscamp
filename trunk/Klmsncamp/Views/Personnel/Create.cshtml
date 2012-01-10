@@ -37,6 +37,17 @@
                     <tr>
                         <td>
                             <div class="editor-label">
+                                @Html.LabelFor(model => model.Email)
+                            </div>
+                        </td>
+                        <td>
+                            @Html.EditorFor(model=>model.Email)
+                            @Html.ValidationMessageFor(model => model.Email)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="editor-label">
                                 @Html.LabelFor(model => model.ValidationStateID, "Durumu")
                             </div>
                         </td>

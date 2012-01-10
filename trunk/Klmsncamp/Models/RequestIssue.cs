@@ -59,6 +59,8 @@ namespace Klmsncamp.Models
         [Display(Name = "Süreç Bilgilendirme Notu")]
         public string Note { get; set; }
 
+        public virtual string CapitalizedNote { get { if (string.IsNullOrEmpty(this.Note)) { return string.Empty; } else { return char.ToUpper(this.Note[0]) + this.Note.ToLower().Substring(1); } } }
+
         [Display(Name = "Planlanan Başlangıç Tarihi")]
         [DisplayFormat(DataFormatString = "{0:G}", ApplyFormatInEditMode = true)]
         [Required(ErrorMessage = "Zorunlu Alan")]

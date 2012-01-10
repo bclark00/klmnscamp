@@ -13,10 +13,9 @@
                 var sTitle;
                 var nTds = $("td", this);
                 var sAck = $(nTds[9]).text();
-                //alert(sAck);
                 sTitle = sAck
-
                 this.setAttribute('title', sTitle);
+
             });
 
             /* Apply the tooltips */
@@ -47,7 +46,7 @@
             background: #BDCDFF;
             padding: 5px 20px;
             color: #333;
-            font-size: 10px;
+            font-size: 9px;
             border-radius: 2px;
             -webkit-border-radius: 2px;
             -moz-border-radius: 2px;
@@ -94,11 +93,21 @@
                     </td>
 
                             }
+                            if (ViewBag.HasPrevPage || ViewBag.HasNextPage)
+                            {
+                    <td style="width: auto;">@Html.ActionLink("Tüm İşler", "Index", "RequestIssue", new { show = ViewBag.Currentshow, page = -1 }, null)
+                    </td>
+
+                            }
                         }
                     }
 
-                    if (ViewBag.CurrentShow != null)
-                    {
+                    <td @if (ViewBag.CurrentResp == "Y")
+                        { <text>style="background-color: #CCFF99;" </text>}>@Html.ActionLink("İşlerim", "Index", "RequestIssue", new { show = "A", page = -1, resp = "Y" }, null)
+                    </td>
+
+                        if (ViewBag.CurrentShow != null)
+                        {
 
                     <td @if (ViewBag.CurrentShow == "W")
                         { <text>style="background-color: #CCCCFF;" </text>}>@Html.ActionLink("Bekleyenler", "Index", "RequestIssue", new { show = "W", page = 1 }, null)
@@ -115,9 +124,11 @@
                     <td @if (ViewBag.CurrentShow == "A")
                         { <text>style="background-color: #CCCCFF;"</text> }>@Html.ActionLink("Hepsi", "Index", "RequestIssue", new { show = "A", page = 1 }, null)
                     </td>
-                    }
+                        }
                 }
-                <td>@Html.ActionLink("Excel'e Aktar", "ExportXls", "RequestIssue", new { page = ViewBag.Currentpage, orderBy = "~", filter = ViewBag.CurrentShow }, null)
+                <td>
+                </td>
+                <td>@Html.ActionLink("Excele Aktar", "ExportXls", "RequestIssue", new { page = ViewBag.Currentpage, orderBy = "~", filter = ViewBag.CurrentShow }, null)
                 </td>
             </tr>
         </tbody>
@@ -136,8 +147,8 @@
                                 columns.Bound(o => o.UserReq.FullName).Width(120).Title("Kaydı Açan");
                                 columns.Bound(o => o.Location.CapitalizedDescription).Width(120).Title("Departman");
                                 columns.Bound(o => o.Personnel.FullName).Width(140).Title("İş İsteyen");
-                                columns.Bound(o => o.RequestState.Description).Width(150).Title("Durumu");
-                                columns.Bound(o => o.Note).Width(450).Title("Sonuç Notu").Filterable(false).Groupable(false).Sortable(false);
+                                columns.Bound(o => o.RequestState.CapitalizedDescription).Width(150).Title("Durumu");
+                                columns.Bound(o => o.CapitalizedNote).Width(450).Title("Sonuç Notu").Filterable(false).Groupable(false).Sortable(false);
                                 columns.Bound(o => o.User.FullName).Width(140).Title("İlgili Kullanıcı");
                                 @columns.Template(
                                         @<text>
@@ -159,13 +170,17 @@
                                                                                                                                                                         )
                                                                                                                                                                         .RowAction(row =>
                                                                                                                                                                         {
-                                                                                                                                                                            if (row.DataItem.IsApproved == true)
+                                                                                                                                                                            if (row.DataItem.IsApproved == true && row.DataItem.RequestStateID == 5)
                                                                                                                                                                             {
                                                                                                                                                                                 row.HtmlAttributes["style"] = "background: #99FF99;";
                                                                                                                                                                             }
+                                                                                                                                                                            else if (row.DataItem.IsApproved == true && row.DataItem.RequestStateID == 6)
+                                                                                                                                                                            {
+                                                                                                                                                                                row.HtmlAttributes["style"] = "background: #FFCCCC;";
+                                                                                                                                                                            }
                                                                                                                                                                             else if (row.DataItem.ValidationStateID == 2)
                                                                                                                                                                             {
-                                                                                                                                                                                row.HtmlAttributes["style"] = "background: #FFCCFF;";
+                                                                                                                                                                                row.HtmlAttributes["style"] = "background: #FFFF00;";
                                                                                                                                                                             }
 
                                                                                                                                                                         })

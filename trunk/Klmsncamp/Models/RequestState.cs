@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
-using System.ComponentModel.DataAnnotations;
 
 namespace Klmsncamp.Models
 {
@@ -15,6 +15,6 @@ namespace Klmsncamp.Models
         [Display(Name = "Açıklama")]
         public string Description { get; set; }
 
-
+        public virtual string CapitalizedDescription { get { return char.ToUpper(this.Description[0]) + this.Description.ToLower().Substring(1); } }
     }
 }

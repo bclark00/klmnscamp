@@ -3,7 +3,10 @@
 @{
     ViewBag.Title = "Personel Tanımlama";
 }
-<div align="center" style="width: 640px; margin-left: auto; margin-right: auto; margin-top: 30px;">
+<div align="center" style="width: 820px; margin-left: auto; margin-right: auto; margin-top: 30px;">
+<div class="submit-row">
+        <p class="deletelink-box">@Html.ActionLink("Yeni Personel Tanımlama", "Create")</p>
+    </div>
     <fieldset class="module aligned ">
         <table style="width: 100%;">
             <tbody>
@@ -13,6 +16,9 @@
                     </th>
                     <th>
                         Departmanı
+                    </th>
+                    <th>
+                        Email
                     </th>
                     <th colspan="2">
                         Durumu
@@ -28,6 +34,9 @@
                             @Html.DisplayFor(modelItem => item.Location.Description)
                         </td>
                         <td>
+                            @Html.DisplayFor(modelItem => item.Email)
+                        </td>
+                        <td>
                             @Html.DisplayFor(modelItem => item.ValidationState.Description)
                         </td>
                         <td>
@@ -38,7 +47,5 @@
             </tbody>
         </table>
     </fieldset>
-    <div class="submit-row">
-        <p class="deletelink-box">@Html.ActionLink("Yeni Personel Tanımlama", "Create")</p>
-    </div>
+    
 </div>

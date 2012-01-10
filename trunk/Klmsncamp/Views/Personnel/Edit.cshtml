@@ -46,6 +46,17 @@
                     <tr>
                         <td style="vertical-align: middle; text-align: right;">
                             <div class="editor-label">
+                                @Html.LabelFor(model => model.Email)
+                            </div>
+                        </td>
+                        <td style="vertical-align: middle; text-align: left;">
+                            @Html.EditorFor(model => model.Email)
+                            @Html.ValidationMessageFor(model => model.Email)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="vertical-align: middle; text-align: right;">
+                            <div class="editor-label">
                                 @Html.LabelFor(model => model.ValidationStateID, "Durumu")
                             </div>
                         </td>
