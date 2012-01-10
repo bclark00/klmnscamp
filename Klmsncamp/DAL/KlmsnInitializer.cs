@@ -135,10 +135,6 @@ namespace Klmsncamp.DAL
             locations.ForEach(s => context.Locations.Add(s));
             context.SaveChanges();
 
-            UserRepository user_ = new UserRepository();
-            var MemUser = user_.CreateUser("scully", "Musa", "Fedakar", "qwerty3", "musaf@klimasan.com.tr");
-            MemUser = user_.CreateUser("ozcane", "Özcan", "Eryalçın", "123456", "ozcan@klimasan.gg");
-
             var usergroups = new List<UserGroup>
             {
                 new UserGroup { Name="administrators" },
@@ -158,11 +154,14 @@ namespace Klmsncamp.DAL
             roles.ForEach(s => context.Roles.Add(s));
             context.SaveChanges();
 
-            roles[0].Users.Add(context.Users.Find(1));
+            /*roles[0].Users.Add(context.Users.Find(1));
             roles[1].Users.Add(context.Users.Find(1));
             roles[1].Users.Add(context.Users.Find(2));
-
+            */
             context.SaveChanges();
+            UserRepository user_ = new UserRepository();
+            var MemUser = user_.CreateUser("scully", "Musa", "Fedakar", "qwerty3", "musaf@klimasan.com.tr");
+            MemUser = user_.CreateUser("ozcane", "Özcan", "Eryalçın", "123456", "ozcan@klimasan.gg");
 
             var corpaccs = new List<CorporateAccount>
             {

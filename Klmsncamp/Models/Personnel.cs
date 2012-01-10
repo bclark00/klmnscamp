@@ -31,7 +31,7 @@ namespace Klmsncamp.Models
         }
 
         [Display(Name = "Adı-Soyadı")]
-        public virtual string FullName { get { return char.ToUpper(this.FirstName[0]) + (this.FirstName.ToLower()).Substring(1) + " " + char.ToUpper(this.LastName[0]) + (this.LastName.ToLower()).Substring(1); } }
+        public virtual string FullName { get { if (this.Location != null) { return char.ToUpper(this.FirstName[0]) + (this.FirstName.ToLower()).Substring(1) + " " + char.ToUpper(this.LastName[0]) + (this.LastName.ToLower()).Substring(1) + " (" + this.Location.CapitalizedDescription + ")"; } else { return char.ToUpper(this.FirstName[0]) + (this.FirstName.ToLower()).Substring(1) + " " + char.ToUpper(this.LastName[0]) + (this.LastName.ToLower()).Substring(1); } } }
 
         [Display(Name = "Departman")]
         public int? LocationID { get; set; }
@@ -42,6 +42,12 @@ namespace Klmsncamp.Models
         [Required(ErrorMessage = "Zorunlu Alan")]
         [Display(Name = "Durum")]
         public int ValidationStateID { get; set; }
+
+        [MaxLength(100, ErrorMessage = "100 karakterden uzun olamaz")]
+        [Display(Name = "Email")]
+        [DataType(DataType.EmailAddress)]
+        [RegularExpression(".+\\@.+\\..+", ErrorMessage = "Geçerli Bir Mail Adresi Değil")]
+        public string Email { get; set; }
 
         [Display(Name = "Durum")]
         public virtual ValidationState ValidationState { get; set; }

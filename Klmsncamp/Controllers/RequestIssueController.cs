@@ -39,16 +39,20 @@ namespace Klmsncamp.Controllers
         }
 
         [Authorize]
-        public ViewResult Index(string show, int? page)
+        public ViewResult Index(string show, int? page, string resp)
         {
+            MembershipUser currentuser_ = new UserRepository().GetUser(User.Identity.Name);
+            int user_wherecondition = int.Parse((currentuser_.ProviderUserKey).ToString());
+
             var requests = from r in db.RequestIssues select r; //.Where(i=>i.ValidationStateID==1).Include(r => r.RequestType).Include(r => r.Location).Include(r => r.Inventory).Include(r => r.Workshop).Include(r => r.RequestState).Include(r => r.UserReq).Include(r => r.User).Include(r => r.ValidationState);
 
             if (!(User.IsInRole("moderators") || User.IsInRole("administrators")))
             {
-                MembershipUser currentuser_ = new UserRepository().GetUser(User.Identity.Name);
-                int user_wherecondition = int.Parse((currentuser_.ProviderUserKey).ToString());
                 requests = requests.Where(i => i.UserReqID == user_wherecondition);//.Include(r => r.RequestType).Include(r => r.Location).Include(r => r.Inventory).Include(r => r.Workshop).Include(r => r.RequestState).Include(r => r.UserReq).Include(r => r.User).Include(r => r.ValidationState);
             }
+
+            //sadece kendilerinin valide ettikleri
+            requests = requests.Where(i => i.ValidationStateID == 1 || (i.ValidationStateID == 2 && i.UserReqID == user_wherecondition));
 
             //else
             //{
@@ -76,11 +80,31 @@ namespace Klmsncamp.Controllers
             {
                 ViewBag.CurrentShow = "A";
             }
+
+            if (resp != null)
+            {
+                if (resp == "Y")
+                {
+                    requests = requests.Where(i => i.UserID == user_wherecondition);
+                    ViewBag.CurrentResp = "Y";
+                }
+            }
+
             requests = requests.Include(r => r.RequestType).Include(r => r.Location).Include(r => r.Personnel).Include(r => r.Inventory).Include(r => r.Workshop).Include(r => r.RequestState).Include(r => r.UserReq).Include(r => r.User).Include(r => r.ValidationState).OrderByDescending(o => o.RequestIssueID);
 
             //enter paging:
-            int pageSize = 15;
-            int pageIndex = (page ?? 1);
+            int pageIndex, pageSize;
+            if (page == -1)
+            {
+                pageIndex = 1;
+                pageSize = requests.ToList().Count;
+            }
+            else
+            {
+                pageIndex = (page ?? 1);
+                pageSize = 50;
+            }
+
             var rlist = requests.AsEnumerable().ToPagedList(pageIndex, pageSize);
 
             ViewBag.CurrentPage = (page ?? 1);
@@ -94,7 +118,7 @@ namespace Klmsncamp.Controllers
             ViewBag.StartIndex = rlist.FirstItemOnPage;
             ViewBag.EndIndex = rlist.LastItemOnPage;
             ViewBag.TotalItems = rlist.TotalItemCount;
-            Response.AddHeader("Refresh", "25");
+            Response.AddHeader("Refresh", "90");
             return View(rlist);
         }
 
@@ -585,7 +609,7 @@ namespace Klmsncamp.Controllers
 
             if (ModelState.IsValid)
             {
-                if (rqToUpdate.IsApproved)
+                if (rqToUpdate.IsApproved && rqToUpdate.RequestStateID != 6)
                 {
                     rqToUpdate.RequestStateID = 5;
                 }
