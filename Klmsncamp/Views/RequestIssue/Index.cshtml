@@ -95,7 +95,7 @@
                             }
                             if (ViewBag.HasPrevPage || ViewBag.HasNextPage)
                             {
-                    <td style="width: auto;">@Html.ActionLink("Tüm İşler", "Index", "RequestIssue", new { show = ViewBag.Currentshow, page = -1 }, null)
+                    <td style="width: auto;">@Html.ActionLink("Tek Sayfa", "Index", "RequestIssue", new { show = ViewBag.Currentshow, page = -1 }, null)
                     </td>
 
                             }
@@ -110,11 +110,11 @@
                         {
 
                     <td @if (ViewBag.CurrentShow == "W")
-                        { <text>style="background-color: #CCCCFF;" </text>}>@Html.ActionLink("Bekleyenler", "Index", "RequestIssue", new { show = "W", page = 1 }, null)
+                        { <text>style="background-color: #CCCCFF;" </text>}>@Html.ActionLink("Taslaklarım", "Index", "RequestIssue", new { show = "W", page = 1 }, null)
                     </td>
 
                     <td @if (ViewBag.CurrentShow == "P")
-                        { <text>style="background-color: #CCCCFF;"</text> }>@Html.ActionLink("Sürenler", "Index", "RequestIssue", new { show = "P", page = 1 }, null)
+                        { <text>style="background-color: #CCCCFF;"</text> }>@Html.ActionLink("Devam Edenler", "Index", "RequestIssue", new { show = "P", page = 1 }, null)
                     </td>
 
                     <td @if (ViewBag.CurrentShow == "C")
@@ -122,7 +122,7 @@
                     </td>
 
                     <td @if (ViewBag.CurrentShow == "A")
-                        { <text>style="background-color: #CCCCFF;"</text> }>@Html.ActionLink("Hepsi", "Index", "RequestIssue", new { show = "A", page = 1 }, null)
+                        { <text>style="background-color: #CCCCFF;"</text> }>@Html.ActionLink("Tüm İşler", "Index", "RequestIssue", new { show = "A", page = 1 }, null)
                     </td>
                         }
                 }
