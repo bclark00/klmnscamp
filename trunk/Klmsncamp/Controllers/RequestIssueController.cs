@@ -63,11 +63,11 @@ namespace Klmsncamp.Controllers
             {
                 if (show == "W")
                 {
-                    requests = requests.Where(i => i.IsApproved == false && i.UserID == null);
+                    requests = requests.Where(i => i.ValidationStateID == 2 && i.UserReqID == user_wherecondition);
                 }
                 else if (show == "P")
                 {
-                    requests = requests.Where(i => i.IsApproved == false && i.UserID != null);
+                    requests = requests.Where(i => i.IsApproved == false);
                 }
                 else if (show == "C")
                 {
@@ -1004,6 +1004,7 @@ namespace Klmsncamp.Controllers
                 "GridExcelExport.xls");     //Suggested file name in the "Save as" dialog which will be displayed to the end user
         }
 
+        [Authorize]
         public ActionResult Report()
         {
             ViewBag.RequestTypeID = new SelectList(db.RequestTypes, "RequestTypeID", "Description");
@@ -1026,6 +1027,7 @@ namespace Klmsncamp.Controllers
             return View();
         }
 
+        [Authorize]
         [HttpPost]
         public ActionResult Report(RequestIssue requestıssue, FormCollection formcollection)
         {
@@ -1102,14 +1104,42 @@ namespace Klmsncamp.Controllers
                 value.Value = "yok";
                 rptH.ParameterFields["OnayDurum"].CurrentValues.Add(value);
             }
-            value.Value = requestıssue.StartDate;
-            rptH.ParameterFields["StartDate"].CurrentValues.Add(value);
 
-            value.Value = requestıssue.EndDate ?? DateTime.Today.AddYears(20);
-            rptH.ParameterFields["EndDate"].CurrentValues.Add(value);
+            if (requestıssue.StartDate != null)
+            {
+                value.Value = requestıssue.StartDate;
+                rptH.ParameterFields["StartDate"].CurrentValues.Add(value);
+            }
+            else
+            {
+                value.Value = DateTime.Today.AddYears(-20);
+                rptH.ParameterFields["StartDate"].CurrentValues.Add(value);
+            }
+
+            if (requestıssue.EndDate != null)
+            {
+                value.Value = requestıssue.EndDate;
+                rptH.ParameterFields["EndDate"].CurrentValues.Add(value);
+            }
+            else
+            {
+                value.Value = DateTime.Today.AddYears(20);
+                rptH.ParameterFields["EndDate"].CurrentValues.Add(value);
+            }
 
             // rptH.SetDataSource([datatable]);
+            var cd = new System.Net.Mime.ContentDisposition
+            {
+                // for example foo.bak
+                FileName = "rapor_.pdf",
+
+                // always prompt the user for downloading, set to true if you want
+                // the browser to try to show the file inline
+                Inline = false,
+            };
+
             Stream stream = rptH.ExportToStream(CrystalDecisions.Shared.ExportFormatType.PortableDocFormat);
+            Response.AppendHeader("Content-Disposition", cd.ToString());
             return File(stream, "application/pdf");
         }
 
