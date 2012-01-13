@@ -215,6 +215,12 @@
     </Compile>
     <Compile Include="Models\Role.cs" />
     <Compile Include="Models\UserIsApprovedCheckAttribute.cs" />
+    <Compile Include="RDLC\ProjectReport.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ProjectReport.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="RDLC\RequestIssueReport.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -1124,6 +1130,10 @@
     <Service Include="{C0C07587-41A7-46C8-8FBD-3F9C8EBE2DDC}" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="RDLC\ProjectReport.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>ProjectReport.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="RDLC\RequestIssueReport.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>RequestIssueReport.cs</LastGenOutput>

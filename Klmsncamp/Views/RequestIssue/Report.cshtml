@@ -19,7 +19,10 @@
                         <tr>
                             <td colspan="2">
                                 <p class="help">
-                                    İş isteklerinizi raporlamak için aşağıdaki kutucukları kullanabilirsiniz</p>
+                                    İş isteklerinizi raporlamak için aşağıdaki kutucukları kullanabilirsiniz<br />
+                                    İşaretli alanlar proje raporu için dikkate Alınmaz<br />
+                                    İş İsteyen Kriteri , <u>Proje Raporu</u> için, Projeye Dahil olan Kişi Olarak anlamlandırılır
+                                </p>
                             </td>
                         </tr>
                         <tr>
@@ -49,8 +52,7 @@
                             </td>
                             <td style="text-align: left;">
                                 <label>
-                                    Onay Durumu&nbsp;:&nbsp;
-                                </label>
+                                    Onay Durumu&nbsp;<font color="maroon">*</font>&nbsp;:&nbsp;</label>
                                 @Html.DropDownList("IsApproved", String.Empty)<br />
                             </td>
                         </tr>
@@ -61,7 +63,7 @@
                             </td>
                             <td style="text-align: left;">
                                 <label>
-                                    İş Tipi&nbsp;:&nbsp;</label>@Html.DropDownList("RequestTypeID", String.Empty)
+                                    İş Tipi&nbsp;<font color="maroon">*</font>&nbsp;:&nbsp;</label>@Html.DropDownList("RequestTypeID", String.Empty)
                             </td>
                         </tr>
                         <tr>
@@ -76,6 +78,17 @@
                                 @Html.Telerik().DatePickerFor(model => model.EndDate).Name("EndDate")
                             </td>
                         </tr>
+                        <tr>
+                            <td style="text-align: right; vertical-align: middle; padding-top: 5px;" width="50%">
+                                <label>
+                                    <font color="maroon">Proje Raporuna İlgili
+                                        <br />
+                                        İş Kayıtları Dahil Edilsin mi?</font></label>
+                            </td>
+                            <td style="text-align: left;" width="50%">
+                                @Html.CheckBox("IncludeRiRecords", true, new { disabled = "disabled" })
+                            </td>
+                        </tr>
                     </tbody>
                 </table>
                 <div class="submit-row">
@@ -86,6 +99,9 @@
                         <tbody>
                             <tr>
                                 <td>
+                                </td>
+                                <td>
+                                    <input type="submit" name="projects" value="Proje Raporu" />
                                 </td>
                                 <td>
                                     <input type="submit" name="workload" value="İş Yükü Raporu" />
@@ -99,6 +115,18 @@
                 </div>
             </fieldset>
             <br />
+            @if (!(string.IsNullOrEmpty(ViewBag.CustomErr)))
+            {
+            <fieldset class="module aligned ">
+                <br />
+                <div style="margin: 5px;">
+                    <ul style="list-style: none">
+                        <li>@ViewBag.CustomErr</li>
+                    </ul>
+                </div>
+            </fieldset>
+            <br />
+            }
             <fieldset class="module aligned ">
                 <br />
                 <h2>
