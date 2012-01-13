@@ -1005,7 +1005,7 @@ namespace Klmsncamp.Controllers
         }
 
         [Authorize]
-        public ActionResult Report()
+        public ActionResult Report(string custommerr)
         {
             ViewBag.RequestTypeID = new SelectList(db.RequestTypes, "RequestTypeID", "Description");
             ViewBag.LocationID = new SelectList(db.Locations, "LocationID", "Description");
@@ -1024,6 +1024,10 @@ namespace Klmsncamp.Controllers
             ViewBag.IsApproved = new SelectList(appviewdropdown, "value", "Description");
             ViewBag.ValidationStateID = new SelectList(db.ValidationStates, "ValidationStateID", "Description");
             ViewBag.timestamp = DateTime.Now;
+            if (!(string.IsNullOrEmpty(custommerr)))
+            {
+                ViewBag.CustomErr = custommerr;
+            }
             return View();
         }
 
@@ -1031,7 +1035,9 @@ namespace Klmsncamp.Controllers
         [HttpPost]
         public ActionResult Report(RequestIssue requestıssue, FormCollection formcollection)
         {
-            ReportClass rptH = new ReportClass();
+            ReportDocument rptH = new ReportDocument();
+            bool isProjectreport = false;
+
             try
             {
                 if (formcollection["workload"].Length > 0)
@@ -1041,97 +1047,202 @@ namespace Klmsncamp.Controllers
             }
             catch
             {
-                rptH.FileName = Server.MapPath("~/RDLC/RequestIssueReport.rpt");
+                try
+                {
+                    if (formcollection["projects"].Length > 0)
+                    {
+                        rptH.FileName = Server.MapPath("~/RDLC/ProjectReport.rpt");
+                        isProjectreport = true;
+                    }
+                }
+                catch
+                {
+                    rptH.FileName = Server.MapPath("~/RDLC/RequestIssueReport.rpt");
+                }
             }
 
-            rptH.Load();
+            rptH.Refresh();
+            //rptH.Load();
 
             var value = new ParameterDiscreteValue();
 
             //value.Value = requestıssue.WorkshopID;
             //rptH.ParameterFields["Atolye"].CurrentValues.Add(value);
-
-            value.Value = requestıssue.LocationID;
-            rptH.ParameterFields["Departman"].CurrentValues.Add(value);
-
-            value.Value = requestıssue.RequestStateID ?? 0;
-
-            rptH.ParameterFields["IsDurum"].CurrentValues.Add(value);
-
-            value.Value = requestıssue.RequestTypeID;
-            rptH.ParameterFields["IsTip"].CurrentValues.Add(value);
-
-            value.Value = formcollection["LocationGroupID"];
-            if (value.Value.ToString() != "")
+            if (isProjectreport)
             {
-                rptH.ParameterFields["AnaDepartman"].CurrentValues.Add(value);
+                var projects_ = db.Projects.AsNoTracking().Include(p => p.Locations).Include(p => p.Personnels).Include(p => p.CorporateAccounts);
+
+                //kriterleri farkli bir sekilde degerlendirmeyi deneyelim. (sonra hepsi tek bir hale getir!!!!)
+                if (formcollection["LocationID"] != null)
+                {
+                    try
+                    {
+                        var loc_ = db.Locations.Include(p => p.Projects).Where(i => i.LocationID == requestıssue.LocationID).SingleOrDefault();
+                        var loc_projs = loc_.Projects.Select(s => s.ProjectID).ToList();
+                        projects_ = projects_.Where(u => loc_projs.Contains(u.ProjectID));
+                    }
+                    catch
+                    {
+                        if (formcollection["LocationGroupID"] != null)
+                        {
+                            try
+                            {
+                                int locgroup_wherecondition = int.Parse(formcollection["LocationGroupID"]);
+                                var locs_ = db.Locations.Include(p => p.Projects).Where(i => i.LocationGroupID == locgroup_wherecondition);
+                                List<int> locgroupproids = new List<int>();
+                                foreach (Location loc_single in locs_)
+                                {
+                                    var loc_projs = loc_single.Projects.Select(s => s.ProjectID).ToList();
+
+                                    foreach (int xpr in loc_projs)
+                                    {
+                                        locgroupproids.Add(xpr);
+                                    }
+                                }
+                                projects_ = projects_.Where(u => locgroupproids.Contains(u.ProjectID));
+                            }
+                            catch { }
+                        }
+                    }
+                }
+
+                if (formcollection["PersonnelID"] != null)
+                {
+                    try
+                    {
+                        int pers_wherecondition = int.Parse(formcollection["PersonnelID"]);
+                        var pers_ = db.Personnels.Include(p => p.Projects).Where(i => i.PersonnelID == pers_wherecondition).SingleOrDefault();
+                        var pers_projs = pers_.Projects.Select(s => s.ProjectID).ToList();
+                        projects_ = projects_.Where(u => pers_projs.Contains(u.ProjectID));
+                    }
+                    catch
+                    { }
+                }
+
+                if (formcollection["UserID"] != null)
+                {
+                    try
+                    {
+                        int project_responsiblewherecondition = int.Parse(formcollection["UserID"]);
+                        projects_ = projects_.Where(u => u.UserID == project_responsiblewherecondition);
+                    }
+                    catch { }
+                }
+
+                if (requestıssue.StartDate != null)
+                {
+                    projects_ = projects_.Where(u => u.StartDate >= requestıssue.StartDate);
+                }
+
+                if (requestıssue.EndDate != null)
+                {
+                    projects_ = projects_.Where(u => u.EndDate <= requestıssue.EndDate);
+                }
+
+                int x_index = 0;
+                foreach (int pro_ in projects_.Select(i => i.ProjectID).ToList())
+                {
+                    value.Value = pro_;
+
+                    rptH.ParameterFields["ProjectIDs"].CurrentValues.Add(value);
+                    x_index++;
+                }
+
+                if (x_index == 0)
+                {
+                    return RedirectToAction("Report", new { custommerr = "Belirttiğiniz Kriterlere Uygun Kayıt(lar) Bulunamadı" });
+                }
+                /*
+                rptH.SetDatabaseLogon("sa", "KLMSN_2007", @"DCVMSERVER/(local)", "HELPDESK", true);
+
+                foreach (ReportDocument sub in rptH.Subreports)
+                {
+                    sub.SetDatabaseLogon("sa", "KLMSN_2007", @"DCVMSERVER/local", "HELPDESK", true);
+                }*/
             }
             else
             {
-                value.Value = 0;
-                rptH.ParameterFields["AnaDepartman"].CurrentValues.Add(value);
-            }
+                value.Value = requestıssue.LocationID;
+                rptH.ParameterFields["Departman"].CurrentValues.Add(value);
 
-            value.Value = formcollection["PersonnelID"].ToString();
-            if (value.Value.ToString() != "")
-            {
-                rptH.ParameterFields["IsIsteyenPersonel"].CurrentValues.Add(value);
-            }
-            else
-            {
-                value.Value = 0;
-                rptH.ParameterFields["IsIsteyenPersonel"].CurrentValues.Add(value);
-            }
+                value.Value = requestıssue.RequestStateID ?? 0;
 
-            value.Value = formcollection["UserID"].ToString();
-            if (value.Value.ToString() != "")
-            {
-                rptH.ParameterFields["IsSahibi"].CurrentValues.Add(value);
-            }
-            else
-            {
-                value.Value = 0;
-                rptH.ParameterFields["IsSahibi"].CurrentValues.Add(value);
-            }
+                rptH.ParameterFields["IsDurum"].CurrentValues.Add(value);
 
-            value.Value = formcollection["IsApproved"].ToString();
-            if (value.Value.ToString() != "")
-            {
-                rptH.ParameterFields["OnayDurum"].CurrentValues.Add(value);
-            }
-            else
-            {
-                value.Value = "yok";
-                rptH.ParameterFields["OnayDurum"].CurrentValues.Add(value);
-            }
+                value.Value = requestıssue.RequestTypeID;
+                rptH.ParameterFields["IsTip"].CurrentValues.Add(value);
 
-            if (requestıssue.StartDate != null)
-            {
-                value.Value = requestıssue.StartDate;
-                rptH.ParameterFields["StartDate"].CurrentValues.Add(value);
-            }
-            else
-            {
-                value.Value = DateTime.Today.AddYears(-20);
-                rptH.ParameterFields["StartDate"].CurrentValues.Add(value);
-            }
+                value.Value = formcollection["LocationGroupID"];
+                if (value.Value.ToString() != "")
+                {
+                    rptH.ParameterFields["AnaDepartman"].CurrentValues.Add(value);
+                }
+                else
+                {
+                    value.Value = 0;
+                    rptH.ParameterFields["AnaDepartman"].CurrentValues.Add(value);
+                }
 
-            if (requestıssue.EndDate != null)
-            {
-                value.Value = requestıssue.EndDate;
-                rptH.ParameterFields["EndDate"].CurrentValues.Add(value);
-            }
-            else
-            {
-                value.Value = DateTime.Today.AddYears(20);
-                rptH.ParameterFields["EndDate"].CurrentValues.Add(value);
-            }
+                value.Value = formcollection["PersonnelID"].ToString();
+                if (value.Value.ToString() != "")
+                {
+                    rptH.ParameterFields["IsIsteyenPersonel"].CurrentValues.Add(value);
+                }
+                else
+                {
+                    value.Value = 0;
+                    rptH.ParameterFields["IsIsteyenPersonel"].CurrentValues.Add(value);
+                }
 
+                value.Value = formcollection["UserID"].ToString();
+                if (value.Value.ToString() != "")
+                {
+                    rptH.ParameterFields["IsSahibi"].CurrentValues.Add(value);
+                }
+                else
+                {
+                    value.Value = 0;
+                    rptH.ParameterFields["IsSahibi"].CurrentValues.Add(value);
+                }
+
+                value.Value = formcollection["IsApproved"].ToString();
+                if (value.Value.ToString() != "")
+                {
+                    rptH.ParameterFields["OnayDurum"].CurrentValues.Add(value);
+                }
+                else
+                {
+                    value.Value = "yok";
+                    rptH.ParameterFields["OnayDurum"].CurrentValues.Add(value);
+                }
+
+                if (requestıssue.StartDate != null)
+                {
+                    value.Value = requestıssue.StartDate;
+                    rptH.ParameterFields["StartDate"].CurrentValues.Add(value);
+                }
+                else
+                {
+                    value.Value = DateTime.Today.AddYears(-20);
+                    rptH.ParameterFields["StartDate"].CurrentValues.Add(value);
+                }
+
+                if (requestıssue.EndDate != null)
+                {
+                    value.Value = requestıssue.EndDate;
+                    rptH.ParameterFields["EndDate"].CurrentValues.Add(value);
+                }
+                else
+                {
+                    value.Value = DateTime.Today.AddYears(20);
+                    rptH.ParameterFields["EndDate"].CurrentValues.Add(value);
+                }
+            }
             // rptH.SetDataSource([datatable]);
             var cd = new System.Net.Mime.ContentDisposition
             {
                 // for example foo.bak
-                FileName = "rapor_.pdf",
+                FileName = "rapor_klimasanHelpDesk.pdf",
 
                 // always prompt the user for downloading, set to true if you want
                 // the browser to try to show the file inline

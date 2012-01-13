@@ -156,9 +156,13 @@
     {
         <img alt="onaysiz" src="@Url.Content("~/Content/images/delete.png")" />
     }
-    else
+    else if (item.IsApproved && item.RequestStateID == 5)
     {
         <img alt="onayli" src="@Url.Content("~/Content/images/checked.gif")" />
+    }
+    else if (item.IsApproved && item.RequestStateID == 6)
+    {
+        <img alt="olumsuz" src="@Url.Content("~/Content/images/exclamation.gif")" />
     }
     </text>
                                     ).Width(50).Title("Durum");
