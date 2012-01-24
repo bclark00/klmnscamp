@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
-using System.ComponentModel.DataAnnotations;
 using System.Web.Security;
 
 namespace Klmsncamp.Models
@@ -15,10 +15,10 @@ namespace Klmsncamp.Models
         [Display(Name = "Açıklama")]
         [MaxLength(100, ErrorMessage = "100 Karakterden fazla olamaz")]
         public string Description { get; set; }
-        
-        [Required(ErrorMessage="Zorunlu Alan")]
-        [Display(Name="Seri No")]
-        [MaxLength(100,ErrorMessage="100 Karakterden fazla olamaz")]
+
+        [Required(ErrorMessage = "Zorunlu Alan")]
+        [Display(Name = "Seri No")]
+        [MaxLength(100, ErrorMessage = "100 Karakterden fazla olamaz")]
         public string SerialNumber { get; set; }
 
         [Display(Name = "Lokasyon")]
@@ -26,7 +26,6 @@ namespace Klmsncamp.Models
 
         public virtual Location Location { get; set; }
 
-        
         [ForeignKey("CorporateAccount")]
         public int? CorporateAccountID { get; set; }
 
@@ -37,8 +36,8 @@ namespace Klmsncamp.Models
         [MaxLength(100, ErrorMessage = "100 Karakterden fazla olamaz")]
         public string BrandModel { get; set; }
 
-        [Display(Name="Demirbaş No")]
-        [MaxLength(100, ErrorMessage="100 Karakterden fazla olamaz")]
+        [Display(Name = "Demirbaş No")]
+        [MaxLength(100, ErrorMessage = "100 Karakterden fazla olamaz")]
         public string InventoryStockNo { get; set; }
 
         [Required(ErrorMessage = "Zorunlu Alan")]
@@ -47,12 +46,12 @@ namespace Klmsncamp.Models
 
         public virtual ValidationState ValidationState { get; set; }
 
-        [Display(Name="Ek Not")]
-        [MaxLength(450, ErrorMessage="450 Karakterden fazla olamaz")]
+        [Display(Name = "Ek Not")]
+        [MaxLength(450, ErrorMessage = "450 Karakterden fazla olamaz")]
         public string Notes { get; set; }
 
-        [Display(Name="Aidiyet")]
-        [Required(ErrorMessage="Zorunlu Alan")]
+        [Display(Name = "Aidiyet")]
+        [Required(ErrorMessage = "Zorunlu Alan")]
         public int InventoryOwnershipID { get; set; }
 
         public virtual InventoryOwnership InvetoryOwnership { get; set; }
@@ -74,8 +73,5 @@ namespace Klmsncamp.Models
         [Display(Name = "Cihaz Alınış Tarihi")]
         [DisplayFormat(DataFormatString = "{0:d}", ApplyFormatInEditMode = true)]
         public DateTime? PurchaseDate { get; set; }
-        
-        
-        
     }
 }
