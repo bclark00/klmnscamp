@@ -1,0 +1,69 @@
+﻿@model IEnumerable<Klmsncamp.Models.SurveyTable>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table>
+    <tr>
+        <th>
+            Description
+        </th>
+        <th>
+            SurveyTemplate
+        </th>
+        <th>
+            RequestIssue
+        </th>
+        <th>
+            HashKey
+        </th>
+        <th>
+            TimeStamp
+        </th>
+        <th>
+            mTimeStamp
+        </th>
+        <th>
+            IsApproved
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SurveyTemplate.Description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.RequestIssue.DetailedDescription)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HashKey)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TimeStamp)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.mTimeStamp)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsApproved)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.SurveyTableID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.SurveyTableID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.SurveyTableID })
+        </td>
+    </tr>
+}
+
+</table>

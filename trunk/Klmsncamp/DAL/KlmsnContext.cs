@@ -62,6 +62,16 @@ namespace Klmsncamp.Models
 
         public DbSet<Project> Projects { get; set; }
 
+        public DbSet<SurveyNode> SurveyNodes { get; set; }
+
+        public DbSet<SurveyRecordType> SurveyRecordTypes { get; set; }
+
+        public DbSet<SurveyTable> SurveyTables { get; set; }
+
+        public DbSet<SurveyTemplate> SurveyTemplates { get; set; }
+
+        public DbSet<SurveyRecord> SurveyRecords { get; set; }
+
         public ObjectContext KlmsnObjectContext
         {
             get { return ((IObjectContextAdapter)this).ObjectContext; }
@@ -90,11 +100,23 @@ namespace Klmsncamp.Models
                     .MapRightKey("PersonnelID")
                     .ToTable("RequestIssuePersonnel"));
 
+            modelBuilder.Entity<SurveyTemplate>()
+                .HasMany(c => c.SurveyRecords).WithMany(i => i.SurveyTemplates)
+                .Map(t => t.MapLeftKey("SurveyTemplateID")
+                    .MapRightKey("SurveyRecordID")
+                    .ToTable("SurveyTemplateSurveyRecord"));
+
             modelBuilder.Entity<RequestIssue>().HasRequired(a => a.ValidationState).WithMany().HasForeignKey(u => u.ValidationStateID).WillCascadeOnDelete(false);
 
             modelBuilder.Entity<LogRequestIssue>().HasRequired(a => a.RequestIssue).WithMany().HasForeignKey(u => u.RequestIssueID).WillCascadeOnDelete(false);
 
             modelBuilder.Entity<Project>().HasRequired(a => a.cUser).WithMany().HasForeignKey(u => u.cUserID).WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<SurveyRecord>().HasRequired(a => a.SurveyNode).WithMany().HasForeignKey(u => u.SurveyNodeID).WillCascadeOnDelete(false);
+            modelBuilder.Entity<SurveyRecord>().HasRequired(a => a.SurveyRecordType).WithMany().HasForeignKey(u => u.SurveyRecordTypeID).WillCascadeOnDelete(false);
+            modelBuilder.Entity<SurveyTemplate>().HasRequired(a => a.RequestType).WithMany().HasForeignKey(u => u.RequestTypeID).WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<SurveyTable>().HasRequired(a => a.RequestIssue).WithMany().HasForeignKey(u => u.RequestIssueID).WillCascadeOnDelete(false);
         }
     }
 }

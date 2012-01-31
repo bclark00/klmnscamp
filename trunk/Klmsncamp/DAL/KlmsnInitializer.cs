@@ -641,6 +641,48 @@ namespace Klmsncamp.DAL
 
             persons.ForEach(s => context.Personnels.Add(s));
             context.SaveChanges();
+
+            var SurvNodes = new List<SurveyNode>
+            {
+                new SurveyNode { Description="Talebiniz Tamamlandı mı?" },
+                new SurveyNode { Description ="Bu sorunu daha önce yaşamış mıydınız?" },
+                new SurveyNode { Description="Memnuniyetiniz" }
+            };
+            SurvNodes.ForEach(s => context.SurveyNodes.Add(s));
+            context.SaveChanges();
+
+            var survrectypes = new List<SurveyRecordType>
+            {
+                new SurveyRecordType { Description="Puanlama" },
+                new SurveyRecordType {Description = "Bool" }
+            };
+            survrectypes.ForEach(s => context.SurveyRecordTypes.Add(s));
+            context.SaveChanges();
+
+            var survrecs = new List<SurveyRecord>
+            {
+                new SurveyRecord { SurveyRecordTypeID = 2, SurveyNodeID= 1, OrderNum=0},
+                new SurveyRecord { SurveyRecordTypeID = 2, SurveyNodeID= 2, OrderNum=1 },
+                new SurveyRecord { SurveyRecordTypeID = 1, SurveyNodeID= 3, OrderNum=0 }
+            };
+            survrecs.ForEach(s => context.SurveyRecords.Add(s));
+            context.SaveChanges();
+
+            var survtemps = new List<SurveyTemplate>
+            {
+                new SurveyTemplate { Description="Donanım Arızası Anketi", PreDefined=true, RequestTypeID=5, SurveyRecords= new List<SurveyRecord>()},
+                new SurveyTemplate { Description="Yazılım Arızası Anketi", PreDefined=true, RequestTypeID=1,SurveyRecords= new List<SurveyRecord>()}
+            };
+            survtemps.ForEach(s => context.SurveyTemplates.Add(s));
+            context.SaveChanges();
+
+            survtemps[0].SurveyRecords.Add(context.SurveyRecords.Find(1));
+            survtemps[0].SurveyRecords.Add(context.SurveyRecords.Find(3));
+            survtemps[1].SurveyRecords.Add(context.SurveyRecords.Find(1));
+            survtemps[1].SurveyRecords.Add(context.SurveyRecords.Find(2));
+            survtemps[1].SurveyRecords.Add(context.SurveyRecords.Find(3));
+
+            context.SaveChanges();
         }
     }
 }

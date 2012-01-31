@@ -271,8 +271,8 @@
                             else
                             {
                                 <td style="vertical-align: middle; text-align: left;">
-                                    @Html.EditorFor(model => model.IsApproved)
-                                    @Html.ValidationMessageFor(model => model.IsApproved)
+                                    @Html.HiddenFor(model => model.IsApproved)
+                                    --
                                 </td>
                             }
                         </tr>

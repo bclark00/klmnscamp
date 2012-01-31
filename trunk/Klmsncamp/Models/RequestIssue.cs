@@ -100,6 +100,8 @@ namespace Klmsncamp.Models
 
         public DateTime TimeStamp { get; set; }
 
+        public DateTime? mTimeStamp { get; set; }
+
         [ForeignKey("User")]
         [Display(Name = "İş Sahibi")]
         [UserIsApprovedCheck]
