@@ -416,7 +416,7 @@ namespace Klmsncamp.Controllers
 
                 if (rq.SendEmail == true)
                 {
-                    string mailsonucstr = SendEmail(new MailAddress(rq.User.Email), new MailAddress(rq.UserReq.Email), "[Klimasan HelpDesk] #" + rq.RequestIssueID.ToString() + " no'lu İş isteğiniz hakkında.", "İş İsteğinizin ön görülen başlangıç ve bitiş tarihleri değiştirilmiş/güncellenmiştir. İsteğinizin son durumu görmek isterseniz; http://192.168.76.176/HelpDesk/RequestIssue/Editp/" + rq.RequestIssueID.ToString() + "?show=A&page=1 adresini ziyaret ediniz. Tarih: " + DateTime.Now.ToString() + ". İyi çalışmalar dileriz.");
+                    string mailsonucstr = SendEmail(new MailAddress(rq.User.Email), new MailAddress(rq.UserReq.Email), "[Klimasan HelpDesk] #" + rq.RequestIssueID.ToString() + " no'lu İş isteğiniz hakkında.", "İş İsteğinizin ön görülen başlangıç ve bitiş tarihleri değiştirilmiş/güncellenmiştir. İsteğinizin son durumu görmek isterseniz; http://192.168.76.176/HelpDesk/RequestIssue/Editp/" + rq.RequestIssueID.ToString() + "?show=A&page=1 adresini ziyaret ediniz. Tarih: " + DateTime.Now.ToString() + ". İyi çalışmalar dileriz.", rq.Personnel.Email, false);
                     if (mailsonucstr != "OK")
                     {
                         ViewBag.Bilgilendirme = "Mail Gönderiminde Hata: " + mailsonucstr;
@@ -442,7 +442,7 @@ namespace Klmsncamp.Controllers
         }
 
         [Authorize]
-        internal static string SendEmail(MailAddress fromAddress, MailAddress toAddress, string subject, string body)
+        internal static string SendEmail(MailAddress fromAddress, MailAddress toAddress, string subject, string body, string fromPersonnel, bool fromEBA)
         {
             try
             {
@@ -451,6 +451,12 @@ namespace Klmsncamp.Controllers
                     Subject = subject,
                     Body = body
                 };
+
+                try
+                {
+                    message.CC.Add(new MailAddress(fromPersonnel));
+                }
+                catch { }
 
                 var client = new SmtpClient("KLMSNEVS.klimasan.msft");
                 client.Credentials = new NetworkCredential("MUSAF@klimasan.com.tr", "1212");

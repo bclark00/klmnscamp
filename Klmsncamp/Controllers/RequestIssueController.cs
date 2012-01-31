@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Mail;
+using System.Text;
 using System.Web.Mvc;
 using System.Web.Security;
 using CrystalDecisions.CrystalReports.Engine;
@@ -21,6 +22,20 @@ namespace Klmsncamp.Controllers
     public class RequestIssueController : Controller
     {
         private KlmsnContext db = new KlmsnContext();
+
+        private static Random random = new Random((int)DateTime.Now.Ticks);//thanks to McAden
+        private string RandomString(int size)
+        {
+            StringBuilder builder = new StringBuilder();
+            char ch;
+            for (int i = 0; i < size; i++)
+            {
+                ch = Convert.ToChar(Convert.ToInt32(Math.Floor(26 * random.NextDouble() + 65)));
+                builder.Append(ch);
+            }
+
+            return builder.ToString();
+        }
 
         //
         // GET: /RequestIssue/
@@ -152,7 +167,7 @@ namespace Klmsncamp.Controllers
                     MembershipUser currentuser_ = new UserRepository().GetUser(User.Identity.Name);
                     User user_from = db.Users.AsNoTracking().Where(b => b.UserId == requestissue.UserID).SingleOrDefault();
 
-                    string mailsonucstr = SendEmail(new MailAddress(user_from.Email), new MailAddress(currentuser_.Email), "[Klimasan HelpDesk] İş isteğiniz hakkında.", "İsteğiniz doğrulanarak kayıt altına alınmıştır.Tarih: " + DateTime.Now.ToString() + " - İş No: #" + (requestissue.RequestIssueID).ToString() + ". İyi çalışmalar dileriz.");
+                    string mailsonucstr = SendEmail(new MailAddress(user_from.Email), new MailAddress(currentuser_.Email), "[Klimasan HelpDesk] İş isteğiniz hakkında.", "İsteğiniz doğrulanarak kayıt altına alınmıştır.Tarih: " + DateTime.Now.ToString() + " - İş No: #" + (requestissue.RequestIssueID).ToString() + ". İyi çalışmalar dileriz.", requestissue.Personnel.Email, false);
                     if (mailsonucstr != "OK")
                     {
                         ViewBag.Bilgilendirme = "Mail Gönderiminde Hata: " + mailsonucstr;
@@ -181,7 +196,7 @@ namespace Klmsncamp.Controllers
 
             ViewBag.RequestTypeID = new SelectList(db.RequestTypes, "RequestTypeID", "Description");
             ViewBag.LocationID = new SelectList(db.Locations, "LocationID", "Description");
-            ViewBag.PersonnelID = new SelectList(db.Personnels, "PersonnelID", "FullName");
+            ViewBag.PersonnelID = new SelectList(db.Personnels.Where(s => s.ValidationStateID == 1), "PersonnelID", "FullName");
             ViewBag.InventoryID = new SelectList(db.Inventories, "InventoryID", "Description");
             ViewBag.WorkshopID = new SelectList(db.Workshops, "WorkshopID", "Description");
             ViewBag.RequestStateID = new SelectList(db.RequestStates, "RequestStateID", "Description", 1);
@@ -613,6 +628,9 @@ namespace Klmsncamp.Controllers
                 {
                     rqToUpdate.RequestStateID = 5;
                 }
+
+                rqToUpdate.mTimeStamp = DateTime.Now;
+
                 db.Entry(rqToUpdate).State = EntityState.Modified;
                 db.SaveChanges();
 
@@ -711,7 +729,8 @@ namespace Klmsncamp.Controllers
                 {
                     User user_from = db.Users.AsNoTracking().Where(b => b.UserId == rqToUpdate.UserID).SingleOrDefault();
                     User userReq_to = db.Users.AsNoTracking().Where(b => b.UserId == rqToUpdate.UserReqID).SingleOrDefault();
-                    string mailsonucstr = SendEmail(new MailAddress(user_from.Email), new MailAddress(userReq_to.Email), "[Klimasan HelpDesk] #" + rqToUpdate.RequestIssueID.ToString() + " no'lu İş isteğiniz hakkında.", "İş İsteğiniz güncellenmiştir. İsteğinizin son durumu görmek isterseniz;  http://192.168.76.176/HelpDesk/RequestIssue/Editp/" + rqToUpdate.RequestIssueID.ToString() + "?show=A&page=1 adresini ziyaret ediniz. Tarih: " + DateTime.Now.ToString() + ". İyi çalışmalar dileriz.");
+                    Personnel pers_from = db.Personnels.AsNoTracking().Where(b => b.PersonnelID == rqToUpdate.PersonnelID).SingleOrDefault();
+                    string mailsonucstr = SendEmail(new MailAddress(user_from.Email), new MailAddress(userReq_to.Email), "[Klimasan HelpDesk] #" + rqToUpdate.RequestIssueID.ToString() + " no'lu İş isteğiniz hakkında.", "İş İsteğiniz güncellenmiştir. İsteğinizin son durumu görmek isterseniz;  http://192.168.76.176/HelpDesk/RequestIssue/Editp/" + rqToUpdate.RequestIssueID.ToString() + "?show=A&page=1 adresini ziyaret ediniz. Tarih: " + DateTime.Now.ToString() + ". İyi çalışmalar dileriz.", pers_from.Email, false);
                     if (mailsonucstr != "OK")
                     {
                         ViewBag.Bilgilendirme = "Mail Gönderiminde Hata: " + mailsonucstr;
@@ -739,6 +758,12 @@ namespace Klmsncamp.Controllers
                         db.SaveChanges();
                     }
                 }
+
+                if (rqToUpdate.IsApproved)
+                {
+                    CreateSurvey(rqToUpdate.PersonnelID.Value, rqToUpdate.RequestTypeID, rqToUpdate.RequestIssueID);
+                }
+
                 return RedirectToAction("Index", new { show = formCollection["show"], page = formCollection["page"] });
             }
 
@@ -858,7 +883,7 @@ namespace Klmsncamp.Controllers
             var xuser = db.Users.AsNoTracking().Where(i => i.UserId == user_wherecondition).Single();
             if (requestıssue.SendEmail == true)
             {
-                string mailsonucstr = SendEmail(new MailAddress(requestıssue.User.Email), new MailAddress(requestıssue.UserReq.Email), "[Klimasan HelpDesk] #" + requestıssue.RequestIssueID.ToString() + " no'lu İş isteğiniz hakkında.", "İş İsteğiniz " + xuser.FullName + " silinmiştir. Tarih: " + DateTime.Now.ToString() + ". İyi çalışmalar dileriz.");
+                string mailsonucstr = SendEmail(new MailAddress(requestıssue.User.Email), new MailAddress(requestıssue.UserReq.Email), "[Klimasan HelpDesk] #" + requestıssue.RequestIssueID.ToString() + " no'lu İş isteğiniz hakkında.", "İş İsteğiniz " + xuser.FullName + " silinmiştir. Tarih: " + DateTime.Now.ToString() + ". İyi çalışmalar dileriz.", requestıssue.Personnel.Email, false);
             }
             db.RequestIssues.Remove(requestıssue);
             db.SaveChanges();
@@ -873,15 +898,67 @@ namespace Klmsncamp.Controllers
         }
 
         [Authorize]
-        internal static string SendEmail(MailAddress fromAddress, MailAddress toAddress, string subject, string body)
+        public void CreateSurvey(int xpersID, int xrequesttypeID, int xrequestissueID)
+        {
+            try
+            {
+                Personnel pers_ = db.Personnels.AsNoTracking().Where(i => i.PersonnelID == xpersID).SingleOrDefault();
+                if (pers_.Email != null)
+                {
+                    var mastersurvtemp = db.SurveyTemplates.Include(u => u.SurveyRecords).Where(i => i.RequestTypeID == xrequesttypeID && i.PreDefined == true).SingleOrDefault();
+                    List<SurveyRecord> survrecs = new List<SurveyRecord>();
+                    foreach (SurveyRecord sr_ in mastersurvtemp.SurveyRecords.ToList())
+                    {
+                        SurveyRecord mysurveyrec = new SurveyRecord { SurveyNodeID = sr_.SurveyNodeID, SurveyRecordTypeID = sr_.SurveyRecordTypeID, OrderNum = sr_.OrderNum, ApprovalStatus = sr_.ApprovalStatus, Score = sr_.Score, Note = sr_.Note };
+                        survrecs.Add(mysurveyrec);
+                        db.SurveyRecords.Add(mysurveyrec);
+                    }
+                    db.SaveChanges();
+
+                    SurveyTemplate mysurvtemp = new SurveyTemplate()
+                    {
+                        Description = "XxxXxxxxxXXX tarihli XxXXXx iş talebinize yönelik Anket",
+                        PreDefined = false,
+                        RequestTypeID = xrequesttypeID,
+                        SurveyRecords = survrecs
+                    };
+                    db.SurveyTemplates.Add(mysurvtemp);
+                    db.SaveChanges();
+
+                    SurveyTable mysurvey = new SurveyTable()
+                    {
+                        RequestIssueID = xrequestissueID,
+                        Description = "XxxXxxxxxXXX tarihli XxXXXx iş talebinize yönelik Anket",
+                        TimeStamp = DateTime.Now,
+                        SurveyTemplateID = mysurvtemp.SurveyTemplateID,
+                        IsApproved = false,
+                        HashKey = RandomString(20)
+                    };
+                    db.SurveyTables.Add(mysurvey);
+                    db.SaveChanges();
+                }
+            }
+            catch
+            {
+            }
+        }
+
+        [Authorize]
+        internal static string SendEmail(MailAddress fromAddress, MailAddress toAddress, string subject, string body, string fromPersonnel, bool fromEBA)
         {
             try
             {
                 var message = new MailMessage(fromAddress, toAddress)
                 {
                     Subject = subject,
-                    Body = body
+                    Body = body,
                 };
+
+                try
+                {
+                    message.CC.Add(new MailAddress(fromPersonnel));
+                }
+                catch { }
 
                 var client = new SmtpClient("KLMSNEVS.klimasan.msft");
                 client.Credentials = new NetworkCredential("MUSAF@klimasan.com.tr", "1213");

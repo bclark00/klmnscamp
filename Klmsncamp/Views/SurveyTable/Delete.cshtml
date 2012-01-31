@@ -1,0 +1,53 @@
+﻿@model Klmsncamp.Models.SurveyTable
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<fieldset>
+    <legend>SurveyTable</legend>
+
+    <div class="display-label">Description</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Description)
+    </div>
+
+    <div class="display-label">SurveyTemplate</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.SurveyTemplate.Description)
+    </div>
+
+    <div class="display-label">RequestIssue</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.RequestIssue.DetailedDescription)
+    </div>
+
+    <div class="display-label">HashKey</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.HashKey)
+    </div>
+
+    <div class="display-label">TimeStamp</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.TimeStamp)
+    </div>
+
+    <div class="display-label">mTimeStamp</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.mTimeStamp)
+    </div>
+
+    <div class="display-label">IsApproved</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.IsApproved)
+    </div>
+</fieldset>
+@using (Html.BeginForm()) {
+    <p>
+        <input type="submit" value="Delete" /> |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+}

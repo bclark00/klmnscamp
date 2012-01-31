@@ -177,6 +177,7 @@
     <Compile Include="Controllers\RequestIssueController.cs" />
     <Compile Include="Controllers\RequestStateController.cs" />
     <Compile Include="Controllers\RequestTypeController.cs" />
+    <Compile Include="Controllers\SurveyTableController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\UserGroupController.cs" />
     <Compile Include="Controllers\ValidationStateController.cs" />
@@ -214,6 +215,11 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Models\Role.cs" />
+    <Compile Include="Models\SurveyNode.cs" />
+    <Compile Include="Models\SurveyRecord.cs" />
+    <Compile Include="Models\SurveyRecordType.cs" />
+    <Compile Include="Models\SurveyTable.cs" />
+    <Compile Include="Models\SurveyTemplate.cs" />
     <Compile Include="Models\UserIsApprovedCheckAttribute.cs" />
     <Compile Include="RDLC\ProjectReport.cs">
       <AutoGen>True</AutoGen>
@@ -1104,6 +1110,11 @@
     <Content Include="Views\Project\Create.cshtml" />
     <Content Include="Views\Project\Edit.cshtml" />
     <Content Include="Views\Project\Delete.cshtml" />
+    <Content Include="Views\SurveyTable\Index.cshtml" />
+    <Content Include="Views\SurveyTable\Details.cshtml" />
+    <Content Include="Views\SurveyTable\Create.cshtml" />
+    <Content Include="Views\SurveyTable\Edit.cshtml" />
+    <Content Include="Views\SurveyTable\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_GlobalResources\EditorLocalization.en-US.resx">

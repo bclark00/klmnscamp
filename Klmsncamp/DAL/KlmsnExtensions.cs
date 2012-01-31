@@ -38,9 +38,12 @@ namespace Klmsncamp.DAL
                     object value1 = typeof(T).GetProperty(pi.Name).GetValue(obj1, null);
                     object value2 = typeof(T).GetProperty(pi.Name).GetValue(obj2, null);
 
-                    if (value1 != value2 && ((value1 == null || !value1.Equals(value2)) || (value2 == null || !value2.Equals(value1))))
+                    if (!(pi.Name == "TimeStamp" || pi.Name == "mTimeStamp"))
                     {
-                        return true;
+                        if (value1 != value2 && ((value1 == null || !value1.Equals(value2)) || (value2 == null || !value2.Equals(value1))))
+                        {
+                            return true;
+                        }
                     }
                 }
             }
@@ -58,20 +61,23 @@ namespace Klmsncamp.DAL
                     object value1 = typeof(T).GetProperty(pi.Name).GetValue(obj1, null);
                     object value2 = typeof(T).GetProperty(pi.Name).GetValue(obj2, null);
 
-                    //if (value1 != value2 && (value1 == null || !value1.Equals(value2)))
-                    if (value1 != value2 && ((value1 == null || !value1.Equals(value2)) || (value2 == null || !value2.Equals(value1))))
+                    if (!(pi.Name == "TimeStamp" || pi.Name == "mTimeStamp"))
                     {
-                        if (value1 == null)
+                        //if (value1 != value2 && (value1 == null || !value1.Equals(value2)))
+                        if (value1 != value2 && ((value1 == null || !value1.Equals(value2)) || (value2 == null || !value2.Equals(value1))))
                         {
-                            LogProps.Add(new LogRequestIssueViewModel { PropertyName = pi.Name, OldValue = "--", NewValue = typeof(T).GetProperty(pi.Name).GetValue(obj2, null).ToString() });
-                        }
-                        else if (value2 == null)
-                        {
-                            LogProps.Add(new LogRequestIssueViewModel { PropertyName = pi.Name, OldValue = typeof(T).GetProperty(pi.Name).GetValue(obj1, null).ToString(), NewValue = "--" });
-                        }
-                        else
-                        {
-                            LogProps.Add(new LogRequestIssueViewModel { PropertyName = pi.Name, OldValue = typeof(T).GetProperty(pi.Name).GetValue(obj1, null).ToString(), NewValue = typeof(T).GetProperty(pi.Name).GetValue(obj2, null).ToString() });
+                            if (value1 == null)
+                            {
+                                LogProps.Add(new LogRequestIssueViewModel { PropertyName = pi.Name, OldValue = "--", NewValue = typeof(T).GetProperty(pi.Name).GetValue(obj2, null).ToString() });
+                            }
+                            else if (value2 == null)
+                            {
+                                LogProps.Add(new LogRequestIssueViewModel { PropertyName = pi.Name, OldValue = typeof(T).GetProperty(pi.Name).GetValue(obj1, null).ToString(), NewValue = "--" });
+                            }
+                            else
+                            {
+                                LogProps.Add(new LogRequestIssueViewModel { PropertyName = pi.Name, OldValue = typeof(T).GetProperty(pi.Name).GetValue(obj1, null).ToString(), NewValue = typeof(T).GetProperty(pi.Name).GetValue(obj2, null).ToString() });
+                            }
                         }
                     }
                 }
