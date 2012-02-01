@@ -1,0 +1,25 @@
+﻿@model Klmsncamp.Models.ParameterSetting
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<fieldset>
+    <legend>ParameterSetting</legend>
+
+    <div class="display-label">Description</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Description)
+    </div>
+
+    <div class="display-label">ParameterValue</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.ParameterValue)
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.ParameterSettingID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

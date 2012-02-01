@@ -10,11 +10,13 @@ namespace Klmsncamp.Models
     {
         public int SurveyTemplateID { get; set; }
 
-        [Display(Name = "Taslak Anket Açıklama")]
+        [Display(Name = "Anket Taslağı Açıklama")]
         [MaxLength(150, ErrorMessage = "150 karakterden uzun olamaz")]
+        [Required(ErrorMessage = " Zorunlu Alan ")]
         public string Description { get; set; }
 
         [Display(Name = "İş Talep Tipi")]
+        [Required(ErrorMessage = " Zorunlu Alan ")]
         public int RequestTypeID { get; set; }
 
         [Display(Name = "İş Talep Tipi")]

@@ -13,63 +13,23 @@ namespace Klmsncamp.Controllers
     {
         private KlmsnContext db = new KlmsnContext();
 
-        //
-        // GET: /SurveyTable/
-
-        public ViewResult Index()
-        {
-            var surveytables = db.SurveyTables.Include(s => s.SurveyTemplate).Include(s => s.RequestIssue);
-            return View(surveytables.ToList());
-        }
-
-        //
-        // GET: /SurveyTable/Details/5
-
-        public ViewResult Details(int id)
-        {
-            SurveyTable surveytable = db.SurveyTables.Find(id);
-            return View(surveytable);
-        }
-
-        //
-        // GET: /SurveyTable/Create
-
-        public ActionResult Create()
-        {
-            ViewBag.SurveyTemplateID = new SelectList(db.SurveyTemplates, "SurveyTemplateID", "Description");
-            ViewBag.RequestIssueID = new SelectList(db.RequestIssues, "RequestIssueID", "DetailedDescription");
-            return View();
-        }
-
-        //
-        // POST: /SurveyTable/Create
-
-        [HttpPost]
-        public ActionResult Create(SurveyTable surveytable)
-        {
-            if (ModelState.IsValid)
-            {
-                db.SurveyTables.Add(surveytable);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-
-            ViewBag.SurveyTemplateID = new SelectList(db.SurveyTemplates, "SurveyTemplateID", "Description", surveytable.SurveyTemplateID);
-            ViewBag.RequestIssueID = new SelectList(db.RequestIssues, "RequestIssueID", "DetailedDescription", surveytable.RequestIssueID);
-            return View(surveytable);
-        }
-
-        //
-        // GET: /SurveyTable/Edit/5
-
-        public ActionResult Edit(int id)
+        [Authorize]
+        public ActionResult Edit(int id, string customerr)
         {
             SurveyTable surveytable = db.SurveyTables.Find(id);
             ViewBag.SurveyTemplateID = new SelectList(db.SurveyTemplates, "SurveyTemplateID", "Description", surveytable.SurveyTemplateID);
             ViewBag.RequestIssueID = new SelectList(db.RequestIssues, "RequestIssueID", "DetailedDescription", surveytable.RequestIssueID);
 
             ViewBag.TheseSurveyRecords = surveytable.SurveyTemplate.SurveyRecords.ToList();
+            if (!(string.IsNullOrEmpty(customerr)))
+            {
+                ViewBag.CustomErr = customerr;
+            }
 
+            if (surveytable.IsApproved)
+            {
+                ViewBag.CustomErr = "Bu Anket İş Talep sahibi tarafından doldurularak tamamlanmıştır. İlginize Teşekkürler..";
+            }
             return View(surveytable);
         }
 
@@ -77,38 +37,64 @@ namespace Klmsncamp.Controllers
         // POST: /SurveyTable/Edit/5
 
         [HttpPost]
+        [Authorize]
         public ActionResult Edit(SurveyTable surveytable, FormCollection formcollection)
         {
             if (ModelState.IsValid)
             {
-                //db.Entry(surveytable).State = EntityState.Modified;
                 //db.SaveChanges();
-                return RedirectToAction("Index");
+                if (surveytable.IsApproved)
+                {
+                    return RedirectToAction("Edit", new { id = surveytable.SurveyTableID });
+                }
+
+                if (DateTime.Now > surveytable.TimeStamp.AddDays(1))
+                {
+                    return RedirectToAction("Edit", new { id = surveytable.SurveyTableID, customerr = "Üzgünüz, bu anketin geçerlilik süresi dolmuştur." });
+                }
+
+                try
+                {
+                    string hashconfirm = formcollection["HashkeyConfirm"];
+                    var mysvtable_ = db.SurveyTables.AsNoTracking().Where(i => i.SurveyTableID == surveytable.SurveyTableID).SingleOrDefault();
+
+                    if (mysvtable_.HashKey.Equals(hashconfirm))
+                    {
+                        var mysvtemplate_ = db.SurveyTemplates.Where(i => i.SurveyTemplateID == surveytable.SurveyTemplateID).Include(p => p.SurveyRecords).SingleOrDefault();
+                        foreach (SurveyRecord mysurvrecord in mysvtemplate_.SurveyRecords.ToList())
+                        {
+                            if (mysurvrecord.SurveyRecordTypeID == 1)
+                            {
+                                mysurvrecord.Score = int.Parse(formcollection[mysurvrecord.SurveyRecordID.ToString() + "_Score"]);
+                            }
+                            else if (mysurvrecord.SurveyRecordTypeID == 2)
+                            {
+                                mysurvrecord.ApprovalStatus = bool.Parse(formcollection[mysurvrecord.SurveyRecordID.ToString() + "_ApprovalStatus"].Split(',')[0]);
+                            }
+
+                            mysurvrecord.Note = formcollection[mysurvrecord.SurveyRecordID.ToString() + "_Note"];
+                        }
+                        db.SaveChanges();
+                        db.Entry(surveytable).State = EntityState.Modified;
+                        surveytable.HashKey = hashconfirm;
+                        surveytable.IsApproved = true;
+                        surveytable.mTimeStamp = DateTime.Now;
+                        db.SaveChanges();
+                    }
+                    else
+                    {
+                        return RedirectToAction("Edit", new { id = surveytable.SurveyTableID, customerr = "Şifre Uyumsuz. Her anket için farklı şifre üretilmektedir, lütfen elinizdeki şifrenin doğruluğunu kontrol edin." });
+                    }
+                }
+                catch (Exception exx)
+                {
+                    return RedirectToAction("Edit", new { id = surveytable.SurveyTableID, customerr = "Üzgünüz bir hata oldu.(Detaylar :" + exx.Message + ")" });
+                }
+                return RedirectToAction("Edit", new { id = surveytable.SurveyTableID });
             }
             ViewBag.SurveyTemplateID = new SelectList(db.SurveyTemplates, "SurveyTemplateID", "Description", surveytable.SurveyTemplateID);
             ViewBag.RequestIssueID = new SelectList(db.RequestIssues, "RequestIssueID", "DetailedDescription", surveytable.RequestIssueID);
             return View(surveytable);
-        }
-
-        //
-        // GET: /SurveyTable/Delete/5
-
-        public ActionResult Delete(int id)
-        {
-            SurveyTable surveytable = db.SurveyTables.Find(id);
-            return View(surveytable);
-        }
-
-        //
-        // POST: /SurveyTable/Delete/5
-
-        [HttpPost, ActionName("Delete")]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            SurveyTable surveytable = db.SurveyTables.Find(id);
-            db.SurveyTables.Remove(surveytable);
-            db.SaveChanges();
-            return RedirectToAction("Index");
         }
 
         protected override void Dispose(bool disposing)

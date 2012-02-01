@@ -318,7 +318,7 @@
         <div class="submit-row">
             <p class="deletelink-box">
                 @Html.ActionLink("Vazgeç ve Geri Dön", "Index")&nbsp;|&nbsp;@Html.ActionLink("Sil?", "Delete", new { id = @Model.RequestIssueID })</p>
-            <input type="submit" value="Onayla ve Gönder" />
+            <input type="submit" onclick="this.disabled=true;this.value='Lütfen Bekleyiniz..Calisiyor..';this.form.submit();" value="Onayla ve Gönder" />
         </div>
 
     }

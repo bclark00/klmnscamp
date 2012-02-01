@@ -11,6 +11,7 @@ namespace Klmsncamp.Models
         public int SurveyNodeID { get; set; }
 
         [MaxLength(150, ErrorMessage = "150 Karakterden büyük olamaz")]
+        [Required(ErrorMessage = " Zorunlu Alan ")]
         public string Description { get; set; }
     }
 }

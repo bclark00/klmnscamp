@@ -167,6 +167,7 @@
     <Compile Include="Controllers\CalendarController.cs" />
     <Compile Include="Controllers\CorporateAccountController.cs" />
     <Compile Include="Controllers\CorporateTypeController.cs" />
+    <Compile Include="Controllers\ParameterSettingController.cs" />
     <Compile Include="Controllers\PaymentController.cs" />
     <Compile Include="Controllers\InventoryController.cs" />
     <Compile Include="Controllers\InventoryOwnershipController.cs" />
@@ -177,7 +178,9 @@
     <Compile Include="Controllers\RequestIssueController.cs" />
     <Compile Include="Controllers\RequestStateController.cs" />
     <Compile Include="Controllers\RequestTypeController.cs" />
+    <Compile Include="Controllers\SurveyNodeController.cs" />
     <Compile Include="Controllers\SurveyTableController.cs" />
+    <Compile Include="Controllers\SurveyTemplateController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\UserGroupController.cs" />
     <Compile Include="Controllers\ValidationStateController.cs" />
@@ -202,6 +205,7 @@
     <Compile Include="Models\LogRequestIssueDetail.cs" />
     <Compile Include="Models\MaintenanceNode.cs" />
     <Compile Include="App_Data\MyMembershipProvider.cs" />
+    <Compile Include="Models\ParameterSetting.cs" />
     <Compile Include="Models\Payment.cs" />
     <Compile Include="Models\PaymentFile.cs" />
     <Compile Include="Models\Personnel.cs" />
@@ -1110,11 +1114,19 @@
     <Content Include="Views\Project\Create.cshtml" />
     <Content Include="Views\Project\Edit.cshtml" />
     <Content Include="Views\Project\Delete.cshtml" />
-    <Content Include="Views\SurveyTable\Index.cshtml" />
-    <Content Include="Views\SurveyTable\Details.cshtml" />
-    <Content Include="Views\SurveyTable\Create.cshtml" />
     <Content Include="Views\SurveyTable\Edit.cshtml" />
-    <Content Include="Views\SurveyTable\Delete.cshtml" />
+    <Content Include="Views\ParameterSetting\Index.cshtml" />
+    <Content Include="Views\ParameterSetting\Details.cshtml" />
+    <Content Include="Views\ParameterSetting\Create.cshtml" />
+    <Content Include="Views\ParameterSetting\Edit.cshtml" />
+    <Content Include="Views\ParameterSetting\Delete.cshtml" />
+    <Content Include="Views\SurveyTemplate\Index.cshtml" />
+    <Content Include="Views\SurveyTemplate\Create.cshtml" />
+    <Content Include="Views\SurveyTemplate\Edit.cshtml" />
+    <Content Include="Views\SurveyTemplate\Delete.cshtml" />
+    <Content Include="Views\SurveyNode\Index.cshtml" />
+    <Content Include="Views\SurveyNode\Create.cshtml" />
+    <Content Include="Views\SurveyNode\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_GlobalResources\EditorLocalization.en-US.resx">
