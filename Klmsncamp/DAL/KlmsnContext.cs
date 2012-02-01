@@ -72,6 +72,8 @@ namespace Klmsncamp.Models
 
         public DbSet<SurveyRecord> SurveyRecords { get; set; }
 
+        public DbSet<ParameterSetting> ParameterSettings { get; set; }
+
         public ObjectContext KlmsnObjectContext
         {
             get { return ((IObjectContextAdapter)this).ObjectContext; }

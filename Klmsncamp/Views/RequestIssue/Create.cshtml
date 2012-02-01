@@ -264,7 +264,8 @@
         <div class="submit-row">
             <p class="deletelink-box">
                 @Html.ActionLink("Vazgeç ve Geri Dön", "Index")</p>
-            <input type="submit" value="Ekle" />
+            <input type="submit" onclick="this.disabled=true;this.value='Lütfen Bekleyiniz..Calisiyor..';this.form.submit();"
+                value="Ekle" />
         </div>
 
     }

@@ -761,7 +761,10 @@ namespace Klmsncamp.Controllers
 
                 if (rqToUpdate.IsApproved)
                 {
-                    CreateSurvey(rqToUpdate.PersonnelID.Value, rqToUpdate.RequestTypeID, rqToUpdate.RequestIssueID);
+                    if (rqToUpdate.PersonnelID == 27 || rqToUpdate.PersonnelID == 155)
+                    {
+                        CreateSurvey(rqToUpdate.PersonnelID.Value, rqToUpdate.RequestTypeID, rqToUpdate.RequestIssueID, rqToUpdate.DetailedDescription, rqToUpdate.TimeStamp);
+                    }
                 }
 
                 return RedirectToAction("Index", new { show = formCollection["show"], page = formCollection["page"] });
@@ -864,6 +867,18 @@ namespace Klmsncamp.Controllers
             {
             }
 
+            //anketleri siliyoruz
+            try
+            {
+                foreach (SurveyTable st in db.SurveyTables.Where(i => i.RequestIssueID == id).ToList())
+                {
+                    db.SurveyTables.Remove(st);
+                    db.SaveChanges();
+                }
+            }
+            catch
+            { }
+
             //Projelerden manytomany tabloolardan cikariyoruz
             try
             {
@@ -898,11 +913,13 @@ namespace Klmsncamp.Controllers
         }
 
         [Authorize]
-        public void CreateSurvey(int xpersID, int xrequesttypeID, int xrequestissueID)
+        public void CreateSurvey(int xpersID, int xrequesttypeID, int xrequestissueID, string xrequestissueDesc, DateTime xtimestamp)
         {
             try
             {
                 Personnel pers_ = db.Personnels.AsNoTracking().Where(i => i.PersonnelID == xpersID).SingleOrDefault();
+                RequestType reqtype_ = db.RequestTypes.AsNoTracking().Where(i => i.RequestTypeID == xrequesttypeID).SingleOrDefault();
+                string longdescription = xtimestamp.ToLongDateString() + " tarihli #" + xrequestissueID.ToString() + " No'lu, " + reqtype_.Description.ToLower() + " tipindeki iş talebinize yönelik Anket.";
                 if (pers_.Email != null)
                 {
                     var mastersurvtemp = db.SurveyTemplates.Include(u => u.SurveyRecords).Where(i => i.RequestTypeID == xrequesttypeID && i.PreDefined == true).SingleOrDefault();
@@ -917,7 +934,7 @@ namespace Klmsncamp.Controllers
 
                     SurveyTemplate mysurvtemp = new SurveyTemplate()
                     {
-                        Description = "XxxXxxxxxXXX tarihli XxXXXx iş talebinize yönelik Anket",
+                        Description = longdescription,
                         PreDefined = false,
                         RequestTypeID = xrequesttypeID,
                         SurveyRecords = survrecs
@@ -928,7 +945,7 @@ namespace Klmsncamp.Controllers
                     SurveyTable mysurvey = new SurveyTable()
                     {
                         RequestIssueID = xrequestissueID,
-                        Description = "XxxXxxxxxXXX tarihli XxXXXx iş talebinize yönelik Anket",
+                        Description = longdescription,
                         TimeStamp = DateTime.Now,
                         SurveyTemplateID = mysurvtemp.SurveyTemplateID,
                         IsApproved = false,
@@ -936,6 +953,8 @@ namespace Klmsncamp.Controllers
                     };
                     db.SurveyTables.Add(mysurvey);
                     db.SaveChanges();
+
+                    string maildurum_ = SendEmail(new MailAddress("musa.fedakar@klimasan.com.tr"), new MailAddress(pers_.Email), "[Klimasan HelpDesk] #" + xrequestissueID.ToString() + " no'lu İş isteğiniz hakkında.", "İş Talep/İsteğiniz tamamlanmış ve memnuniyet anketi oluşturulmuştur. " + "\n" + "Anketi Doldurmak için;  http://192.168.76.176/HelpDesk/SurveyTable/Edit/" + mysurvey.SurveyTableID + " adresini ziyaret ediniz. " + "\n" + "Anket Şifresi : " + mysurvey.HashKey + " \n" + "Tarih: " + DateTime.Now.ToString() + ". İyi çalışmalar dileriz.", null, false);
                 }
             }
             catch

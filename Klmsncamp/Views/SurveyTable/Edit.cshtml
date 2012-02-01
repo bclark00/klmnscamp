@@ -30,23 +30,27 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td colspan="3" style="text-align: justify; vertical-align: middle; font-style: italic;">
-                            <br />
-                            Anketi Başarıyla Doldurabilmeniz için mail yoluyla size iletilen şifreyi aşağıdaki
-                            kutucuğa yapıştırın..<br />
-                            &nbsp;<br />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="text-align: right; font-weight: bold; vertical-align: middle;">
-                            Şifre
-                        </td>
-                        <td colspan="3" style="text-align: left; vertical-align: middle;">
-                            @Html.TextBox("HashkeyConfirm", "Şifreyi buraya yapıştırın", new { size = 40, style = "font-weight: bold;" })
-                            @Html.ValidationMessageFor(model => model.HashKey)
-                        </td>
-                    </tr>
+                    @if (!(Model.IsApproved))
+                    {
+                        <tr>
+                            <td colspan="3" style="text-align: justify; vertical-align: middle; font-style: italic;">
+                                <br />
+                                Anketi Başarıyla Doldurabilmeniz için mail yoluyla size iletilen şifreyi aşağıdaki
+                                kutucuğa yapıştırın..<br />
+                                &nbsp;<br />
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td style="text-align: right; font-weight: bold; vertical-align: middle;">
+                                Şifre
+                            </td>
+                            <td colspan="3" style="text-align: left; vertical-align: middle;">
+                                @Html.TextBox("HashkeyConfirm", "Şifreyi buraya yapıştırın..", new { size = 40, style = "font-weight: bold;" })
+                                @Html.ValidationMessageFor(model => model.HashKey)
+                            </td>
+                        </tr>
+                    }
                     <tr>
                         <td style="border-right: 1px solid #EEE; color: Maroon; text-align: right; vertical-align: middle;
                             font-weight: bolder;">
@@ -59,9 +63,9 @@
                             font-weight: bolder;">
                             &nbsp;
                             <br />
-                            Puanlama
+                            Cevabınız
                             <br />
-                            0 (başarısız) - 5 (başarılı)&nbsp;
+                            &nbsp;
                             <br />
                         </td>
                         <td style="border-right: 1px solid #EEE; color: Maroon; text-align: left; vertical-align: middle;
@@ -80,32 +84,114 @@
                             </td>
                             @if (survrec.SurveyRecordTypeID == 2)
                             {
-                                <td style="border-right: 1px solid #EEE; vertical-align: middle;">@Html.CheckBox(survrec.SurveyRecordID + "_ApprovalStatus", false)
+                                if (Model.IsApproved)
+                                {
+                                <td style="border-right: 1px solid #EEE; vertical-align: middle;">@Html.CheckBox(survrec.SurveyRecordID + "_ApprovalStatus", survrec.ApprovalStatus, new { disabled = "disabled" })
                                 </td>
+                                }
+                                else
+                                {
+                                <td style="border-right: 1px solid #EEE; vertical-align: middle;">@Html.CheckBox(survrec.SurveyRecordID + "_ApprovalStatus", true)
+                                </td>
+                                }
                             }
                             else
                             {
+                                if (Model.IsApproved)
+                                {
                                 <td style="border-right: 1px solid #EEE; vertical-align: middle;">
                                     @(Html.Telerik().Slider<int>()
-                              .Name(survrec.SurveyRecordID + "_Score")
-                              .Min(0)
-                              .Max(5)
-                              .SmallStep(1)
-                              .Orientation(SliderOrientation.Horizontal)
-                              .ShowButtons(false).TickPlacement(SliderTickPlacement.None)
-                              .Value(3)
-                        )
+                                      .Name(survrec.SurveyRecordID + "_Score")
+                                      .Min(0)
+                                      .Max(5)
+                                      .SmallStep(1)
+                                      .Orientation(SliderOrientation.Horizontal)
+                                      .ShowButtons(false).TickPlacement(SliderTickPlacement.None)
+                                      .Value(survrec.Score).Enable(false)
+                                     )
                                 </td>
+                                }
+                                else
+                                {
+                                <td style="border-right: 1px solid #EEE; vertical-align: middle;">
+                                    @(Html.Telerik().Slider<int>()
+                                      .Name(survrec.SurveyRecordID + "_Score")
+                                      .Min(0)
+                                      .Max(5)
+                                      .SmallStep(1)
+                                      .Orientation(SliderOrientation.Horizontal)
+                                      .ShowButtons(false).TickPlacement(SliderTickPlacement.None)
+                                      .Value(5)
+                                     )
+                                </td>
+                                }
+
                             }
-                            <td style="vertical-align: middle;">@Html.TextBox(survrec.SurveyRecordID + "_Note", null, new { size = 30, style = "font-style: italic;" })
+                            <td style="vertical-align: middle;">
+                            @if (Model.IsApproved)
+                            {
+                                @Html.TextBox(survrec.SurveyRecordID + "_Note", survrec.Note, new { size = 30, disabled="disabled",style = "font-style: italic;" })
+                            }
+                            else
+                            {
+                                @Html.TextBox(survrec.SurveyRecordID + "_Note", null, new { size = 30, style = "font-style: italic;" })
+                            }
                             </td>
                         </tr>
                     }
                 </tbody>
             </table>
-            <p>
-                <input type="submit" value="Save" />
-            </p>
+            <div class="submit-row">
+                <p class="deletelink-box" style="padding-top: 7px;">
+                    @Html.ActionLink("Vazgeç ve Geri Dön", "Index")
+                </p>
+                <table>
+                    <tbody>
+                        <tr>
+                            <td>
+                                @if (Model.IsApproved)
+                                {
+                                    <input class="default" disabled="disabled" name="surveycomplete" type="submit" value="Tamamlanmış" />
+                                }
+                                else
+                                {
+                                    <input class="default" name="surveycomplete" type="submit" value="Anketi Onayla" />
+                                }
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </fieldset>
+        <br />
+                                if (!(string.IsNullOrEmpty(ViewBag.CustomErr)))
+                                {
+        <fieldset class="module aligned ">
+            <br />
+            <div style="margin: 5px; font-size: larger; font-weight: bold; text-align: center;
+                color: Maroon;">
+                <ul style="list-style: none">
+                    <li>@ViewBag.CustomErr</li>
+                </ul>
+            </div>
+        </fieldset>
+        <br />
+                                }
+        <fieldset class="module aligned ">
+            <br />
+            <h2>
+                Bilinmesi Gerekenler</h2>
+            <div style="margin: 5px; font-size: larger; font-weight: bold; text-align: left;">
+                <ul style="list-style: none">
+                    <li>Bu anket, Yukarıda açtığınız iş talebinizin çözüm ve sonuçlandırılması sürecindeki
+                        memnuniyetinizi ölçmek için oluşturulmuştur.</li>
+                    <li>Anketi ilgili iş talebinizin kapatılmasını takip eden 24 saat içinde (@Model.TimeStamp.AddDays(1))
+                        doldurmalısınız.</li>
+                    <li>Skorlama türündeki sorularda [0-5] aralığı, "0":en olumsuz, "5": en olumlu olacak
+                        şekilde değerlendirilir. </li>
+                </ul>
+            </div>
+        </fieldset>
+
     }
 </div>

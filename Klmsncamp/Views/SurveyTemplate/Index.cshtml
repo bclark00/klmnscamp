@@ -1,0 +1,48 @@
+﻿@model IEnumerable<Klmsncamp.Models.SurveyTemplate>
+@{
+    ViewBag.Title = "Anket Taslakları";
+}
+<div align="center" style="width: 640px; margin-left: auto; margin-right: auto; margin-top: 30px;">
+    <fieldset class="module aligned ">
+        <table style="width: 100%;">
+            <tbody>
+                <thead>
+                    <th colspan="3">&nbsp;<br />
+                        &nbsp;Anket Taslakları
+                        <br />&nbsp;
+                    </th>
+                    
+                </thead>
+                <tr>
+                    <th style="text-align: left; vertical-align: middle;">
+                        Taslak Açıklama<br />
+                    </th>
+                    <th style="text-align: left; vertical-align: middle;" >
+                        İş Talep Tipi<br />
+                    </th>
+                    <th>
+                    </th>
+                </tr>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td style="text-align: left; vertical-align: middle;">
+                            @Html.DisplayFor(modelItem => item.Description)
+                        </td>
+                        <td style="text-align: left; vertical-align: middle;">
+                            @Html.DisplayFor(modelItem => item.RequestType.Description)
+                        </td>
+                        <td style="text-align: left; vertical-align: middle;">
+                            @Html.ActionLink("Düzenle", "Edit", new { id = item.SurveyTemplateID }) |
+                            @Html.ActionLink("Sil", "Delete", new { id = item.SurveyTemplateID })
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </fieldset>
+    <br />
+    <div class="submit-row">
+        <p class="deletelink-box">@Html.ActionLink("Yeni Anket Taslağı Tanımlama", "Create")</p>
+    </div>
+</div>
