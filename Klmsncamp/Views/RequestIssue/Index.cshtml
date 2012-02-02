@@ -9,16 +9,25 @@
     <script type="text/javascript" language="javascript">
         $(document).ready(function () {
             $("tbody tr").each(function () {
-                //alert("aaa");
+
                 var sTitle;
                 var nTds = $("td", this);
                 var sAck = $(nTds[9]).text();
                 sTitle = sAck
                 this.setAttribute('title', sTitle);
-
+                
+                
+                if ( sTitle.replace(" ","") == "Tamamlananlar") {
+                this.setAttribute('title', 'Veri Süz');
+                }
+                else {
+                this.setAttribute('title', sTitle);
+                }
             });
 
             /* Apply the tooltips */
+            //var url = $(this).attr('href');
+
             $("tbody tr[title]").tooltip({
                 "delay": 0,
                 "track": true,

@@ -122,9 +122,14 @@ namespace Klmsncamp.Controllers
                             var mysrec = db.SurveyRecords.Find(mysurvrec.SurveyRecordID);
                             surveytemplate.SurveyRecords.Remove(mysrec);
                             db.Entry(surveytemplate).State = EntityState.Modified;
+
                             //db.SurveyRecords.Remove(mysurvrec);
                             db.SaveChanges();
-
+                            KlmsnContext db_ = new KlmsnContext();
+                            var mysrec_forremove = db_.SurveyRecords.Find(mysurvrec.SurveyRecordID);
+                            db_.SurveyRecords.Remove(mysrec_forremove);
+                            db_.SaveChanges();
+                            db_.Dispose();
                             try
                             {
                                 if (bool.Parse(formcollection[snode_.SurveyNodeID.ToString() + "_Check"].Split(',')[0]))

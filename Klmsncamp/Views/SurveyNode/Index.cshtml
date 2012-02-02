@@ -1,33 +1,41 @@
-﻿@model IEnumerable<Klmsncamp.Models.SurveyNode>
-
+﻿@using Telerik.Web.Mvc.UI
+@model IEnumerable<Klmsncamp.Models.SurveyNode>
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Anket Soruları Tanımlama";
 }
-
-<h2>Index</h2>
-
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table>
-    <tr>
-        <th>
-            Description
-        </th>
-        <th></th>
-    </tr>
-
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Description)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.SurveyNodeID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.SurveyNodeID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.SurveyNodeID })
-        </td>
-    </tr>
-}
-
-</table>
+<div align="center" style="width: 820px; margin-left: auto; margin-right: auto; margin-top: 30px;">
+    <div class="submit-row">
+        <p class="deletelink-box">@Html.ActionLink("Yeni Soru Cümlesi Tanımlama", "Create")</p>
+    </div>
+    <fieldset class="module aligned ">
+    <br />
+        <table style="width: 90%;">
+            <tbody>
+                <thead>
+                <tr>
+                    <th style="vertical-align: middle;" colspan="2">
+                        &nbsp;<br />
+                        &nbsp;Açıklama
+                        <br />
+                        &nbsp;
+                    </th>
+               
+                </tr>
+                </thead>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td style="text-align: left; vertical-align: middle; border-left: 1px solid;">
+                            @Html.DisplayFor(modelItem => item.Description)
+                        </td>
+                        <td>
+                            @Html.ActionLink("Düzenle", "Edit", new { id = item.SurveyNodeID }) |
+                            @Html.ActionLink("Sil", "Delete", new { id = item.SurveyNodeID })
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <br />
+    </fieldset>
+</div>
