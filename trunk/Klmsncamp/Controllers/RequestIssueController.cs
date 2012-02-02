@@ -954,7 +954,7 @@ namespace Klmsncamp.Controllers
                     db.SurveyTables.Add(mysurvey);
                     db.SaveChanges();
 
-                    string maildurum_ = SendEmail(new MailAddress("musa.fedakar@klimasan.com.tr"), new MailAddress(pers_.Email), "[Klimasan HelpDesk] #" + xrequestissueID.ToString() + " no'lu İş isteğiniz hakkında.", "İş Talep/İsteğiniz tamamlanmış ve memnuniyet anketi oluşturulmuştur. " + "\n" + "Anketi Doldurmak için;  http://192.168.76.176/HelpDesk/SurveyTable/Edit/" + mysurvey.SurveyTableID + " adresini ziyaret ediniz. " + "\n" + "Anket Şifresi : " + mysurvey.HashKey + " \n" + "Tarih: " + DateTime.Now.ToString() + ". İyi çalışmalar dileriz.", null, false);
+                    string maildurum_ = SendEmail(new MailAddress("HelpDesk@klimasan.com.tr"), new MailAddress(pers_.Email), "[Klimasan HelpDesk] #" + xrequestissueID.ToString() + " no'lu İş isteğiniz hakkında.", "İş Talep/İsteğiniz tamamlanmış ve memnuniyet anketi oluşturulmuştur. " + "\n" + "Anketi Doldurmak için;  http://192.168.76.176/HelpDesk/SurveyTable/Edit/" + mysurvey.SurveyTableID + " adresini ziyaret ediniz. " + "\n" + "Anket Şifresi : " + mysurvey.HashKey + " \n" + "Tarih: " + DateTime.Now.ToString() + ". İyi çalışmalar dileriz.", null, false);
                 }
             }
             catch

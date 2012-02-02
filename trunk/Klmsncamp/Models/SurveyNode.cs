@@ -12,6 +12,7 @@ namespace Klmsncamp.Models
 
         [MaxLength(150, ErrorMessage = "150 Karakterden büyük olamaz")]
         [Required(ErrorMessage = " Zorunlu Alan ")]
+        [Display(Name = "Açıklama")]
         public string Description { get; set; }
     }
 }

@@ -13,7 +13,6 @@ namespace Klmsncamp.Controllers
     {
         private KlmsnContext db = new KlmsnContext();
 
-        [Authorize]
         public ActionResult Edit(int id, string customerr)
         {
             SurveyTable surveytable = db.SurveyTables.Find(id);
@@ -37,7 +36,6 @@ namespace Klmsncamp.Controllers
         // POST: /SurveyTable/Edit/5
 
         [HttpPost]
-        [Authorize]
         public ActionResult Edit(SurveyTable surveytable, FormCollection formcollection)
         {
             if (ModelState.IsValid)
