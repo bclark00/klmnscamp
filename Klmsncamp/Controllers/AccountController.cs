@@ -11,6 +11,7 @@ namespace Klmsncamp.Controllers
 {
     public class AccountController : Controller
     {
+        private KlmsnContext db = new KlmsnContext();
         //
         // GET: /Account/LogOn
 
@@ -62,15 +63,16 @@ namespace Klmsncamp.Controllers
 
         //
         // GET: /Account/Register
-
+        [Authorize]
         public ActionResult Register()
         {
+            ViewBag.UserResetID = new SelectList(db.Users, "UserID", "FullName");
             return View();
         }
 
         //
         // POST: /Account/Register
-
+        [Authorize]
         [HttpPost]
         public ActionResult Register(RegisterModel model)
         {
@@ -93,6 +95,18 @@ namespace Klmsncamp.Controllers
 
             // If we got this far, something failed, redisplay form
             return View(model);
+        }
+
+        [Authorize]
+        [HttpPost]
+        public ActionResult PasswordReset(FormCollection formcollection)
+        {
+            User usr_ = db.Users.Find(int.Parse(formcollection["UserResetID"]));
+            MembershipUser currentUser = Membership.GetUser(usr_.UserName, false/* userIsOnline */);
+            string newPassword = currentUser.ResetPassword(usr_.UserName);
+            ViewBag.NewPassword = newPassword;
+            ViewBag.TheUser = usr_.FullName + "( " + usr_.UserName + " )";
+            return View();
         }
 
         //
