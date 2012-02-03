@@ -101,11 +101,18 @@ namespace Klmsncamp.Controllers
         [HttpPost]
         public ActionResult PasswordReset(FormCollection formcollection)
         {
-            User usr_ = db.Users.Find(int.Parse(formcollection["UserResetID"]));
-            MembershipUser currentUser = Membership.GetUser(usr_.UserName, false/* userIsOnline */);
-            string newPassword = currentUser.ResetPassword(usr_.UserName);
-            ViewBag.NewPassword = newPassword;
-            ViewBag.TheUser = usr_.FullName + "( " + usr_.UserName + " )";
+            try
+            {
+                User usr_ = db.Users.Find(int.Parse(formcollection["UserResetID"]));
+                MembershipUser currentUser = Membership.GetUser(usr_.UserName, false/* userIsOnline */);
+                string newPassword = currentUser.ResetPassword(usr_.UserName);
+                ViewBag.NewPassword = newPassword;
+                ViewBag.TheUser = usr_.FullName + "( " + usr_.UserName + " )";
+            }
+            catch (Exception exx)
+            {
+                ViewBag.NewPassword = "Hata Oluştu, (Detaylar --> " + exx.Message + ")";
+            }
             return View();
         }
 

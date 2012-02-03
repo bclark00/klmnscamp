@@ -116,23 +116,23 @@
         </fieldset>
 
     }
-<br />
-<hr />
-<br />
-        <fieldset class="module aligned ">
-            <legend>Hesap Oluşturma</legend>
-            <br />
-            <p class="help">
+    <br />
+    <hr />
+    <br />
+    <fieldset class="module aligned ">
+        <legend>Hesap Oluşturma</legend>
+        <br />
+        <p>
             Herhangi bir kullanıcının şifresi sıfırlamak icin aşağıdaki kutucuğu kullanabilirsiniz.
         </p>
         <br />
-    @using (Html.BeginForm("PasswordReset", "Account", FormMethod.Post))
-    {
+        @using (Html.BeginForm("PasswordReset", "Account", FormMethod.Post))
+        {
 
-        @Html.DropDownList("UserResetID", String.Empty)<br />
+            @Html.DropDownList("UserResetID", String.Empty)<br />
 
-        <input type="submit" value="Şifreyi Sıfırla" />
+            <input type="submit" value="Şifreyi Sıfırla" />
 
-    }
+        }
     </fieldset>
 </div>
