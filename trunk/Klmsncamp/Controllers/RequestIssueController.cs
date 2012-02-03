@@ -759,9 +759,10 @@ namespace Klmsncamp.Controllers
                     }
                 }
 
+                //anket olustursun eger onayli ve ebadan geliyorsa
                 if (rqToUpdate.IsApproved)
                 {
-                    if (rqToUpdate.PersonnelID == 27 || rqToUpdate.PersonnelID == 155)
+                    if (rqToUpdate.UserReqID == 7)
                     {
                         CreateSurvey(rqToUpdate.PersonnelID.Value, rqToUpdate.RequestTypeID, rqToUpdate.RequestIssueID, rqToUpdate.DetailedDescription, rqToUpdate.TimeStamp);
                     }

@@ -204,7 +204,9 @@ public class MyMembershipProvider : MembershipProvider
 
     public override string ResetPassword(string username, string answer)
     {
-        throw new NotImplementedException();
+        UserRepository _user = new UserRepository();
+
+        return _user.resetPass(username);
     }
 
     public override bool UnlockUser(string userName)

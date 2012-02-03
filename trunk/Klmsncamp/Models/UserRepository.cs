@@ -179,6 +179,25 @@ namespace Klmsncamp.Models
             }
         }
 
+        public string resetPass(string userName)
+        {
+            using (KlmsnContext db = new KlmsnContext())
+            {
+                try
+                {
+                    User user = db.Users.Where(i => i.UserName == userName).SingleOrDefault();
+                    user.PasswordSalt = CreateSalt();
+                    user.Password = CreatePasswordHash("123456", user.PasswordSalt);
+                    db.SaveChanges();
+                    return "123456";
+                }
+                catch
+                {
+                    return "Şifre Sıfırlamada Hata";
+                }
+            }
+        }
+
         private static string CreateSalt()
         {
             RNGCryptoServiceProvider rng = new RNGCryptoServiceProvider();
