@@ -6,10 +6,11 @@
 <script src="@Url.Content("~/Scripts/chosen.jquery.js")" type="text/javascript"></script>
 <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/chosen.css")" />
 @{ Html.Telerik().ScriptRegistrar()
-        .OnDocumentReady(@<text> $(".chzn-choices input").live('hover', function(){
-    $('.chzn-container').css('zIndex',1); $(this).closest('.chzn-container').css('zIndex',100);
-    }); $(".chzn-select").chosen(); $(".chzn-select-deselect").chosen({ allow_single_deselect:
-    true });
+        .OnDocumentReady(@<text> var comboreason = $("#RequestActualReasonID").data("tComboBox");
+    if (comboreason.value() > 0 ){ $('#rqreason-box').show();} else { $('#rqreason-box').hide();}
+    $(".chzn-choices input").live('hover', function(){ $('.chzn-container').css('zIndex',1);
+    $(this).closest('.chzn-container').css('zIndex',100); }); $(".chzn-select").chosen();
+    $(".chzn-select-deselect").chosen({ allow_single_deselect: true });
     </text>); }
 <script type="text/javascript">
     function TimePickerSet24h() {
@@ -30,6 +31,16 @@
         } else {
             document.getElementById('add-file-field').innerHTML += "<br />Bir Seferde En çok 5 Dosya Eklenebilir";
             document.getElementById('addfile').disabled = true;
+        }
+    }
+
+    function onRequestActualReasonIDChange(e) {
+        var combo = $("#RequestActualReasonID").data("tComboBox");
+        if (combo.value() > 0) {
+            $('#rqreason-box').show();
+        }
+        else {
+            $('#rqreason-box').hide();
         }
     }
 </script>
@@ -191,6 +202,34 @@
                     </tr>
                     <tr>
                         <td style="vertical-align: middle; text-align: right;">
+                            @Html.LabelFor(model => model.RequestActualReasonID, "İş Talep Esas Nedeni")&nbsp;
+                        </td>
+                        <td style="vertical-align: middle; text-align: left;">
+                            <br />
+                            @(Html.Telerik().ComboBox()
+            .Name("RequestActualReasonID")
+            .HtmlAttributes(new { id = "ComboBox_wrapper_requestactualreason" })
+            .AutoFill(true).HtmlAttributes(new { style = "width:210px;" }).DropDownHtmlAttributes(new { style = "width: 210px;" }).InputHtmlAttributes(new { style = "vertical-align: middle; font-size:100%; border: 1px solid; width: 200px;" })
+            .BindTo((SelectList)ViewBag.RequestActualReasonID)
+            .Filterable(filtering => filtering.FilterMode((AutoCompleteFilterMode)Enum.Parse(typeof(AutoCompleteFilterMode), "2", false)))
+            .HighlightFirstMatch(true)
+            .ClientEvents(events => events.OnChange("onRequestActualReasonIDChange"))
+            )
+                            <br />
+                            @Html.ValidationMessageFor(model => model.RequestActualReasonID)
+                        </td>
+                    </tr>
+                    <tr id="rqreason-box">
+                        <td style="vertical-align: middle; text-align: right;">
+                            Talep Nedeni Detay Açıklama&nbsp;
+                        </td>
+                        <td align="left" style="text-align: left;">
+                            @Html.TextAreaFor(model => model.RequestActualReasonNote, new { cols = "60", rows = "4" })<br />
+                            @Html.ValidationMessageFor(model => model.RequestActualReasonNote)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="vertical-align: middle; text-align: right;">
                             @Html.LabelFor(model => model.SendEmail)
                         </td>
                         <td style="vertical-align: middle; text-align: left;">
@@ -318,7 +357,8 @@
         <div class="submit-row">
             <p class="deletelink-box">
                 @Html.ActionLink("Vazgeç ve Geri Dön", "Index")&nbsp;|&nbsp;@Html.ActionLink("Sil?", "Delete", new { id = @Model.RequestIssueID })</p>
-            <input type="submit" onclick="this.disabled=true;this.value='Lütfen Bekleyiniz..Calisiyor..';this.form.submit();" value="Onayla ve Gönder" />
+            <input type="submit" onclick="this.disabled=true;this.value='Lütfen Bekleyiniz..Calisiyor..';this.form.submit();"
+                value="Onayla ve Gönder" />
         </div>
 
     }

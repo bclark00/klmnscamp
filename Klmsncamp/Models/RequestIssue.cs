@@ -110,6 +110,15 @@ namespace Klmsncamp.Models
         [Display(Name = "İş Sahibi")]
         public virtual User User { get; set; }
 
+        [Display(Name = "Talep Esas Nedeni")]
+        public int? RequestActualReasonID { get; set; }
+
+        public virtual RequestActualReason RequestActualReason { get; set; }
+
+        [MaxLength(300, ErrorMessage = "300 karakterden uzun olamaz")]
+        [Display(Name = "Sebep Notları")]
+        public string RequestActualReasonNote { get; set; }
+
         [Required(ErrorMessage = "Zorunlu Alan")]
         [Display(Name = "Durum")]
         public int ValidationStateID { get; set; }

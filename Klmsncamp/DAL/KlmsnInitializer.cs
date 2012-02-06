@@ -44,6 +44,16 @@ namespace Klmsncamp.DAL
             requestTypes.ForEach(s => context.RequestTypes.Add(s));
             context.SaveChanges();
 
+            var rqreasons = new List<RequestActualReason>
+            {
+                new RequestActualReason { Description = "--", ValidationStateID=1},
+                new RequestActualReason { Description= "Kullanıcı Kaynaklı", ValidationStateID=1},
+                new RequestActualReason { Description = "İç Kaynaklı" , ValidationStateID=1},
+                new RequestActualReason { Description = "Dış Kaynaklı" , ValidationStateID=1 }
+            };
+            rqreasons.ForEach(s => context.RequestActualReasons.Add(s));
+            context.SaveChanges();
+
             var workshops = new List<Workshop>
             {
                 new Workshop { Description = "BİLGİ İŞLEM", ValidationStateID=1  }

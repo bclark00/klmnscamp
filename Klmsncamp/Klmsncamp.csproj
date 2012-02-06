@@ -210,6 +210,7 @@
     <Compile Include="Models\PaymentFile.cs" />
     <Compile Include="Models\Personnel.cs" />
     <Compile Include="Models\Project.cs" />
+    <Compile Include="Models\RequestActualReason.cs" />
     <Compile Include="Models\RequestIssue.cs" />
     <Compile Include="Models\RequestIssueFile.cs" />
     <Compile Include="Models\RequestState.cs" />
@@ -230,6 +231,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ProjectReport.rpt</DependentUpon>
       <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="RDLC\RequestIssueMatrixReport.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RequestIssueMatrixReport.rpt</DependentUpon>
     </Compile>
     <Compile Include="RDLC\RequestIssueReport.cs">
       <AutoGen>True</AutoGen>
@@ -1157,6 +1163,10 @@
     <EmbeddedResource Include="RDLC\ProjectReport.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>ProjectReport.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RDLC\RequestIssueMatrixReport.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>RequestIssueMatrixReport.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="RDLC\RequestIssueReport.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>

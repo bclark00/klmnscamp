@@ -20,6 +20,16 @@
         combo.reload();
     }
 
+    function onRequestActualReasonIDChange(e) {
+        var combo = $("#RequestActualReasonID").data("tComboBox");
+        if (combo.value() > 0) {
+            $('#rqreason-box').show();
+        }
+        else {
+            $('#rqreason-box').hide();
+        }
+    }
+
     function onInventoryDataBinding(e) {
         var combo = $("#LocationID").data("tComboBox");
         e.data = $.extend({}, e.data, { LocationID: combo.value() });
@@ -36,8 +46,8 @@
     }
 </script>
 @{ Html.Telerik().ScriptRegistrar()
-        .OnDocumentReady(@<text> $(".chzn-choices input").live('hover', function(){
-    $('.chzn-container').css('zIndex',1); $(this).closest('.chzn-container').css('zIndex',100);
+        .OnDocumentReady(@<text> $('#rqreason-box').hide(); $(".chzn-choices input").live('hover',
+    function(){ $('.chzn-container').css('zIndex',1); $(this).closest('.chzn-container').css('zIndex',100);
     }); $('#rqdetail-box').hide(); $('#rqdetail-toggle').click(function() { $('#rqdetail-box').toggle(400);
     return false; }); $(".chzn-select").chosen(); $(".chzn-select-deselect").chosen({allow_single_deselect:
     true });
@@ -193,6 +203,34 @@
                         <td style="vertical-align: middle; text-align: left;">
                             @Html.Telerik().DateTimePickerFor(model => model.EndDate).Name("EndDate").Value(DateTime.Now).ClientEvents(events => events.OnLoad("EndTimePickerSet24h"))<br />
                             @Html.ValidationMessageFor(model => model.EndDate)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="vertical-align: middle; text-align: right;">
+                            @Html.LabelFor(model => model.RequestActualReasonID, "İş Talep Esas Nedeni")&nbsp;
+                        </td>
+                        <td style="vertical-align: middle; text-align: left;">
+                            <br />
+                            @(Html.Telerik().ComboBox()
+            .Name("RequestActualReasonID")
+            .HtmlAttributes(new { id = "ComboBox_wrapper_requestactualreason" })
+            .AutoFill(true).HtmlAttributes(new { style = "width:210px;" }).DropDownHtmlAttributes(new { style = "width: 210px;" }).InputHtmlAttributes(new { style = "vertical-align: middle; font-size:100%; border: 1px solid; width: 200px;" })
+            .BindTo((SelectList)ViewBag.RequestActualReasonID)
+            .Filterable(filtering => filtering.FilterMode((AutoCompleteFilterMode)Enum.Parse(typeof(AutoCompleteFilterMode), "2", false)))
+            .HighlightFirstMatch(true)
+            .ClientEvents(events => events.OnChange("onRequestActualReasonIDChange"))
+            )
+                            <br />
+                            @Html.ValidationMessageFor(model => model.RequestActualReasonID)
+                        </td>
+                    </tr>
+                    <tr id="rqreason-box">
+                        <td style="vertical-align: middle; text-align: right;">
+                            Talep Nedeni Detay Açıklama&nbsp;
+                        </td>
+                        <td align="left" style="text-align: left;">
+                            @Html.TextAreaFor(model => model.RequestActualReasonNote, new { cols = "60", rows = "4" })<br />
+                            @Html.ValidationMessageFor(model => model.RequestActualReasonNote)
                         </td>
                     </tr>
                     <!--<tr>
