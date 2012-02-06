@@ -74,6 +74,8 @@ namespace Klmsncamp.Models
 
         public DbSet<ParameterSetting> ParameterSettings { get; set; }
 
+        public DbSet<RequestActualReason> RequestActualReasons { get; set; }
+
         public ObjectContext KlmsnObjectContext
         {
             get { return ((IObjectContextAdapter)this).ObjectContext; }

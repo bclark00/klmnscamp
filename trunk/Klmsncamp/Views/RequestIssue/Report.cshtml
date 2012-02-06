@@ -104,6 +104,9 @@
                                     <input type="submit" name="projects" value="Proje Raporu" />
                                 </td>
                                 <td>
+                                    <input type="submit" name="matrix" value="İş Durumları Matris" />
+                                </td>
+                                <td>
                                     <input type="submit" name="workload" value="İş Yükü Raporu" />
                                 </td>
                                 <td>
@@ -117,15 +120,15 @@
             <br />
             @if (!(string.IsNullOrEmpty(ViewBag.CustomErr)))
             {
-            <fieldset class="module aligned ">
+                <fieldset class="module aligned ">
+                    <br />
+                    <div style="margin: 5px;">
+                        <ul style="list-style: none">
+                            <li>@ViewBag.CustomErr</li>
+                        </ul>
+                    </div>
+                </fieldset>
                 <br />
-                <div style="margin: 5px;">
-                    <ul style="list-style: none">
-                        <li>@ViewBag.CustomErr</li>
-                    </ul>
-                </div>
-            </fieldset>
-            <br />
             }
             <fieldset class="module aligned ">
                 <br />

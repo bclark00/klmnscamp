@@ -195,6 +195,7 @@ namespace Klmsncamp.Controllers
             int user_wherecondition = int.Parse((currentuser_.ProviderUserKey).ToString());
 
             ViewBag.RequestTypeID = new SelectList(db.RequestTypes, "RequestTypeID", "Description");
+            ViewBag.RequestActualReasonID = new SelectList(db.RequestActualReasons, "RequestActualReasonID", "Description");
             ViewBag.LocationID = new SelectList(db.Locations, "LocationID", "Description");
             ViewBag.PersonnelID = new SelectList(db.Personnels.Where(s => s.ValidationStateID == 1), "PersonnelID", "FullName");
             ViewBag.InventoryID = new SelectList(db.Inventories, "InventoryID", "Description");
@@ -325,6 +326,7 @@ namespace Klmsncamp.Controllers
             int user_wherecondition = int.Parse((currentuser_.ProviderUserKey).ToString());
 
             ViewBag.RequestTypeID = new SelectList(db.RequestTypes, "RequestTypeID", "Description", requestıssue.RequestTypeID);
+            ViewBag.RequestActualReasonID = new SelectList(db.RequestActualReasons, "RequestActualReasonID", "Description");
             ViewBag.LocationID = new SelectList(db.Locations, "LocationID", "Description", requestıssue.LocationID);
             ViewBag.PersonnelID = new SelectList(db.Personnels, "PersonnelID", "FullName", requestıssue.PersonnelID);
             ViewBag.InventoryID = new SelectList(db.Inventories, "InventoryID", "Description", requestıssue.InventoryID);
@@ -385,6 +387,7 @@ namespace Klmsncamp.Controllers
             }
 
             ViewBag.RequestTypeID = new SelectList(db.RequestTypes, "RequestTypeID", "Description", requestıssue.RequestTypeID);
+            ViewBag.RequestActualReasonID = new SelectList(db.RequestActualReasons, "RequestActualReasonID", "Description", requestıssue.RequestActualReasonID);
             ViewBag.LocationID = new SelectList(db.Locations, "LocationID", "Description", requestıssue.LocationID);
             ViewBag.PersonnelID = new SelectList(db.Personnels, "PersonnelID", "FullName", requestıssue.PersonnelID);
             ViewBag.InventoryID = new SelectList(db.Inventories, "InventoryID", "Description", requestıssue.InventoryID);
@@ -507,6 +510,7 @@ namespace Klmsncamp.Controllers
                 return RedirectToAction("Validate", "RequestIssue", new { id = requestıssue.RequestIssueID, show = formCollection["show"], page = formCollection["page"] });
             }
             ViewBag.RequestTypeID = new SelectList(db.RequestTypes, "RequestTypeID", "Description", requestıssue.RequestTypeID);
+            ViewBag.RequestActualReasonID = new SelectList(db.RequestActualReasons, "RequestActualReasonID", "Description", requestıssue.RequestActualReasonID);
             ViewBag.LocationID = new SelectList(db.Locations, "LocationID", "Description", requestıssue.LocationID);
             ViewBag.PersonnelID = new SelectList(db.Personnels, "PersonnelID", "FullName", requestıssue.PersonnelID);
             ViewBag.InventoryID = new SelectList(db.Inventories, "InventoryID", "Description", requestıssue.InventoryID);
@@ -545,6 +549,7 @@ namespace Klmsncamp.Controllers
             else
             {
                 ViewBag.RequestTypeID = new SelectList(db.RequestTypes, "RequestTypeID", "Description", rq.RequestTypeID);
+                ViewBag.RequestActualReasonID = new SelectList(db.RequestActualReasons, "RequestActualReasonID", "Description", rq.RequestActualReasonID);
                 ViewBag.LocationID = new SelectList(db.Locations, "LocationID", "Description", rq.LocationID);
                 ViewBag.PersonnelID = new SelectList(db.Personnels, "PersonnelID", "FullName", rq.PersonnelID);
                 ViewBag.InventoryID = new SelectList(db.Inventories, "InventoryID", "Description", rq.InventoryID);
@@ -778,6 +783,7 @@ namespace Klmsncamp.Controllers
             //return RedirectToAction("Editp/" + id.ToString());
             rqToUpdate.IsApproved = false;
             ViewBag.RequestTypeID = new SelectList(db.RequestTypes, "RequestTypeID", "Description", rqToUpdate.RequestTypeID);
+            ViewBag.RequestActualReasonID = new SelectList(db.RequestActualReasons, "RequestActualReasonID", "Description", rqToUpdate.RequestActualReasonID);
             ViewBag.LocationID = new SelectList(db.Locations, "LocationID", "Description", rqToUpdate.LocationID);
             ViewBag.PersonnelID = new SelectList(db.Personnels, "PersonnelID", "FullName", rqToUpdate.PersonnelID);
             ViewBag.InventoryID = new SelectList(db.Inventories, "InventoryID", "Description", rqToUpdate.InventoryID);
@@ -1154,7 +1160,17 @@ namespace Klmsncamp.Controllers
                 }
                 catch
                 {
-                    rptH.FileName = Server.MapPath("~/RDLC/RequestIssueReport.rpt");
+                    try
+                    {
+                        if (formcollection["matrix"].Length > 0)
+                        {
+                            rptH.FileName = Server.MapPath("~/RDLC/RequestIssueMatrixReport.rpt");
+                        }
+                    }
+                    catch
+                    {
+                        rptH.FileName = Server.MapPath("~/RDLC/RequestIssueReport.rpt");
+                    }
                 }
             }
 

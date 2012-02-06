@@ -43,14 +43,14 @@ namespace Klmsncamp.Models
         [Display(Name = "Durum")]
         public int ValidationStateID { get; set; }
 
+        [Display(Name = "Durum")]
+        public virtual ValidationState ValidationState { get; set; }
+
         [MaxLength(100, ErrorMessage = "100 karakterden uzun olamaz")]
         [Display(Name = "Email")]
         [DataType(DataType.EmailAddress)]
         [RegularExpression(".+\\@.+\\..+", ErrorMessage = "Geçerli Bir Mail Adresi Değil")]
         public string Email { get; set; }
-
-        [Display(Name = "Durum")]
-        public virtual ValidationState ValidationState { get; set; }
 
         public virtual ICollection<Project> Projects { get; set; }
 
