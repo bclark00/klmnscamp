@@ -15,13 +15,12 @@
                 var sAck = $(nTds[9]).text();
                 sTitle = sAck
                 this.setAttribute('title', sTitle);
-                
-                
-                if ( sTitle.replace(" ","") == "Tamamlananlar") {
-                this.setAttribute('title', 'Veri Süz');
+
+                if (sTitle.replace(" ", "") == "Tamamlananlar") {
+                    this.setAttribute('title', 'Veri Süz');
                 }
                 else {
-                this.setAttribute('title', sTitle);
+                    this.setAttribute('title', sTitle);
                 }
             });
 
@@ -165,11 +164,11 @@
     {
         <img alt="onaysiz" src="@Url.Content("~/Content/images/delete.png")" />
     }
-    else if (item.IsApproved && item.RequestStateID == 5)
+    else if (item.IsApproved && item.RequestStateID == ViewBag.CompletedStateID)
     {
         <img alt="onayli" src="@Url.Content("~/Content/images/checked.gif")" />
     }
-    else if (item.IsApproved && item.RequestStateID == 6)
+    else if (item.IsApproved && item.RequestStateID == ViewBag.InCompletedStateID)
     {
         <img alt="olumsuz" src="@Url.Content("~/Content/images/exclamation.gif")" />
     }
@@ -183,11 +182,11 @@
                                                                                                                                                                         )
                                                                                                                                                                         .RowAction(row =>
                                                                                                                                                                         {
-                                                                                                                                                                            if (row.DataItem.IsApproved == true && row.DataItem.RequestStateID == 5)
+                                                                                                                                                                            if (row.DataItem.IsApproved == true && row.DataItem.RequestStateID == ViewBag.CompletedStateID)
                                                                                                                                                                             {
                                                                                                                                                                                 row.HtmlAttributes["style"] = "background: #99FF99;";
                                                                                                                                                                             }
-                                                                                                                                                                            else if (row.DataItem.IsApproved == true && row.DataItem.RequestStateID == 6)
+                                                                                                                                                                            else if (row.DataItem.IsApproved == true && row.DataItem.RequestStateID == ViewBag.InCompletedStateID)
                                                                                                                                                                             {
                                                                                                                                                                                 row.HtmlAttributes["style"] = "background: #FFCCCC;";
                                                                                                                                                                             }

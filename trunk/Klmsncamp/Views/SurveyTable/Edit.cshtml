@@ -86,14 +86,33 @@
                             {
                                 if (Model.IsApproved)
                                 {
-                                <td style="border-right: 1px solid #EEE; vertical-align: middle;">@Html.CheckBox(survrec.SurveyRecordID + "_ApprovalStatus", survrec.ApprovalStatus, new { disabled = "disabled" })
+                                <td style="border-right: 1px solid #EEE; text-align: center; vertical-align: middle;">@Html.CheckBox(survrec.SurveyRecordID + "_ApprovalStatus", survrec.ApprovalStatus, new { disabled = "disabled" })
+                                </td>
+                                <td style="vertical-align: middle;">
+                                    @Html.TextBox(survrec.SurveyRecordID + "_Note", survrec.Note, new { size = 30, disabled = "disabled", style = "font-style: italic;" })
                                 </td>
                                 }
                                 else
                                 {
-                                <td style="border-right: 1px solid #EEE; vertical-align: middle;">@Html.CheckBox(survrec.SurveyRecordID + "_ApprovalStatus", true)
+                                <td style="border-right: 1px solid #EEE; text-align: center; vertical-align: middle;">@Html.CheckBox(survrec.SurveyRecordID + "_ApprovalStatus", true)
+                                </td>
+                                <td style="vertical-align: middle;">
+                                    @Html.TextBox(survrec.SurveyRecordID + "_Note", null, new { size = 30, style = "font-style: italic;" })
                                 </td>
                                 }
+                            }
+                            else if (survrec.SurveyRecordTypeID == 3)
+                            {
+                                <td colspan="2" style="vertical-align: middle;">
+                                    @if (Model.IsApproved)
+                                    {
+                                        @Html.TextBox(survrec.SurveyRecordID + "_Note", survrec.Note, new { size = 50, disabled = "disabled", style = "font-style: italic;" })
+                                    }
+                                    else
+                                    {
+                                        @Html.TextBox(survrec.SurveyRecordID + "_Note", null, new { size = 50, style = "font-style: italic;" })
+                                    }
+                                </td>
                             }
                             else
                             {
@@ -110,6 +129,9 @@
                                       .Value(survrec.Score).Enable(false)
                                      )
                                 </td>
+                                <td style="vertical-align: middle;">
+                                    @Html.TextBox(survrec.SurveyRecordID + "_Note", survrec.Note, new { size = 30, disabled = "disabled", style = "font-style: italic;" })
+                                </td>
                                 }
                                 else
                                 {
@@ -124,19 +146,12 @@
                                       .Value(5)
                                      )
                                 </td>
+                                <td style="vertical-align: middle;">
+                                    @Html.TextBox(survrec.SurveyRecordID + "_Note", null, new { size = 30, style = "font-style: italic;" })
+                                </td>
                                 }
 
                             }
-                            <td style="vertical-align: middle;">
-                            @if (Model.IsApproved)
-                            {
-                                @Html.TextBox(survrec.SurveyRecordID + "_Note", survrec.Note, new { size = 30, disabled="disabled",style = "font-style: italic;" })
-                            }
-                            else
-                            {
-                                @Html.TextBox(survrec.SurveyRecordID + "_Note", null, new { size = 30, style = "font-style: italic;" })
-                            }
-                            </td>
                         </tr>
                     }
                 </tbody>

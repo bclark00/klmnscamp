@@ -442,7 +442,7 @@ namespace Klmsncamp.Controllers
         }
 
         [Authorize]
-        internal static string SendEmail(MailAddress fromAddress, MailAddress toAddress, string subject, string body, string fromPersonnel, bool fromEBA)
+        public string SendEmail(MailAddress fromAddress, MailAddress toAddress, string subject, string body, string fromPersonnel, bool fromEBA)
         {
             try
             {
@@ -458,8 +458,11 @@ namespace Klmsncamp.Controllers
                 }
                 catch { }
 
-                var client = new SmtpClient("KLMSNEVS.klimasan.msft");
-                client.Credentials = new NetworkCredential("MUSAF@klimasan.com.tr", "1212");
+                string mailaccount_ = db.ParameterSettings.AsNoTracking().Where(i => i.ParameterSettingID == 1).SingleOrDefault().ParameterValue;
+                string mailpassword_ = db.ParameterSettings.AsNoTracking().Where(i => i.ParameterSettingID == 2).SingleOrDefault().ParameterValue;
+                string mailhost_ = db.ParameterSettings.AsNoTracking().Where(i => i.ParameterSettingID == 3).SingleOrDefault().ParameterValue;
+                var client = new SmtpClient(mailhost_);
+                client.Credentials = new NetworkCredential(mailaccount_, mailpassword_);
                 client.Send(message);
 
                 return "OK";
