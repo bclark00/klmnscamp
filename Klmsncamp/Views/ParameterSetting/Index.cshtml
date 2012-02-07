@@ -1,39 +1,48 @@
-﻿@model IEnumerable<Klmsncamp.Models.ParameterSetting>
-
+﻿@using Telerik.Web.Mvc.UI
+@model IEnumerable<Klmsncamp.Models.ParameterSetting>
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Parametre Listesi";
 }
-
-<h2>Index</h2>
-
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table>
-    <tr>
-        <th>
-            Description
-        </th>
-        <th>
-            ParameterValue
-        </th>
-        <th></th>
-    </tr>
-
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Description)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ParameterValue)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ParameterSettingID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ParameterSettingID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ParameterSettingID })
-        </td>
-    </tr>
-}
-
-</table>
+<div align="center" style="width: 820px; margin-left: auto; margin-right: auto; margin-top: 30px;">
+    <fieldset class="module aligned ">
+        <br />
+        <p class="help">
+            Program global değişkenlerin listesidir!<br /> Herhangi bir değişikliğik yapılmadan evvel,
+            tablonun yedeğinin alınması rica olunur!
+        </p>
+        <br />
+        <table style="width: 100%;">
+            <table>
+                <tbody>
+                    <thead>
+                        <th> Param. #Id</th>
+                        <th>
+                            Açıklama
+                        </th>
+                        <th>
+                            Parametre Değeri
+                        </th>
+                        <th>
+                        </th>
+                    </thead>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td style="text-align: left; font-weight:bold;">
+                                @Html.DisplayFor(modelItem => item.ParameterSettingID)
+                            </td>
+                            <td style="text-align: left; font-weight:bold;">
+                                @Html.DisplayFor(modelItem => item.Description)
+                            </td>
+                            <td style="text-align: left; color: Maroon; font-weight:bold;">
+                                @Html.DisplayFor(modelItem => item.ParameterValue)
+                            </td>
+                            <td>
+                                @Html.ActionLink("Değiştir", "Edit", new { id = item.ParameterSettingID })
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+    </fieldset>
+</div>

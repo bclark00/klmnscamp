@@ -236,6 +236,7 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>RequestIssueMatrixReport.rpt</DependentUpon>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="RDLC\RequestIssueReport.cs">
       <AutoGen>True</AutoGen>
@@ -1122,10 +1123,7 @@
     <Content Include="Views\Project\Delete.cshtml" />
     <Content Include="Views\SurveyTable\Edit.cshtml" />
     <Content Include="Views\ParameterSetting\Index.cshtml" />
-    <Content Include="Views\ParameterSetting\Details.cshtml" />
-    <Content Include="Views\ParameterSetting\Create.cshtml" />
     <Content Include="Views\ParameterSetting\Edit.cshtml" />
-    <Content Include="Views\ParameterSetting\Delete.cshtml" />
     <Content Include="Views\SurveyTemplate\Index.cshtml" />
     <Content Include="Views\SurveyTemplate\Create.cshtml" />
     <Content Include="Views\SurveyTemplate\Edit.cshtml" />

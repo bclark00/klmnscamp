@@ -122,6 +122,14 @@ namespace Klmsncamp.Controllers
 
             var rlist = requests.AsEnumerable().ToPagedList(pageIndex, pageSize);
 
+            //parametrelerim
+            string xincompletedstatestr_ = db.ParameterSettings.AsNoTracking().Where(i => i.ParameterSettingID == 6).SingleOrDefault().ParameterValue;
+            int xincompletedstateint_ = int.Parse(xincompletedstatestr_);
+            string xcompletedstatestr_ = db.ParameterSettings.AsNoTracking().Where(i => i.ParameterSettingID == 5).SingleOrDefault().ParameterValue;
+            int xcompletedstateint_ = int.Parse(xcompletedstatestr_);
+            ViewBag.CompletedStateID = xcompletedstateint_;
+            ViewBag.InCompletedStateID = xincompletedstateint_;
+
             ViewBag.CurrentPage = (page ?? 1);
             ViewBag.PrevPageNumber = rlist.PageNumber - 1;
             ViewBag.NextPageNumber = rlist.PageNumber + 1;
@@ -629,9 +637,16 @@ namespace Klmsncamp.Controllers
 
             if (ModelState.IsValid)
             {
-                if (rqToUpdate.IsApproved && rqToUpdate.RequestStateID != 6)
+                //durum parameterlerim
+                string xincompletedstatestr_ = db.ParameterSettings.AsNoTracking().Where(i => i.ParameterSettingID == 6).SingleOrDefault().ParameterValue;
+                int xincompletedstateint_ = int.Parse(xincompletedstatestr_);
+
+                string xcompletedstatestr_ = db.ParameterSettings.AsNoTracking().Where(i => i.ParameterSettingID == 5).SingleOrDefault().ParameterValue;
+                int xcompletedstateint_ = int.Parse(xcompletedstatestr_);
+
+                if (rqToUpdate.IsApproved && rqToUpdate.RequestStateID != xincompletedstateint_)
                 {
-                    rqToUpdate.RequestStateID = 5;
+                    rqToUpdate.RequestStateID = xcompletedstateint_;
                 }
 
                 rqToUpdate.mTimeStamp = DateTime.Now;
@@ -764,12 +779,25 @@ namespace Klmsncamp.Controllers
                     }
                 }
 
-                //anket olustursun eger onayli ve ebadan geliyorsa
+                //anket olustursun eger onayli ve anket sistemi aktif ve ebadan geliyorsa
                 if (rqToUpdate.IsApproved)
                 {
-                    if (rqToUpdate.UserReqID == 7)
+                    string issurveryactive_ = db.ParameterSettings.AsNoTracking().Where(i => i.ParameterSettingID == 7).SingleOrDefault().ParameterValue;
+                    if (issurveryactive_ == "1")
                     {
-                        CreateSurvey(rqToUpdate.PersonnelID.Value, rqToUpdate.RequestTypeID, rqToUpdate.RequestIssueID, rqToUpdate.DetailedDescription, rqToUpdate.TimeStamp);
+                        string ebauserstr_ = db.ParameterSettings.AsNoTracking().Where(i => i.ParameterSettingID == 9).SingleOrDefault().ParameterValue;
+                        int ebauserint_ = int.Parse(ebauserstr_);
+
+                        if (rqToUpdate.UserReqID == ebauserint_)
+                        {
+                            bool xrejected = false;
+                            //olumsuz kapanmis mi?
+                            if (rqToUpdate.RequestStateID == xincompletedstateint_)
+                            {
+                                xrejected = true;
+                            }
+                            CreateSurvey(rqToUpdate.PersonnelID.Value, rqToUpdate.RequestTypeID, rqToUpdate.RequestIssueID, rqToUpdate.DetailedDescription, rqToUpdate.TimeStamp, xrejected);
+                        }
                     }
                 }
 
@@ -920,8 +948,9 @@ namespace Klmsncamp.Controllers
         }
 
         [Authorize]
-        public void CreateSurvey(int xpersID, int xrequesttypeID, int xrequestissueID, string xrequestissueDesc, DateTime xtimestamp)
+        public void CreateSurvey(int xpersID, int xrequesttypeID, int xrequestissueID, string xrequestissueDesc, DateTime xtimestamp, bool isreject)
         {
+            int survtempid_ = 1;
             try
             {
                 Personnel pers_ = db.Personnels.AsNoTracking().Where(i => i.PersonnelID == xpersID).SingleOrDefault();
@@ -929,13 +958,37 @@ namespace Klmsncamp.Controllers
                 string longdescription = xtimestamp.ToLongDateString() + " tarihli #" + xrequestissueID.ToString() + " No'lu, " + reqtype_.Description.ToLower() + " tipindeki iş talebinize yönelik Anket.";
                 if (pers_.Email != null)
                 {
-                    var mastersurvtemp = db.SurveyTemplates.Include(u => u.SurveyRecords).Where(i => i.RequestTypeID == xrequesttypeID && i.PreDefined == true).SingleOrDefault();
-                    List<SurveyRecord> survrecs = new List<SurveyRecord>();
-                    foreach (SurveyRecord sr_ in mastersurvtemp.SurveyRecords.ToList())
+                    //eğer arıza tipine bir anket acilmissa ! yok degilse parametre default olan
+                    try
                     {
-                        SurveyRecord mysurveyrec = new SurveyRecord { SurveyNodeID = sr_.SurveyNodeID, SurveyRecordTypeID = sr_.SurveyRecordTypeID, OrderNum = sr_.OrderNum, ApprovalStatus = sr_.ApprovalStatus, Score = sr_.Score, Note = sr_.Note };
+                        survtempid_ = db.SurveyTemplates.Include(u => u.SurveyRecords).Where(i => i.RequestTypeID == xrequesttypeID && i.PreDefined == true).SingleOrDefault().SurveyTemplateID;
+                    }
+                    catch
+                    {
+                        string survtempidstr_ = db.ParameterSettings.AsNoTracking().Where(i => i.ParameterSettingID == 8).SingleOrDefault().ParameterValue;
+                        survtempid_ = int.Parse(survtempidstr_);
+                    }
+
+                    var mastersurvtemp = db.SurveyTemplates.Include(u => u.SurveyRecords).Where(i => i.SurveyTemplateID == survtempid_ && i.PreDefined == true).SingleOrDefault();
+
+                    List<SurveyRecord> survrecs = new List<SurveyRecord>();
+
+                    if (isreject)
+                    {
+                        string rejectedsurveynodestr_ = db.ParameterSettings.AsNoTracking().Where(i => i.ParameterSettingID == 10).SingleOrDefault().ParameterValue;
+                        int rejectedsurveynodeint_ = int.Parse(rejectedsurveynodestr_);
+                        SurveyRecord mysurveyrec = new SurveyRecord { SurveyNodeID = rejectedsurveynodeint_, SurveyRecordTypeID = 2, OrderNum = 1, ApprovalStatus = false, Score = null, Note = null };
                         survrecs.Add(mysurveyrec);
                         db.SurveyRecords.Add(mysurveyrec);
+                    }
+                    else
+                    {
+                        foreach (SurveyRecord sr_ in mastersurvtemp.SurveyRecords.ToList())
+                        {
+                            SurveyRecord mysurveyrec = new SurveyRecord { SurveyNodeID = sr_.SurveyNodeID, SurveyRecordTypeID = sr_.SurveyRecordTypeID, OrderNum = sr_.OrderNum, ApprovalStatus = sr_.ApprovalStatus, Score = sr_.Score, Note = sr_.Note };
+                            survrecs.Add(mysurveyrec);
+                            db.SurveyRecords.Add(mysurveyrec);
+                        }
                     }
                     db.SaveChanges();
 
@@ -970,7 +1023,7 @@ namespace Klmsncamp.Controllers
         }
 
         [Authorize]
-        internal static string SendEmail(MailAddress fromAddress, MailAddress toAddress, string subject, string body, string fromPersonnel, bool fromEBA)
+        public string SendEmail(MailAddress fromAddress, MailAddress toAddress, string subject, string body, string fromPersonnel, bool fromEBA)
         {
             try
             {
@@ -986,8 +1039,11 @@ namespace Klmsncamp.Controllers
                 }
                 catch { }
 
-                var client = new SmtpClient("KLMSNEVS.klimasan.msft");
-                client.Credentials = new NetworkCredential("MUSAF@klimasan.com.tr", "1213");
+                string mailaccount_ = db.ParameterSettings.AsNoTracking().Where(i => i.ParameterSettingID == 1).SingleOrDefault().ParameterValue;
+                string mailpassword_ = db.ParameterSettings.AsNoTracking().Where(i => i.ParameterSettingID == 2).SingleOrDefault().ParameterValue;
+                string mailhost_ = db.ParameterSettings.AsNoTracking().Where(i => i.ParameterSettingID == 3).SingleOrDefault().ParameterValue;
+                var client = new SmtpClient(mailhost_);
+                client.Credentials = new NetworkCredential(mailaccount_, mailpassword_);
                 client.Send(message);
                 return "OK";
             }

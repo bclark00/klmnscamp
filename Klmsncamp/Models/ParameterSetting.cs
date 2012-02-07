@@ -14,6 +14,8 @@ namespace Klmsncamp.Models
         [Display(Name = "Parametre Adı")]
         public string Description { get; set; }
 
-        public int ParameterValue { get; set; }
+        [Display(Name = "Parametre Değeri")]
+        [MaxLength(100, ErrorMessage = "100 karakterden uzun olamaz")]
+        public string ParameterValue { get; set; }
     }
 }
