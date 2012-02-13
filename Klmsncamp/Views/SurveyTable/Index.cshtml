@@ -14,7 +14,7 @@
             columns.Bound(o => o.RequestIssueID).Title("İşNo").Width(60);
             columns.Bound(o => o.RequestIssueID).ClientTemplate("<a href='" + Url.Action("Edit", "RequestIssue", new { id = "<#= RequestIssueID #>", show = "A", page = 1 }) + "'>Talebe Git</a>").Width(70).Title("İş Talebi").Filterable(false).Sortable(false);
             columns.Bound(o => o.Description).Width(560).Title("Açıklama");
-            columns.Bound(o => o.Timestamp).Format("{0:MM/dd/yyyy}").Title("Tarihzaman");
+            columns.Bound(o => o.Timestamp).Format("{0:dd/MM/yyyy}").Title("Tarihzaman");
         })
         .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxBinding", "SurveyTable", null))
         .Pageable()
@@ -45,6 +45,32 @@
                 ))
 
 )
+<br />
+@if (!(string.IsNullOrEmpty(ViewBag.CustomErr)))
+{
+    <div align="center" style="width: 720px; margin-left: auto; margin-right: auto;">
+        <fieldset class="module aligned ">
+            <br />
+            <div style="margin: 5px;">
+                <ul style="list-style: none">
+                    <li>@ViewBag.CustomErr</li>
+                </ul>
+            </div>
+        </fieldset>
+    </div>
+    <br />
+
+}
+<div align="center" style="width: 720px; margin-left: auto; margin-right: auto;">
+    @using (Html.BeginForm("Report", "SurveyTable", FormMethod.Post))
+    {
+
+        <div class="submit-row">
+            <input type="submit" value="Raporla" class="default" />
+        </div>
+
+    }
+</div>
 <script type="text/javascript">
 
     function expandFirstRow(grid, row) {
