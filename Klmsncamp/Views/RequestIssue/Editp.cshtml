@@ -46,9 +46,14 @@
     var windowElement = $('#RequestIssueLogs'); var undoButton= $('#undo'); undoButton
     .bind('click', function(e) { windowElement.data('tWindow').open(); undoButton.hide();
     }) .toggle(!windowElement.is(':visible')); windowElement.bind('close', function()
-    { undoButton.show(); }); $(".chzn-choices input").live('hover', function(){ $('.chzn-container').css('zIndex',1);
-    $(this).closest('.chzn-container').css('zIndex',100); }); $(".chzn-select").chosen();
-    $(".chzn-select-deselect").chosen({ allow_single_deselect: true });
+    { undoButton.show(); }); var windowElement_survey = $('#RequestIssueSurveys'); var
+    undoButton_survey= $('#undo_survey'); undoButton_survey.bind('click', function(e)
+    { alert(windowElement_survey); windowElement_survey.data('tWindow').open(); undoButton_survey.hide();
+    }) .toggle(!windowElement_survey.is(':visible')); windowElement_survey.bind('close',
+    function() { undoButton_survey.show(); }); $(".chzn-choices input").live('hover',
+    function(){ $('.chzn-container').css('zIndex',1); $(this).closest('.chzn-container').css('zIndex',100);
+    }); $(".chzn-select").chosen(); $(".chzn-select-deselect").chosen({ allow_single_deselect:
+    true });
     </text>); }
 <div align="center" style="width: 640px; margin-left: auto; margin-right: auto; margin-top: 30px;">
     @using (Html.BeginForm("Editp", "RequestIssue", FormMethod.Post, new { enctype = "multipart/form-data" }))
@@ -417,7 +422,7 @@
                             @if ((!User.IsInRole("administrators") && !User.IsInRole("moderators")) || Model.IsApproved == true)
                             {
                                 @Html.HiddenFor(model => model.RequestActualReasonID)
-                              <font style="color: #A80000;"> @Html.DisplayFor(model => model.RequestActualReason.Description)</font>
+                                <font style="color: #A80000;">@Html.DisplayFor(model => model.RequestActualReason.Description)</font>
                             }
                             else
                             {
@@ -444,7 +449,7 @@
                             @if ((!User.IsInRole("administrators") && !User.IsInRole("moderators")) || Model.IsApproved == true)
                             {
                                 @Html.HiddenFor(model => model.RequestActualReasonNote)
-                              <font style="color: #A80000;">@Html.DisplayFor(model => model.RequestActualReasonNote)</font>
+                                <font style="color: #A80000;">@Html.DisplayFor(model => model.RequestActualReasonNote)</font>
                             }
                             else
                             {
@@ -528,7 +533,7 @@
                                 else
                                 {
                                 @:<img title="Açık / Çalışma Sürüyor" alt="Devam Ediyor" src="@Url.Content("~/Content/images/delete.png")"/>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    }
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    }
                             }
                         </td>
                     </tr>
@@ -558,7 +563,7 @@
                                 catch
                                 {
                                 @: Henüz Atanmamış..
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    }
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    }
                             }
                         </td>
                     </tr>
@@ -571,7 +576,7 @@
         </fieldset>
         <div class="submit-row">
             <p class="deletelink-box">
-                @Html.ActionLink("Vazgeç ve Geri Dön", "Index")</p>
+                @Html.ActionLink("Vazgeç ve Geri Dön", "Index")&nbsp;|&nbsp;@Html.ActionLink("Sil", "Delete", "RequestIssue", new { id = Model.RequestIssueID, show = ViewBag.show, page = ViewBag.page }, null)</p>
             <input type="submit" onclick="this.disabled=true;this.value='Lütfen Bekleyiniz..Calisiyor..';this.form.submit();"
                 value="Kaydet" />
         </div>
@@ -631,8 +636,9 @@
     </div>
     </text>
 }
-<div style="position: fixed; top: 15%; right: 400px;" align="right">
-    <span id="undo" class="t-group">Güncellemeleri Göster</span>
+<div style="position: fixed; top: 12%; right: 360px;" align="right">
+    <span id="undo" style="position: fixed; top: 12%; right: 360px;" class="t-group">Güncellemeleri
+        Göster</span>
     @{ Html.Telerik().Window()
                             .Name("RequestIssueLogs")
                             .Title("Güncelleme Bilgileri")
@@ -652,11 +658,74 @@
                                             .MaxHeight(800)
                                             .MaxWidth(350)
                                         )
-                            .Width(350)
+                            .Width(320)
                             .Height(350)
                             .Render();
     }
 </div>
+@helper TotalSurveysTemplate(WebViewPage page)
+    {
+
+    <text>
+    <div align="left">
+        <table>
+            <thead>
+                <th>
+                    Anketler
+                </th>
+                <th>
+                    Tarih
+                </th>
+            </thead>
+            <tbody>
+                @foreach (var svtable in ViewBag.TheSurveys as IList<Klmsncamp.Models.SurveyTable>)
+                {
+
+                    <tr @AlternateBackground("#E0E0E0")>
+                        <td>
+                            @Html.ActionLink(svtable.Description, "Edit", "SurveyTable", new { id = svtable.SurveyTableID }, null)
+                        </td>
+                        <td>
+                            @svtable.TimeStamp
+                        </td>
+                    </tr>
+
+                }
+            </tbody>
+        </table>
+    </div>
+    </text>
+}
+@if (ViewBag.HasSurvey)
+{
+    <div style="position: fixed; top: 12%; left: 36px;" align="left">
+        <span id="undo_survey" style="position: fixed; top: 12%; left: 36px;" class="t-group">
+            Anketleri Göster</span>
+        @{ Html.Telerik().Window()
+                            .Name("RequestIssueSurveys")
+                            .Title("Anket Bilgileri")
+                            .Draggable(true)
+                            .Resizable(resizing => resizing
+                                .Enabled(false)
+
+                            )
+                            .Modal(false)
+                            .Buttons(b => b.Close())
+                            .Content(a => TotalSurveysTemplate(this))
+                            .Scrollable(true)
+                            .Resizable(resizing => resizing
+                                            .Enabled(true)
+                                            .MinHeight(350)
+                                            .MinWidth(350)
+                                            .MaxHeight(800)
+                                            .MaxWidth(350)
+                                        )
+                            .Width(320)
+                            .Height(350)
+                            .Render();
+        }
+    </div>
+}
 @functions{
     public string asMb(float number)
     {

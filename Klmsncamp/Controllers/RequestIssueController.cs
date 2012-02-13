@@ -601,6 +601,24 @@ namespace Klmsncamp.Controllers
                 }
                 ViewBag.TheLogs = MyLogs;
 
+                //anketleri göstermece
+                IList<SurveyTable> MySurveys = new List<SurveyTable>();
+                foreach (SurveyTable surveytable_item in db.SurveyTables.Where(s => s.RequestIssueID == id).ToList())
+                {
+                    if (surveytable_item.IsApproved)
+                    {
+                        MySurveys.Add(surveytable_item);
+                    }
+                }
+                if (MySurveys.ToList().Count > 0)
+                {
+                    ViewBag.TheSurveys = MySurveys;
+                    ViewBag.HasSurvey = true;
+                }
+                else
+                {
+                    ViewBag.HasSurvey = false;
+                }
                 return View(rq);
             }
         }
@@ -851,6 +869,24 @@ namespace Klmsncamp.Controllers
             }
             ViewBag.TheLogs = MyLogs;
 
+            //anketleri göstermece
+            IList<SurveyTable> MySurveys = new List<SurveyTable>();
+            foreach (SurveyTable surveytable_item in db.SurveyTables.Where(s => s.RequestIssueID == id).ToList())
+            {
+                if (surveytable_item.IsApproved)
+                {
+                    MySurveys.Add(surveytable_item);
+                }
+            }
+            if (MySurveys.ToList().Count > 0)
+            {
+                ViewBag.TheSurveys = MySurveys;
+                ViewBag.HasSurvey = true;
+            }
+            else
+            {
+                ViewBag.HasSurvey = false;
+            }
             return View(rqToUpdate);
         }
 
@@ -1042,7 +1078,17 @@ namespace Klmsncamp.Controllers
                 string mailaccount_ = db.ParameterSettings.AsNoTracking().Where(i => i.ParameterSettingID == 1).SingleOrDefault().ParameterValue;
                 string mailpassword_ = db.ParameterSettings.AsNoTracking().Where(i => i.ParameterSettingID == 2).SingleOrDefault().ParameterValue;
                 string mailhost_ = db.ParameterSettings.AsNoTracking().Where(i => i.ParameterSettingID == 3).SingleOrDefault().ParameterValue;
+
                 var client = new SmtpClient(mailhost_);
+                try
+                {
+                    string mailhostport_ = db.ParameterSettings.AsNoTracking().Where(i => i.ParameterSettingID == 4).SingleOrDefault().ParameterValue;
+                    int mailhostportint_ = int.Parse(mailhostport_);
+                    client.Port = mailhostportint_;
+                }
+                catch
+                {
+                }
                 client.Credentials = new NetworkCredential(mailaccount_, mailpassword_);
                 client.Send(message);
                 return "OK";

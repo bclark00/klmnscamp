@@ -1,0 +1,61 @@
+﻿@using Telerik.Web.Mvc.UI
+@model IEnumerable<Klmsncamp.Models.SurveyTable>
+@{
+    ViewBag.Title = "Anketler";
+}
+<br />
+<br />
+@(Html.Telerik().Grid<Klmsncamp.ViewModels.SurveyTableViewModel>()
+        .Name("Grid")
+        .Columns(columns =>
+        {
+            columns.Bound(o => o.SurveyTableID).Title("AnketNo").Width(80);
+            columns.Bound(o => o.SurveyTableID).ClientTemplate("<a href='" + Url.Action("Edit", "SurveyTable", new { id = "<#= SurveyTableID #>" }) + "'>Ankete Git</a>").Width(70).Title("Anket").Filterable(false).Sortable(false);
+            columns.Bound(o => o.RequestIssueID).Title("İşNo").Width(60);
+            columns.Bound(o => o.RequestIssueID).ClientTemplate("<a href='" + Url.Action("Edit", "RequestIssue", new { id = "<#= RequestIssueID #>", show = "A", page = 1 }) + "'>Talebe Git</a>").Width(70).Title("İş Talebi").Filterable(false).Sortable(false);
+            columns.Bound(o => o.Description).Width(560).Title("Açıklama");
+            columns.Bound(o => o.Timestamp).Format("{0:MM/dd/yyyy}").Title("Tarihzaman");
+        })
+        .DataBinding(dataBinding => dataBinding.Ajax().Select("_AjaxBinding", "SurveyTable", null))
+        .Pageable()
+        .Sortable()
+        .Scrollable(scrolling => scrolling.Height(600))
+        .Groupable()
+        .Filterable().HtmlAttributes(new { style = "width: 1000px; margin-left: auto; margin-right: auto;" })
+        .Localizable("TR-tr")
+        .ClientEvents(events => events.OnRowDataBound("surveytables_onRowDataBound"))
+        .DetailView(details => details.ClientTemplate(
+            Html.Telerik().Grid<Klmsncamp.ViewModels.SurveyTableDetailViewModel>()
+                    .Name("Orders_<#= SurveyTableID #>")
+                .Columns(columns =>
+                {
+                    columns.Bound(e => e.SurveyNodeDescription).Width(250).Title("Soru");
+                    columns.Bound(e => e.SurveyRecordTypeDescription).Width(250).Title("Anket Tipi");
+                    columns.Bound(e => e.ApprovalStatusStr).Width(50).Title("E/H");
+                    columns.Bound(e => e.Score).Title("Puan").Width(50);
+                    columns.Bound(e => e.Note).Title("Yorumlar");
+
+                }).Localizable("Tr-tr")
+                .DataBinding(dataBinding => dataBinding.Ajax()
+                .Select("_AjaxBindingDetails", "SurveyTable", new { surveyID = "<#= SurveyTableID #>" }))
+                .Pageable()
+                .Sortable()
+                .Filterable()
+                .ToHtmlString()
+                ))
+
+)
+<script type="text/javascript">
+
+    function expandFirstRow(grid, row) {
+        if (grid.$rows().index(row) == 0) {
+            grid.expandRow(row);
+        }
+    }
+
+    function surveytables_onRowDataBound(e) {
+        var grid = $(this).data('tGrid');
+        expandFirstRow(grid, e.row);
+    }
+
+</script>

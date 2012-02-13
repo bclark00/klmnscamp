@@ -6,12 +6,132 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Klmsncamp.Models;
+using Klmsncamp.ViewModels;
+using PagedList;
+using Telerik.Web.Mvc;
 
 namespace Klmsncamp.Controllers
 {
     public class SurveyTableController : Controller
     {
         private KlmsnContext db = new KlmsnContext();
+
+        public ViewResult Index(int? page)
+        {
+            /* var surveys = from s in db.SurveyTables select s; //.Where(i=>i.ValidationStateID==1).Include(r => r.RequestType).Include(r => r.Location).Include(r => r.Inventory).Include(r => r.Workshop).Include(r => r.RequestState).Include(r => r.UserReq).Include(r => r.User).Include(r => r.ValidationState);
+
+             surveys = surveys.Where(i => i.IsApproved == true);
+
+             surveys = surveys.Include(r => r.SurveyTemplate.SurveyRecords);
+
+             //enter paging:
+             int pageIndex, pageSize;
+             if (page == -1)
+             {
+                 pageIndex = 1;
+                 pageSize = surveys.ToList().Count;
+             }
+             else
+             {
+                 pageIndex = (page ?? 1);
+                 pageSize = 50;
+             }
+
+             var rlist = surveys.AsEnumerable().ToPagedList(pageIndex, pageSize);
+             ViewBag.CurrentPage = (page ?? 1);
+             ViewBag.PrevPageNumber = rlist.PageNumber - 1;
+             ViewBag.NextPageNumber = rlist.PageNumber + 1;
+             ViewBag.TotalPages = rlist.PageCount;
+             ViewBag.HasPrevPage = rlist.HasPreviousPage;
+             ViewBag.HasNextPage = rlist.HasNextPage;
+             ViewBag.isFirstPage = rlist.IsFirstPage;
+             ViewBag.isLastPage = rlist.IsLastPage;
+             ViewBag.StartIndex = rlist.FirstItemOnPage;
+             ViewBag.EndIndex = rlist.LastItemOnPage;
+             ViewBag.TotalItems = rlist.TotalItemCount;
+             Response.AddHeader("Refresh", "90");
+             return View(rlist);*/
+            return View();
+        }
+
+        public IEnumerable<Klmsncamp.Models.SurveyTable> GetSurveys()
+        {
+            //var surveys = from s in db.SurveyTables select s; //.Where(i=>i.ValidationStateID==1).Include(r => r.RequestType).Include(r => r.Location).Include(r => r.Inventory).Include(r => r.Workshop).Include(r => r.RequestState).Include(r => r.UserReq).Include(r => r.User).Include(r => r.ValidationState);
+
+            //surveys = surveys.Where(i => i.IsApproved == true);
+
+            //surveys = surveys.Include(r => r.SurveyTemplate.SurveyRecords);
+            /*
+            //enter paging:
+            int pageIndex, pageSize;
+            if (page == -1)
+            {
+                pageIndex = 1;
+                pageSize = surveys.ToList().Count;
+            }
+            else
+            {
+                pageIndex = (page ?? 1);
+                pageSize = 50;
+            }
+            */
+
+            /*var rlist = surveys.AsEnumerable().ToPagedList(pageIndex, pageSize);
+            ViewBag.CurrentPage = (page ?? 1);
+            ViewBag.PrevPageNumber = rlist.PageNumber - 1;
+            ViewBag.NextPageNumber = rlist.PageNumber + 1;
+            ViewBag.TotalPages = rlist.PageCount;
+            ViewBag.HasPrevPage = rlist.HasPreviousPage;
+            ViewBag.HasNextPage = rlist.HasNextPage;
+            ViewBag.isFirstPage = rlist.IsFirstPage;
+            ViewBag.isLastPage = rlist.IsLastPage;
+            ViewBag.StartIndex = rlist.FirstItemOnPage;
+            ViewBag.EndIndex = rlist.LastItemOnPage;
+            ViewBag.TotalItems = rlist.TotalItemCount;
+            Response.AddHeader("Refresh", "90");*/
+            var rlist = new List<SurveyTable>();
+            foreach (var sv in db.SurveyTables)
+            {
+                rlist.Add(sv);
+            }
+            return rlist;
+        }
+
+        [GridAction]
+        public ActionResult _AjaxBinding()
+        {
+            var surveytables = from e in db.SurveyTables.Where(i => i.IsApproved == true)
+                               select new SurveyTableViewModel
+                               {
+                                   SurveyTableID = e.SurveyTableID,
+                                   RequestIssueID = e.RequestIssueID,
+                                   Description = e.Description,
+                                   Timestamp = e.TimeStamp
+                               };
+
+            //sorun şu kendi basit viewmodelini yapıcan
+            return View(new GridModel(surveytables));
+        }
+
+        [GridAction]
+        public ActionResult _AjaxBindingDetails(int surveyID)
+        {
+            int mysurvtemplateID = db.SurveyTables.Find(surveyID).SurveyTemplateID;
+
+            SurveyTemplate survtemplate = db.SurveyTemplates.Include(u => u.SurveyRecords).Where(i => i.SurveyTemplateID == mysurvtemplateID).SingleOrDefault();
+
+            var surveyrecords = from e in survtemplate.SurveyRecords
+                                select new SurveyTableDetailViewModel
+                                  {
+                                      SurveyNodeDescription = e.SurveyNode.Description,
+                                      SurveyRecordTypeDescription = e.SurveyRecordType.Description,
+                                      ApprovalStatus = e.ApprovalStatus,
+                                      Score = int.Parse(e.Score.GetValueOrDefault(0).ToString()),
+                                      Note = e.Note
+                                  };
+
+            return View(new GridModel(surveyrecords));
+        }
 
         public ActionResult Edit(int id, string customerr)
         {

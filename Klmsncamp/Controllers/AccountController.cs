@@ -217,5 +217,11 @@ namespace Klmsncamp.Controllers
         }
 
         #endregion Status Codes
+
+        protected override void Dispose(bool disposing)
+        {
+            db.Dispose();
+            base.Dispose(disposing);
+        }
     }
 }
