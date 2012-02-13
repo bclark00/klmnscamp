@@ -2,9 +2,12 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using CrystalDecisions.CrystalReports.Engine;
+using CrystalDecisions.Shared;
 using Klmsncamp.Models;
 using Klmsncamp.ViewModels;
 using PagedList;
@@ -16,6 +19,7 @@ namespace Klmsncamp.Controllers
     {
         private KlmsnContext db = new KlmsnContext();
 
+        [Authorize]
         public ViewResult Index(int? page)
         {
             /* var surveys = from s in db.SurveyTables select s; //.Where(i=>i.ValidationStateID==1).Include(r => r.RequestType).Include(r => r.Location).Include(r => r.Inventory).Include(r => r.Workshop).Include(r => r.RequestState).Include(r => r.UserReq).Include(r => r.User).Include(r => r.ValidationState);
@@ -54,6 +58,7 @@ namespace Klmsncamp.Controllers
             return View();
         }
 
+        [Authorize]
         public IEnumerable<Klmsncamp.Models.SurveyTable> GetSurveys()
         {
             //var surveys = from s in db.SurveyTables select s; //.Where(i=>i.ValidationStateID==1).Include(r => r.RequestType).Include(r => r.Location).Include(r => r.Inventory).Include(r => r.Workshop).Include(r => r.RequestState).Include(r => r.UserReq).Include(r => r.User).Include(r => r.ValidationState);
@@ -98,6 +103,7 @@ namespace Klmsncamp.Controllers
         }
 
         [GridAction]
+        [Authorize]
         public ActionResult _AjaxBinding()
         {
             var surveytables = from e in db.SurveyTables.Where(i => i.IsApproved == true)
@@ -114,6 +120,7 @@ namespace Klmsncamp.Controllers
         }
 
         [GridAction]
+        [Authorize]
         public ActionResult _AjaxBindingDetails(int surveyID)
         {
             int mysurvtemplateID = db.SurveyTables.Find(surveyID).SurveyTemplateID;
@@ -213,6 +220,50 @@ namespace Klmsncamp.Controllers
             ViewBag.SurveyTemplateID = new SelectList(db.SurveyTemplates, "SurveyTemplateID", "Description", surveytable.SurveyTemplateID);
             ViewBag.RequestIssueID = new SelectList(db.RequestIssues, "RequestIssueID", "DetailedDescription", surveytable.RequestIssueID);
             return View(surveytable);
+        }
+
+        [HttpPost]
+        public ActionResult Report(RequestIssue requestıssue, FormCollection formcollection)
+        {
+            ReportDocument rptH = new ReportDocument();
+
+            rptH.FileName = Server.MapPath("~/RDLC/SurveyReport.rpt");
+
+            rptH.Refresh();
+            //rptH.Load();
+
+            var value = new ParameterDiscreteValue();
+
+            var requests_ = db.RequestIssues.AsNoTracking().Include(p => p.Locations).Include(p => p.Personnels).Include(p => p.CorporateAccounts);
+
+            int x_index = 0;
+            foreach (int req_ in requests_.Select(i => i.RequestIssueID).ToList())
+            {
+                value.Value = req_;
+
+                rptH.ParameterFields["RequestIDs"].CurrentValues.Add(value);
+                x_index++;
+            }
+
+            if (x_index == 0)
+            {
+                return RedirectToAction("Index", new { custommerr = "Belirttiğiniz Kriterlere Uygun Kayıt(lar) Bulunamadı" });
+            }
+
+            // rptH.SetDataSource([datatable]);
+            var cd = new System.Net.Mime.ContentDisposition
+            {
+                // for example foo.bak
+                FileName = "rapor_klimasanHelpDeskAnketler.pdf",
+
+                // always prompt the user for downloading, set to true if you want
+                // the browser to try to show the file inline
+                Inline = false,
+            };
+
+            Stream stream = rptH.ExportToStream(CrystalDecisions.Shared.ExportFormatType.PortableDocFormat);
+            Response.AppendHeader("Content-Disposition", cd.ToString());
+            return File(stream, "application/pdf");
         }
 
         protected override void Dispose(bool disposing)

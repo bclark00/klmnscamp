@@ -244,6 +244,12 @@
       <DependentUpon>RequestIssueReport.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="RDLC\SurveyReport.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SurveyReport.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="RDLC\WorkLoadByDepVsUserReport.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -1171,6 +1177,10 @@
     <EmbeddedResource Include="RDLC\RequestIssueReport.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>RequestIssueReport.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RDLC\SurveyReport.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>SurveyReport.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="RDLC\WorkLoadByDepVsUserReport.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
