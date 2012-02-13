@@ -1,4 +1,6 @@
-﻿@{
+﻿
+
+@{
     ViewBag.Title = "Klimasan Intranet";
 }
 @section script
@@ -15,16 +17,17 @@
             </script>*@
 }
 <div align="center">
-    <br>
+    <br />
     <div align="center" id="digiclock">
     </div>
-    <br>
-    <h1 style="text-decoration: overline; text-shadow: 1px 1px 1px #111;">
-        KLIMASAN Hoşgeldiniz</h1>
+    <br />
+    <h1 style="text-decoration: overline;">
+        @Html.Raw(@ViewBag.WelcomeString)</h1>
     <br />
     <br />
-     <p style="font-family: Calibri, Tahoma, Arial Unicode MS; font-size: small; font-weight: bold;
+    <p style="font-family: Calibri, Tahoma, Arial Unicode MS; font-size: small; font-weight: bold;
         color: Maroon;">
         @ViewBag.ErrMessage
     </p>
 </div>
+

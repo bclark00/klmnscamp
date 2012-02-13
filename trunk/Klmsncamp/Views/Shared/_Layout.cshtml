@@ -1,4 +1,12 @@
 ﻿@using Telerik.Web.Mvc.UI
+@using Klmsncamp.Models
+@{
+    ParameterSetting pr = new ParameterSetting();
+    ViewBag.BannerFileName = pr.BannerFileName;
+    ViewBag.BannerOverlayString = pr.BannerOverlayString;
+        //ViewBag.BanneFileName = "klimasan_banner.png";
+        //ViewBag.BannerOverlayString = "Klimasan - Bilgi İşlem 2011";
+}
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head profile="http://gmpg.org/xfn/11">
@@ -51,6 +59,12 @@
                 <img src="@Url.Content("~/Content/Coquette/folder_full.png")" alt="İş Listesi" />
                 <p>
                     @Html.ActionLink("İş Listesi", "Index", "RequestIssue", new { show = "A", page = 1 }, null)
+                </p>
+            </li>
+            <li class="product">
+                <img src="@Url.Content("~/Content/Coquette/comments.png")" alt="İş Listesi" />
+                <p>
+                    @Html.ActionLink("Anketler", "Index", "SurveyTable", null, null)
                 </p>
             </li>
             @if (User.IsInRole("moderators") || User.IsInRole("administrator"))
@@ -155,13 +169,12 @@
                 .Text("Hakkında").Action("About", "Home")
                 .Content(@<text>
         <div style="width: 700px; height: 150px; z-index: 0; position: relative;">
-            <img width="700px" height="150px" src="@Url.Content("~/Content/images/klimasan_banner.png")"
+            <img width="700px" height="150px" src="@Url.Content("~/Content/images/" + @ViewBag.BannerFileName)"
         alt="Bize Ulaşın" />
             <div>
                 <div style="top: 35px; font-size: small; font-weight: bold; z-index: 1; position: absolute;
                     padding-left: 520px; text-align: right;">
-                    Klimasan &copy;Bilgi İşlem<br />
-                    2011
+                    @Html.Raw(ViewBag.BannerOverlayString)
                 </div>
             </div>
         </div>

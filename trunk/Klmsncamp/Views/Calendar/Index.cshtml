@@ -158,7 +158,7 @@
             //var hidden_element= document.getElementById("sonucx");
             //element.innerHTML=random_num;
             var xreturn = true;
-            ajax.open("GET", "/HelpDesk/Calendar/Update/?xisid=" + xisid + "&xtip=" + xtip + "&xgun=" + xgun + "&xdk=" + xdk + "&xtumGun=" + xtumgun + "&ms=" + new Date().getTime(), true);
+            ajax.open("GET", "@ViewBag.AbsolutePATH/Update/?xisid=" + xisid + "&xtip=" + xtip + "&xgun=" + xgun + "&xdk=" + xdk + "&xtumGun=" + xtumgun + "&ms=" + new Date().getTime(), true);
             ajax.onreadystatechange = function () {
                 if (ajax.readyState < 4) {
                     $("#ajaxloading").fadeIn('slow');

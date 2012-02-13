@@ -263,6 +263,7 @@
     <Compile Include="Models\Workshop.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Models\WeatherProxy.aspx.designer.cs" />
+    <Compile Include="ViewModels\SurveyTableViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\base.css" />
@@ -1132,6 +1133,7 @@
     <Content Include="Views\SurveyNode\Create.cshtml" />
     <Content Include="Views\SurveyNode\Edit.cshtml" />
     <Content Include="Views\Account\PasswordReset.cshtml" />
+    <Content Include="Views\SurveyTable\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_GlobalResources\EditorLocalization.en-US.resx">

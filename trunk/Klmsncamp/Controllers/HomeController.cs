@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
+using System.Data.Entity;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -14,18 +15,24 @@ using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using System.Web.UI.WebControls.WebParts;
 using System.Xml;
+using Klmsncamp.DAL;
+using Klmsncamp.Models;
 using Klmsncamp.ViewModels;
 
 namespace Klmsncamp.Controllers
 {
     public class HomeController : Controller
     {
+        private KlmsnContext db = new KlmsnContext();
+
         public ActionResult Index(string err)
         {
             if (err == "404")
             {
                 ViewBag.ErrMessage = "Aradığınız Arıza no bulunamadı..";
             }
+
+            ViewBag.WelcomeString = db.ParameterSettings.AsNoTracking().Where(i => i.ParameterSettingID == 11).SingleOrDefault().ParameterValue;
             return View();
         }
 
@@ -117,6 +124,12 @@ namespace Klmsncamp.Controllers
             Response.Close();
 
             return PageContent;
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            db.Dispose();
+            base.Dispose(disposing);
         }
     }
 }
