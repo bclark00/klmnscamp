@@ -38,6 +38,7 @@ namespace Klmsncamp.Controllers
 
         public ActionResult About()
         {
+            ViewBag.MarqueeString = db.ParameterSettings.AsNoTracking().Where(i => i.ParameterSettingID == 13).SingleOrDefault().ParameterValue;
             return View();
         }
 

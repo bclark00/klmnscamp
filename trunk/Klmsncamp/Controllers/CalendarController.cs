@@ -416,7 +416,9 @@ namespace Klmsncamp.Controllers
 
                 if (rq.SendEmail == true)
                 {
-                    string mailsonucstr = SendEmail(new MailAddress(rq.User.Email), new MailAddress(rq.UserReq.Email), "[Klimasan HelpDesk] #" + rq.RequestIssueID.ToString() + " no'lu İş isteğiniz hakkında.", "İş İsteğinizin ön görülen başlangıç ve bitiş tarihleri değiştirilmiş/güncellenmiştir. İsteğinizin son durumu görmek isterseniz; http://192.168.76.176/HelpDesk/RequestIssue/Editp/" + rq.RequestIssueID.ToString() + "?show=A&page=1 adresini ziyaret ediniz. Tarih: " + DateTime.Now.ToString() + ". İyi çalışmalar dileriz.", rq.Personnel.Email, false);
+                    string softwaretitle = db.ParameterSettings.AsNoTracking().Where(i => i.ParameterSettingID == 14).SingleOrDefault().ParameterValue;
+
+                    string mailsonucstr = SendEmail(new MailAddress(rq.User.Email), new MailAddress(rq.UserReq.Email), "[" + softwaretitle + "] #" + rq.RequestIssueID.ToString() + " no'lu İş isteğiniz hakkında.", "İş İsteğinizin ön görülen başlangıç ve bitiş tarihleri değiştirilmiş/güncellenmiştir. İsteğinizin son durumu görmek isterseniz; " + Url.Action("Editp", "RequestIssue", new { id = rq.RequestIssueID, show = "A", page = 1 }, "http") + " adresini ziyaret ediniz. Tarih: " + DateTime.Now.ToString() + ". İyi çalışmalar dileriz.", rq.Personnel.Email, false);
                     if (mailsonucstr != "OK")
                     {
                         ViewBag.Bilgilendirme = "Mail Gönderiminde Hata: " + mailsonucstr;
