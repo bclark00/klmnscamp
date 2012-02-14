@@ -52,11 +52,11 @@
         @Html.ActionLink("Sil", "Delete", "Project", new { id = @item.ProjectID }, null)
         </text>
                                 ).Width(100);
-                                columns.Bound(o => o.Description).Width(750).Title("Açıklama");
+                                columns.Bound(o => o.Description).Width(720).Title("Açıklama");
                                 columns.Bound(o => o.StartDate).Width(120).Title("Baş.Tarihi").Format("{0:d}");
                                 columns.Bound(o => o.EndDate).Width(120).Title("Bit.Tarihi").Format("{0:d}");
                                 columns.Bound(o => o.RequestState.Description).Width(150).Title("Proje Durumu");
-                                columns.Bound(o => o.User.FullName).Width(150).Title("Proje Sahibi");
+                                columns.Bound(o => o.User.FullName).Title("Proje Sahibi");
 
                             })
                             .DetailView(detailView => detailView.Template(o =>
@@ -73,13 +73,13 @@
                                                                 {
                                                                     columns.Bound(e => e.RequestIssueID).Title("#id#").Width(60);
                                                                     columns.Bound(e => e.Personnel.FullName).Title("İş İsteyen").Width(120);
-                                                                    columns.Bound(e => e.DetailedDescription).Title("Açıklama").Width(360);
+                                                                    columns.Bound(e => e.DetailedDescription).Title("Açıklama").Width(300);
                                                                     columns.Bound(e => e.Location.CapitalizedDescription).Title("Departman").Width(120);
                                                                     columns.Bound(e => e.RequestType.Description).Title("İş Tipi").Width(120);
                                                                     columns.Bound(e => e.Note).Title("Süreç Notu").Width(200);
                                                                     columns.Bound(e => e.RequestState.Description).Title("Durumu").Width(150);
                                                                     columns.Bound(e => e.User.FullName).Title("İş Sahibi").Width(120);
-                                                                    columns.Bound(e => e.StartDate).Width(90).Title("Baş.Tarihi").Format("{0:d}");
+                                                                    columns.Bound(e => e.StartDate).Title("Baş.Tarihi").Format("{0:d}");
 
                                                                 })
                                                                 .Pageable()
@@ -92,7 +92,7 @@
                                                                 .Columns(columns =>
                                                                 {
                                                                     columns.Bound(e => e.Description).Title("Açıklama").Width(350);
-                                                                    columns.Bound(e => e.LocationGroup.Description).Title("Bağlı Olduğu Ana Departman").Width(410);
+                                                                    columns.Bound(e => e.LocationGroup.Description).Title("Bağlı Olduğu Ana Departman");
 
                                                                 })
                                                                 .Pageable()
@@ -105,11 +105,11 @@
                                                                 .Columns(columns =>
                                                                 {
                                                                     columns.Bound(e => e.Title).Title("Ünvanı").Width(250);
-                                                                    columns.Bound(e => e.Address).Title("Adresi").Width(350);
-                                                                    columns.Bound(e => e.CorpEmail).Title("Email").Width(300);
+                                                                    columns.Bound(e => e.Address).Title("Adresi").Width(300);
+                                                                    columns.Bound(e => e.CorpEmail).Title("Email").Width(250);
                                                                     columns.Bound(e => e.Phone1).Title("Telefon-1").Width(100);
                                                                     columns.Bound(e => e.CorporateType.Description).Title("Firma Tipi").Width(150);
-                                                                    columns.Bound(e => e.ContactPerson).Title("Yetkili").Title("Yetkili").Width(170);
+                                                                    columns.Bound(e => e.ContactPerson).Title("Yetkili").Title("Yetkili");
                                                                 })
                                                                 .Pageable()
 
@@ -121,7 +121,7 @@
                                                                 .Columns(columns =>
                                                                 {
                                                                     columns.Bound(e => e.FullName).Title("Adı-Soyadı").Width(350);
-                                                                    columns.Bound(e => e.Location).Title("Birimi").Width(410);
+                                                                    columns.Bound(e => e.Location).Title("Birimi");
 
                                                                 })
                                                                 .Pageable()
