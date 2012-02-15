@@ -23,7 +23,7 @@
         .Groupable()
         .Filterable().HtmlAttributes(new { style = "width: 1000px; margin-left: auto; margin-right: auto;" })
         .Localizable("TR-tr")
-        .ClientEvents(events => events.OnRowDataBound("surveytables_onRowDataBound"))
+        //.ClientEvents(events => events.OnRowDataBound("surveytables_onRowDataBound"))
         .DetailView(details => details.ClientTemplate(
             Html.Telerik().Grid<Klmsncamp.ViewModels.SurveyTableDetailViewModel>()
                     .Name("Orders_<#= SurveyTableID #>")
@@ -72,16 +72,16 @@
     }
 </div>
 <script type="text/javascript">
-
+    /*
     function expandFirstRow(grid, row) {
-        if (grid.$rows().index(row) == 0) {
-            grid.expandRow(row);
-        }
+    if (grid.$rows().index(row) == 0) {
+    grid.expandRow(row);
+    }
     }
 
     function surveytables_onRowDataBound(e) {
-        var grid = $(this).data('tGrid');
-        expandFirstRow(grid, e.row);
+    var grid = $(this).data('tGrid');
+    expandFirstRow(grid, e.row);
     }
-
+    */
 </script>
