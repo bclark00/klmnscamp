@@ -507,34 +507,58 @@
                             @Html.LabelFor(model => model.IsApproved)
                         </td>
                         <td style="color: #A80000; vertical-align: middle; text-align: left;">
-                            @if (Model.IsApproved == true && !User.IsInRole("administrators"))
+                            @if (ViewBag.HasSurvey)
                             {
                                 @Html.HiddenFor(model => model.IsApproved)
                                 if (Model.IsApproved == true)
                                 {
-                                @:<img title="Bu iş istek onaylanarak kapatılmıştır." alt="Tamamlandı" src="@Url.Content("~/Content/images/checked.gif")">
-                     }
+                                <font color="maroon"><b>Bu İş istek kapatılmış ve Anketi Doldurulmuştur. Onay Durumu
+                                    değiştirilemez.</b></font>
+                                @:<img title="Bu iş istek onaylanarak kapatılmıştır." alt="Tamamlandı" src="@Url.Content("~/Content/images/checked.gif")"/>
+                            }
                                 else
                                 {
+                                <font color="maroon"><b>Bu İş istek/talebe ait Anket Doldurulmuştur. Onay Durumu değiştirilemez.</b></font>
                                 @:<img title="Açık / Çalışma Sürüyor" alt="Devam Ediyor" src="@Url.Content("~/Content/images/delete.png")"/>
-                    }
 
-                            }
-                            else if (User.IsInRole("administrators"))
-                            {
-                                @Html.EditorFor(model => model.IsApproved)
+                                }
                             }
                             else
                             {
-                                @Html.HiddenFor(model => model.IsApproved)
-                                if (Model.IsApproved == true)
+                                @if (Model.IsApproved == true && !User.IsInRole("administrators"))
                                 {
-                                @:<img title="Bu iş istek onaylanarak kapatılmıştır." alt="Tamamlandı" src="@Url.Content("~/Content/images/checked.gif")"/>
-                     }
+                                    @Html.HiddenFor(model => model.IsApproved)
+                                    if (Model.IsApproved == true)
+                                    {
+                                    @:<img title="Bu iş istek onaylanarak kapatılmıştır." alt="Tamamlandı" src="@Url.Content("~/Content/images/checked.gif")"/>
+                                }
+                                    else
+                                    {
+                                    @:<img title="Açık / Çalışma Sürüyor" alt="Devam Ediyor" src="@Url.Content("~/Content/images/delete.png")"/>
+                                }
+
+                                }
+                                else if (User.IsInRole("moderators"))
+                                {
+                                    @Html.EditorFor(model => model.IsApproved)
+                                }
+                                else if (User.IsInRole("administrators"))
+                                {
+                                    @Html.EditorFor(model => model.IsApproved)
+                                }
                                 else
                                 {
+                                    @Html.HiddenFor(model => model.IsApproved)
+                                    if (Model.IsApproved == true)
+                                    {
+                                    @:<img title="Bu iş istek onaylanarak kapatılmıştır." alt="Tamamlandı" src="@Url.Content("~/Content/images/checked.gif")"/>
+                                }
+                                    else
+                                    {
                                 @:<img title="Açık / Çalışma Sürüyor" alt="Devam Ediyor" src="@Url.Content("~/Content/images/delete.png")"/>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            }
+
+                                    }
+                                }
                             }
                         </td>
                     </tr>
@@ -564,7 +588,7 @@
                                 catch
                                 {
                                 @: Henüz Atanmamış..
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            }
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            }
                             }
                         </td>
                     </tr>

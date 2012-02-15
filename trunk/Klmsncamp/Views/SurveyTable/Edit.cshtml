@@ -103,7 +103,8 @@
                             }
                             else if (survrec.SurveyRecordTypeID == 3)
                             {
-                                <td colspan="2" style="vertical-align: middle;">
+                                <td colspan="2" style="text-align: left; vertical-align: middle;">
+                                    &nbsp;
                                     @if (Model.IsApproved)
                                     {
                                         @Html.TextArea(survrec.SurveyRecordID + "_Note", survrec.Note, new { cols = "40", rows = "4", disabled = "disabled", style = "font-style: italic;" })
@@ -202,6 +203,8 @@
                         memnuniyetinizi ölçmek için oluşturulmuştur.</li>
                     <li>Anketi ilgili iş talebinizin kapatılmasını takip eden 24 saat içinde (@Model.TimeStamp.AddDays(1))
                         doldurmalısınız.</li>
+                    <li>Evet/Hayır türündeki sorularda, Dolu işaretli kutucuk "Evet", Boş kutucuk ise "Hayır"
+                        olarak değerlendirilir</li>
                     <li>Skorlama türündeki sorularda [0-5] aralığı, "0":en olumsuz, "5": en olumlu olacak
                         şekilde değerlendirilir. </li>
                 </ul>
