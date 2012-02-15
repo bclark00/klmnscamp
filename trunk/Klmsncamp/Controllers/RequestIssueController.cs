@@ -653,6 +653,11 @@ namespace Klmsncamp.Controllers
                 return RedirectToAction("Editp", new { id = rqToUpdatex.RequestIssueID.ToString(), show = formCollection["show"], page = formCollection["page"] });
             }
 
+            if (rqToUpdate.IsApproved == true && rqDBrecord.IsApproved == true)
+            {
+                return RedirectToAction("Index", new { show = formCollection["show"], page = formCollection["page"] });
+            }
+
             //bool _enddatepostpone = CheckEndDateIfCanBeUpdated(rqToUpdate);
 
             if (ModelState.IsValid)

@@ -106,11 +106,11 @@
                                 <td colspan="2" style="vertical-align: middle;">
                                     @if (Model.IsApproved)
                                     {
-                                        @Html.TextBox(survrec.SurveyRecordID + "_Note", survrec.Note, new { size = 50, disabled = "disabled", style = "font-style: italic;" })
+                                        @Html.TextArea(survrec.SurveyRecordID + "_Note", survrec.Note, new { cols = "40", rows = "4", disabled = "disabled", style = "font-style: italic;" })
                                     }
                                     else
                                     {
-                                        @Html.TextBox(survrec.SurveyRecordID + "_Note", null, new { size = 50, style = "font-style: italic;" })
+                                        @Html.TextArea(survrec.SurveyRecordID + "_Note", null, new { cols = "40", rows = "4", style = "font-style: italic;" })
                                     }
                                 </td>
                             }
