@@ -338,7 +338,7 @@ namespace Klmsncamp.Controllers
             ViewBag.RequestTypeID = new SelectList(db.RequestTypes, "RequestTypeID", "Description", requestıssue.RequestTypeID);
             ViewBag.RequestActualReasonID = new SelectList(db.RequestActualReasons, "RequestActualReasonID", "Description");
             ViewBag.LocationID = new SelectList(db.Locations, "LocationID", "Description", requestıssue.LocationID);
-            ViewBag.PersonnelID = new SelectList(db.Personnels, "PersonnelID", "FullName", requestıssue.PersonnelID);
+            ViewBag.PersonnelID = new SelectList(db.Personnels.Where(s => s.ValidationStateID == 1), "PersonnelID", "FullName", requestıssue.PersonnelID);
             ViewBag.InventoryID = new SelectList(db.Inventories, "InventoryID", "Description", requestıssue.InventoryID);
             ViewBag.WorkshopID = new SelectList(db.Workshops, "WorkshopID", "Description", requestıssue.WorkshopID);
             ViewBag.RequestStateID = new SelectList(db.RequestStates, "RequestStateID", "Description", requestıssue.RequestStateID);
