@@ -214,6 +214,17 @@ namespace Klmsncamp.Controllers
             ViewBag.UserReqID = new SelectList(db.Users.Where(x => x.UserId == user_wherecondition), "UserId", "FullName", currentuser_.ProviderUserKey);
             ViewBag.UserID = new SelectList(db.Users, "UserId", "FullName", currentuser_.ProviderUserKey);
             ViewBag.ValidationStateID = new SelectList(db.ValidationStates, "ValidationStateID", "Description");
+            
+            string multipleworkshops = db.ParameterSettings.AsNoTracking().Where(i => i.ParameterSettingID == 16).SingleOrDefault().ParameterValue;
+
+            if (multipleworkshops == "1")
+            {
+                ViewBag.MultipleWorkshops = true;
+            }
+            else
+            {
+                ViewBag.MultipleWorkshops = false;
+            }
 
             if (projectid != null && projectid.GetType().Name == "Int32")
             {
@@ -346,6 +357,17 @@ namespace Klmsncamp.Controllers
             ViewBag.UserID = new SelectList(db.Users, "UserId", "FullName", requestıssue.UserID);
             ViewBag.ValidationStateID = new SelectList(db.ValidationStates, "ValidationStateID", "Description", requestıssue.ValidationStateID);
 
+            string multipleworkshops = db.ParameterSettings.AsNoTracking().Where(i => i.ParameterSettingID == 16).SingleOrDefault().ParameterValue;
+
+            if (multipleworkshops == "1")
+            {
+                ViewBag.MultipleWorkshops = true;
+            }
+            else
+            {
+                ViewBag.MultipleWorkshops = false;
+            }
+
             if (formcollection["DetailProjectID"] != null)
             {
                 ViewBag.DetailProjectID = new MultiSelectList(db.Projects, "ProjectID", "MultiboxDescription", formcollection["DetailProjectID"].Split(',').ToList());
@@ -414,6 +436,17 @@ namespace Klmsncamp.Controllers
 
             ViewBag.show = show;
             ViewBag.page = page;
+
+            string multipleworkshops = db.ParameterSettings.AsNoTracking().Where(i => i.ParameterSettingID == 16).SingleOrDefault().ParameterValue;
+
+            if (multipleworkshops == "1")
+            {
+                ViewBag.MultipleWorkshops = true;
+            }
+            else
+            {
+                ViewBag.MultipleWorkshops = false;
+            }
 
             return View(requestıssue);
         }
@@ -545,6 +578,18 @@ namespace Klmsncamp.Controllers
 
             ViewBag.show = formCollection["show"];
             ViewBag.page = formCollection["page"];
+
+            string multipleworkshops = db.ParameterSettings.AsNoTracking().Where(i => i.ParameterSettingID == 16).SingleOrDefault().ParameterValue;
+
+            if (multipleworkshops == "1")
+            {
+                ViewBag.MultipleWorkshops = true;
+            }
+            else
+            {
+                ViewBag.MultipleWorkshops = false;
+            }
+
             return View(requestıssue);
         }
 
@@ -571,6 +616,17 @@ namespace Klmsncamp.Controllers
                 ViewBag.DetailLocationID = new MultiSelectList(db.Locations, "LocationID", "Description", rq.Locations.Select(p => p.LocationID).ToList());
                 ViewBag.DetailCorporateAccountID = new MultiSelectList(db.CorporateAccounts, "CorporateAccountID", "Title", rq.CorporateAccounts.Select(p => p.CorporateAccountID).ToList());
                 ViewBag.DetailPersonnelID = new MultiSelectList(db.Personnels, "PersonnelID", "FullName", rq.Personnels.Select(p => p.PersonnelID).ToList());
+
+                string multipleworkshops = db.ParameterSettings.AsNoTracking().Where(i => i.ParameterSettingID == 16).SingleOrDefault().ParameterValue;
+
+                if (multipleworkshops == "1")
+                {
+                    ViewBag.MultipleWorkshops = true;
+                }
+                else
+                {
+                    ViewBag.MultipleWorkshops = false;
+                }
 
                 ViewBag.show = show;
                 ViewBag.page = page;
@@ -860,6 +916,17 @@ namespace Klmsncamp.Controllers
             ViewBag.DetailLocationID = new MultiSelectList(db.Locations, "LocationID", "Description", requestissue__.Locations.Select(p => p.LocationID).ToList());
             ViewBag.DetailCorporateAccountID = new MultiSelectList(db.CorporateAccounts, "CorporateAccountID", "Title", requestissue__.CorporateAccounts.Select(p => p.CorporateAccountID).ToList());
             ViewBag.DetailPersonnelID = new MultiSelectList(db.Personnels, "PersonnelID", "FullName", requestissue__.Personnels.Select(p => p.PersonnelID).ToList());
+            
+            string multipleworkshops = db.ParameterSettings.AsNoTracking().Where(i => i.ParameterSettingID == 16).SingleOrDefault().ParameterValue;
+
+            if (multipleworkshops == "1")
+            {
+                ViewBag.MultipleWorkshops = true;
+            }
+            else
+            {
+                ViewBag.MultipleWorkshops = false;
+            }
 
             ViewBag.show = formCollection["show"];
             ViewBag.page = formCollection["page"];

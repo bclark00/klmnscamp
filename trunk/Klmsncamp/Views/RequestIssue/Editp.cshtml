@@ -60,7 +60,6 @@
     {
         @Html.ValidationSummary(true)
         @Html.HiddenFor(model => model.RequestIssueID)
-        @Html.HiddenFor(model => model.WorkshopID)
         @Html.HiddenFor(model => model.Pre1EndDate)
         @Html.HiddenFor(model => model.Pre2EndDate)
         <fieldset class="module aligned ">
@@ -71,6 +70,40 @@
                             İş İstek Düzenleme
                         </th>
                     </thead>
+                    @if (ViewBag.MultipleWorkshops == true)
+                    {
+                        <tr>
+                            <td style="vertical-align: middle; text-align: right;">
+                                @Html.LabelFor(model => model.WorkshopID)
+                            </td>
+                            <td style="color: #A80000; vertical-align: middle; text-align: left;">
+                                @if (!User.IsInRole("administrators"))
+                                {
+                                    @Html.HiddenFor(model => model.WorkshopID)
+                                    @Html.DisplayFor(model => model.Workshop.Description)
+                                }
+                                else
+                                {
+                                    <br />
+                                    @(Html.Telerik().ComboBox()
+                                    .Name("WorkshopID")
+                                    .HtmlAttributes(new { id = "ComboBox_wrapper_workshop" })
+                                    .AutoFill(true).HtmlAttributes(new { style = "width:210px;" }).DropDownHtmlAttributes(new { style = "width: 210px;" }).InputHtmlAttributes(new { style = "vertical-align: middle; font-size:100%; border: 1px solid; width: 200px;" })
+                                    .BindTo((SelectList)ViewBag.WorkshopID)
+                                    .Filterable(filtering => filtering.FilterMode((AutoCompleteFilterMode)Enum.Parse(typeof(AutoCompleteFilterMode), "2", false)))
+                                    .HighlightFirstMatch(true)
+                                    )
+                                    <br />
+                                    @Html.ValidationMessageFor(model => model.WorkshopID)
+                                }
+                            </td>
+                        </tr>
+                    }
+                    else
+                    {
+                       @Html.HiddenFor(model=>model.WorkshopID)
+                    }
+                        
                     <tr>
                         <td style="vertical-align: middle; text-align: right;">
                             @Html.LabelFor(model => model.LocationID)
@@ -85,13 +118,13 @@
                             {
                                 <br />
                                 @(Html.Telerik().ComboBox()
-                    .Name("LocationID")
-                    .HtmlAttributes(new { id = "ComboBox_wrapper_location" })
-                    .AutoFill(true).HtmlAttributes(new { style = "width:210px;" }).DropDownHtmlAttributes(new { style = "width: 210px;" }).InputHtmlAttributes(new { style = "vertical-align: middle; font-size:100%; border: 1px solid; width: 200px;" })
-                    .BindTo((SelectList)ViewBag.LocationID)
-                    .Filterable(filtering => filtering.FilterMode((AutoCompleteFilterMode)Enum.Parse(typeof(AutoCompleteFilterMode), "2", false)))
-                    .HighlightFirstMatch(true)
-                    )
+                                .Name("LocationID")
+                                .HtmlAttributes(new { id = "ComboBox_wrapper_location" })
+                                .AutoFill(true).HtmlAttributes(new { style = "width:210px;" }).DropDownHtmlAttributes(new { style = "width: 210px;" }).InputHtmlAttributes(new { style = "vertical-align: middle; font-size:100%; border: 1px solid; width: 200px;" })
+                                .BindTo((SelectList)ViewBag.LocationID)
+                                .Filterable(filtering => filtering.FilterMode((AutoCompleteFilterMode)Enum.Parse(typeof(AutoCompleteFilterMode), "2", false)))
+                                .HighlightFirstMatch(true)
+                                )
                                 <br />
                                 @Html.ValidationMessageFor(model => model.LocationID)
                             }
@@ -525,7 +558,7 @@
                             }
                             else
                             {
-                                @if (Model.IsApproved == true && !User.IsInRole("administrators"))
+                                if (Model.IsApproved == true && !User.IsInRole("administrators"))
                                 {
                                     @Html.HiddenFor(model => model.IsApproved)
                                     if (Model.IsApproved == true)
