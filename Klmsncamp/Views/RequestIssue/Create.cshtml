@@ -69,7 +69,31 @@
                             İş-Arıza Bilgileri (<font color="maroon">*</font>) Zorunlu Alanlar
                         </th>
                     </thead>
-                    @Html.Hidden("WorkshopID", (int)1)
+                    @if (ViewBag.MultipleWorkshops == true)
+                    {
+                    <tr>
+                        <td style="vertical-align: middle; text-align: right;">
+                            @Html.LabelFor(model => model.WorkshopID, "Atölye Bilgisi")&nbsp;<font color="maroon">*</font>
+                        </td>
+                        <td style="vertical-align: middle; text-align: left;">
+                            <br />
+                            @(Html.Telerik().ComboBox()
+                            .Name("WorkshopID")
+                            .HtmlAttributes(new { id = "ComboBox_wrapper_workshop" })
+                            .AutoFill(true).HtmlAttributes(new { style = "width:210px;" }).DropDownHtmlAttributes(new { style = "width: 210px;" }).InputHtmlAttributes(new { style = "vertical-align: middle; font-size:100%; border: 1px solid; width: 200px;" })
+                            .BindTo((SelectList)ViewBag.WorkshopID)
+                            .Filterable(filtering => filtering.FilterMode((AutoCompleteFilterMode)Enum.Parse(typeof(AutoCompleteFilterMode), "2", false)))
+                            .HighlightFirstMatch(true)
+                            )
+                            <br />
+                            @Html.ValidationMessageFor(model => model.WorkshopID)
+                        </td>
+                    </tr>
+                    }
+                    else
+                    {
+                        @Html.Hidden("WorkshopID", (int)1)
+                    }
                     <tr>
                         <td style="vertical-align: middle; text-align: right;">
                             @Html.LabelFor(model => model.LocationID, "İş-Arıza Bildirim Yeri")&nbsp;<font color="maroon">*</font>
@@ -169,6 +193,8 @@
                             @Html.ValidationMessageFor(model => model.DetailedDescription)
                         </td>
                     </tr>
+                    @if (User.IsInRole("administrators") || User.IsInRole("moderators"))
+                    {
                     <tr>
                         <td style="vertical-align: middle; text-align: right;">
                             @Html.LabelFor(model => model.RequestStateID, "İş Durumu")
@@ -178,6 +204,13 @@
                             @Html.ValidationMessageFor(model => model.RequestStateID)
                         </td>
                     </tr>
+                    }
+                    else
+                    {
+                        @Html.Hidden("RequestStateID",1)
+                    }
+                    @if (User.IsInRole("administrators") || User.IsInRole("moderators"))
+                    {
                     <tr>
                         <td style="vertical-align: middle; text-align: right;">
                             @Html.LabelFor(model => model.Note)
@@ -187,6 +220,7 @@
                             @Html.ValidationMessageFor(model => model.Note)
                         </td>
                     </tr>
+                    }
                     <tr>
                         <td style="vertical-align: middle; text-align: right;">
                             @Html.LabelFor(model => model.StartDate)
@@ -196,6 +230,8 @@
                             @Html.ValidationMessageFor(model => model.StartDate)
                         </td>
                     </tr>
+                    @if (User.IsInRole("administrators") || User.IsInRole("moderators"))
+                    {
                     <tr>
                         <td style="vertical-align: middle; text-align: right;">
                             @Html.LabelFor(model => model.EndDate)
@@ -205,34 +241,38 @@
                             @Html.ValidationMessageFor(model => model.EndDate)
                         </td>
                     </tr>
-                    <tr>
-                        <td style="vertical-align: middle; text-align: right;">
-                            @Html.LabelFor(model => model.RequestActualReasonID, "İş Talep Esas Nedeni")&nbsp;
-                        </td>
-                        <td style="vertical-align: middle; text-align: left;">
-                            <br />
-                            @(Html.Telerik().ComboBox()
-            .Name("RequestActualReasonID")
-            .HtmlAttributes(new { id = "ComboBox_wrapper_requestactualreason" })
-            .AutoFill(true).HtmlAttributes(new { style = "width:210px;" }).DropDownHtmlAttributes(new { style = "width: 210px;" }).InputHtmlAttributes(new { style = "vertical-align: middle; font-size:100%; border: 1px solid; width: 200px;" })
-            .BindTo((SelectList)ViewBag.RequestActualReasonID)
-            .Filterable(filtering => filtering.FilterMode((AutoCompleteFilterMode)Enum.Parse(typeof(AutoCompleteFilterMode), "2", false)))
-            .HighlightFirstMatch(true)
-            .ClientEvents(events => events.OnChange("onRequestActualReasonIDChange"))
-            )
-                            <br />
-                            @Html.ValidationMessageFor(model => model.RequestActualReasonID)
-                        </td>
-                    </tr>
-                    <tr id="rqreason-box">
-                        <td style="vertical-align: middle; text-align: right;">
-                            Talep Nedeni Detay Açıklama&nbsp;
-                        </td>
-                        <td align="left" style="text-align: left;">
-                            @Html.TextAreaFor(model => model.RequestActualReasonNote, new { cols = "60", rows = "4" })<br />
-                            @Html.ValidationMessageFor(model => model.RequestActualReasonNote)
-                        </td>
-                    </tr>
+                    }
+                    @if (User.IsInRole("administrators") || User.IsInRole("moderators"))
+                    {
+                        <tr>
+                            <td style="vertical-align: middle; text-align: right;">
+                                @Html.LabelFor(model => model.RequestActualReasonID, "İş Talep Esas Nedeni")&nbsp;
+                            </td>
+                            <td style="vertical-align: middle; text-align: left;">
+                                <br />
+                                @(Html.Telerik().ComboBox()
+                                .Name("RequestActualReasonID")
+                                .HtmlAttributes(new { id = "ComboBox_wrapper_requestactualreason" })
+                                .AutoFill(true).HtmlAttributes(new { style = "width:210px;" }).DropDownHtmlAttributes(new { style = "width: 210px;" }).InputHtmlAttributes(new { style = "vertical-align: middle; font-size:100%; border: 1px solid; width: 200px;" })
+                                .BindTo((SelectList)ViewBag.RequestActualReasonID)
+                                .Filterable(filtering => filtering.FilterMode((AutoCompleteFilterMode)Enum.Parse(typeof(AutoCompleteFilterMode), "2", false)))
+                                .HighlightFirstMatch(true)
+                                .ClientEvents(events => events.OnChange("onRequestActualReasonIDChange"))
+                                )
+                                <br />
+                                @Html.ValidationMessageFor(model => model.RequestActualReasonID)
+                            </td>
+                        </tr>
+                        <tr id="rqreason-box">
+                            <td style="vertical-align: middle; text-align: right;">
+                                Talep Nedeni Detay Açıklama&nbsp;
+                            </td>
+                            <td align="left" style="text-align: left;">
+                                @Html.TextAreaFor(model => model.RequestActualReasonNote, new { cols = "60", rows = "4" })<br />
+                                @Html.ValidationMessageFor(model => model.RequestActualReasonNote)
+                            </td>
+                        </tr>
+                    }
                     <!--<tr>
         <td style="vertical-align: middle; text-align: right;">
             @Html.LabelFor(model => model.IsApproved)
@@ -260,6 +300,8 @@
             @Html.ValidationMessageFor(model => model.IsAllDay)
         </td>
         </tr>-->
+            @if (User.IsInRole("administrators") || User.IsInRole("moderators"))
+            {
                     <tr>
                         <td style="vertical-align: middle; text-align: right;">
                             @Html.LabelFor(model => model.UserID, "İş Sahibi")
@@ -269,6 +311,7 @@
                             @Html.ValidationMessageFor(model => model.UserID)
                         </td>
                     </tr>
+            }
                     <tr>
                         <td style="vertical-align: middle; text-align: right;">
                             @Html.LabelFor(model => model.UserReqID)

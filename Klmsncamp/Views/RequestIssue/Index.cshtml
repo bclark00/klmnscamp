@@ -12,7 +12,7 @@
 
                 var sTitle;
                 var nTds = $("td", this);
-                var sAck = $(nTds[9]).text();
+                var sAck = $(nTds[10]).text();
                 sTitle = sAck
                 this.setAttribute('title', sTitle);
 
@@ -151,12 +151,13 @@
     @Html.ActionLink("Sil", "Delete", "RequestIssue", new { id = @item.RequestIssueID, show = @ViewBag.CurrentShow, page = @ViewBag.CurrentPage }, null)
     </text>
                                 ).Width(100);
+                                columns.Bound(o => o.Workshop.Description).Width(100).Title("Atölye");
                                 columns.Bound(o => o.StartDate).Width(120).Title("Baş.Tarihi").Format("{0:d}");
                                 columns.Bound(o => o.UserReq.FullName).Width(120).Title("Kaydı Açan");
                                 columns.Bound(o => o.Location.CapitalizedDescription).Width(120).Title("Departman");
                                 columns.Bound(o => o.Personnel.FullName).Width(140).Title("İş İsteyen");
-                                columns.Bound(o => o.RequestState.CapitalizedDescription).Width(150).Title("Durumu");
-                                columns.Bound(o => o.CapitalizedNote).Width(450).Title("Sonuç Notu").Filterable(false).Groupable(false).Sortable(false);
+                                columns.Bound(o => o.RequestState.CapitalizedDescription).Width(120).Title("Durumu");
+                                columns.Bound(o => o.CapitalizedNote).Width(350).Title("Sonuç Notu").Filterable(false).Groupable(false).Sortable(false);
                                 columns.Bound(o => o.User.FullName).Width(140).Title("İlgili Kullanıcı");
                                 @columns.Template(
                                         @<text>
