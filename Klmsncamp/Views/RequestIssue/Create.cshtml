@@ -101,14 +101,14 @@
                         <td style="vertical-align: middle; text-align: left;">
                             <br />
                             @(Html.Telerik().ComboBox()
-            .Name("LocationID")
-            .HtmlAttributes(new { id = "ComboBox_wrapper_location" })
-            .AutoFill(true).HtmlAttributes(new { style = "width:210px;" }).DropDownHtmlAttributes(new { style = "width: 210px;" }).InputHtmlAttributes(new { style = "vertical-align: middle; font-size:100%; border: 1px solid; width: 200px;" })
-            .BindTo((SelectList)ViewBag.LocationID)
-            .Filterable(filtering => filtering.FilterMode((AutoCompleteFilterMode)Enum.Parse(typeof(AutoCompleteFilterMode), "2", false)))
-            .HighlightFirstMatch(true)
-            .ClientEvents(events => events.OnChange("onLocationChange"))
-            )
+                            .Name("LocationID")
+                            .HtmlAttributes(new { id = "ComboBox_wrapper_location" })
+                            .AutoFill(true).HtmlAttributes(new { style = "width:210px;" }).DropDownHtmlAttributes(new { style = "width: 210px;" }).InputHtmlAttributes(new { style = "vertical-align: middle; font-size:100%; border: 1px solid; width: 200px;" })
+                            .BindTo((SelectList)ViewBag.LocationID)
+                            .Filterable(filtering => filtering.FilterMode((AutoCompleteFilterMode)Enum.Parse(typeof(AutoCompleteFilterMode), "2", false)))
+                            .HighlightFirstMatch(true)
+                            .ClientEvents(events => events.OnChange("onLocationChange"))
+                            )
                             <br />
                             @Html.ValidationMessageFor(model => model.LocationID)
                         </td>
@@ -120,13 +120,13 @@
                         <td style="vertical-align: middle; text-align: left;">
                             <br />
                             @(Html.Telerik().ComboBox()
-            .Name("PersonnelID")
-            .HtmlAttributes(new { id = "ComboBox_wrapper_personnel" })
-            .AutoFill(true).HtmlAttributes(new { style = "width:210px;" }).DropDownHtmlAttributes(new { style = "width: 210px;" }).InputHtmlAttributes(new { style = "vertical-align: middle; font-size:100%; border: 1px solid; width: 200px;" })
-            .BindTo((SelectList)ViewBag.PersonnelID)
-            .Filterable(filtering => filtering.FilterMode((AutoCompleteFilterMode)Enum.Parse(typeof(AutoCompleteFilterMode), "2", false)))
-            .HighlightFirstMatch(true)
-            )
+                            .Name("PersonnelID")
+                            .HtmlAttributes(new { id = "ComboBox_wrapper_personnel" })
+                            .AutoFill(true).HtmlAttributes(new { style = "width:210px;" }).DropDownHtmlAttributes(new { style = "width: 210px;" }).InputHtmlAttributes(new { style = "vertical-align: middle; font-size:100%; border: 1px solid; width: 200px;" })
+                            .BindTo((SelectList)ViewBag.PersonnelID)
+                            .Filterable(filtering => filtering.FilterMode((AutoCompleteFilterMode)Enum.Parse(typeof(AutoCompleteFilterMode), "2", false)))
+                            .HighlightFirstMatch(true)
+                            )
                             <br />
                             @Html.ValidationMessageFor(model => model.PersonnelID)
                         </td>
@@ -241,6 +241,11 @@
                             @Html.ValidationMessageFor(model => model.EndDate)
                         </td>
                     </tr>
+                    }
+                    else
+                    {
+                        @Html.Hidden("EndDate",DateTime.Now.AddDays(1))
+                                            
                     }
                     @if (User.IsInRole("administrators") || User.IsInRole("moderators"))
                     {

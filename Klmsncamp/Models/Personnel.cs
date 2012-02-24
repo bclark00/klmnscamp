@@ -52,6 +52,12 @@ namespace Klmsncamp.Models
         [RegularExpression(".+\\@.+\\..+", ErrorMessage = "Geçerli Bir Mail Adresi Değil")]
         public string Email { get; set; }
 
+        [Display(Name = "Kullanıcı Adı")]
+        public int? UserID { get; set; }
+
+        [Display(Name = "Kullanıcı Adı")]
+        public virtual User User{ get; set; }
+
         public virtual ICollection<Project> Projects { get; set; }
 
         public virtual ICollection<RequestIssue> RequestIssues { get; set; }

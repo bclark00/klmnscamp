@@ -37,7 +37,9 @@ namespace Klmsncamp.Controllers
         public ActionResult Create()
         {
             ViewBag.LocationID = new SelectList(db.Locations, "LocationID", "Description");
+            ViewBag.UserID = new SelectList(db.Users, "UserID", "FullName");
             ViewBag.ValidationStateID = new SelectList(db.ValidationStates, "ValidationStateID", "Description");
+
             return View();
         } 
 
@@ -55,6 +57,7 @@ namespace Klmsncamp.Controllers
             }
 
             ViewBag.LocationID = new SelectList(db.Locations, "LocationID", "Description", personnel.LocationID);
+            ViewBag.UserID = new SelectList(db.Users, "UserID", "FullName");
             ViewBag.ValidationStateID = new SelectList(db.ValidationStates, "ValidationStateID", "Description", personnel.ValidationStateID);
             return View(personnel);
         }
@@ -66,6 +69,7 @@ namespace Klmsncamp.Controllers
         {
             Personnel personnel = db.Personnels.Find(id);
             ViewBag.LocationID = new SelectList(db.Locations, "LocationID", "Description", personnel.LocationID);
+            ViewBag.UserID = new SelectList(db.Users,"UserID","FullName")
             ViewBag.ValidationStateID = new SelectList(db.ValidationStates, "ValidationStateID", "Description", personnel.ValidationStateID);
             return View(personnel);
         }
