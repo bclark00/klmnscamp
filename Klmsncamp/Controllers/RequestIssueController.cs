@@ -207,7 +207,19 @@ namespace Klmsncamp.Controllers
             ViewBag.RequestTypeID = new SelectList(db.RequestTypes, "RequestTypeID", "Description");
             ViewBag.RequestActualReasonID = new SelectList(db.RequestActualReasons, "RequestActualReasonID", "Description");
             ViewBag.LocationID = new SelectList(db.Locations, "LocationID", "Description");
-            ViewBag.PersonnelID = new SelectList(db.Personnels.Where(s => s.ValidationStateID == 1), "PersonnelID", "FullName");
+
+            //bagli personel bilgisi var mi?
+            int xcount = db.Personnels.Where(i => i.ValidationStateID==1 && i.UserID == user_wherecondition).ToList().Count;
+            
+            if (xcount > 0)
+            {
+                ViewBag.PersonnelID = new SelectList(db.Personnels.Where(s => s.ValidationStateID == 1), "PersonnelID", "FullName", db.Personnels.Where(i => i.UserID == user_wherecondition).SingleOrDefault().PersonnelID);
+            }
+            else
+            {
+                ViewBag.PersonnelID = new SelectList(db.Personnels.Where(s => s.ValidationStateID == 1), "PersonnelID", "FullName");
+            }
+
             ViewBag.InventoryID = new SelectList(db.Inventories, "InventoryID", "Description");
             ViewBag.WorkshopID = new SelectList(db.Workshops, "WorkshopID", "Description");
             ViewBag.RequestStateID = new SelectList(db.RequestStates, "RequestStateID", "Description", 1);

@@ -96,6 +96,20 @@ public class MyRoleProvider : RoleProvider
 
     }
 
+    public bool HasPerm(string username, string customperm)
+    {
+        UserRepository _repository = new UserRepository();
+        MembershipUser user = _repository.GetUser(username);
+        if (user != null)
+        {
+            return _repository.isInRole(int.Parse((user.ProviderUserKey).ToString()), customperm);
+        }
+        else
+        {
+            return false;
+        }
+    }
+
     public override void RemoveUsersFromRoles(string[] usernames, string[] roleNames)
     {
         throw new NotImplementedException();

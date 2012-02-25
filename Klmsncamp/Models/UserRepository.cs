@@ -159,6 +159,37 @@ namespace Klmsncamp.Models
             }
         }
 
+        public bool HasPerm(int userID, string customPerm)
+        {
+            using (KlmsnContext db = new KlmsnContext())
+            {
+                //kendisinin var mi?
+                var user_ = db.Users.Find(userID);
+                var user_perms = user_.CustomPermissions.ToList();
+                var usergroups_ = user_.UserGroups.ToList();
+                foreach (UserGroup group_ in usergroups_)
+                {
+                    foreach (CustomPermission cp_ in group_.CustomPermissions.ToList())
+                    {
+                        user_perms.Add(cp_);
+                    }
+                }
+
+                db.Dispose();
+                foreach(CustomPermission cp in user_perms)
+                {
+                    if (cp.Description.Equals(customPerm))
+                    {
+                        return true;
+                    }
+                }
+
+                //gruplarinin var mi?
+                
+                return false;
+            }
+        }
+
         public bool changePass(string userName, string oldPass, string newPass)
         {
             using (KlmsnContext db = new KlmsnContext())
