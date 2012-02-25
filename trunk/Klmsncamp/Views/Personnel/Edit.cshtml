@@ -57,6 +57,17 @@
                     <tr>
                         <td style="vertical-align: middle; text-align: right;">
                             <div class="editor-label">
+                                @Html.LabelFor(model => model.UserID, "Kullanıcı Hesabı (varsa)")
+                            </div>
+                        </td>
+                        <td style="vertical-align: middle; text-align: left;">
+                            @Html.DropDownList("UserID", String.Empty)
+                            @Html.ValidationMessageFor(model => model.UserID)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="vertical-align: middle; text-align: right;">
+                            <div class="editor-label">
                                 @Html.LabelFor(model => model.ValidationStateID, "Durumu")
                             </div>
                         </td>

@@ -14,28 +14,24 @@
             </thead>
             <tr>
                 <td>
+                    
                     <div class="display-label">
-                        FirstName</div>
-                    <div class="display-field">
-                        @Html.DisplayFor(model => model.FirstName)
-                    </div>
-                    <div class="display-label">
-                        LastName</div>
-                    <div class="display-field">
-                        @Html.DisplayFor(model => model.LastName)
-                    </div>
-                    <div class="display-label">
-                        FullName</div>
+                        Adı-Soyadı</div>
                     <div class="display-field">
                         @Html.DisplayFor(model => model.FullName)
                     </div>
                     <div class="display-label">
-                        Location</div>
+                        Departman</div>
                     <div class="display-field">
                         @Html.DisplayFor(model => model.Location.Description)
                     </div>
                     <div class="display-label">
-                        ValidationState</div>
+                        Kullanıcı Hesabı (varsa)</div>
+                    <div class="display-field">
+                        @Html.DisplayFor(model => model.User.FullName)
+                    </div>
+                    <div class="display-label">
+                        Durum</div>
                     <div class="display-field">
                         @Html.DisplayFor(model => model.ValidationState.Description)
                     </div>

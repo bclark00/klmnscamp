@@ -146,7 +146,7 @@ namespace Klmsncamp.Controllers
                             }
                         }
                     }
-                    catch (Exception exx)
+                    catch 
                     {
                         try
                         {

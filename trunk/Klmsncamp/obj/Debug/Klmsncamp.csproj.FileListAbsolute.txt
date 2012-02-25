@@ -16,9 +16,6 @@ C:\Users\MUSAF\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\Tel
 C:\Users\MUSAF\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\obj\Debug\ResolveAssemblyReference.cache
 C:\Users\MUSAF\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\obj\Debug\Klmsncamp.dll
 C:\Users\MUSAF\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\obj\Debug\Klmsncamp.pdb
-C:\Users\bimmm\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\obj\Debug\ResolveAssemblyReference.cache
-C:\Users\bimmm\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\obj\Debug\Klmsncamp.dll
-C:\Users\bimmm\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\obj\Debug\Klmsncamp.pdb
 C:\Users\bimmm\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\Klmsncamp.dll
 C:\Users\bimmm\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\Klmsncamp.pdb
 C:\Users\bimmm\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\CrystalDecisions.CrystalReports.Engine.dll
@@ -64,3 +61,6 @@ C:\Users\bimmm\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\Pag
 C:\Users\bimmm\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\System.Web.Mvc.xml
 C:\Users\bimmm\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\System.Web.WebPages.xml
 C:\Users\bimmm\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\System.Web.Helpers.xml
+C:\Users\bimmm\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\bimmm\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\obj\Debug\Klmsncamp.dll
+C:\Users\bimmm\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\obj\Debug\Klmsncamp.pdb

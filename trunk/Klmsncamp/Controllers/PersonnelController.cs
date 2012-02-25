@@ -18,7 +18,7 @@ namespace Klmsncamp.Controllers
 
         public ViewResult Index()
         {
-            var personnels = db.Personnels.Include(p => p.Location).Include(p => p.ValidationState);
+            var personnels = db.Personnels.Include(p => p.Location).Include(p=>p.User).Include(p => p.ValidationState);
             return View(personnels.ToList());
         }
 
@@ -57,7 +57,7 @@ namespace Klmsncamp.Controllers
             }
 
             ViewBag.LocationID = new SelectList(db.Locations, "LocationID", "Description", personnel.LocationID);
-            ViewBag.UserID = new SelectList(db.Users, "UserID", "FullName");
+            ViewBag.UserID = new SelectList(db.Users, "UserID", "FullName",personnel.UserID);
             ViewBag.ValidationStateID = new SelectList(db.ValidationStates, "ValidationStateID", "Description", personnel.ValidationStateID);
             return View(personnel);
         }
@@ -69,7 +69,7 @@ namespace Klmsncamp.Controllers
         {
             Personnel personnel = db.Personnels.Find(id);
             ViewBag.LocationID = new SelectList(db.Locations, "LocationID", "Description", personnel.LocationID);
-            ViewBag.UserID = new SelectList(db.Users,"UserID","FullName")
+            ViewBag.UserID = new SelectList(db.Users, "UserID", "FullName", personnel.UserID);
             ViewBag.ValidationStateID = new SelectList(db.ValidationStates, "ValidationStateID", "Description", personnel.ValidationStateID);
             return View(personnel);
         }
@@ -87,6 +87,7 @@ namespace Klmsncamp.Controllers
                 return RedirectToAction("Index");
             }
             ViewBag.LocationID = new SelectList(db.Locations, "LocationID", "Description", personnel.LocationID);
+            ViewBag.UserID = new SelectList(db.Users, "UserID", "FullName", personnel.UserID);
             ViewBag.ValidationStateID = new SelectList(db.ValidationStates, "ValidationStateID", "Description", personnel.ValidationStateID);
             return View(personnel);
         }

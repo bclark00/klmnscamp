@@ -48,6 +48,17 @@
                     <tr>
                         <td>
                             <div class="editor-label">
+                                @Html.LabelFor(model => model.UserID, "Kullanıcı Hesabı (varsa)")
+                            </div>
+                        </td>
+                        <td>
+                            @Html.DropDownList("UserID", String.Empty)
+                            @Html.ValidationMessageFor(model => model.UserID)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="editor-label">
                                 @Html.LabelFor(model => model.ValidationStateID, "Durumu")
                             </div>
                         </td>
