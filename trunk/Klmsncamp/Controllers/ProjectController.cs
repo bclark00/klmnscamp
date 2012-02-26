@@ -287,6 +287,74 @@ namespace Klmsncamp.Controllers
             return RedirectToAction("Index");
         }
 
+        [Authorize]
+        [HttpPost, ActionName("CopyProject")]
+        public ActionResult CopyProject(FormCollection formcollection)
+        {
+            DateTime extendDate = DateTime.Parse(formcollection["ExtendDate"]);
+            int projectid_ = int.Parse(formcollection["projectId"]);
+            Project myproject = db.Projects.AsNoTracking().Include(p => p.RequestIssues).Include(p => p.Locations).Include(p => p.CorporateAccounts).Include(p => p.Personnels).Where(i => i.ProjectID == projectid_).SingleOrDefault();
+
+            double extendAsDays = extendDate.Subtract(myproject.StartDate).Days;
+
+            Project newproject = new Project
+            {
+                Description = myproject.Description,
+                cUserID = myproject.cUserID,
+                EndDate = myproject.EndDate.Value.AddDays(extendAsDays),
+                RequestStateID = 1,
+                StartDate = myproject.StartDate.AddDays(extendAsDays),
+                TimeStamp = DateTime.Now,
+                UserID = myproject.UserID,
+                Locations = new List<Location>(),
+                CorporateAccounts = new List<CorporateAccount>(),
+                Personnels = new List<Personnel>(),
+                RequestIssues = new List<RequestIssue>()
+            };
+
+            db.Projects.Add(newproject);
+            db.SaveChanges();
+
+            foreach (Location loc_ in myproject.Locations.ToList())
+            {
+                newproject.Locations.Add(db.Locations.Find(loc_.LocationID));
+            }
+            foreach (CorporateAccount corp_ in myproject.CorporateAccounts.ToList())
+            {
+                newproject.CorporateAccounts.Add(db.CorporateAccounts.Find(corp_.CorporateAccountID));
+            }
+            foreach (Personnel pers_ in myproject.Personnels.ToList())
+            {
+                newproject.Personnels.Add(db.Personnels.Find(pers_.PersonnelID));
+            }
+
+            db.SaveChanges();
+
+            foreach (RequestIssue rq_ in myproject.RequestIssues.ToList())
+            {
+                var copyoldnotrackrq_ = db.RequestIssues.Include(p=>p.Locations).Include(p=>p.CorporateAccounts).Include(p=>p.Personnels).Include(p=>p.Projects).Where(i=>i.RequestIssueID==rq_.RequestIssueID).SingleOrDefault();
+                
+                RequestIssue newrq_ = db.RequestIssues.Include(p=>p.Locations).Include(p=>p.CorporateAccounts).Include(p=>p.Personnels).Include(p=>p.Projects).Where(i=>i.RequestIssueID==rq_.RequestIssueID).SingleOrDefault();
+                db.Entry(newrq_).State = EntityState.Detached;
+                
+                db.Entry(newrq_).State = EntityState.Added;
+                db.SaveChanges();
+                newrq_.StartDate.AddDays(extendAsDays);
+                newrq_.EndDate.Value.AddDays(extendAsDays);
+                newrq_.Locations = copyoldnotrackrq_.Locations;
+                newrq_.Personnels = copyoldnotrackrq_.Personnels;
+                newrq_.Projects = copyoldnotrackrq_.Projects;
+                newrq_.CorporateAccounts = copyoldnotrackrq_.CorporateAccounts;
+                db.Entry(newrq_).State = EntityState.Modified;
+                db.SaveChanges();
+
+                //newproject.RequestIssues.Add(db.RequestIssues.Find(newrq_.RequestIssueID));
+               // newproject.RequestIssues.Add(rq_);
+            }
+
+            return RedirectToAction("Index");
+        }
+
         protected override void Dispose(bool disposing)
         {
             db.Dispose();
