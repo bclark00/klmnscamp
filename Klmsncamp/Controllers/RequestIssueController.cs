@@ -177,7 +177,18 @@ namespace Klmsncamp.Controllers
 
                     string softwaretitle = db.ParameterSettings.AsNoTracking().Where(i => i.ParameterSettingID == 14).SingleOrDefault().ParameterValue;
 
-                    string mailsonucstr = SendEmail(new MailAddress(user_from.Email), new MailAddress(currentuser_.Email), "[" + softwaretitle + "] İş isteğiniz hakkında.", "İsteğiniz doğrulanarak kayıt altına alınmıştır.Tarih: " + DateTime.Now.ToString() + " - İş No: #" + (requestissue.RequestIssueID).ToString() + ". İyi çalışmalar dileriz.", requestissue.Personnel.Email, false);
+                    string fromemailaddress = db.ParameterSettings.AsNoTracking().Where(i=> i.ParameterSettingID == 15).SingleOrDefault().ParameterValue;
+                    try
+                    {
+                        fromemailaddress = user_from.Email;
+                    }
+                    catch
+                    {
+                    }
+
+
+                    string mailsonucstr = SendEmail(new MailAddress(fromemailaddress), new MailAddress(currentuser_.Email), "[" + softwaretitle + "] İş isteğiniz hakkında.", "İsteğiniz doğrulanarak kayıt altına alınmıştır.Tarih: " + DateTime.Now.ToString() + " - İş No: #" + (requestissue.RequestIssueID).ToString() + ". İyi çalışmalar dileriz.", requestissue.Personnel.Email, false,requestissue.RequestIssueID);
+                    
                     if (mailsonucstr != "OK")
                     {
                         ViewBag.Bilgilendirme = "Mail Gönderiminde Hata: " + mailsonucstr;
@@ -846,7 +857,16 @@ namespace Klmsncamp.Controllers
 
                     string softwaretitle = db.ParameterSettings.AsNoTracking().Where(i => i.ParameterSettingID == 14).SingleOrDefault().ParameterValue;
 
-                    string mailsonucstr = SendEmail(new MailAddress(user_from.Email), new MailAddress(userReq_to.Email), "[" + softwaretitle + "] #" + rqToUpdate.RequestIssueID.ToString() + " no'lu İş isteğiniz hakkında.", "İş İsteğiniz güncellenmiştir. İsteğinizin son durumu görmek isterseniz;  " + Url.Action("Editp", "RequestIssue", new { id = rqToUpdate.RequestIssueID, show = "A", page = 1 }, "http") + " adresini ziyaret ediniz. Tarih: " + DateTime.Now.ToString() + ". İyi çalışmalar dileriz.", pers_from.Email, false);
+                    string fromemailaddress = db.ParameterSettings.AsNoTracking().Where(i => i.ParameterSettingID == 15).SingleOrDefault().ParameterValue;
+                    try
+                    {
+                        fromemailaddress = user_from.Email;
+                    }
+                    catch
+                    {
+                    }
+
+                    string mailsonucstr = SendEmail(new MailAddress(fromemailaddress), new MailAddress(userReq_to.Email), "[" + softwaretitle + "] #" + rqToUpdate.RequestIssueID.ToString() + " no'lu İş isteğiniz hakkında.", "İş İsteğiniz güncellenmiştir. İsteğinizin son durumu görmek isterseniz;  " + Url.Action("Editp", "RequestIssue", new { id = rqToUpdate.RequestIssueID, show = "A", page = 1 }, "http") + " adresini ziyaret ediniz. Tarih: " + DateTime.Now.ToString() + ". İyi çalışmalar dileriz.", pers_from.Email, false,rqToUpdate.RequestIssueID);
                     if (mailsonucstr != "OK")
                     {
                         ViewBag.Bilgilendirme = "Mail Gönderiminde Hata: " + mailsonucstr;
@@ -1060,7 +1080,16 @@ namespace Klmsncamp.Controllers
             {
                 string softwaretitle = db.ParameterSettings.AsNoTracking().Where(i => i.ParameterSettingID == 14).SingleOrDefault().ParameterValue;
 
-                string mailsonucstr = SendEmail(new MailAddress(requestıssue.User.Email), new MailAddress(requestıssue.UserReq.Email), "[" + softwaretitle + "] #" + requestıssue.RequestIssueID.ToString() + " no'lu İş isteğiniz hakkında.", "İş İsteğiniz " + xuser.FullName + " silinmiştir. Tarih: " + DateTime.Now.ToString() + ". İyi çalışmalar dileriz.", requestıssue.Personnel.Email, false);
+                string fromemailaddress = db.ParameterSettings.AsNoTracking().Where(i => i.ParameterSettingID == 15).SingleOrDefault().ParameterValue;
+                try
+                {
+                    fromemailaddress = requestıssue.User.Email;
+                }
+                catch
+                {
+                }
+
+                string mailsonucstr = SendEmail(new MailAddress(fromemailaddress), new MailAddress(requestıssue.UserReq.Email), "[" + softwaretitle + "] #" + requestıssue.RequestIssueID.ToString() + " no'lu İş isteğiniz hakkında.", "İş İsteğiniz " + xuser.FullName + " silinmiştir. Tarih: " + DateTime.Now.ToString() + ". İyi çalışmalar dileriz.", requestıssue.Personnel.Email, false,requestıssue.RequestIssueID);
             }
             db.RequestIssues.Remove(requestıssue);
             db.SaveChanges();
@@ -1143,7 +1172,7 @@ namespace Klmsncamp.Controllers
 
                     string defemailaddparam_ = db.ParameterSettings.AsNoTracking().Where(i => i.ParameterSettingID == 15).SingleOrDefault().ParameterValue;
                     string softwaretitle = db.ParameterSettings.AsNoTracking().Where(i => i.ParameterSettingID == 14).SingleOrDefault().ParameterValue;
-                    string maildurum_ = SendEmail(new MailAddress(defemailaddparam_), new MailAddress(pers_.Email), "[" + softwaretitle + "] #" + xrequestissueID.ToString() + " no'lu İş isteğiniz hakkında.", "İş Talep/İsteğiniz tamamlanmış ve memnuniyet anketi oluşturulmuştur. " + "\n" + "Anketi Doldurmak için; " + Url.Action("Edit", "SurveyTable", new { id = mysurvey.SurveyTableID }, "http") + " adresini ziyaret ediniz. " + "\n" + "Anket Şifresi : " + mysurvey.HashKey + " \n" + "Tarih: " + DateTime.Now.ToString() + ". İyi çalışmalar dileriz.", null, false);
+                    string maildurum_ = SendEmail(new MailAddress(defemailaddparam_), new MailAddress(pers_.Email), "[" + softwaretitle + "] #" + xrequestissueID.ToString() + " no'lu İş isteğiniz hakkında.", "İş Talep/İsteğiniz tamamlanmış ve memnuniyet anketi oluşturulmuştur. " + "\n" + "Anketi Doldurmak için; " + Url.Action("Edit", "SurveyTable", new { id = mysurvey.SurveyTableID }, "http") + " adresini ziyaret ediniz. " + "\n" + "Anket Şifresi : " + mysurvey.HashKey + " \n" + "Tarih: " + DateTime.Now.ToString() + ". İyi çalışmalar dileriz.", null, false,xrequestissueID);
                 }
             }
             catch
@@ -1152,7 +1181,7 @@ namespace Klmsncamp.Controllers
         }
 
         [Authorize]
-        public string SendEmail(MailAddress fromAddress, MailAddress toAddress, string subject, string body, string fromPersonnel, bool fromEBA)
+        public string SendEmail(MailAddress fromAddress, MailAddress toAddress, string subject, string body, string fromPersonnel, bool fromEBA,int xrqID)
         {
             try
             {
@@ -1168,6 +1197,20 @@ namespace Klmsncamp.Controllers
                 }
                 catch { }
 
+                string addProjectPplonCC_ = db.ParameterSettings.AsNoTracking().Where(i => i.ParameterSettingID == 17).SingleOrDefault().ParameterValue;
+
+                if (addProjectPplonCC_ == "1")
+                {
+                    var projectppl_ = db.RequestIssues.AsNoTracking().Include(p => p.Personnels).Where(i=>i.RequestIssueID==xrqID).SingleOrDefault().Personnels.ToList();
+
+                    foreach (Personnel pppl_ in projectppl_)
+                    {
+                        if (pppl_.Email!=null)
+                        {
+                            message.CC.Add(new MailAddress(pppl_.Email));
+                        }
+                    }
+                }
                 string mailaccount_ = db.ParameterSettings.AsNoTracking().Where(i => i.ParameterSettingID == 1).SingleOrDefault().ParameterValue;
                 string mailpassword_ = db.ParameterSettings.AsNoTracking().Where(i => i.ParameterSettingID == 2).SingleOrDefault().ParameterValue;
                 string mailhost_ = db.ParameterSettings.AsNoTracking().Where(i => i.ParameterSettingID == 3).SingleOrDefault().ParameterValue;

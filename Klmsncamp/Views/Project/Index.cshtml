@@ -116,18 +116,24 @@
                                                         )
         </text>);
                                                 items.Add().Text("İlgili Personel").Content(@<text>
-        @(Html.Telerik().Grid(o.Personnels)
-                                                                .Name("Personnels_" + o.ProjectID)
-                                                                .Columns(columns =>
-                                                                {
-                                                                    columns.Bound(e => e.FullName).Title("Adı-Soyadı").Width(350);
-                                                                    columns.Bound(e => e.Location).Title("Birimi");
+                                                    @(Html.Telerik().Grid(o.Personnels)
+                                                                                                            .Name("Personnels_" + o.ProjectID)
+                                                                                                            .Columns(columns =>
+                                                                                                            {
+                                                                                                                columns.Bound(e => e.FullName).Title("Adı-Soyadı").Width(350);
+                                                                                                                columns.Bound(e => e.Location.CapitalizedDescription).Title("Birimi");
 
-                                                                })
-                                                                .Pageable()
+                                                                                                            })
+                                                                                                            .Pageable()
 
-                                                        )
-        </text>);
+                                                                                                    )
+                                                    </text>);
+                                                items.Add().Text("Eylemler").Content(@<text>
+                                                    @using (Html.BeginForm("CopyProject","Project",FormMethod.Post))
+                                                    {
+                                                        @Html.Hidden("projectId",o.ProjectID)<table><tbody><tr><td style="border: 1px solid; padding-left: 10px; ">Başlangıç Tarihi&nbsp;@Html.Telerik().DatePicker().InputHtmlAttributes(new {style="vertical-align: middle;"}).HtmlAttributes(new {style="vertical-align: middle;"}).Name("ExtendDate").Value(DateTime.Now.AddMonths(1))&nbsp;olacak şekilde&nbsp;&nbsp;|&nbsp;&nbsp;<input onclick="this.disabled=true;this.value='Lütfen Bekleyiniz..Calisiyor..';this.form.submit();" style="padding: 0px; height: 25px;" type="submit" value=" Kopyala ve Oluştur " /></td></tr></tbody></table>
+                                                    }
+                                                    </text>);
 
                                             })
                                             .Render();

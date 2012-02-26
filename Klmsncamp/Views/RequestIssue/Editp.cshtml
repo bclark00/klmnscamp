@@ -77,7 +77,12 @@
                                 @Html.LabelFor(model => model.WorkshopID)
                             </td>
                             <td style="color: #A80000; vertical-align: middle; text-align: left;">
-                                @if (!User.IsInRole("administrators"))
+                                @if (Model.IsApproved == true)
+                                {
+                                    @Html.HiddenFor(model => model.WorkshopID)
+                                    @Html.DisplayFor(model => model.Workshop.Description)
+                                }
+                                else if (!User.IsInRole("administrators") || !User.IsInRole("moderators"))
                                 {
                                     @Html.HiddenFor(model => model.WorkshopID)
                                     @Html.DisplayFor(model => model.Workshop.Description)
@@ -101,7 +106,7 @@
                     }
                     else
                     {
-                       @Html.HiddenFor(model=>model.WorkshopID)
+                       @Html.HiddenFor(model => model.WorkshopID)
                     }
                         
                     <tr>
@@ -138,15 +143,15 @@
                             @if (Model.IsApproved == true)
                             {
                                 @Html.HiddenFor(model => model.PersonnelID)
-                                try
-                                {
+                           try
+                           {
                                 @Model.Personnel.FullName
-                                }
-                                catch
-                                {
+                           }
+                           catch
+                           {
                                 @:--
 
-                                }
+                           }
                             }
                             else
                             {
@@ -391,12 +396,12 @@
                             @if ((!User.IsInRole("administrators") && !User.IsInRole("moderators")) || Model.IsApproved == true)
                             {
                                 @Html.HiddenFor(model => model.SendEmail)
-                                if (Model.SendEmail == true)
-                                {
+                           if (Model.SendEmail == true)
+                           {
                                 @:EVET
                     }
-                                else
-                                {
+                           else
+                           {
                                 @:HAYIR
                     }
                             }
@@ -501,12 +506,12 @@
                             @if ((!User.IsInRole("administrators") && !User.IsInRole("moderators")) || Model.IsApproved == true)
                             {
                                 @Html.HiddenFor(model => model.IsAllDay)
-                                if (Model.IsAllDay == true)
-                                {
+                           if (Model.IsAllDay == true)
+                           {
                                 @:EVET
                     }
-                                else
-                                {
+                           else
+                           {
                                 @:HAYIR
                     }
                             }
@@ -543,30 +548,30 @@
                             @if (ViewBag.HasSurvey)
                             {
                                 @Html.HiddenFor(model => model.IsApproved)
-                                if (Model.IsApproved == true)
-                                {
+                           if (Model.IsApproved == true)
+                           {
                                 <font color="maroon"><b>Bu İş istek kapatılmış ve Anketi Doldurulmuştur. Onay Durumu
                                     değiştirilemez.</b></font>
                                 @:<img title="Bu iş istek onaylanarak kapatılmıştır." alt="Tamamlandı" src="@Url.Content("~/Content/images/checked.gif")"/>
                             }
-                                else
-                                {
+                           else
+                           {
                                 <font color="maroon"><b>Bu İş istek/talebe ait Anket Doldurulmuştur. Onay Durumu değiştirilemez.</b></font>
                                 @:<img title="Açık / Çalışma Sürüyor" alt="Devam Ediyor" src="@Url.Content("~/Content/images/delete.png")"/>
 
-                                }
+                           }
                             }
                             else
                             {
                                 if (Model.IsApproved == true && !User.IsInRole("administrators"))
                                 {
                                     @Html.HiddenFor(model => model.IsApproved)
-                                    if (Model.IsApproved == true)
-                                    {
+                               if (Model.IsApproved == true)
+                               {
                                     @:<img title="Bu iş istek onaylanarak kapatılmıştır." alt="Tamamlandı" src="@Url.Content("~/Content/images/checked.gif")"/>
                                 }
-                                    else
-                                    {
+                               else
+                               {
                                     @:<img title="Açık / Çalışma Sürüyor" alt="Devam Ediyor" src="@Url.Content("~/Content/images/delete.png")"/>
                                 }
 
@@ -582,15 +587,15 @@
                                 else
                                 {
                                     @Html.HiddenFor(model => model.IsApproved)
-                                    if (Model.IsApproved == true)
-                                    {
+                               if (Model.IsApproved == true)
+                               {
                                     @:<img title="Bu iş istek onaylanarak kapatılmıştır." alt="Tamamlandı" src="@Url.Content("~/Content/images/checked.gif")"/>
                                 }
-                                    else
-                                    {
+                               else
+                               {
                                 @:<img title="Açık / Çalışma Sürüyor" alt="Devam Ediyor" src="@Url.Content("~/Content/images/delete.png")"/>
 
-                                    }
+                               }
                                 }
                             }
                         </td>
@@ -614,12 +619,12 @@
                             else
                             {
                                 @Html.HiddenFor(model => model.User)
-                                try
-                                {
+                           try
+                           {
                                 @Html.DisplayFor(model => model.User.FullName)
-                                }
-                                catch
-                                {
+                           }
+                           catch
+                           {
                                 @: Henüz Atanmamış..
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             }
                             }
