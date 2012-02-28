@@ -332,20 +332,50 @@ namespace Klmsncamp.Controllers
 
             foreach (RequestIssue rq_ in myproject.RequestIssues.ToList())
             {
-                var copyoldnotrackrq_ = db.RequestIssues.Include(p=>p.Locations).Include(p=>p.CorporateAccounts).Include(p=>p.Personnels).Include(p=>p.Projects).Where(i=>i.RequestIssueID==rq_.RequestIssueID).SingleOrDefault();
+                //var copyoldnotrackrq_ = db.RequestIssues.Include(p=>p.Locations).Include(p=>p.CorporateAccounts).Include(p=>p.Personnels).Include(p=>p.Projects).Where(i=>i.RequestIssueID==rq_.RequestIssueID).SingleOrDefault();
                 
                 RequestIssue newrq_ = db.RequestIssues.Include(p=>p.Locations).Include(p=>p.CorporateAccounts).Include(p=>p.Personnels).Include(p=>p.Projects).Where(i=>i.RequestIssueID==rq_.RequestIssueID).SingleOrDefault();
+                var _mylocations = newrq_.Locations.ToList();
+                var _mycorps = newrq_.CorporateAccounts.ToList();
+                var _mypersonnels = newrq_.Personnels.ToList();
+                var _myprojects = newrq_.Projects.ToList();
                 db.Entry(newrq_).State = EntityState.Detached;
                 
                 db.Entry(newrq_).State = EntityState.Added;
                 db.SaveChanges();
+
+                RequestIssue myrqformanys_ = db.RequestIssues.Find(newrq_.RequestIssueID);
+                myrqformanys_.StartDate = myrqformanys_.StartDate.AddDays(extendAsDays);
+                myrqformanys_.EndDate = myrqformanys_.EndDate.Value.AddDays(extendAsDays);
+
+                foreach (var _loc in _mylocations)
+                {
+                    myrqformanys_.Locations.Add(_loc);
+                }
+
+                foreach (var _pers in _mypersonnels)
+                {
+                    myrqformanys_.Personnels.Add(_pers);
+                }
+
+                foreach (var _corp in _mycorps )
+                {
+                    myrqformanys_.CorporateAccounts.Add(_corp);
+                }
+
+                
+                myrqformanys_.Projects.Add(newproject);
+                
+              
+                /*
                 newrq_.StartDate.AddDays(extendAsDays);
                 newrq_.EndDate.Value.AddDays(extendAsDays);
                 newrq_.Locations = copyoldnotrackrq_.Locations;
                 newrq_.Personnels = copyoldnotrackrq_.Personnels;
                 newrq_.Projects = copyoldnotrackrq_.Projects;
                 newrq_.CorporateAccounts = copyoldnotrackrq_.CorporateAccounts;
-                db.Entry(newrq_).State = EntityState.Modified;
+                 */
+                //db.Entry(newrq_).State = EntityState.Modified;
                 db.SaveChanges();
 
                 //newproject.RequestIssues.Add(db.RequestIssues.Find(newrq_.RequestIssueID));
