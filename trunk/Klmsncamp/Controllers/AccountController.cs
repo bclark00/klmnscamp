@@ -98,6 +98,17 @@ namespace Klmsncamp.Controllers
         }
 
         [Authorize]
+        public ActionResult Edit(int id)
+        {
+
+            ViewBag.WorkshopID = new MultiSelectList(db.Workshops, "WorkshopID", "Description");
+            ViewBag.UserGroupID = new MultiSelectList(db.UserGroups, "UserGroupID", "Description");
+            ViewBag.CustomPermissionID = new MultiSelectList(db.CustomPermissions, "CustomPermissionID", "Description");
+
+            return View();
+        }
+
+        [Authorize]
         [HttpPost]
         public ActionResult PasswordReset(FormCollection formcollection)
         {
