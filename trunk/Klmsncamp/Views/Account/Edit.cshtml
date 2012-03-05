@@ -12,9 +12,15 @@
     <tbody>
     <tr>
     <td>@Html.ListBox("WorkshopID", null, new {style = "width: 250px;" })</td>
+    <td>@Html.ListBox("UserGroupID",null, new {style = "width: 250px;"})</td>
+    <td>@Html.ListBox("CustomPermissionID",null,new {style = "width: 250px;"})</td>
     </tr>            
     </tbody>
     </table>
+    <br />
+    <div class="submit-row">
+    <input type="submit" name="kaydet" value="Kaydet" />
+    </div>
             
 }
 </fieldset>
