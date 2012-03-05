@@ -1,0 +1,21 @@
+﻿@using Telerik.Web.Mvc.UI
+@model Klmsncamp.Models.User
+@{
+    ViewBag.Title = "Profil Düzenleme";
+}
+<div align="center" style="width: 640px; margin-left: auto; margin-right: auto; margin-top: 30px;">
+<fieldset style="width: 820px;" class="module aligned ">
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary(true)
+    <table style="width: 100%; margin-top: 15px;">
+    <tbody>
+    <tr>
+    <td>@Html.ListBox("WorkshopID", null, new {style = "width: 250px;" })</td>
+    </tr>            
+    </tbody>
+    </table>
+            
+}
+</fieldset>
+</div>
