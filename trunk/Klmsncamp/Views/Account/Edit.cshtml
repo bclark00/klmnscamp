@@ -11,8 +11,22 @@
     <table style="width: 100%; margin-top: 15px;">
     <tbody>
     <tr>
+    <td style="vertical-align: top; text-align: right; font-weight: bold;">Kullanıcının Rollerini Seçiniz</td>
+    <td>@Html.ListBox("RoleID", null, new {style = "width: 250px;" })</td>
+    </tr>
+    <tr>
+    <td style="vertical-align: top; text-align: right; font-weight: bold;">Yetkili Olduğu Ana birimleri Belirtiniz</td>
+    
     <td>@Html.ListBox("WorkshopID", null, new {style = "width: 250px;" })</td>
+    </tr>
+    <tr>
+    <td style="vertical-align: top; text-align: right; font-weight: bold;">Yetki Gruplarını Belirtiniz (Yetki Grubunun bağlı olduğu ana birim ve özel izinler, Kullanıcı izinlerine dahil edilir)</td>
+    
     <td>@Html.ListBox("UserGroupID",null, new {style = "width: 250px;"})</td>
+    </tr>
+    <tr>
+    <td style="vertical-align: top; text-align: right; font-weight: bold;">Özel izinleri seçiniz</td>
+    
     <td>@Html.ListBox("CustomPermissionID",null,new {style = "width: 250px;"})</td>
     </tr>            
     </tbody>

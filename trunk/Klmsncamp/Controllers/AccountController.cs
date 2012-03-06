@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 using System.Web.Security;
+using System.Linq;
+using System.Data;
+using System.Data.Entity;
 using Klmsncamp.Models;
 
 namespace Klmsncamp.Controllers
@@ -100,11 +102,14 @@ namespace Klmsncamp.Controllers
         [Authorize]
         public ActionResult Edit(int id)
         {
+            
+            User user_ = db.Users.Include(p=>p.Roles).Include(p=>p.Workshops).Include(p => p.UserGroups).Include(p => p.CustomPermissions).Where(i => i.UserId == id).SingleOrDefault();
 
-            ViewBag.WorkshopID = new MultiSelectList(db.Workshops, "WorkshopID", "Description");
-            ViewBag.UserGroupID = new MultiSelectList(db.UserGroups, "UserGroupID", "Description");
-            ViewBag.CustomPermissionID = new MultiSelectList(db.CustomPermissions, "CustomPermissionID", "Description");
-
+            ViewBag.RoleId = new MultiSelectList(db.Roles, "RoleID", "Description", user_.Roles.Select(p => p.RoleID).ToList());
+            ViewBag.WorkshopID = new MultiSelectList(db.Workshops, "WorkshopID", "Description",user_.Workshops.Select(p=>p.WorkshopID).ToList());
+            ViewBag.UserGroupID = new MultiSelectList(db.UserGroups, "UserGroupID", "Name",user_.UserGroups.Select(p=>p.UserGroupID).ToList());
+            ViewBag.CustomPermissionID = new MultiSelectList(db.CustomPermissions, "CustomPermissionID", "Description",user_.CustomPermissions.Select(p=>p.CustomPermissionID).ToList());
+            
             return View();
         }
 
