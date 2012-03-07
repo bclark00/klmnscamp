@@ -1,7 +1,7 @@
 ﻿@if (Request.IsAuthenticated)
 {
     <text><strong>@User.Identity.Name</strong>! [ @Html.ActionLink("Çıkış", "LogOff", "Account")
-    ]&nbsp;[ @Html.ActionLink("Şifre Değiştir", "ChangePassword", "Account") ]&nbsp;[@Html.ActionLink("Profil", "Edit", "Account") ]</text>
+    ]&nbsp;[ @Html.ActionLink("Şifre Değiştir", "ChangePassword", "Account") ]&nbsp;[@Html.ActionLink("Profil", "Edit", "Account", new { username_ = User.Identity.Name.ToString() },null) ]</text>
 
 }
 else

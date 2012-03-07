@@ -100,17 +100,112 @@ namespace Klmsncamp.Controllers
         }
 
         [Authorize]
-        public ActionResult Edit(int id)
+        public ActionResult Edit(string username_)
         {
-            
-            User user_ = db.Users.Include(p=>p.Roles).Include(p=>p.Workshops).Include(p => p.UserGroups).Include(p => p.CustomPermissions).Where(i => i.UserId == id).SingleOrDefault();
+            int _userid = db.Users.Where(i => i.UserName == username_).SingleOrDefault().UserId;
+            User user_ = db.Users.Include(p=>p.Roles).Include(p=>p.Workshops).Include(p => p.UserGroups).Include(p => p.CustomPermissions).Where(i => i.UserId == _userid).SingleOrDefault();
+
+            ViewBag.UserID = new SelectList(db.Users, "UserId", "FullNameWithUsername");
 
             ViewBag.RoleId = new MultiSelectList(db.Roles, "RoleID", "Description", user_.Roles.Select(p => p.RoleID).ToList());
             ViewBag.WorkshopID = new MultiSelectList(db.Workshops, "WorkshopID", "Description",user_.Workshops.Select(p=>p.WorkshopID).ToList());
             ViewBag.UserGroupID = new MultiSelectList(db.UserGroups, "UserGroupID", "Name",user_.UserGroups.Select(p=>p.UserGroupID).ToList());
             ViewBag.CustomPermissionID = new MultiSelectList(db.CustomPermissions, "CustomPermissionID", "Description",user_.CustomPermissions.Select(p=>p.CustomPermissionID).ToList());
             
-            return View();
+            return View(user_);
+        }
+
+        [Authorize]
+        [HttpPost]
+        public ActionResult Edit(User user, FormCollection formcollection)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Entry(user).State = EntityState.Modified;
+                db.SaveChanges();
+
+                //roles bosalt
+                User user_ = db.Users.Include(p => p.Roles).Include(p => p.Workshops).Include(p => p.UserGroups).Include(p => p.CustomPermissions).Where(i => i.UserId == user.UserId).SingleOrDefault();
+                user_.Roles.Clear();
+                user_.UserGroups.Clear();
+                user_.Workshops.Clear();
+                user_.CustomPermissions.Clear();
+                db.SaveChanges();
+
+                if (formcollection["RoleID"] != null)
+                {
+                    foreach (var role_int in formcollection["RoleID"].Split(',').ToList())
+                    {
+                        try
+                        {
+                            int role_index = int.Parse(role_int.ToString());
+                            var role_ = db.Roles.Find(role_index);
+                            role_.Users.Add(user_);
+                        }
+                        catch
+                        { }
+                        db.SaveChanges();
+                    }
+                }
+
+                if (formcollection["WorkshopID"] != null)
+                {
+                    foreach (var workshop_int in formcollection["WorkshopID"].Split(',').ToList())
+                    {
+                        try
+                        {
+                            int workshop_index = int.Parse(workshop_int.ToString());
+                            var workshop_ = db.Workshops.Find(workshop_index);
+                            workshop_.Users.Add(user_);
+                        }
+                        catch
+                        { }
+                        db.SaveChanges();
+                    }
+                }
+
+                if (formcollection["UserGroupID"] != null)
+                {
+                    foreach (var usergroup_int in formcollection["UserGroupID"].Split(',').ToList())
+                    {
+                        try
+                        {
+                            int usergroup_index = int.Parse(usergroup_int.ToString());
+                            var usergroup_ = db.UserGroups.Find(usergroup_index);
+                            usergroup_.Users.Add(user_);
+                        }
+                        catch
+                        { }
+                        db.SaveChanges();
+                    }
+                }
+
+                if (formcollection["CustomPermissionID"] != null)
+                {
+                    foreach (var custom_int in formcollection["CustomPermissionID"].Split(',').ToList())
+                    {
+                        try
+                        {
+                            int custom_index = int.Parse(custom_int.ToString());
+                            var customperm_ = db.CustomPermissions.Find(custom_index);
+                            customperm_.Users.Add(user_);
+                        }
+                        catch
+                        { }
+                        db.SaveChanges();
+                    }
+                }
+            }
+
+            return RedirectToAction("Edit", new { username_ = user.UserName });
+        }
+
+        [Authorize(Roles = "administrators")]
+        public ActionResult RedirectToEdit(int UserID)
+        {
+            string username = db.Users.AsNoTracking().Where(i => i.UserId == UserID).SingleOrDefault().UserName;
+            return RedirectToAction("Edit", new { username_ = username });
+
         }
 
         [Authorize]

@@ -72,6 +72,8 @@ namespace Klmsncamp.Models
         public virtual ICollection<Role> Roles { get; set; }
 
         public virtual string FullName { get { return char.ToUpper(this.FirstName[0]) + (this.FirstName.ToLower()).Substring(1) + " " + char.ToUpper(this.LastName[0]) + (this.LastName.ToLower()).Substring(1); } }
+        
+        public virtual string FullNameWithUsername { get { return char.ToUpper(this.FirstName[0]) + (this.FirstName.ToLower()).Substring(1) + " " + char.ToUpper(this.LastName[0]) + (this.LastName.ToLower()).Substring(1) + " ( "+this.UserName + " )";  } }
 
         public string getFullName()
         {
