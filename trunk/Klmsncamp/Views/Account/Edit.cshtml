@@ -3,39 +3,106 @@
 @{
     ViewBag.Title = "Profil Düzenleme";
 }
-<div align="center" style="width: 640px; margin-left: auto; margin-right: auto; margin-top: 30px;">
+<div align="center" style="width: 840px; margin-left: auto; margin-right: auto; margin-top: 30px;">
 <fieldset style="width: 820px;" class="module aligned ">
+<legend>Profil</legend>
 @using (Html.BeginForm())
 {
+    @Html.HiddenFor(model => model.UserId)
+    @Html.HiddenFor(model => model.UserName)
+    @Html.HiddenFor(model => model.Password)
+    @Html.HiddenFor(model => model.PasswordSalt)
+    @Html.HiddenFor(model => model.CreatedDate)
+    @Html.HiddenFor(model => model.LastLoginDate)
+    @Html.HiddenFor(model => model.LastLockedOutDate)
     @Html.ValidationSummary(true)
     <table style="width: 100%; margin-top: 15px;">
     <tbody>
+    <thead><th colspan="2"><p style="margin-top: 5px; padding-top: 5px;"><u style="color: Red;">@Model.UserName</u>&nbsp;Kullanıcı Bilgileri Düzenle</p></th></thead>
     <tr>
-    <td style="vertical-align: top; text-align: right; font-weight: bold;">Kullanıcının Rollerini Seçiniz</td>
-    <td>@Html.ListBox("RoleID", null, new {style = "width: 250px;" })</td>
+    <td style="border-left: 1px solid; width: 30%; vertical-align: middle; text-align: right; font-weight: bold;">
+    @Html.LabelFor(model=>model.FirstName,"Ad")&nbsp;-&nbsp;@Html.LabelFor(model=>model.LastName,"Soyad")
+    </td>
+    <td style="vertical-align: middle; text-align: left; font-weight: bold;">
+    @Html.EditorFor(model=>model.FirstName)&nbsp;@Html.EditorFor(model=>model.LastName)
+     @Html.ValidationMessageFor(model => model.FirstName)
+     @Html.ValidationMessageFor(model => model.LastName)
+    </td>
     </tr>
     <tr>
-    <td style="vertical-align: top; text-align: right; font-weight: bold;">Yetkili Olduğu Ana birimleri Belirtiniz</td>
+    <td style="border-left: 1px solid; width: 30%; vertical-align: middle; text-align: right; font-weight: bold;">
+     @Html.LabelFor(model=>model.Email)
+    </td>
+    <td style="vertical-align: middle; text-align: left; font-weight: bold;">
     
-    <td>@Html.ListBox("WorkshopID", null, new {style = "width: 250px;" })</td>
+        @Html.EditorFor(model=>model.Email)&nbsp;  @if (Model.UserName.ToString().Equals(@User.Identity.Name.ToString()))
+    { @Html.ActionLink("Şifre Değiştir", "ChangePassword", "Account") <br />
+        @Html.ValidationMessageFor(model => model.Email)
+    }
+       
+    </td>
     </tr>
     <tr>
-    <td style="vertical-align: top; text-align: right; font-weight: bold;">Yetki Gruplarını Belirtiniz (Yetki Grubunun bağlı olduğu ana birim ve özel izinler, Kullanıcı izinlerine dahil edilir)</td>
-    
-    <td>@Html.ListBox("UserGroupID",null, new {style = "width: 250px;"})</td>
+    <td style="border-left: 1px solid; width: 30%; vertical-align: top; text-align: right; font-weight: bold;">Kullanıcının Rollerini Seçiniz</td>
+    <td style="vertical-align: top; text-align: left; font-weight: bold;">@Html.ListBox("RoleID", null, new { style = "width: 250px;" })</td>
     </tr>
     <tr>
-    <td style="vertical-align: top; text-align: right; font-weight: bold;">Özel izinleri seçiniz</td>
+    <td style="border-left: 1px solid; vertical-align: top; text-align: right; font-weight: bold;">Yetkili Olduğu Ana birimleri Belirtiniz</td>
     
-    <td>@Html.ListBox("CustomPermissionID",null,new {style = "width: 250px;"})</td>
-    </tr>            
+    <td style="vertical-align: top; text-align: left; font-weight: bold;">@Html.ListBox("WorkshopID", null, new { style = "width: 250px;" })</td>
+    </tr>
+    @if (User.IsInRole("administrators"))
+    { 
+    <tr>
+    <td style="border-left: 1px solid; vertical-align: top; text-align: right; font-weight: bold;">Yetki Gruplarını Belirtiniz (Yetki Grubunun bağlı olduğu ana birim ve özel izinler, Kullanıcı izinlerine dahil edilir)</td>
+    
+    <td style="vertical-align: top; text-align: left; font-weight: bold;">@Html.ListBox("UserGroupID", null, new { style = "width: 250px;" })</td>
+    </tr>
+    <tr>
+    <td style="border-left: 1px solid; vertical-align: top; text-align: right; font-weight: bold;">Özel izinleri seçiniz</td>
+    
+    <td style="vertical-align: top; text-align: left; font-weight: bold;">@Html.ListBox("CustomPermissionID", null, new { style = "width: 250px;" })</td>
+    </tr> 
+    }           
     </tbody>
     </table>
     <br />
     <div class="submit-row">
-    <input type="submit" name="kaydet" value="Kaydet" />
+    <input type="submit" name="kaydet" onclick="this.disabled=true;this.value='Lütfen Bekleyiniz..Calisiyor..';this.form.submit();" value="Kaydet" />
     </div>
             
 }
 </fieldset>
+<br />
+<br />
+@if (User.IsInRole("administrators"))
+{ 
+    <fieldset style="width: 820px;" class="module aligned ">
+    <legend>Diğer Kullanıcılar :</legend>
+    @using (Html.BeginForm("RedirectToEdit", "Account", FormMethod.Get))
+    {
+        <table>
+        <tbody>
+        <tr>
+        <td style="vertical-align: middle;">
+        
+        @(Html.Telerik().ComboBox()
+        .Name("UserID")
+        .HtmlAttributes(new { id = "ComboBox_wrapper_user" })
+        .AutoFill(true).HtmlAttributes(new { style = "width:210px;" }).DropDownHtmlAttributes(new { style = "width: 210px;" }).InputHtmlAttributes(new { style = "vertical-align: middle; font-size:100%; border: 1px solid; width: 200px;" })
+        .BindTo((SelectList)ViewBag.UserID)
+        .Filterable(filtering => filtering.FilterMode((AutoCompleteFilterMode)Enum.Parse(typeof(AutoCompleteFilterMode), "2", false)))
+        .HighlightFirstMatch(true)
+        )
+        <br />
+        </td>
+        <td style="vertical-align: middle;">
+        <input type="submit" name="Düzenle" onclick="this.disabled=true;this.value='Lütfen Bekleyiniz..Calisiyor..';this.form.submit();" value="Kullanıcıyı Düzenle" />
+        </td>
+        </tr>
+        </tbody>
+        </table>
+    }
+        </fieldset>
+}
 </div>
