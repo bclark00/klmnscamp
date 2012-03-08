@@ -56,14 +56,15 @@ namespace Klmsncamp.DAL
 
             var workshops = new List<Workshop>
             {
-                new Workshop { Description = "BİLGİ İŞLEM", ValidationStateID=1  }
+                new Workshop { Description = "BİLGİ İŞLEM", ValidationStateID=1  },
+                new Workshop { Description = "TEKNİK SERVİS", ValidationStateID=1  }
             };
             workshops.ForEach(s => context.Workshops.Add(s));
             context.SaveChanges();
 
             var invowns = new List<InventoryOwnership>
             {
-                new InventoryOwnership { Description="KLİMASAN" },
+                new InventoryOwnership { Description="UHG" },
                 new InventoryOwnership { Description = "DIŞ FİRMA"},
                 new InventoryOwnership { Description = "DİĞER"}
             };
@@ -147,9 +148,9 @@ namespace Klmsncamp.DAL
 
             var usergroups = new List<UserGroup>
             {
-                new UserGroup { Name="administrators" },
-                new UserGroup {Name = "Power Users" },
-                new UserGroup {Name = "Users"}
+                new UserGroup { Name="Yöneticiler" },
+                new UserGroup {Name = "Sorumlular" },
+                new UserGroup {Name = "Çalışanlar"}
             };
             usergroups.ForEach(s => context.UserGroups.Add(s));
             context.SaveChanges();
@@ -693,6 +694,31 @@ namespace Klmsncamp.DAL
             survtemps[1].SurveyRecords.Add(context.SurveyRecords.Find(3));
 
             context.SaveChanges();
+
+            var paramsets = new List<ParameterSetting>
+            {
+                new ParameterSetting { Description="Mail Hesap Adı", ParameterValue="musa.fedakar@uhg.com.tr"},
+                new ParameterSetting { Description="Mail Hesap Şifre", ParameterValue="uhgposta123"},
+                new ParameterSetting { Description="Mail Sunucusu", ParameterValue="mail.uhg.com.tr"},
+                new ParameterSetting { Description="Mail Sunucusu Port", ParameterValue="2525"},
+                new ParameterSetting { Description="İş Tamamlandı Durum ID", ParameterValue="5"},
+                new ParameterSetting { Description="İş Olumsuz Kapatıldı Durum ID", ParameterValue="6"},
+                new ParameterSetting { Description="Anket Sistemi Aktif", ParameterValue="0"},
+                new ParameterSetting { Description="Varsayılan Taslak Anket ID", ParameterValue="14"},
+                new ParameterSetting { Description="EBA Kullanıcı ID", ParameterValue="7"},
+                new ParameterSetting { Description="Ret Edilmiş Talep Anket Sorusu ID", ParameterValue="6"},
+                new ParameterSetting { Description="Banner üst yazı", ParameterValue="Ege Sağlık - 2012"},
+                new ParameterSetting { Description="Banner resim dosyasi", ParameterValue="klimasan_banner.png"},
+                new ParameterSetting { Description="Hakkinda Kayan Yazi", ParameterValue="Ege Sağlık - İş Takip"},
+                new ParameterSetting { Description="Yazılım Adı", ParameterValue="Ege Sağlık - İş Takip"},
+                new ParameterSetting { Description="Varsayilan Gonderen Mail Adresi", ParameterValue="helpdesk@uhg.com.tr"},
+                new ParameterSetting { Description="Çoklu Atölye Aktif", ParameterValue="1"},
+                new ParameterSetting { Description="Proje Ekibini Email listesine Al", ParameterValue="1"}
+            };
+
+            paramsets.ForEach(s => context.ParameterSettings.Add(s));
+            context.SaveChanges();
+
         }
     }
 }

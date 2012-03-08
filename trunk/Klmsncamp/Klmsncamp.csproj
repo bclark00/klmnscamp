@@ -186,6 +186,7 @@
     <Compile Include="Controllers\UserGroupController.cs" />
     <Compile Include="Controllers\ValidationStateController.cs" />
     <Compile Include="Controllers\WorkshopController.cs" />
+    <Compile Include="Controllers\WorkshopPermissionController.cs" />
     <Compile Include="DAL\KlmsnContext.cs" />
     <Compile Include="DAL\KlmsnExtensions.cs" />
     <Compile Include="DAL\KlmsnInitializer.cs" />
@@ -227,6 +228,7 @@
     <Compile Include="Models\SurveyTable.cs" />
     <Compile Include="Models\SurveyTemplate.cs" />
     <Compile Include="Models\UserIsApprovedCheckAttribute.cs" />
+    <Compile Include="Models\WorkshopPermission.cs" />
     <Compile Include="RDLC\ProjectReport.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -1142,6 +1144,11 @@
     <Content Include="Views\Account\PasswordReset.cshtml" />
     <Content Include="Views\SurveyTable\Index.cshtml" />
     <Content Include="Views\Account\Edit.cshtml" />
+    <Content Include="Views\WorkshopPermission\Index.cshtml" />
+    <Content Include="Views\WorkshopPermission\Details.cshtml" />
+    <Content Include="Views\WorkshopPermission\Create.cshtml" />
+    <Content Include="Views\WorkshopPermission\Edit.cshtml" />
+    <Content Include="Views\WorkshopPermission\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_GlobalResources\EditorLocalization.en-US.resx">

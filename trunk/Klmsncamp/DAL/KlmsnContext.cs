@@ -76,6 +76,8 @@ namespace Klmsncamp.Models
 
         public DbSet<RequestActualReason> RequestActualReasons { get; set; }
 
+        public DbSet<WorkshopPermission> WorkshopPermissions { get; set; }
+
         public ObjectContext KlmsnObjectContext
         {
             get { return ((IObjectContextAdapter)this).ObjectContext; }

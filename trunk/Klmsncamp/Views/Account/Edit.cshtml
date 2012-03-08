@@ -6,6 +6,7 @@
 <div align="center" style="width: 840px; margin-left: auto; margin-right: auto; margin-top: 30px;">
 <fieldset style="width: 820px;" class="module aligned ">
 <legend>Profil</legend>
+<br />
 @using (Html.BeginForm())
 {
     @Html.HiddenFor(model => model.UserId)
@@ -18,27 +19,27 @@
     @Html.ValidationSummary(true)
     <table style="width: 100%; margin-top: 15px;">
     <tbody>
-    <thead><th colspan="2"><p style="margin-top: 5px; padding-top: 5px;"><u style="color: Red;">@Model.UserName</u>&nbsp;Kullanıcı Bilgileri Düzenle</p></th></thead>
+    <thead><th colspan="2"><p style="margin-top: 5px; padding-top: 5px;"><u style="color: Maroon;">@Model.UserName</u>&nbsp;Kullanıcı Bilgileri Düzenle</p></th></thead>
     <tr>
     <td style="border-left: 1px solid; width: 30%; vertical-align: middle; text-align: right; font-weight: bold;">
-    @Html.LabelFor(model=>model.FirstName,"Ad")&nbsp;-&nbsp;@Html.LabelFor(model=>model.LastName,"Soyad")
+    @Html.LabelFor(model => model.FirstName, "Ad")&nbsp;-&nbsp;@Html.LabelFor(model => model.LastName, "Soyad")
     </td>
     <td style="vertical-align: middle; text-align: left; font-weight: bold;">
-    @Html.EditorFor(model=>model.FirstName)&nbsp;@Html.EditorFor(model=>model.LastName)
+    @Html.EditorFor(model => model.FirstName)&nbsp;@Html.EditorFor(model => model.LastName)
      @Html.ValidationMessageFor(model => model.FirstName)
      @Html.ValidationMessageFor(model => model.LastName)
     </td>
     </tr>
     <tr>
     <td style="border-left: 1px solid; width: 30%; vertical-align: middle; text-align: right; font-weight: bold;">
-     @Html.LabelFor(model=>model.Email)
+     @Html.LabelFor(model => model.Email)
     </td>
     <td style="vertical-align: middle; text-align: left; font-weight: bold;">
     
-        @Html.EditorFor(model=>model.Email)&nbsp;  @if (Model.UserName.ToString().Equals(@User.Identity.Name.ToString()))
-    { @Html.ActionLink("Şifre Değiştir", "ChangePassword", "Account") <br />
+        @Html.EditorFor(model => model.Email)&nbsp;  @if (Model.UserName.ToString().Equals(@User.Identity.Name.ToString()))
+                                                     { @Html.ActionLink("Şifre Değiştir", "ChangePassword", "Account") <br />
         @Html.ValidationMessageFor(model => model.Email)
-    }
+                                                     }
        
     </td>
     </tr>
@@ -46,11 +47,13 @@
     <td style="border-left: 1px solid; width: 30%; vertical-align: top; text-align: right; font-weight: bold;">Kullanıcının Rollerini Seçiniz</td>
     <td style="vertical-align: top; text-align: left; font-weight: bold;">@Html.ListBox("RoleID", null, new { style = "width: 250px;" })</td>
     </tr>
+    <!--
     <tr>
     <td style="border-left: 1px solid; vertical-align: top; text-align: right; font-weight: bold;">Yetkili Olduğu Ana birimleri Belirtiniz</td>
     
-    <td style="vertical-align: top; text-align: left; font-weight: bold;">@Html.ListBox("WorkshopID", null, new { style = "width: 250px;" })</td>
+    <td style="vertical-align: top; text-align: left; font-weight: bold;">@Html.ListBox("WorkshopMultiSelectID", null, new { style = "width: 250px;" })</td>
     </tr>
+    -->
     @if (User.IsInRole("administrators"))
     { 
     <tr>
@@ -66,12 +69,123 @@
     }           
     </tbody>
     </table>
-    <br />
+ 
     <div class="submit-row">
-    <input type="submit" name="kaydet" onclick="this.disabled=true;this.value='Lütfen Bekleyiniz..Calisiyor..';this.form.submit();" value="Kaydet" />
+    <input type="submit" name="kaydet" class="default" onclick="this.disabled=true;this.value='Lütfen Bekleyiniz..Calisiyor..';this.form.submit();" value="Kaydet" />
     </div>
-            
 }
+    <br />
+   
+    <!-- yeni yetkiler-->
+    <table style="width: 100%; margin-top: 15px;">
+    <tbody>
+    <thead><th colspan="8"><p style="margin-top: 5px; padding-top: 5px;"><u style="color: Maroon;">@Model.UserName</u>&nbsp;Anabirim Yetkilerini Düzenle</p></th></thead>
+    <tr>
+    <td colspan="2" style="border-top: 1px solid; border-left: 1px solid; vertical-align: top; text-align: left; font-weight: bold;">
+    </td>
+    <td style="border-top: 1px solid;">
+    Görüntüle
+    </td>
+    <td style="border-top: 1px solid;">
+    Kayıt Ekle
+    </td>
+    <td style="border-top: 1px solid;">
+    Güncelle
+    </td>
+    <td style="border-top: 1px solid;">
+    Onayla/Kapat
+    </td>
+    <td style="border-top: 1px solid;">
+     Sil
+    </td>
+    <td style="border-top: 1px solid;">
+    </td>
+    </tr>
+    @using (Html.BeginForm("Create", "WorkshopPermission",new { userID = Model.UserId, RedirectRoute = "Profil" },FormMethod.Post,null))
+    {
+    <tr>
+    <td colspan="2" style="border-left: 1px solid; vertical-align: middle; text-align: right; font-weight: bold;">
+      @Html.DropDownList("WorkshopID", "Ana Birim Belirtiniz    ")
+    </td>
+    <td>
+    @Html.CheckBox("Select", false)
+    </td>
+    <td>
+    @Html.CheckBox("Insert", false)
+    </td>
+    <td>
+    @Html.CheckBox("Update", false)
+    </td>
+    <td>
+    @Html.CheckBox("Approve", false)
+    </td>
+    <td>
+    @Html.CheckBox("Delete", false)
+    </td>
+    <td>
+    <input type="submit" name="Ekle" onclick="this.disabled=true;this.value='Lütfen Bekleyiniz..Calisiyor..';this.form.submit();" value="Ekle" />
+    </td>
+    </tr>
+    
+    
+    }
+    <tr>
+    <td colspan="8" style="border-left: 1px solid; vertical-align:  middle; color: Green; text-align: middle; font-weight: bold;">
+        Kullanıcının Şu anki Ana Birim Yetkileri :
+    </td>
+    </tr>
+    @if (ViewBag.ErrorMessage != null)
+    {
+    <tr>
+    <td colspan="8" style="border-left: 1px solid; vertical-align:  middle; color: Maroon; text-align:center; font-weight: bold;">
+        Hata Oluştu &nbsp;:&nbsp;@ViewBag.ErrorMessage
+    </td>
+    </tr>
+    
+    }
+    @foreach (var Wrp in ViewBag.TheWorkshopPermissions as IList<Klmsncamp.Models.WorkshopPermission>)
+    {
+    <tr>
+    
+     <td colspan="2" style="border-left: 1px solid; vertical-align:  middle; text-align: right; font-weight: bold;">
+           @Wrp.Workshop.Description
+     </td>
+     <td>
+       @Html.CheckBox("Select", @Wrp.Select, new { disabled = "disabled" })
+     </td>
+     <td>
+        @Html.CheckBox("Insert", @Wrp.Insert, new { disabled = "disabled" })
+     </td>
+     <td>
+     @Html.CheckBox("Update", @Wrp.Update, new { disabled = "disabled" })
+     </td>
+     <td>
+     @Html.CheckBox("Approve", @Wrp.Approve, new { disabled = "disabled" })
+     </td>
+     <td>
+     @Html.CheckBox("Delete", @Wrp.Delete, new { disabled = "disabled" })
+     </td>
+     <td style="vertical-align: middle;">
+         @Html.ActionLink("Kaldır", "Delete", "WorkshopPermission", new { id = @Wrp.WorkshopPermissionID, userID=@Model.UserId,RedirectRoute = "Profil" }, null)
+     </td>
+    
+    
+    </tr>
+    }
+    @if ((int)ViewBag.TheWorkshopPermissionsCount == 0)
+    {
+        <tr>
+        <td colspan="8" style="border-left: 1px solid; vertical-align:  middle; color: Gray; text-align: center; font-weight: bold;">
+           Yetki Bulunamadı..
+        </td>
+        </tr>
+    }
+    </tbody>
+    </table>
+  
+      <!-- yeni yetkiler bitis-->
+            
+
 </fieldset>
 <br />
 <br />
