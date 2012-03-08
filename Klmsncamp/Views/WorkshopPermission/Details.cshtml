@@ -1,0 +1,45 @@
+﻿@model Klmsncamp.Models.WorkshopPermission
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<fieldset>
+    <legend>WorkshopPermission</legend>
+
+    <div class="display-label">Workshop</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Workshop.Description)
+    </div>
+
+    <div class="display-label">Select</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Select)
+    </div>
+
+    <div class="display-label">Insert</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Insert)
+    </div>
+
+    <div class="display-label">Update</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Update)
+    </div>
+
+    <div class="display-label">Delete</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Delete)
+    </div>
+
+    <div class="display-label">Approve</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Approve)
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.WorkshopPermissionID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

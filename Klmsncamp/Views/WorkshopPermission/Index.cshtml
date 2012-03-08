@@ -1,0 +1,63 @@
+﻿@model IEnumerable<Klmsncamp.Models.WorkshopPermission>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table>
+    <tr>
+        <th>
+            Workshop
+        </th>
+        <th>
+            Select
+        </th>
+        <th>
+            Insert
+        </th>
+        <th>
+            Update
+        </th>
+        <th>
+            Delete
+        </th>
+        <th>
+            Approve
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Workshop.Description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Select)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Insert)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Update)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Delete)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Approve)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.WorkshopPermissionID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.WorkshopPermissionID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.WorkshopPermissionID })
+        </td>
+    </tr>
+}
+
+</table>

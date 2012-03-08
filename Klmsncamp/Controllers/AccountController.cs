@@ -100,15 +100,26 @@ namespace Klmsncamp.Controllers
         }
 
         [Authorize]
-        public ActionResult Edit(string username_)
+        public ActionResult Edit(string username_,string err)
         {
             int _userid = db.Users.Where(i => i.UserName == username_).SingleOrDefault().UserId;
-            User user_ = db.Users.Include(p=>p.Roles).Include(p=>p.Workshops).Include(p => p.UserGroups).Include(p => p.CustomPermissions).Where(i => i.UserId == _userid).SingleOrDefault();
+            User user_ = db.Users.Include(p=>p.Roles).Include(p=>p.Workshops).Include(p=>p.WorkshopPermissions).Include(p => p.UserGroups).Include(p => p.CustomPermissions).Where(i => i.UserId == _userid).SingleOrDefault();
 
+
+            IList<WorkshopPermission> MyWorkshopPermissions = new List<WorkshopPermission>();
+
+            foreach (WorkshopPermission wrp_item in user_.WorkshopPermissions.ToList())
+            {
+                MyWorkshopPermissions.Add(wrp_item);    
+            }
+            ViewBag.TheWorkshopPermissionsCount = MyWorkshopPermissions.Count;
+            ViewBag.TheWorkshopPermissions = MyWorkshopPermissions;
+            ViewBag.ErrorMessage = err;
+            ViewBag.WorkshopID = new SelectList(db.Workshops, "WorkshopID", "Description");
             ViewBag.UserID = new SelectList(db.Users, "UserId", "FullNameWithUsername");
 
             ViewBag.RoleId = new MultiSelectList(db.Roles, "RoleID", "Description", user_.Roles.Select(p => p.RoleID).ToList());
-            ViewBag.WorkshopID = new MultiSelectList(db.Workshops, "WorkshopID", "Description",user_.Workshops.Select(p=>p.WorkshopID).ToList());
+            ViewBag.WorkshopMultiSelectID = new MultiSelectList(db.Workshops, "WorkshopID", "Description",user_.Workshops.Select(p=>p.WorkshopID).ToList());
             ViewBag.UserGroupID = new MultiSelectList(db.UserGroups, "UserGroupID", "Name",user_.UserGroups.Select(p=>p.UserGroupID).ToList());
             ViewBag.CustomPermissionID = new MultiSelectList(db.CustomPermissions, "CustomPermissionID", "Description",user_.CustomPermissions.Select(p=>p.CustomPermissionID).ToList());
             
@@ -148,9 +159,9 @@ namespace Klmsncamp.Controllers
                     }
                 }
 
-                if (formcollection["WorkshopID"] != null)
+                if (formcollection["WorkshopMultiSelectID"] != null)
                 {
-                    foreach (var workshop_int in formcollection["WorkshopID"].Split(',').ToList())
+                    foreach (var workshop_int in formcollection["WorkshopMultiSelectID"].Split(',').ToList())
                     {
                         try
                         {

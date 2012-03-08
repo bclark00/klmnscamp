@@ -61,11 +61,16 @@ namespace Klmsncamp.Controllers
 
             var requests = from r in db.RequestIssues select r; //.Where(i=>i.ValidationStateID==1).Include(r => r.RequestType).Include(r => r.Location).Include(r => r.Inventory).Include(r => r.Workshop).Include(r => r.RequestState).Include(r => r.UserReq).Include(r => r.User).Include(r => r.ValidationState);
 
-            if (!(User.IsInRole("moderators") || User.IsInRole("administrators")))
+
+            /*if (!(User.IsInRole("moderators") || User.IsInRole("administrators")))
             {
                 requests = requests.Where(i => i.UserReqID == user_wherecondition);//.Include(r => r.RequestType).Include(r => r.Location).Include(r => r.Inventory).Include(r => r.Workshop).Include(r => r.RequestState).Include(r => r.UserReq).Include(r => r.User).Include(r => r.ValidationState);
             }
-
+            */
+            User theuser_ = db.Users.Include(p => p.WorkshopPermissions).Where(i => i.UserId == user_wherecondition).SingleOrDefault();
+            var theuser_wrps = theuser_.WorkshopPermissions.Where(i=>i.Select==true).Select(s => s.WorkshopID).ToList();
+            
+            requests = requests.Where(u => theuser_wrps.Contains(u.WorkshopID));
             //sadece kendilerinin valide ettikleri
             requests = requests.Where(i => i.ValidationStateID == 1 || (i.ValidationStateID == 2 && i.UserReqID == user_wherecondition));
 
