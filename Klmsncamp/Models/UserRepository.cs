@@ -220,6 +220,7 @@ namespace Klmsncamp.Models
                     user.PasswordSalt = CreateSalt();
                     user.Password = CreatePasswordHash("123456", user.PasswordSalt);
                     db.SaveChanges();
+                    db.Dispose();
                     return "123456";
                 }
                 catch
