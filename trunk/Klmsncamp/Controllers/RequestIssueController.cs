@@ -71,9 +71,17 @@ namespace Klmsncamp.Controllers
             var theuser_wrps = theuser_.WorkshopPermissions.Where(i=>i.Select==true).Select(s => s.WorkshopID).ToList();
             
             requests = requests.Where(u => theuser_wrps.Contains(u.WorkshopID));
-            //sadece kendilerinin valide ettikleri
-            requests = requests.Where(i => i.ValidationStateID == 1 || (i.ValidationStateID == 2 && i.UserReqID == user_wherecondition));
+            
+            
+            if (!(new UserRepository().HasPerm(user_wherecondition, "ana_birim_tum_isleri_goruntuleyebilir")))
+            {
+                requests = requests.Where(i => i.UserReqID == user_wherecondition);
+            }
+            
 
+            //sadece kendilerinin taslaklari + valideler
+            requests = requests.Where(i => i.ValidationStateID == 1 || (i.ValidationStateID == 2 && i.UserReqID == user_wherecondition));
+            
             //else
             //{
             //    requests = requests.Where(i => i.ValidationStateID == 1);//.Include(r => r.RequestType).Include(r => r.Location).Include(r => r.Inventory).Include(r => r.Workshop).Include(r => r.RequestState).Include(r => r.UserReq).Include(r => r.User).Include(r => r.ValidationState);
@@ -631,6 +639,8 @@ namespace Klmsncamp.Controllers
             }
             else
             {
+
+               
                 ViewBag.RequestTypeID = new SelectList(db.RequestTypes, "RequestTypeID", "Description", rq.RequestTypeID);
                 ViewBag.RequestActualReasonID = new SelectList(db.RequestActualReasons, "RequestActualReasonID", "Description", rq.RequestActualReasonID);
                 ViewBag.LocationID = new SelectList(db.Locations, "LocationID", "Description", rq.LocationID);
@@ -644,7 +654,8 @@ namespace Klmsncamp.Controllers
                 ViewBag.DetailLocationID = new MultiSelectList(db.Locations, "LocationID", "Description", rq.Locations.Select(p => p.LocationID).ToList());
                 ViewBag.DetailCorporateAccountID = new MultiSelectList(db.CorporateAccounts, "CorporateAccountID", "Title", rq.CorporateAccounts.Select(p => p.CorporateAccountID).ToList());
                 ViewBag.DetailPersonnelID = new MultiSelectList(db.Personnels, "PersonnelID", "FullName", rq.Personnels.Select(p => p.PersonnelID).ToList());
-
+                ViewBag.ValidationStateID = new SelectList(db.ValidationStates, "ValidationStateID", "Description", rq.ValidationStateID);
+            
                 string multipleworkshops = db.ParameterSettings.AsNoTracking().Where(i => i.ParameterSettingID == 16).SingleOrDefault().ParameterValue;
 
                 if (multipleworkshops == "1")
@@ -659,18 +670,23 @@ namespace Klmsncamp.Controllers
                 ViewBag.show = show;
                 ViewBag.page = page;
 
+                MembershipUser currentuser_ = new UserRepository().GetUser(User.Identity.Name);
+                int user_wherecondition = int.Parse((currentuser_.ProviderUserKey).ToString());
+
                 if (User.IsInRole("administrators") || User.IsInRole("moderators"))
                 {
                     ViewBag.UserID = new SelectList(db.Users, "UserId", "FullName", rq.UserID);
                 }
                 else
                 {
-                    MembershipUser currentuser_ = new UserRepository().GetUser(User.Identity.Name);
-                    int user_wherecondition = int.Parse((currentuser_.ProviderUserKey).ToString());
+                    
                     ViewBag.UserID = new SelectList(db.Users.Where(i => i.UserId == user_wherecondition), "UserId", "FullName", rq.UserID);
                 }
 
-                ViewBag.ValidationStateID = new SelectList(db.ValidationStates, "ValidationStateID", "Description", rq.ValidationStateID);
+                User theuser_ = db.Users.Include(p => p.WorkshopPermissions).Where(i => i.UserId == user_wherecondition).SingleOrDefault();
+                WorkshopPermission thewrp_ = theuser_.WorkshopPermissions.Where(i => i.WorkshopID == rq.WorkshopID).SingleOrDefault();
+
+                ViewBag.UpdatePermission = thewrp_.Update;
 
                 //loglari göstermece
                 IList<LogRequestIssue> MyLogs = new List<LogRequestIssue>();

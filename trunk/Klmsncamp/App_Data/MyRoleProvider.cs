@@ -102,7 +102,7 @@ public class MyRoleProvider : RoleProvider
         MembershipUser user = _repository.GetUser(username);
         if (user != null)
         {
-            return _repository.isInRole(int.Parse((user.ProviderUserKey).ToString()), customperm);
+            return _repository.HasPerm(int.Parse((user.ProviderUserKey).ToString()), customperm);
         }
         else
         {
