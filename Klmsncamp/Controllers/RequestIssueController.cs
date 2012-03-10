@@ -683,7 +683,7 @@ namespace Klmsncamp.Controllers
                     ViewBag.UserID = new SelectList(db.Users.Where(i => i.UserId == user_wherecondition), "UserId", "FullName", rq.UserID);
                 }
 
-                User theuser_ = db.Users.Include(p => p.WorkshopPermissions).Where(i => i.UserId == user_wherecondition).SingleOrDefault();
+                User theuser_ = db.Users.AsNoTracking().Include(p => p.WorkshopPermissions).Where(i => i.UserId == user_wherecondition).SingleOrDefault();
                 WorkshopPermission thewrp_ = theuser_.WorkshopPermissions.Where(i => i.WorkshopID == rq.WorkshopID).SingleOrDefault();
 
                 ViewBag.UpdatePermission = thewrp_.Update;
@@ -731,8 +731,17 @@ namespace Klmsncamp.Controllers
         {
             MembershipUser currentuser_ = new UserRepository().GetUser(User.Identity.Name);
             int user_wherecondition = int.Parse((currentuser_.ProviderUserKey).ToString());
-
+            
             var rqDBrecord = db.RequestIssues.AsNoTracking().Where(i => i.RequestIssueID == rqToUpdate.RequestIssueID).SingleOrDefault();
+
+            User theuser_ = db.Users.AsNoTracking().Include(p => p.WorkshopPermissions).Where(i => i.UserId == user_wherecondition).SingleOrDefault();
+            WorkshopPermission thewrp_ = theuser_.WorkshopPermissions.Where(i => i.WorkshopID == rqDBrecord.WorkshopID).SingleOrDefault();
+
+            if (!thewrp_.Update)
+            {
+                return RedirectToAction("Index", new { show = formCollection["show"], page = formCollection["page"] });
+            }
+
 
             if (formCollection["isApproved"] == "false" && rqDBrecord.IsApproved == true && User.IsInRole("administrators"))
             {

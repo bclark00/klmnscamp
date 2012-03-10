@@ -640,8 +640,11 @@
         <div class="submit-row">
             <p class="deletelink-box">
                 @Html.ActionLink("Vazgeç ve Geri Dön", "Index")&nbsp;|&nbsp;@Html.ActionLink("Sil", "Delete", "RequestIssue", new { id = Model.RequestIssueID, show = ViewBag.show, page = ViewBag.page }, null)</p>
+           @if (ViewBag.UpdatePermission)
+           {
             <input type="submit" onclick="this.disabled=true;this.value='Lütfen Bekleyiniz..Calisiyor..';this.form.submit();"
                 value="Kaydet" />
+           }
         </div>
 
     }
