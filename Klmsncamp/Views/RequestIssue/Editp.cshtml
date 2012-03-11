@@ -270,7 +270,7 @@
 
                         <tr>
                             <td style="vertical-align: middle; text-align: right;">
-                                @Html.LabelFor(model => model.Projects)
+                                @Html.LabelFor(model => model.Projects,"Bağlı Olduğu Projeler")
                             </td>
                             <td align="left" style="text-align: left;">
                                 @Html.ListBox("DetailProjectID", null, new { @class = "chzn-select", style = "width: 350px;" })
@@ -278,7 +278,7 @@
                         </tr>
                         <tr>
                             <td style="vertical-align: middle; text-align: right;">
-                                @Html.LabelFor(model => model.Locations)
+                                @Html.LabelFor(model => model.Locations,"Departmanlar")
                             </td>
                             <td align="left" style="text-align: left;">
                                 @Html.ListBox("DetailLocationID", null, new { @class = "chzn-select", style = "width: 350px;" })
@@ -286,7 +286,7 @@
                         </tr>
                         <tr>
                             <td style="vertical-align: middle; text-align: right;">
-                                @Html.LabelFor(model => model.CorporateAccounts)
+                                @Html.LabelFor(model => model.CorporateAccounts,"İlgili Firmalar")
                             </td>
                             <td align="left" style="text-align: left;">
                                 @Html.ListBox("DetailCorporateAccountID", null, new { @class = "chzn-select", style = "width: 350px;" })
@@ -294,7 +294,7 @@
                         </tr>
                         <tr>
                             <td style="vertical-align: middle; text-align: right;">
-                                @Html.LabelFor(model => model.Personnels)
+                                @Html.LabelFor(model => model.Personnels,"İlgili Personel")
                             </td>
                             <td align="left" style="text-align: left;">
                                 @Html.ListBox("DetailPersonnelID", null, new { @class = "chzn-select", style = "width: 350px;" })

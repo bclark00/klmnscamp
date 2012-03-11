@@ -105,7 +105,6 @@ namespace Klmsncamp.Controllers
             int _userid = db.Users.Where(i => i.UserName == username_).SingleOrDefault().UserId;
             User user_ = db.Users.Include(p=>p.Roles).Include(p=>p.Workshops).Include(p=>p.WorkshopPermissions).Include(p => p.UserGroups).Include(p => p.CustomPermissions).Where(i => i.UserId == _userid).SingleOrDefault();
 
-
             IList<WorkshopPermission> MyWorkshopPermissions = new List<WorkshopPermission>();
 
             foreach (WorkshopPermission wrp_item in user_.WorkshopPermissions.ToList())
@@ -116,7 +115,35 @@ namespace Klmsncamp.Controllers
             ViewBag.TheWorkshopPermissions = MyWorkshopPermissions;
             ViewBag.ErrorMessage = err;
             ViewBag.WorkshopID = new SelectList(db.Workshops, "WorkshopID", "Description");
-            ViewBag.UserID = new SelectList(db.Users, "UserId", "FullNameWithUsername");
+
+            //herkes altındakilerin yetkilerini duzenleyebilir.?
+            MembershipUser currentuser_ = new UserRepository().GetUser(User.Identity.Name);
+            int user_wherecondition = int.Parse((currentuser_.ProviderUserKey).ToString());
+            User Currentuser_ = db.Users.AsNoTracking().Include(p => p.Roles).Include(p => p.WorkshopPermissions).Where(i => i.UserId == user_wherecondition).SingleOrDefault();
+            
+            try
+            {
+                int usr_role_min = Currentuser_.Roles.Min(p => p.RoleID);
+                var usr_roles_toadminister = db.Roles.AsNoTracking().Where(i=> i.RoleID>usr_role_min).ToList();
+
+                List<int> userids = new List<int>();
+                foreach (var role_ in usr_roles_toadminister)
+                {
+                    foreach (int ui in role_.Users.Select(i=>i.UserId).ToList())
+                    {
+                        userids.Add(ui);
+                    }
+                }
+
+                ViewBag.UserID = new SelectList(db.Users.Where(s=>userids.Contains(s.UserId)) , "UserId", "FullNameWithUsername");
+            }
+            catch
+            {
+                
+                ViewBag.UserID = new SelectList(db.Users.Where(u=> u.UserId<0), "UserId", "FullNameWithUsername");
+            }
+            
+            
 
             ViewBag.RoleId = new MultiSelectList(db.Roles, "RoleID", "Description", user_.Roles.Select(p => p.RoleID).ToList());
             ViewBag.WorkshopMultiSelectID = new MultiSelectList(db.Workshops, "WorkshopID", "Description",user_.Workshops.Select(p=>p.WorkshopID).ToList());
@@ -211,7 +238,8 @@ namespace Klmsncamp.Controllers
             return RedirectToAction("Edit", new { username_ = user.UserName });
         }
 
-        [Authorize(Roles = "administrators")]
+        
+        [Authorize(Roles = "administrators, moderators")]
         public ActionResult RedirectToEdit(int UserID)
         {
             string username = db.Users.AsNoTracking().Where(i => i.UserId == UserID).SingleOrDefault().UserName;

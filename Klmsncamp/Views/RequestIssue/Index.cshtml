@@ -151,7 +151,7 @@
     @Html.ActionLink("Sil", "Delete", "RequestIssue", new { id = @item.RequestIssueID, show = @ViewBag.CurrentShow, page = @ViewBag.CurrentPage }, null)
     </text>
                                 ).Width(100);
-                                columns.Bound(o => o.Workshop.Description).Width(100).Title("Atölye");
+                                columns.Bound(o => o.Workshop.Description).Width(100).Title("Yeni İşletme Birimi");
                                 columns.Bound(o => o.StartDate).Width(120).Title("Baş.Tarihi").Format("{0:d}");
                                 columns.Bound(o => o.UserReq.FullName).Width(120).Title("Kaydı Açan");
                                 columns.Bound(o => o.Location.CapitalizedDescription).Width(120).Title("Departman");

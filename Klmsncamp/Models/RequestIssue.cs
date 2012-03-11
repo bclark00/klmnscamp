@@ -17,11 +17,11 @@ namespace Klmsncamp.Models
 
         public virtual RequestType RequestType { get; set; }
 
-        [Display(Name = "Arıza Bildirimi Yapan")]
+        [Display(Name = "İş İsteğini Gerçekleştiren")]
         [ForeignKey("Personnel")]
         public int? PersonnelID { get; set; }
 
-        [Display(Name = "Arıza Bildirimi Yapan")]
+        [Display(Name = "İş İsteğini Gerçekleştiren")]
         public virtual Personnel Personnel { get; set; }
 
         [MaxLength(500, ErrorMessage = "500 karakterden uzun olamaz")]
@@ -29,11 +29,11 @@ namespace Klmsncamp.Models
         [Required(ErrorMessage = "Zorunlu Alan")]
         public string DetailedDescription { get; set; }
 
-        [Display(Name = "Lokasyon")]
+        [Display(Name = "İşin Gerçekleştiği Yer")]
         [Required(ErrorMessage = "Zorunlu Alan")]
         public int LocationID { get; set; }
 
-        [Display(Name = "İş / Arıza Bildirim Yeri")]
+        [Display(Name = "İşin Gerçekleştiği Yer")]
         public virtual Location Location { get; set; }
 
         [Display(Name = "Cihaz")]
@@ -42,7 +42,7 @@ namespace Klmsncamp.Models
         [Display(Name = "Envanter / Cihaz")]
         public virtual Inventory Inventory { get; set; }
 
-        [Display(Name = "Atölye")]
+        [Display(Name = "İşletme Birimi")]
         [Required(ErrorMessage = "Zorunlu Alan")]
         public int WorkshopID { get; set; }
 

@@ -73,7 +73,7 @@
                     {
                     <tr>
                         <td style="vertical-align: middle; text-align: right;">
-                            @Html.LabelFor(model => model.WorkshopID, "Atölye Bilgisi")&nbsp;<font color="maroon">*</font>
+                            @Html.LabelFor(model => model.WorkshopID, "İşletme Birimi Bilgisi")&nbsp;<font color="maroon">*</font>
                         </td>
                         <td style="vertical-align: middle; text-align: left;">
                             <br />
@@ -96,7 +96,7 @@
                     }
                     <tr>
                         <td style="vertical-align: middle; text-align: right;">
-                            @Html.LabelFor(model => model.LocationID, "İş-Arıza Bildirim Yeri")&nbsp;<font color="maroon">*</font>
+                            @Html.LabelFor(model => model.LocationID)&nbsp;<font color="maroon">*</font>
                         </td>
                         <td style="vertical-align: middle; text-align: left;">
                             <br />
@@ -160,7 +160,10 @@
                     </tr>
                     <tr id="rqdetail-box">
                         <td style="vertical-align: middle; text-align: right;">
-                            Detay Bilgileri
+                            @Html.LabelFor(model=>model.Projects)<br /><br />
+                            @Html.LabelFor(model=>model.Locations)<br /><br />
+                            @Html.LabelFor(model=>model.CorporateAccounts)<br /><br />
+                            @Html.LabelFor(model=>model.Personnels)
                         </td>
                         <td align="left" style="text-align: left;">
                             @Html.ListBox("DetailProjectID", null, new { @class = "chzn-select", style = "width: 350px;" })
