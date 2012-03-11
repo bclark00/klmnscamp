@@ -21,7 +21,7 @@
     <tbody>
     <thead><th colspan="2"><p style="margin-top: 5px; padding-top: 5px;"><u style="color: Maroon;">@Model.UserName</u>&nbsp;Kullanıcı Bilgileri Düzenle</p></th></thead>
     <tr>
-    <td style="border-left: 1px solid; width: 30%; vertical-align: middle; text-align: right; font-weight: bold;">
+    <td style="border-left: 1px solid rgb(238, 238, 238); width: 30%; vertical-align: middle; text-align: right; font-weight: bold;">
     @Html.LabelFor(model => model.FirstName, "Ad")&nbsp;-&nbsp;@Html.LabelFor(model => model.LastName, "Soyad")
     </td>
     <td style="vertical-align: middle; text-align: left; font-weight: bold;">
@@ -31,7 +31,7 @@
     </td>
     </tr>
     <tr>
-    <td style="border-left: 1px solid; width: 30%; vertical-align: middle; text-align: right; font-weight: bold;">
+    <td style="border-left: 1px solid rgb(238, 238, 238); width: 30%; vertical-align: middle; text-align: right; font-weight: bold;">
      @Html.LabelFor(model => model.Email)
     </td>
     <td style="vertical-align: middle; text-align: left; font-weight: bold;">
@@ -46,24 +46,24 @@
     @if (User.IsInRole("administrators"))
     {
     <tr>
-    <td style="border-left: 1px solid; width: 30%; vertical-align: top; text-align: right; font-weight: bold;">Kullanıcının Rollerini Seçiniz</td>
+    <td style="border-left: 1px solid rgb(238, 238, 238); width: 30%; vertical-align: top; text-align: right; font-weight: bold;">Kullanıcının Rollerini Seçiniz</td>
     <td style="vertical-align: top; text-align: left; font-weight: bold;">@Html.ListBox("RoleID", null, new { style = "width: 250px;" })</td>
     </tr>
     <!--
     <tr>
-    <td style="border-left: 1px solid; vertical-align: top; text-align: right; font-weight: bold;">Yetkili Olduğu Ana birimleri Belirtiniz</td>
+    <td style="border-left: 1px solid rgb(238, 238, 238); vertical-align: top; text-align: right; font-weight: bold;">Yetkili Olduğu Ana birimleri Belirtiniz</td>
     
     <td style="vertical-align: top; text-align: left; font-weight: bold;">@Html.ListBox("WorkshopMultiSelectID", null, new { style = "width: 250px;" })</td>
     </tr>
     -->
      
     <tr>
-    <td style="border-left: 1px solid; vertical-align: top; text-align: right; font-weight: bold;">Yetki Gruplarını Belirtiniz (Yetki Grubunun bağlı olduğu ana birim ve özel izinler, Kullanıcı izinlerine dahil edilir)</td>
+    <td style="border-left: 1px solid rgb(238, 238, 238); vertical-align: top; text-align: right; font-weight: bold;">Yetki Gruplarını Belirtiniz (Yetki Grubunun bağlı olduğu ana birim ve özel izinler, Kullanıcı izinlerine dahil edilir)</td>
     
     <td style="vertical-align: top; text-align: left; font-weight: bold;">@Html.ListBox("UserGroupID", null, new { style = "width: 250px;" })</td>
     </tr>
     <tr>
-    <td style="border-left: 1px solid; vertical-align: top; text-align: right; font-weight: bold;">Özel izinleri seçiniz</td>
+    <td style="border-left: 1px solid rgb(238, 238, 238); vertical-align: top; text-align: right; font-weight: bold;">Özel izinleri seçiniz</td>
     
     <td style="vertical-align: top; text-align: left; font-weight: bold;">@Html.ListBox("CustomPermissionID", null, new { style = "width: 250px;" })</td>
     </tr> 
@@ -76,36 +76,38 @@
     </div>
 }
     <br />
-   
+
+@if (User.IsInRole("administrators") || User.IsInRole("moderators"))
+{  
     <!-- yeni yetkiler-->
     <table style="width: 100%; margin-top: 15px;">
     <tbody>
     <thead><th colspan="8"><p style="margin-top: 5px; padding-top: 5px;"><u style="color: Maroon;">@Model.UserName</u>&nbsp;Anabirim Yetkilerini Düzenle</p></th></thead>
     <tr>
-    <td colspan="2" style="border-top: 1px solid; border-left: 1px solid; vertical-align: top; text-align: left; font-weight: bold;">
+    <td colspan="2" style="border-top: 1px solid rgb(238, 238, 238); border-left: 1px solid rgb(238, 238, 238); vertical-align: top; text-align: left; font-weight: bold;">
     </td>
-    <td style="border-top: 1px solid;">
+    <td style="border-top: 1px solid rgb(238, 238, 238);">
     Görüntüle
     </td>
-    <td style="border-top: 1px solid;">
+    <td style="border-top: 1px solid rgb(238, 238, 238);">
     Kayıt Ekle
     </td>
-    <td style="border-top: 1px solid;">
+    <td style="border-top: 1px solid rgb(238, 238, 238);">
     Güncelle
     </td>
-    <td style="border-top: 1px solid;">
+    <td style="border-top: 1px solid rgb(238, 238, 238);">
     Onayla/Kapat
     </td>
-    <td style="border-top: 1px solid;">
+    <td style="border-top: 1px solid rgb(238, 238, 238);">
      Sil
     </td>
-    <td style="border-top: 1px solid;">
+    <td style="border-top: 1px solid rgb(238, 238, 238);">
     </td>
     </tr>
-    @using (Html.BeginForm("Create", "WorkshopPermission",new { userID = Model.UserId, RedirectRoute = "Profil" },FormMethod.Post,null))
+    @using (Html.BeginForm("Create", "WorkshopPermission", new { userID = Model.UserId, RedirectRoute = "Profil" }, FormMethod.Post, null))
     {
     <tr>
-    <td colspan="2" style="border-left: 1px solid; vertical-align: middle; text-align: right; font-weight: bold;">
+    <td colspan="2" style="border-left: 1px solid rgb(238, 238, 238); vertical-align: middle; text-align: right; font-weight: bold;">
       @Html.DropDownList("WorkshopID", "Ana Birim Belirtiniz    ")
     </td>
     <td>
@@ -124,21 +126,21 @@
     @Html.CheckBox("Delete", false)
     </td>
     <td>
-    <input type="submit" name="Ekle" onclick="this.disabled=true;this.value='Lütfen Bekleyiniz..Calisiyor..';this.form.submit();" value="Ekle" />
+    <input type="submit" name="Ekle" value="Ekle" />
     </td>
     </tr>
     
     
     }
     <tr>
-    <td colspan="8" style="border-left: 1px solid; vertical-align:  middle; color: Green; text-align: middle; font-weight: bold;">
+    <td colspan="8" style="border-left: 1px solid rgb(238, 238, 238); vertical-align:  middle; color: Green; text-align: middle; font-weight: bold;">
         Kullanıcının Şu anki Ana Birim Yetkileri :
     </td>
     </tr>
     @if (ViewBag.ErrorMessage != null)
     {
     <tr>
-    <td colspan="8" style="border-left: 1px solid; vertical-align:  middle; color: Maroon; text-align:center; font-weight: bold;">
+    <td colspan="8" style="border-left: 1px solid rgb(238, 238, 238); vertical-align:  middle; color: Maroon; text-align:center; font-weight: bold;">
         Hata Oluştu &nbsp;:&nbsp;@ViewBag.ErrorMessage
     </td>
     </tr>
@@ -148,7 +150,7 @@
     {
     <tr>
     
-     <td colspan="2" style="border-left: 1px solid; vertical-align:  middle; text-align: right; font-weight: bold;">
+     <td colspan="2" style="border-left: 1px solid rgb(238, 238, 238); vertical-align:  middle; text-align: right; font-weight: bold;">
            @Wrp.Workshop.Description
      </td>
      <td>
@@ -167,7 +169,7 @@
      @Html.CheckBox("Delete", @Wrp.Delete, new { disabled = "disabled" })
      </td>
      <td style="vertical-align: middle;">
-         @Html.ActionLink("Kaldır", "Delete", "WorkshopPermission", new { id = @Wrp.WorkshopPermissionID, userID=@Model.UserId,RedirectRoute = "Profil" }, null)
+         @Html.ActionLink("Kaldır", "Delete", "WorkshopPermission", new { id = @Wrp.WorkshopPermissionID, userID = @Model.UserId, RedirectRoute = "Profil" }, null)
      </td>
     
     
@@ -176,7 +178,7 @@
     @if ((int)ViewBag.TheWorkshopPermissionsCount == 0)
     {
         <tr>
-        <td colspan="8" style="border-left: 1px solid; vertical-align:  middle; color: Gray; text-align: center; font-weight: bold;">
+        <td colspan="8" style="border-left: 1px solid rgb(238, 238, 238); vertical-align:  middle; color: rgb(238, 238, 238); text-align: center; font-weight: bold;">
            Yetki Bulunamadı..
         </td>
         </tr>
@@ -185,12 +187,12 @@
     </table>
   
       <!-- yeni yetkiler bitis-->
-            
-
+}         
 </fieldset>
+
 <br />
 <br />
-@if (User.IsInRole("administrators"))
+@if (User.IsInRole("administrators") ||User.IsInRole("moderators"))
 { 
     <fieldset style="width: 820px;" class="module aligned ">
     <legend>Diğer Kullanıcılar :</legend>
@@ -204,7 +206,7 @@
         @(Html.Telerik().ComboBox()
         .Name("UserID")
         .HtmlAttributes(new { id = "ComboBox_wrapper_user" })
-        .AutoFill(true).HtmlAttributes(new { style = "width:210px;" }).DropDownHtmlAttributes(new { style = "width: 210px;" }).InputHtmlAttributes(new { style = "vertical-align: middle; font-size:100%; border: 1px solid; width: 200px;" })
+        .AutoFill(true).HtmlAttributes(new { style = "width:210px;" }).DropDownHtmlAttributes(new { style = "width: 210px;" }).InputHtmlAttributes(new { style = "vertical-align: middle; font-size:100%; border: 1px solid rgb(238, 238, 238); width: 200px;" })
         .BindTo((SelectList)ViewBag.UserID)
         .Filterable(filtering => filtering.FilterMode((AutoCompleteFilterMode)Enum.Parse(typeof(AutoCompleteFilterMode), "2", false)))
         .HighlightFirstMatch(true)

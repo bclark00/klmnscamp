@@ -244,8 +244,12 @@ namespace Klmsncamp.Controllers
                 ViewBag.PersonnelID = new SelectList(db.Personnels.Where(s => s.ValidationStateID == 1), "PersonnelID", "FullName");
             }
 
+
+            User theuser_ = db.Users.Include(p => p.WorkshopPermissions).Where(i => i.UserId == user_wherecondition).SingleOrDefault();
+            var theuser_wrps = theuser_.WorkshopPermissions.Where(i => i.Insert == true).Select(s => s.WorkshopID).ToList();
+
             ViewBag.InventoryID = new SelectList(db.Inventories, "InventoryID", "Description");
-            ViewBag.WorkshopID = new SelectList(db.Workshops, "WorkshopID", "Description");
+            ViewBag.WorkshopID = new SelectList(db.Workshops.Where(u=> theuser_wrps.Contains(u.WorkshopID)), "WorkshopID", "Description");
             ViewBag.RequestStateID = new SelectList(db.RequestStates, "RequestStateID", "Description", 1);
             ViewBag.UserReqID = new SelectList(db.Users.Where(x => x.UserId == user_wherecondition), "UserId", "FullName", currentuser_.ProviderUserKey);
             ViewBag.UserID = new SelectList(db.Users, "UserId", "FullName", currentuser_.ProviderUserKey);
@@ -262,6 +266,7 @@ namespace Klmsncamp.Controllers
                 ViewBag.MultipleWorkshops = false;
             }
 
+            
             if (projectid != null && projectid.GetType().Name == "Int32")
             {
                 ViewBag.DetailProjectID = new MultiSelectList(db.Projects, "ProjectID", "MultiboxDescription", db.Projects.Where(i => i.ProjectID == projectid).Select(p => p.ProjectID).ToList());
@@ -387,7 +392,12 @@ namespace Klmsncamp.Controllers
             ViewBag.LocationID = new SelectList(db.Locations, "LocationID", "Description", requestıssue.LocationID);
             ViewBag.PersonnelID = new SelectList(db.Personnels.Where(s => s.ValidationStateID == 1), "PersonnelID", "FullName", requestıssue.PersonnelID);
             ViewBag.InventoryID = new SelectList(db.Inventories, "InventoryID", "Description", requestıssue.InventoryID);
-            ViewBag.WorkshopID = new SelectList(db.Workshops, "WorkshopID", "Description", requestıssue.WorkshopID);
+
+            User theuser_ = db.Users.Include(p => p.WorkshopPermissions).Where(i => i.UserId == user_wherecondition).SingleOrDefault();
+            var theuser_wrps = theuser_.WorkshopPermissions.Where(i => i.Insert == true).Select(s => s.WorkshopID).ToList();
+
+            ViewBag.WorkshopID = new SelectList(db.Workshops.Where(u=> theuser_wrps.Contains(u.WorkshopID)), "WorkshopID", "Description", requestıssue.WorkshopID);
+
             ViewBag.RequestStateID = new SelectList(db.RequestStates, "RequestStateID", "Description", requestıssue.RequestStateID);
             ViewBag.UserReqID = new SelectList(db.Users.Where(x => x.UserId == user_wherecondition), "UserId", "FullName", requestıssue.UserReqID);
             ViewBag.UserID = new SelectList(db.Users, "UserId", "FullName", requestıssue.UserID);
