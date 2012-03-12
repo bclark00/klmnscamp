@@ -547,55 +547,55 @@
                         <td style="color: #A80000; vertical-align: middle; text-align: left;">
                             @if (ViewBag.HasSurvey)
                             {
-                                @Html.HiddenFor(model => model.IsApproved)
-                           if (Model.IsApproved == true)
-                           {
-                                <font color="maroon"><b>Bu İş istek kapatılmış ve Anketi Doldurulmuştur. Onay Durumu
-                                    değiştirilemez.</b></font>
-                                @:<img title="Bu iş istek onaylanarak kapatılmıştır." alt="Tamamlandı" src="@Url.Content("~/Content/images/checked.gif")"/>
-                            }
-                           else
-                           {
-                                <font color="maroon"><b>Bu İş istek/talebe ait Anket Doldurulmuştur. Onay Durumu değiştirilemez.</b></font>
-                                @:<img title="Açık / Çalışma Sürüyor" alt="Devam Ediyor" src="@Url.Content("~/Content/images/delete.png")"/>
+                                   @Html.HiddenFor(model => model.IsApproved)
+                                   if (Model.IsApproved == true)
+                                   {
+                                        <font color="maroon"><b>Bu İş istek kapatılmış ve Anketi Doldurulmuştur. Onay Durumu
+                                            değiştirilemez.</b></font>
+                                        @:<img title="Bu iş istek onaylanarak kapatılmıştır." alt="Tamamlandı" src="@Url.Content("~/Content/images/checked.gif")"/>
+                                    }
+                                   else
+                                   {
+                                        <font color="maroon"><b>Bu İş istek/talebe ait Anket Doldurulmuştur. Onay Durumu değiştirilemez.</b></font>
+                                        @:<img title="Açık / Çalışma Sürüyor" alt="Devam Ediyor" src="@Url.Content("~/Content/images/delete.png")"/>
 
-                           }
+                                   }
                             }
                             else
                             {
-                                if (Model.IsApproved == true && !User.IsInRole("administrators"))
+                                if (Model.IsApproved == true && !(ViewBag.ApprovePermission))
                                 {
                                     @Html.HiddenFor(model => model.IsApproved)
-                               if (Model.IsApproved == true)
-                               {
-                                    @:<img title="Bu iş istek onaylanarak kapatılmıştır." alt="Tamamlandı" src="@Url.Content("~/Content/images/checked.gif")"/>
-                                }
-                               else
-                               {
-                                    @:<img title="Açık / Çalışma Sürüyor" alt="Devam Ediyor" src="@Url.Content("~/Content/images/delete.png")"/>
-                                }
+                                   if (Model.IsApproved == true)
+                                   {
+                                        @:<img title="Bu iş istek onaylanarak kapatılmıştır." alt="Tamamlandı" src="@Url.Content("~/Content/images/checked.gif")"/>
+                                    }
+                                   else
+                                   {
+                                        @:<img title="Açık / Çalışma Sürüyor" alt="Devam Ediyor" src="@Url.Content("~/Content/images/delete.png")"/>
+                                    }
 
                                 }
-                                else if (User.IsInRole("moderators"))
+                                else if (ViewBag.ApprovePermission)
                                 {
                                     @Html.EditorFor(model => model.IsApproved)
                                 }
-                                else if (User.IsInRole("administrators"))
+                                else if (ViewBag.ApprovePermission)
                                 {
                                     @Html.EditorFor(model => model.IsApproved)
                                 }
                                 else
                                 {
                                     @Html.HiddenFor(model => model.IsApproved)
-                               if (Model.IsApproved == true)
-                               {
-                                    @:<img title="Bu iş istek onaylanarak kapatılmıştır." alt="Tamamlandı" src="@Url.Content("~/Content/images/checked.gif")"/>
-                                }
-                               else
-                               {
-                                @:<img title="Açık / Çalışma Sürüyor" alt="Devam Ediyor" src="@Url.Content("~/Content/images/delete.png")"/>
+                                   if (Model.IsApproved == true)
+                                   {
+                                        @:<img title="Bu iş istek onaylanarak kapatılmıştır." alt="Tamamlandı" src="@Url.Content("~/Content/images/checked.gif")"/>
+                                    }
+                                   else
+                                   {
+                                    @:<img title="Açık / Çalışma Sürüyor" alt="Devam Ediyor" src="@Url.Content("~/Content/images/delete.png")"/>
 
-                               }
+                                   }
                                 }
                             }
                         </td>

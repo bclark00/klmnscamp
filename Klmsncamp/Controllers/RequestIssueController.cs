@@ -75,7 +75,7 @@ namespace Klmsncamp.Controllers
             
             if (!(new UserRepository().HasPerm(user_wherecondition, "ana_birim_tum_isleri_goruntuleyebilir")))
             {
-                requests = requests.Where(i => i.UserReqID == user_wherecondition);
+                requests = requests.Where(i => i.UserReqID == user_wherecondition || i.UserID== user_wherecondition);
             }
             
 
@@ -698,6 +698,7 @@ namespace Klmsncamp.Controllers
 
                 ViewBag.UpdatePermission = thewrp_.Update;
 
+                ViewBag.ApprovePermission = thewrp_.Approve;
                 //loglari göstermece
                 IList<LogRequestIssue> MyLogs = new List<LogRequestIssue>();
                 foreach (LogRequestIssue log_item in db.LogRequestIssues.Where(i => i.RequestIssueID == id).ToList())
