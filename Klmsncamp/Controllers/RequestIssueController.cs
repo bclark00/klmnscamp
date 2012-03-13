@@ -693,12 +693,24 @@ namespace Klmsncamp.Controllers
                     ViewBag.UserID = new SelectList(db.Users.Where(i => i.UserId == user_wherecondition), "UserId", "FullName", rq.UserID);
                 }
 
+                //ozel yetkiler
                 User theuser_ = db.Users.AsNoTracking().Include(p => p.WorkshopPermissions).Where(i => i.UserId == user_wherecondition).SingleOrDefault();
                 WorkshopPermission thewrp_ = theuser_.WorkshopPermissions.Where(i => i.WorkshopID == rq.WorkshopID).SingleOrDefault();
 
                 ViewBag.UpdatePermission = thewrp_.Update;
 
                 ViewBag.ApprovePermission = thewrp_.Approve;
+
+                if (!(new UserRepository().HasPerm(user_wherecondition, "is_bildiriminde_eklenmis_dosyalari_duzenleyebilir")))
+                {
+                    ViewBag.FileEditPermission = false;
+                }
+                else
+                {
+                    ViewBag.FileEditPermission = true;
+                }
+                //ozel yetkiler bitis
+
                 //loglari göstermece
                 IList<LogRequestIssue> MyLogs = new List<LogRequestIssue>();
                 foreach (LogRequestIssue log_item in db.LogRequestIssues.Where(i => i.RequestIssueID == id).ToList())
@@ -1003,6 +1015,23 @@ namespace Klmsncamp.Controllers
 
             ViewBag.show = formCollection["show"];
             ViewBag.page = formCollection["page"];
+
+            //ozel yetkiler
+           
+            ViewBag.UpdatePermission = thewrp_.Update;
+
+            ViewBag.ApprovePermission = thewrp_.Approve;
+
+            if (!(new UserRepository().HasPerm(user_wherecondition, "is_bildiriminde_eklenmis_dosyalari_duzenleyebilir")))
+            {
+                ViewBag.FileEditPermission = false;
+            }
+            else
+            {
+                ViewBag.FileEditPermission = true;
+            }
+            //ozelyetkiler bitiş
+
 
             //loglari göstermece
             IList<LogRequestIssue> MyLogs = new List<LogRequestIssue>();

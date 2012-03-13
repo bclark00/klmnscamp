@@ -137,7 +137,7 @@
                     </tr>
                     <tr>
                         <td style="vertical-align: middle; text-align: right;">
-                            @Html.LabelFor(model => model.PersonnelID)
+                            @Html.LabelFor(model => model.PersonnelID,"İş isteğini Yapan")
                         </td>
                         <td style="color: #A80000; vertical-align: middle; text-align: left;">
                             @if (Model.IsApproved == true)
@@ -155,7 +155,7 @@
                             }
                             else
                             {
-                                <br />
+                                
                                 @(Html.Telerik().ComboBox()
                     .Name("PersonnelID")
                     .HtmlAttributes(new { id = "ComboBox_wrapper_personnel" })
@@ -305,7 +305,7 @@
                         <td style="vertical-align: middle; text-align: right;">
                             Ek Dosyalar
                         </td>
-                        @if ((!User.IsInRole("administrators") && !User.IsInRole("moderators")) || Model.IsApproved == true)
+                        @if (Model.IsApproved == true)
                         {
                             <td style="color: #A80000; vertical-align: middle; text-align: left;">
                                 <ul>
@@ -317,23 +317,34 @@
                                 </ul>
                             </td>
                         }
-                        else
+                        else if (User.IsInRole("administrators") || ViewBag.FileEditPermission)
                         {
 
                             <td style="vertical-align: middle; text-align: left;">
-                                <ul>
-                                    <li>
+                               
                                         <input type="button" class="default" value="Ekle" onclick="javascript: addInput();"
-                                            id="addfile" /></li>
+                                            id="addfile" /><br />
                                     @foreach (var xfileitem in this.Model.RequestIssueFiles)
                                     {
-                                        <li>@Html.ActionLink("(Sil)", "DeleteRequestIssueFile", new { id = xfileitem.RequestIssueFileID, rqid = this.Model.RequestIssueID, show = ViewBag.show, page = ViewBag.page })&nbsp;|&nbsp;@Html.ActionLink(xfileitem.RequestIssueFileName + " (indir)", "DownloadRequestIssueFile", new { id = xfileitem.RequestIssueFileID })&nbsp;(@asMb(xfileitem.RequestIssueFileSize)&nbsp;Mb)</li>
+                                        @Html.ActionLink("(Sil)", "DeleteRequestIssueFile", new { id = xfileitem.RequestIssueFileID, rqid = this.Model.RequestIssueID, show = ViewBag.show, page = ViewBag.page }) <text>&nbsp;|&nbsp;</text> @Html.ActionLink(xfileitem.RequestIssueFileName + " (indir)", "DownloadRequestIssueFile", new { id = xfileitem.RequestIssueFileID })<text>&nbsp;(</text>@asMb(xfileitem.RequestIssueFileSize)@:&nbsp;Mb)<br />
 
                                     }
-                                </ul>
+                                
                                 <br />
                                 <div id="add-file-field">
                                 </div>
+                            </td>
+                        }
+                        else
+                        {
+                            <td style="color: #A80000; vertical-align: middle; text-align: left;">
+                                <ul>
+                                    @foreach (var xfileitem in this.Model.RequestIssueFiles)
+                                    {
+                                        <li>@Html.ActionLink(xfileitem.RequestIssueFileName + " (indir)", "DownloadRequestIssueFile", new { id = xfileitem.RequestIssueFileID })&nbsp;(@asMb(xfileitem.RequestIssueFileSize)&nbsp;Mb)</li>
+
+                                    }
+                                </ul>
                             </td>
                         }
                     </tr>
@@ -342,7 +353,7 @@
                             @Html.LabelFor(model => model.RequestStateID)
                         </td>
                         <td style="color: #A80000; vertical-align: middle; text-align: left;">
-                            @if ((!User.IsInRole("administrators") && !User.IsInRole("moderators")) || Model.IsApproved == true)
+                            @if ( Model.IsApproved == true)
                             {
                                 @Html.HiddenFor(model => model.RequestStateID)
                                 @Html.DisplayFor(model => model.RequestState.Description)
@@ -417,7 +428,7 @@
                             @Html.LabelFor(model => model.Note)
                         </td>
                         <td style="color: #A80000; vertical-align: top; text-align: left;">
-                            @if ((!User.IsInRole("administrators") && !User.IsInRole("moderators")) || Model.IsApproved == true)
+                            @if ( Model.IsApproved == true)
                             {
                                 @Html.HiddenFor(model => model.Note)
                                 @Model.Note
@@ -618,7 +629,7 @@
                             }
                             else
                             {
-                                @Html.HiddenFor(model => model.User)
+                                @Html.HiddenFor(model => model.UserID)
                            try
                            {
                                 @Html.DisplayFor(model => model.User.FullName)
