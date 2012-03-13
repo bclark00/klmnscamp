@@ -629,15 +629,15 @@
                             }
                             else
                             {
-                                @Html.HiddenFor(model => model.UserID)
-                           try
-                           {
-                                @Html.DisplayFor(model => model.User.FullName)
-                           }
-                           catch
-                           {
-                                @: Henüz Atanmamış..
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            }
+                               @Html.HiddenFor(model => model.UserID)
+                               try
+                               {
+                                    @Html.DisplayFor(model => model.User.FullName)
+                               }
+                               catch
+                               {
+                                    @: Henüz Atanmamış..
+                               }
                             }
                         </td>
                     </tr>
