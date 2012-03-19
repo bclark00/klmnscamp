@@ -17,9 +17,9 @@ namespace Klmsncamp.Models
                 xpresent = my_model.TimeStamp;
             }
             DateTime xvalue = (DateTime)value;
-            if (xpresent.AddHours(-18) > xvalue)
+            if (xpresent.AddHours(-36) > xvalue)
             {
-                string sErrorMessage = "Başlangıç Tarihi, Kayıt tarihinden ( " + xpresent.ToLongDateString() + " " + xpresent.ToLongTimeString() + " ) en fazla 18 saat geri olabilir.";
+                string sErrorMessage = "Başlangıç Tarihi, Kayıt tarihinden ( " + xpresent.ToLongDateString() + " " + xpresent.ToLongTimeString() + " ) en fazla 36 saat geri olabilir.";
                 return new ValidationResult(sErrorMessage);
             }
             else
