@@ -1250,6 +1250,81 @@ namespace Klmsncamp.Controllers
             }
         }
 
+        
+        [Authorize(Roles = "administrators,moderators")]
+        public ActionResult Search()
+        {
+            var requests = from r in db.RequestIssues select r; //.Where(i=>i.ValidationStateID==1).Include(r => r.RequestType).Include(r => r.Location).Include(r => r.Inventory).Include(r => r.Workshop).Include(r => r.RequestState).Include(r => r.UserReq).Include(r => r.User).Include(r => r.ValidationState);
+            requests = requests.Include(r => r.RequestType).Include(r => r.Location).Include(r => r.Personnel).Include(r => r.Inventory).Include(r => r.Workshop).Include(r => r.RequestState).Include(r => r.UserReq).Include(r => r.User).Include(r => r.ValidationState).OrderByDescending(o => o.RequestIssueID);
+            var rlist = requests.Where(i=>i.RequestIssueID==-1).AsEnumerable();
+
+            ViewBag.UserID = new SelectList(db.Users, "UserId", "FullName");
+            
+
+            return View(rlist);
+        }
+
+        [Authorize(Roles = "administrators, moderators")]
+        [HttpPost]
+        public ActionResult Search(FormCollection formcollection)
+        {
+            bool hasDateCrit = true;
+            DateTime datecriteria_ = DateTime.Now;
+            try
+            {
+               datecriteria_ = DateTime.Parse(formcollection["TargetDate"]).AddDays(1);
+            }
+            catch { hasDateCrit = false; }
+
+            var requests = from r in db.RequestIssues select r;
+
+            if (hasDateCrit)
+            {
+                requests = from r in db.RequestIssues where r.EndDate < datecriteria_ select r; //.Where(i=>i.ValidationStateID==1).Include(r => r.RequestType).Include(r => r.Location).Include(r => r.Inventory).Include(r => r.Workshop).Include(r => r.RequestState).Include(r => r.UserReq).Include(r => r.User).Include(r => r.ValidationState);
+            }
+            
+
+            requests = requests.Where(u =>u.IsApproved == false);
+
+            try
+            {
+                if (int.Parse(formcollection["UserID"]) > 0)
+                {
+                    int usercrit_ = int.Parse(formcollection["UserID"]);
+                    requests = requests.Where(i => i.UserID.Value == usercrit_);
+
+                    ViewBag.UserID = new SelectList(db.Users, "UserId", "FullName", usercrit_);
+                }
+                else
+                {
+
+                    ViewBag.UserID = new SelectList(db.Users, "UserId", "FullName");
+                }
+            }
+            catch
+            {
+
+                ViewBag.UserID = new SelectList(db.Users, "UserId", "FullName");
+            }
+
+            
+
+            if (!string.IsNullOrEmpty(formcollection["SearchString"].Trim()))
+            {
+               var searchcrit_ = formcollection["SearchString"].Trim().ToLower();
+               requests = requests.Where(i => i.DetailedDescription.ToLower().Contains(searchcrit_) || i.Note.ToLower().Contains(searchcrit_));
+            }
+
+
+            requests = requests.Include(r => r.RequestType).Include(r => r.Location).Include(r => r.Personnel).Include(r => r.Inventory).Include(r => r.Workshop).Include(r => r.RequestState).Include(r => r.UserReq).Include(r => r.User).Include(r => r.ValidationState).OrderByDescending(o => o.EndDate);
+
+            var rlist = requests.AsEnumerable();
+
+            ViewBag.FilterString = formcollection["SearchString"].ToString();
+            
+            return View(rlist);
+        }
+
         [Authorize]
         public string SendEmail(MailAddress fromAddress, MailAddress toAddress, string subject, string body, string fromPersonnel, bool fromEBA,int xrqID)
         {

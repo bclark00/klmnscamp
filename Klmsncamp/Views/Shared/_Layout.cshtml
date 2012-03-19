@@ -86,10 +86,16 @@
         </ul>
         </text>);
             menu.Add()
-                .Text("Hızlı Ara")
+                .Text("Arama")
                 .Content(@<text>
         <ul class="product-list">
-            <li class="product" style="width: 250px;">
+            <li class="product">
+                <img src="@Url.Content("~/Content/Coquette/mail_search.png")" alt="İş Listesi" />
+                <p>
+                    @Html.ActionLink("Detaylı Ara", "Search", "RequestIssue", null, null)
+                </p>
+            </li>
+            <li class="product" style="height: 75px; width: 200px;">
                 <img src="@Url.Content("~/Content/Coquette/search.png")" alt="İş Listesi" />
                 <p style="display: inline;">
                     @using (Html.BeginForm("Find", "RequestIssue", FormMethod.Get, new { style = "float: left; text-align: center; width: 30px;" }))
