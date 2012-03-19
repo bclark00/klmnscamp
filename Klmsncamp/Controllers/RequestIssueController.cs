@@ -1259,7 +1259,9 @@ namespace Klmsncamp.Controllers
             var rlist = requests.Where(i=>i.RequestIssueID==-1).AsEnumerable();
 
             ViewBag.UserID = new SelectList(db.Users, "UserId", "FullName");
-            
+
+            ViewBag.CurrentShow = "A";
+            ViewBag.CurrentPage = 1;
 
             return View(rlist);
         }
@@ -1321,7 +1323,10 @@ namespace Klmsncamp.Controllers
             var rlist = requests.AsEnumerable();
 
             ViewBag.FilterString = formcollection["SearchString"].ToString();
-            
+
+            ViewBag.CurrentShow = "A";
+            ViewBag.CurrentPage = 1;
+
             return View(rlist);
         }
 
