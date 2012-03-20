@@ -1150,6 +1150,7 @@
     <Content Include="Views\WorkshopPermission\Edit.cshtml" />
     <Content Include="Views\WorkshopPermission\Delete.cshtml" />
     <Content Include="Views\RequestIssue\Search.cshtml" />
+    <Content Include="Views\RequestIssue\SearchResult.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_GlobalResources\EditorLocalization.en-US.resx">

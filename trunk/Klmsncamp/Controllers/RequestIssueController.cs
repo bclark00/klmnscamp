@@ -1252,7 +1252,7 @@ namespace Klmsncamp.Controllers
 
         
         [Authorize(Roles = "administrators,moderators")]
-        public ActionResult Search()
+        public ActionResult Search(int? page)
         {
             var requests = from r in db.RequestIssues select r; //.Where(i=>i.ValidationStateID==1).Include(r => r.RequestType).Include(r => r.Location).Include(r => r.Inventory).Include(r => r.Workshop).Include(r => r.RequestState).Include(r => r.UserReq).Include(r => r.User).Include(r => r.ValidationState);
             requests = requests.Include(r => r.RequestType).Include(r => r.Location).Include(r => r.Personnel).Include(r => r.Inventory).Include(r => r.Workshop).Include(r => r.RequestState).Include(r => r.UserReq).Include(r => r.User).Include(r => r.ValidationState).OrderByDescending(o => o.RequestIssueID);
@@ -1265,18 +1265,27 @@ namespace Klmsncamp.Controllers
 
             return View(rlist);
         }
-
+        
         [Authorize(Roles = "administrators, moderators")]
-        [HttpPost]
-        public ActionResult Search(FormCollection formcollection)
+        [HttpGet]
+        [AcceptVerbs(HttpVerbs.Get)]
+        public ActionResult SearchResult(int? UserID, string TargetDate, bool? AllFieldCheck, string SearchString,
+           [Bind(Prefix = "Result-page")] int? Result_page)
         {
             bool hasDateCrit = true;
             DateTime datecriteria_ = DateTime.Now;
             try
             {
-               datecriteria_ = DateTime.Parse(formcollection["TargetDate"]).AddDays(1);
+               datecriteria_ = DateTime.Parse(TargetDate).AddDays(1);
+               
+               ViewBag.TargetDate = datecriteria_.ToShortDateString();
+                
             }
-            catch { hasDateCrit = false; }
+            catch 
+            { 
+                hasDateCrit = false;
+                ViewBag.TargetDate = datecriteria_.ToShortDateString();
+            }
 
             var requests = from r in db.RequestIssues select r;
 
@@ -1286,13 +1295,13 @@ namespace Klmsncamp.Controllers
             }
             
 
-            requests = requests.Where(u =>u.IsApproved == false);
+            requests = requests.Where(u =>u.IsApproved == false && u.ValidationStateID==1);
 
             try
             {
-                if (int.Parse(formcollection["UserID"]) > 0)
+                if (UserID.Value > 0)
                 {
-                    int usercrit_ = int.Parse(formcollection["UserID"]);
+                    int usercrit_ = UserID.Value;
                     requests = requests.Where(i => i.UserID.Value == usercrit_);
 
                     ViewBag.UserID = new SelectList(db.Users, "UserId", "FullName", usercrit_);
@@ -1309,24 +1318,40 @@ namespace Klmsncamp.Controllers
                 ViewBag.UserID = new SelectList(db.Users, "UserId", "FullName");
             }
 
-            
 
-            if (!string.IsNullOrEmpty(formcollection["SearchString"].Trim()))
+            try
             {
-               var searchcrit_ = formcollection["SearchString"].Trim().ToLower();
-               requests = requests.Where(i => i.DetailedDescription.ToLower().Contains(searchcrit_) || i.Note.ToLower().Contains(searchcrit_));
+                if (!string.IsNullOrEmpty(SearchString.Trim()))
+                {
+                    var searchcrit_ = SearchString.Trim().ToLower();
+                    requests = requests.Where(i => i.DetailedDescription.ToLower().Contains(searchcrit_) || i.Note.ToLower().Contains(searchcrit_));
+                    ViewBag.FilterString = SearchString;
+                }
             }
-
+            catch 
+            {
+                ViewBag.FilterString = String.Empty;
+            }
 
             requests = requests.Include(r => r.RequestType).Include(r => r.Location).Include(r => r.Personnel).Include(r => r.Inventory).Include(r => r.Workshop).Include(r => r.RequestState).Include(r => r.UserReq).Include(r => r.User).Include(r => r.ValidationState).OrderByDescending(o => o.EndDate);
 
             var rlist = requests.AsEnumerable();
 
-            ViewBag.FilterString = formcollection["SearchString"].ToString();
+            
 
             ViewBag.CurrentShow = "A";
-            ViewBag.CurrentPage = 1;
-
+            try
+            {
+                if (Result_page.Value > 0)
+                {
+                    ViewBag.CurrentPage = Result_page;
+                }
+                else
+                {
+                    ViewBag.CurrentPage = 1;
+                }
+            }
+            catch { ViewBag.CurrentPage = 1; }
             return View(rlist);
         }
 
@@ -1743,7 +1768,7 @@ namespace Klmsncamp.Controllers
             var cd = new System.Net.Mime.ContentDisposition
             {
                 // for example foo.bak
-                FileName = "rapor_klimasanHelpDesk.pdf",
+                FileName = "rapor_HelpDesk.pdf",
 
                 // always prompt the user for downloading, set to true if you want
                 // the browser to try to show the file inline

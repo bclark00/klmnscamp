@@ -96,11 +96,11 @@
                 </p>
             </li>
             <li class="product" style="height: 75px; width: 200px;">
-                <img src="@Url.Content("~/Content/Coquette/search.png")" alt="İş Listesi" />
-                <p style="display: inline;">
+                <img src="@Url.Content("~/Content/Coquette/search.png")" style="width: 40px; height: 40px;" alt="İş Listesi" />
+                <p style=" margin-left: 10px; display: inline;">
                     @using (Html.BeginForm("Find", "RequestIssue", FormMethod.Get, new { style = "float: left; text-align: center; width: 30px;" }))
                     {
-                        @Html.ActionLink("Arıza Kaydı Ara", "Index", "Home", null, null)<text>:&nbsp;</text>@Html.TextBox("Rqid", null, new { size = "10" })<text>&nbsp;<input
+                        @Html.ActionLink("İş No ", "Index", "Home", null, null)<text>:&nbsp;</text>@Html.TextBox("Rqid", null, new { size = "10" })<text>&nbsp;<input
                             type="submit" style="margin: 0; padding: 0;" value="Git" name="Go" /></text>
                     }
                 </p>
