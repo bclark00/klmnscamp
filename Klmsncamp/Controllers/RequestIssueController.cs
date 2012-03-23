@@ -230,7 +230,7 @@ namespace Klmsncamp.Controllers
 
             ViewBag.RequestTypeID = new SelectList(db.RequestTypes, "RequestTypeID", "Description");
             ViewBag.RequestActualReasonID = new SelectList(db.RequestActualReasons, "RequestActualReasonID", "Description");
-            ViewBag.LocationID = new SelectList(db.Locations, "LocationID", "Description");
+            ViewBag.LocationID = new SelectList(db.Locations, "LocationID", "CapitalizedDescription");
 
             //bagli personel bilgisi var mi?
             int xcount = db.Personnels.Where(i => i.ValidationStateID==1 && i.UserID == user_wherecondition).ToList().Count;
@@ -270,14 +270,14 @@ namespace Klmsncamp.Controllers
             if (projectid != null && projectid.GetType().Name == "Int32")
             {
                 ViewBag.DetailProjectID = new MultiSelectList(db.Projects, "ProjectID", "MultiboxDescription", db.Projects.Where(i => i.ProjectID == projectid).Select(p => p.ProjectID).ToList());
-                ViewBag.DetailLocationID = new MultiSelectList(db.Locations, "LocationID", "Description", db.Projects.Include(s => s.Locations).Where(i => i.ProjectID == projectid).SingleOrDefault().Locations.Select(p => p.LocationID).ToList());
+                ViewBag.DetailLocationID = new MultiSelectList(db.Locations, "LocationID", "CapitalizedDescription", db.Projects.Include(s => s.Locations).Where(i => i.ProjectID == projectid).SingleOrDefault().Locations.Select(p => p.LocationID).ToList());
                 ViewBag.DetailCorporateAccountID = new MultiSelectList(db.CorporateAccounts, "CorporateAccountID", "Title", db.Projects.Include(s => s.CorporateAccounts).Where(i => i.ProjectID == projectid).SingleOrDefault().CorporateAccounts.Select(p => p.CorporateAccountID).ToList());
                 ViewBag.DetailPersonnelID = new MultiSelectList(db.Personnels, "PersonnelID", "FullName", db.Projects.Include(s => s.Personnels).Where(i => i.ProjectID == projectid).SingleOrDefault().Personnels.Select(p => p.PersonnelID).ToList());
             }
             else
             {
                 ViewBag.DetailProjectID = new MultiSelectList(db.Projects, "ProjectID", "MultiboxDescription");
-                ViewBag.DetailLocationID = new MultiSelectList(db.Locations, "LocationID", "Description");
+                ViewBag.DetailLocationID = new MultiSelectList(db.Locations, "LocationID", "CapitalizedDescription");
                 ViewBag.DetailCorporateAccountID = new MultiSelectList(db.CorporateAccounts, "CorporateAccountID", "Title");
                 ViewBag.DetailPersonnelID = new MultiSelectList(db.Personnels, "PersonnelID", "FullName");
             }
@@ -389,7 +389,7 @@ namespace Klmsncamp.Controllers
 
             ViewBag.RequestTypeID = new SelectList(db.RequestTypes, "RequestTypeID", "Description", requestıssue.RequestTypeID);
             ViewBag.RequestActualReasonID = new SelectList(db.RequestActualReasons, "RequestActualReasonID", "Description");
-            ViewBag.LocationID = new SelectList(db.Locations, "LocationID", "Description", requestıssue.LocationID);
+            ViewBag.LocationID = new SelectList(db.Locations, "LocationID", "CapitalizedDescription", requestıssue.LocationID);
             ViewBag.PersonnelID = new SelectList(db.Personnels.Where(s => s.ValidationStateID == 1), "PersonnelID", "FullName", requestıssue.PersonnelID);
             ViewBag.InventoryID = new SelectList(db.Inventories, "InventoryID", "Description", requestıssue.InventoryID);
 
@@ -425,7 +425,7 @@ namespace Klmsncamp.Controllers
 
             if (formcollection["DetailLocationID"] != null)
             {
-                ViewBag.DetailLocationID = new MultiSelectList(db.Locations, "LocationID", "Description", formcollection["DetailLocationID"].Split(',').ToList());
+                ViewBag.DetailLocationID = new MultiSelectList(db.Locations, "LocationID", "CapitalizedDescription", formcollection["DetailLocationID"].Split(',').ToList());
             }
             else
             {
@@ -466,7 +466,7 @@ namespace Klmsncamp.Controllers
 
             ViewBag.RequestTypeID = new SelectList(db.RequestTypes, "RequestTypeID", "Description", requestıssue.RequestTypeID);
             ViewBag.RequestActualReasonID = new SelectList(db.RequestActualReasons, "RequestActualReasonID", "Description", requestıssue.RequestActualReasonID);
-            ViewBag.LocationID = new SelectList(db.Locations, "LocationID", "Description", requestıssue.LocationID);
+            ViewBag.LocationID = new SelectList(db.Locations, "LocationID", "CapitalizedDescription", requestıssue.LocationID);
             ViewBag.PersonnelID = new SelectList(db.Personnels, "PersonnelID", "FullName", requestıssue.PersonnelID);
             ViewBag.InventoryID = new SelectList(db.Inventories, "InventoryID", "Description", requestıssue.InventoryID);
             ViewBag.WorkshopID = new SelectList(db.Workshops, "WorkshopID", "Description", requestıssue.WorkshopID);
@@ -476,7 +476,7 @@ namespace Klmsncamp.Controllers
             ViewBag.ValidationStateID = new SelectList(db.ValidationStates, "ValidationStateID", "Description", requestıssue.ValidationStateID);
 
             ViewBag.DetailProjectID = new MultiSelectList(db.Projects, "ProjectID", "MultiboxDescription", requestıssue.Projects.Select(p => p.ProjectID).ToList());
-            ViewBag.DetailLocationID = new MultiSelectList(db.Locations, "LocationID", "Description", requestıssue.Locations.Select(p => p.LocationID).ToList());
+            ViewBag.DetailLocationID = new MultiSelectList(db.Locations, "LocationID", "CapitalizedDescription", requestıssue.Locations.Select(p => p.LocationID).ToList());
             ViewBag.DetailCorporateAccountID = new MultiSelectList(db.CorporateAccounts, "CorporateAccountID", "Title", requestıssue.CorporateAccounts.Select(p => p.CorporateAccountID).ToList());
             ViewBag.DetailPersonnelID = new MultiSelectList(db.Personnels, "PersonnelID", "FullName", requestıssue.Personnels.Select(p => p.PersonnelID).ToList());
 
@@ -600,7 +600,7 @@ namespace Klmsncamp.Controllers
             }
             ViewBag.RequestTypeID = new SelectList(db.RequestTypes, "RequestTypeID", "Description", requestıssue.RequestTypeID);
             ViewBag.RequestActualReasonID = new SelectList(db.RequestActualReasons, "RequestActualReasonID", "Description", requestıssue.RequestActualReasonID);
-            ViewBag.LocationID = new SelectList(db.Locations, "LocationID", "Description", requestıssue.LocationID);
+            ViewBag.LocationID = new SelectList(db.Locations, "LocationID", "CapitalizedDescription", requestıssue.LocationID);
             ViewBag.PersonnelID = new SelectList(db.Personnels, "PersonnelID", "FullName", requestıssue.PersonnelID);
             ViewBag.InventoryID = new SelectList(db.Inventories, "InventoryID", "Description", requestıssue.InventoryID);
             ViewBag.WorkshopID = new SelectList(db.Workshops, "WorkshopID", "Description", requestıssue.WorkshopID);
@@ -618,7 +618,7 @@ namespace Klmsncamp.Controllers
             requestıssue.Personnels = requestissue__.Personnels;
 
             ViewBag.DetailProjectID = new MultiSelectList(db.Projects, "ProjectID", "MultiboxDescription", requestissue__.Projects.Select(p => p.ProjectID).ToList());
-            ViewBag.DetailLocationID = new MultiSelectList(db.Locations, "LocationID", "Description", requestissue__.Locations.Select(p => p.LocationID).ToList());
+            ViewBag.DetailLocationID = new MultiSelectList(db.Locations, "LocationID", "CapitalizedDescription", requestissue__.Locations.Select(p => p.LocationID).ToList());
             ViewBag.DetailCorporateAccountID = new MultiSelectList(db.CorporateAccounts, "CorporateAccountID", "Title", requestissue__.CorporateAccounts.Select(p => p.CorporateAccountID).ToList());
             ViewBag.DetailPersonnelID = new MultiSelectList(db.Personnels, "PersonnelID", "FullName", requestissue__.Personnels.Select(p => p.PersonnelID).ToList());
 
@@ -653,7 +653,7 @@ namespace Klmsncamp.Controllers
                
                 ViewBag.RequestTypeID = new SelectList(db.RequestTypes, "RequestTypeID", "Description", rq.RequestTypeID);
                 ViewBag.RequestActualReasonID = new SelectList(db.RequestActualReasons, "RequestActualReasonID", "Description", rq.RequestActualReasonID);
-                ViewBag.LocationID = new SelectList(db.Locations, "LocationID", "Description", rq.LocationID);
+                ViewBag.LocationID = new SelectList(db.Locations, "LocationID", "CapitalizedDescription", rq.LocationID);
                 ViewBag.PersonnelID = new SelectList(db.Personnels, "PersonnelID", "FullName", rq.PersonnelID);
                 ViewBag.InventoryID = new SelectList(db.Inventories, "InventoryID", "Description", rq.InventoryID);
                 ViewBag.WorkshopID = new SelectList(db.Workshops, "WorkshopID", "Description", rq.WorkshopID);
@@ -661,7 +661,7 @@ namespace Klmsncamp.Controllers
                 ViewBag.UserReqID = new SelectList(db.Users, "UserId", "FullName", rq.UserReq.UserId);
 
                 ViewBag.DetailProjectID = new MultiSelectList(db.Projects, "ProjectID", "MultiboxDescription", rq.Projects.Select(p => p.ProjectID).ToList());
-                ViewBag.DetailLocationID = new MultiSelectList(db.Locations, "LocationID", "Description", rq.Locations.Select(p => p.LocationID).ToList());
+                ViewBag.DetailLocationID = new MultiSelectList(db.Locations, "LocationID", "CapitalizedDescription", rq.Locations.Select(p => p.LocationID).ToList());
                 ViewBag.DetailCorporateAccountID = new MultiSelectList(db.CorporateAccounts, "CorporateAccountID", "Title", rq.CorporateAccounts.Select(p => p.CorporateAccountID).ToList());
                 ViewBag.DetailPersonnelID = new MultiSelectList(db.Personnels, "PersonnelID", "FullName", rq.Personnels.Select(p => p.PersonnelID).ToList());
                 ViewBag.ValidationStateID = new SelectList(db.ValidationStates, "ValidationStateID", "Description", rq.ValidationStateID);
@@ -981,7 +981,7 @@ namespace Klmsncamp.Controllers
             rqToUpdate.IsApproved = false;
             ViewBag.RequestTypeID = new SelectList(db.RequestTypes, "RequestTypeID", "Description", rqToUpdate.RequestTypeID);
             ViewBag.RequestActualReasonID = new SelectList(db.RequestActualReasons, "RequestActualReasonID", "Description", rqToUpdate.RequestActualReasonID);
-            ViewBag.LocationID = new SelectList(db.Locations, "LocationID", "Description", rqToUpdate.LocationID);
+            ViewBag.LocationID = new SelectList(db.Locations, "LocationID", "CapitalizedDescription", rqToUpdate.LocationID);
             ViewBag.PersonnelID = new SelectList(db.Personnels, "PersonnelID", "FullName", rqToUpdate.PersonnelID);
             ViewBag.InventoryID = new SelectList(db.Inventories, "InventoryID", "Description", rqToUpdate.InventoryID);
             ViewBag.WorkshopID = new SelectList(db.Workshops, "WorkshopID", "Description", rqToUpdate.WorkshopID);
@@ -998,7 +998,7 @@ namespace Klmsncamp.Controllers
             rqToUpdate.Personnels = requestissue__.Personnels;
 
             ViewBag.DetailProjectID = new MultiSelectList(db.Projects, "ProjectID", "MultiboxDescription", requestissue__.Projects.Select(p => p.ProjectID).ToList());
-            ViewBag.DetailLocationID = new MultiSelectList(db.Locations, "LocationID", "Description", requestissue__.Locations.Select(p => p.LocationID).ToList());
+            ViewBag.DetailLocationID = new MultiSelectList(db.Locations, "LocationID", "CapitalizedDescription", requestissue__.Locations.Select(p => p.LocationID).ToList());
             ViewBag.DetailCorporateAccountID = new MultiSelectList(db.CorporateAccounts, "CorporateAccountID", "Title", requestissue__.CorporateAccounts.Select(p => p.CorporateAccountID).ToList());
             ViewBag.DetailPersonnelID = new MultiSelectList(db.Personnels, "PersonnelID", "FullName", requestissue__.Personnels.Select(p => p.PersonnelID).ToList());
             

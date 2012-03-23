@@ -114,7 +114,7 @@
                                 @(Html.Telerik().ComboBox()
                 .Name("LocationID")
                 .HtmlAttributes(new { id = "ComboBox_wrapper_location" })
-                .AutoFill(true).HtmlAttributes(new { style = "width:210px;" }).DropDownHtmlAttributes(new { style = "width: 210px;" }).InputHtmlAttributes(new { style = "vertical-align: middle; font-size:100%; border: 1px solid; width: 200px;" })
+                .AutoFill(true).HtmlAttributes(new { style = "width:300px;" }).DropDownHtmlAttributes(new { style = "width: 300px;" }).InputHtmlAttributes(new { style = "vertical-align: middle; font-size:100%; border: 1px solid; width: 280px;" })
                 .BindTo((SelectList)ViewBag.LocationID)
                 .Filterable(filtering => filtering.FilterMode((AutoCompleteFilterMode)Enum.Parse(typeof(AutoCompleteFilterMode), "2", false)))
                 .HighlightFirstMatch(true)
