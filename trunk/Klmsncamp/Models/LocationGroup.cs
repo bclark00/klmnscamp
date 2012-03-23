@@ -14,5 +14,7 @@ namespace Klmsncamp.Models
         [Required(ErrorMessage = "Zorunlu Alan")]
         [Display(Name = "Açıklama")]
         public string Description { get; set; }
+
+        public virtual string CapitalizedDescription { get { return char.ToUpper(this.Description[0])+ this.Description.ToLower().Substring(1); } }
     }
 }

@@ -40,7 +40,7 @@ namespace Klmsncamp.Controllers
             ViewBag.RequestStateID = new SelectList(db.RequestStates, "RequestStateID", "Description");
             ViewBag.UserID = new SelectList(db.Users, "UserId", "FullName");
             ViewBag.cUserID = new SelectList(db.Users, "UserId", "FullName");
-            ViewBag.LocationID = new MultiSelectList(db.Locations, "LocationID", "Description");
+            ViewBag.LocationID = new MultiSelectList(db.Locations, "LocationID", "CapitalizedDescription");
             ViewBag.CorporateAccountID = new MultiSelectList(db.CorporateAccounts, "CorporateAccountID", "Title");
             ViewBag.PersonnelID = new MultiSelectList(db.Personnels, "PersonnelID", "FullName");
             return View();
@@ -121,7 +121,7 @@ namespace Klmsncamp.Controllers
 
             if (formcollection["LocationID"] != null)
             {
-                ViewBag.LocationID = new MultiSelectList(db.Locations, "LocationID", "Description", formcollection["LocationID"].Split(',').ToList());
+                ViewBag.LocationID = new MultiSelectList(db.Locations, "LocationID", "CapitalizedDescription", formcollection["LocationID"].Split(',').ToList());
             }
             else
             {
@@ -157,7 +157,7 @@ namespace Klmsncamp.Controllers
             ViewBag.RequestStateID = new SelectList(db.RequestStates.Where(i => i.RequestStateID == 4 || i.RequestStateID == 5), "RequestStateID", "Description", project.RequestStateID);
             ViewBag.UserID = new SelectList(db.Users, "UserId", "FullName", project.UserID);
             ViewBag.cUserID = new SelectList(db.Users, "UserId", "FullName", project.cUserID);
-            ViewBag.LocationID = new MultiSelectList(db.Locations, "LocationID", "Description", project.Locations.Select(p => p.LocationID).ToList());
+            ViewBag.LocationID = new MultiSelectList(db.Locations, "LocationID", "CapitalizedDescription", project.Locations.Select(p => p.LocationID).ToList());
             ViewBag.CorporateAccountID = new MultiSelectList(db.CorporateAccounts, "CorporateAccountID", "Title", project.CorporateAccounts.Select(p => p.CorporateAccountID).ToList());
             ViewBag.PersonnelID = new MultiSelectList(db.Personnels, "PersonnelID", "FullName", project.Personnels.Select(p => p.PersonnelID).ToList());
 
@@ -246,7 +246,7 @@ namespace Klmsncamp.Controllers
             project.Personnels = project__.Personnels;
             */
 
-            ViewBag.LocationID = new MultiSelectList(db.Locations, "LocationID", "Description", project__.Locations.Select(p => p.LocationID).ToList());
+            ViewBag.LocationID = new MultiSelectList(db.Locations, "LocationID", "CapitalizedDescription", project__.Locations.Select(p => p.LocationID).ToList());
             ViewBag.CorporateAccountID = new MultiSelectList(db.CorporateAccounts, "CorporateAccountID", "Title", project__.CorporateAccounts.Select(p => p.CorporateAccountID).ToList());
             ViewBag.PersonnelID = new MultiSelectList(db.Personnels, "PersonnelID", "FullName", project__.Personnels.Select(p => p.PersonnelID).ToList());
 
