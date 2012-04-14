@@ -636,6 +636,7 @@
     <Content Include="Content\img\admin\tooltag-arrowright_over.gif" />
     <Content Include="Content\jquery.jdigiclock.css" />
     <Content Include="Content\jquery.jdigiclock.style.css" />
+    <Content Include="Content\jquery.multiselect.css" />
     <Content Include="Content\jquery.treeview.css" />
     <Content Include="Content\klimasannavmenu.css" />
     <Content Include="Content\Milky\1.png" />
@@ -997,6 +998,7 @@
     <Content Include="Scripts\jquery-ui.min.js" />
     <Content Include="Scripts\jquery.init.js" />
     <Content Include="Scripts\jquery.jdigiclock.js" />
+    <Content Include="Scripts\jquery.multiselect.js" />
     <Content Include="Scripts\jquery.tooltip.js" />
     <Content Include="Scripts\jquery.treeview.js" />
     <Content Include="Scripts\jquery.validate-vsdoc.js" />
