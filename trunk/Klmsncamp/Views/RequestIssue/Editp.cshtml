@@ -3,8 +3,11 @@
 @{
     ViewBag.Title = "İş İstek Düzenleme";
 }
+
 <script src="@Url.Content("~/Scripts/chosen.jquery.js")" type="text/javascript"></script>
 <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/chosen.css")" />
+<script src="@Url.Content("~/Scripts/jquery.multiselect.js")" type="text/javascript"></script>
+<link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/jquery.multiselect.css")" />
 <script type="text/javascript">
     function TimePickerSet24h() {
         var picker = $("#StartDate").data("tDateTimePicker");
@@ -39,7 +42,9 @@
     }
 </script>
 <script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
+
 <script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+
 @{ Html.Telerik().ScriptRegistrar()
         .OnDocumentReady(@<text> var comboreason = $("#RequestActualReasonID").data("tComboBox");
     if (comboreason.value() > 0 ){ $('#rqreason-box').show();} else { $('#rqreason-box').hide();}
@@ -50,11 +55,15 @@
     undoButton_survey= $('#undo_survey'); undoButton_survey.bind('click', function(e)
     { alert(windowElement_survey); windowElement_survey.data('tWindow').open(); undoButton_survey.hide();
     }) .toggle(!windowElement_survey.is(':visible')); windowElement_survey.bind('close',
-    function() { undoButton_survey.show(); }); $(".chzn-choices input").live('hover',
+    function() { undoButton_survey.show(); }); 
+    $(".chzn-choices input").live('hover',
     function(){ $('.chzn-container').css('zIndex',1); $(this).closest('.chzn-container').css('zIndex',100);
     }); $(".chzn-select").chosen(); $(".chzn-select-deselect").chosen({ allow_single_deselect:
     true });
+    $(".jq_multiselect").multiSelect({selectAllText : 'Hepsini Seç', noneSelected : 'Lütfen Listeden Seçiniz', oneOrMoreSelected : '% seçildi' });
     </text>); }
+
+    
 <div align="center" style="width: 640px; margin-left: auto; margin-right: auto; margin-top: 30px;">
     @using (Html.BeginForm("Editp", "RequestIssue", FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
@@ -63,6 +72,7 @@
         @Html.HiddenFor(model => model.Pre1EndDate)
         @Html.HiddenFor(model => model.Pre2EndDate)
         <fieldset class="module aligned ">
+        
             <table style="width: 100%; margin-top: 15px;">
                 <tbody>
                     <thead>
@@ -281,7 +291,7 @@
                                 @Html.LabelFor(model => model.Locations,"Departmanlar")
                             </td>
                             <td align="left" style="text-align: left;">
-                                @Html.ListBox("DetailLocationID", null, new { @class = "chzn-select", style = "width: 350px;" })
+                                @Html.ListBox("DetailLocationID", null, new { @class = "jq_multiselect", style = "width: 350px;" })
                             </td>
                         </tr>
                         <tr>
@@ -289,6 +299,8 @@
                                 @Html.LabelFor(model => model.CorporateAccounts,"İlgili Firmalar")
                             </td>
                             <td align="left" style="text-align: left;">
+                           
+                            <br />
                                 @Html.ListBox("DetailCorporateAccountID", null, new { @class = "chzn-select", style = "width: 350px;" })
                             </td>
                         </tr>
