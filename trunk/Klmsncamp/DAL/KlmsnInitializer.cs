@@ -62,9 +62,17 @@ namespace Klmsncamp.DAL
             workshops.ForEach(s => context.Workshops.Add(s));
             context.SaveChanges();
 
+            var modules = new List<Module>
+            {
+                new Module { Description = "İş Takip Modülü" , Users= new List<User>(), UserGroups= new List<UserGroup>()},
+                new Module { Description = "Malzeme-Parça Bul", Users= new List<User>(), UserGroups= new List<UserGroup>() },
+            };
+            modules.ForEach(s => context.Modules.Add(s));
+            context.SaveChanges();
+
             var invowns = new List<InventoryOwnership>
             {
-                new InventoryOwnership { Description="UHG" },
+                new InventoryOwnership { Description="AR" },
                 new InventoryOwnership { Description = "DIŞ FİRMA"},
                 new InventoryOwnership { Description = "DİĞER"}
             };
@@ -148,9 +156,9 @@ namespace Klmsncamp.DAL
 
             var usergroups = new List<UserGroup>
             {
-                new UserGroup { Name="Yöneticiler" },
-                new UserGroup {Name = "Sorumlular" },
-                new UserGroup {Name = "Çalışanlar"}
+                new UserGroup { Name="Yöneticiler" , Users= new List<User>()},
+                new UserGroup {Name = "Sorumlular" , Users= new List<User>() },
+                new UserGroup {Name = "Çalışanlar" , Users= new List<User>()}
             };
             usergroups.ForEach(s => context.UserGroups.Add(s));
             context.SaveChanges();
@@ -162,18 +170,26 @@ namespace Klmsncamp.DAL
                 new Role { Description = "users" , Users= new List<User>()}
             };
 
+            //başlangıç yetkileri
             roles.ForEach(s => context.Roles.Add(s));
             context.SaveChanges();
-
-            /*roles[0].Users.Add(context.Users.Find(1));
+                        
+            
+            UserRepository user_ = new UserRepository();
+            var MemUser = user_.CreateUser("scully", "Musa", "Fedakar", "qwerty3", "musa.fedakar@arelektronik.com");
+            MemUser = user_.CreateUser("ozcane", "Özcan", "Eryalçın", "123456", "ozcan@klimasan.gg");
+            context.SaveChanges();
+            
+            roles[0].Users.Add(context.Users.Find(1));
             roles[1].Users.Add(context.Users.Find(1));
             roles[1].Users.Add(context.Users.Find(2));
-            */
             context.SaveChanges();
-            UserRepository user_ = new UserRepository();
-            var MemUser = user_.CreateUser("scully", "Musa", "Fedakar", "qwerty3", "musaf@klimasan.com.tr");
-            MemUser = user_.CreateUser("ozcane", "Özcan", "Eryalçın", "123456", "ozcan@klimasan.gg");
 
+            usergroups[0].Users.Add(context.Users.Find(1));
+
+            modules[0].Users.Add(context.Users.Find(1));
+
+            context.SaveChanges();
             var corpaccs = new List<CorporateAccount>
             {
                 new CorporateAccount{ Title="ADVANTECH", Address="Adresi..", Phone1="Telefonu..", CorporateTypeID=1, ValidationStateID=1 },
@@ -697,21 +713,21 @@ namespace Klmsncamp.DAL
 
             var paramsets = new List<ParameterSetting>
             {
-                new ParameterSetting { Description="Mail Hesap Adı", ParameterValue="musa.fedakar@uhg.com.tr"},
-                new ParameterSetting { Description="Mail Hesap Şifre", ParameterValue="uhgposta123"},
-                new ParameterSetting { Description="Mail Sunucusu", ParameterValue="mail.uhg.com.tr"},
-                new ParameterSetting { Description="Mail Sunucusu Port", ParameterValue="2525"},
+                new ParameterSetting { Description="Mail Hesap Adı", ParameterValue="musa.fedakar@arelektronik.com"},
+                new ParameterSetting { Description="Mail Hesap Şifre", ParameterValue="M123456."},
+                new ParameterSetting { Description="Mail Sunucusu", ParameterValue="mail.arelektronik.com"},
+                new ParameterSetting { Description="Mail Sunucusu Port", ParameterValue="587"},
                 new ParameterSetting { Description="İş Tamamlandı Durum ID", ParameterValue="5"},
                 new ParameterSetting { Description="İş Olumsuz Kapatıldı Durum ID", ParameterValue="6"},
                 new ParameterSetting { Description="Anket Sistemi Aktif", ParameterValue="0"},
                 new ParameterSetting { Description="Varsayılan Taslak Anket ID", ParameterValue="14"},
                 new ParameterSetting { Description="EBA Kullanıcı ID", ParameterValue="7"},
                 new ParameterSetting { Description="Ret Edilmiş Talep Anket Sorusu ID", ParameterValue="6"},
-                new ParameterSetting { Description="Banner üst yazı", ParameterValue="Ege Sağlık - 2012"},
+                new ParameterSetting { Description="Banner üst yazı", ParameterValue="AR Elektronik - 2013"},
                 new ParameterSetting { Description="Banner resim dosyasi", ParameterValue="klimasan_banner.png"},
-                new ParameterSetting { Description="Hakkinda Kayan Yazi", ParameterValue="Ege Sağlık - İş Takip"},
-                new ParameterSetting { Description="Yazılım Adı", ParameterValue="Ege Sağlık - İş Takip"},
-                new ParameterSetting { Description="Varsayilan Gonderen Mail Adresi", ParameterValue="helpdesk@uhg.com.tr"},
+                new ParameterSetting { Description="Hakkinda Kayan Yazi", ParameterValue="ArElektronik - Intrawebs"},
+                new ParameterSetting { Description="Yazılım Adı", ParameterValue="ArElektronik - Intrawebs"},
+                new ParameterSetting { Description="Varsayilan Gonderen Mail Adresi", ParameterValue="musa.fedakar@arelektronik.com"},
                 new ParameterSetting { Description="Çoklu Atölye Aktif", ParameterValue="1"},
                 new ParameterSetting { Description="Proje Ekibini Email listesine Al", ParameterValue="1"}
             };
