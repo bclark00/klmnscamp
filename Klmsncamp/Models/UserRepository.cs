@@ -190,6 +190,22 @@ namespace Klmsncamp.Models
             }
         }
 
+        public bool HasModuleAccess(string username, int moduleId)
+        {
+            using (KlmsnContext db = new KlmsnContext())
+            {
+                var result = (from u in db.Users where (u.UserName == username) select u).FirstOrDefault();
+                int xsay = result.Modules.Where(i => i.ModuleID == moduleId).Count();
+
+                if (xsay > 0)
+                {
+                    return true;
+                }
+
+                
+            }
+            return false;
+        }
         public bool changePass(string userName, string oldPass, string newPass)
         {
             using (KlmsnContext db = new KlmsnContext())

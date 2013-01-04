@@ -147,6 +147,7 @@ namespace Klmsncamp.Controllers
 
             ViewBag.RoleId = new MultiSelectList(db.Roles, "RoleID", "Description", user_.Roles.Select(p => p.RoleID).ToList());
             ViewBag.WorkshopMultiSelectID = new MultiSelectList(db.Workshops, "WorkshopID", "Description",user_.Workshops.Select(p=>p.WorkshopID).ToList());
+            ViewBag.ModuleID = new MultiSelectList(db.Modules, "ModuleID", "Description", user_.Modules.Select(p => p.ModuleID).ToList());
             ViewBag.UserGroupID = new MultiSelectList(db.UserGroups, "UserGroupID", "Name",user_.UserGroups.Select(p=>p.UserGroupID).ToList());
             ViewBag.CustomPermissionID = new MultiSelectList(db.CustomPermissions, "CustomPermissionID", "Description",user_.CustomPermissions.Select(p=>p.CustomPermissionID).ToList());
             
@@ -163,10 +164,11 @@ namespace Klmsncamp.Controllers
                 db.SaveChanges();
 
                 //roles bosalt
-                User user_ = db.Users.Include(p => p.Roles).Include(p => p.Workshops).Include(p => p.UserGroups).Include(p => p.CustomPermissions).Where(i => i.UserId == user.UserId).SingleOrDefault();
+                User user_ = db.Users.Include(p => p.Roles).Include(p => p.Workshops).Include(p => p.Modules).Include(p => p.UserGroups).Include(p => p.CustomPermissions).Where(i => i.UserId == user.UserId).SingleOrDefault();
                 user_.Roles.Clear();
                 user_.UserGroups.Clear();
                 user_.Workshops.Clear();
+                user_.Modules.Clear();
                 user_.CustomPermissions.Clear();
                 db.SaveChanges();
 
@@ -195,6 +197,22 @@ namespace Klmsncamp.Controllers
                             int workshop_index = int.Parse(workshop_int.ToString());
                             var workshop_ = db.Workshops.Find(workshop_index);
                             workshop_.Users.Add(user_);
+                        }
+                        catch
+                        { }
+                        db.SaveChanges();
+                    }
+                }
+
+                if (formcollection["ModuleID"] != null)
+                {
+                    foreach (var module_int in formcollection["ModuleID"].Split(',').ToList())
+                    {
+                        try
+                        {
+                            int module_index = int.Parse(module_int.ToString());
+                            var module_ = db.Modules.Find(module_index);
+                            module_.Users.Add(user_);
                         }
                         catch
                         { }

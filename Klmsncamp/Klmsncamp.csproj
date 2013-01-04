@@ -66,20 +66,15 @@
     <Reference Include="Microsoft.ReportViewer.WebForms, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <Private>True</Private>
     </Reference>
-    <Reference Include="MvcPaging">
-      <HintPath>..\packages\MvcPaging.1.0.0\lib\net40\MvcPaging.dll</HintPath>
-    </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.4.0.2\lib\net40\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="NPOI">
       <HintPath>..\..\..\..\..\Downloads\NPOI.dll</HintPath>
     </Reference>
-    <Reference Include="PagedList">
-      <HintPath>..\packages\PagedList.1.9\lib\net40\PagedList.dll</HintPath>
-    </Reference>
-    <Reference Include="PagedList.Mvc">
-      <HintPath>..\packages\PagedList.Mvc.3.7\lib\net40\PagedList.Mvc.dll</HintPath>
+    <Reference Include="PagedList, Version=1.15.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\PagedList.1.15.0.0\lib\net40\PagedList.dll</HintPath>
     </Reference>
     <Reference Include="System.Data.Entity">
       <Private>True</Private>
@@ -207,6 +202,7 @@
     <Compile Include="Models\LogRequestIssueDetail.cs" />
     <Compile Include="Models\MaintenanceNode.cs" />
     <Compile Include="App_Data\MyMembershipProvider.cs" />
+    <Compile Include="Models\Module.cs" />
     <Compile Include="Models\ParameterSetting.cs" />
     <Compile Include="Models\Payment.cs" />
     <Compile Include="Models\PaymentFile.cs" />
@@ -816,7 +812,6 @@
     <Content Include="Content\Outlook\treeview-line.png" />
     <Content Include="Content\Outlook\treeview-nodes-rtl.png" />
     <Content Include="Content\Outlook\treeview-nodes.png" />
-    <Content Include="Content\PagedList.css" />
     <Content Include="Content\Simple\editor.png" />
     <Content Include="Content\Simple\imagebrowser.png" />
     <Content Include="Content\Simple\loading.gif" />
@@ -1006,8 +1001,6 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\modernizr-1.7.js" />
     <Content Include="Scripts\modernizr-1.7.min.js" />
-    <Content Include="Scripts\PagedList\PagedList.Mvc.js" />
-    <Content Include="Scripts\PagedList\PagedList.Mvc.Template.html" />
     <Content Include="Scripts\telerik.common.js" />
     <Content Include="Scripts\telerik.examples.min.js" />
     <Content Include="Scripts\telerik.menu.js" />

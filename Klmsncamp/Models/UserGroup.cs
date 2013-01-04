@@ -15,6 +15,7 @@ namespace Klmsncamp.Models
 
         public virtual ICollection<Workshop> Workshops { get; set; }
         public virtual ICollection<CustomPermission> CustomPermissions { get; set; }
+        public virtual ICollection<Module> Module { get; set; }
         public virtual ICollection<User> Users { get; set; }
     }
 }

@@ -20,6 +20,8 @@ namespace Klmsncamp.Models
 
         public DbSet<Workshop> Workshops { get; set; }
 
+        public DbSet<Module> Modules { get; set; }
+
         public DbSet<CustomPermission> CustomPermissions { get; set; }
 
         public DbSet<RequestType> RequestTypes { get; set; }
