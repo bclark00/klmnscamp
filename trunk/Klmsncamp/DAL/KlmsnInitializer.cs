@@ -104,6 +104,39 @@ namespace Klmsncamp.DAL
             locationgroups.ForEach(s => context.LocationGroups.Add(s));
             context.SaveChanges();
 
+            var materialcategories = new List<MaterialCategory>
+            {
+                new MaterialCategory { Description = "Devre Elemanları" ,ValidationStateID = 1},
+                new MaterialCategory { Description = "Entegreler",ValidationStateID = 1 },
+                new MaterialCategory { Description = "Diyotlar" , ParentMaterialCategoryID= 1,ValidationStateID = 1 },
+                new MaterialCategory { Description = "Dirençler" , ParentMaterialCategoryID = 1,ValidationStateID = 1 },
+                new MaterialCategory { Description = "Kapasiteler", ParentMaterialCategoryID = 1 ,ValidationStateID = 1},
+                new MaterialCategory { Description = "Mikroişlemciler",ParentMaterialCategoryID= 2 ,ValidationStateID = 1},
+                new MaterialCategory { Description = "Mekanik Komponentler",ValidationStateID = 1 },
+                new MaterialCategory { Description = "RS-232 konnektör", ParentMaterialCategoryID =7,ValidationStateID = 1 },
+                new MaterialCategory { Description = "RS-486 konnektör", ParentMaterialCategoryID = 7 ,ValidationStateID = 1} ,
+                new MaterialCategory { Description = "ARM", ParentMaterialCategoryID = 6,ValidationStateID = 1},
+                new MaterialCategory { Description = "Texas", ParentMaterialCategoryID =6 ,ValidationStateID = 1}
+            };
+            materialcategories.ForEach( s => context.MaterialCategories.Add(s));
+            context.SaveChanges();
+
+            var materialgroups = new List<MaterialGroup>
+            {
+                 new MaterialGroup {Description="Elektronik",ValidationStateID=1},
+                 new MaterialGroup { Description = "Diğer" , ValidationStateID=1}
+            };
+            materialgroups.ForEach(s => context.MaterialGroups.Add(s));
+            context.SaveChanges();
+
+            var materialtypes = new List<MaterialType>
+            {
+                new MaterialType { Description = "Basit Devre"},
+                new MaterialType { Description = "Diğer" }
+            };
+            materialtypes.ForEach(s => context.MaterialTypes.Add(s));
+            context.SaveChanges();
+
             var locations = new List<Location>
             {
                 new Location { Description = "AMBAR", LocationGroupID=3, ValidationStateID=1},

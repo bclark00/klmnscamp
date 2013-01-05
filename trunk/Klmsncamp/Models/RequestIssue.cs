@@ -46,7 +46,7 @@ namespace Klmsncamp.Models
         [Required(ErrorMessage = "Zorunlu Alan")]
         public int WorkshopID { get; set; }
 
-        [Display(Name = "İş İstenen Atölye")]
+        [Display(Name = "İşletme Birimi")]
         public virtual Workshop Workshop { get; set; }
 
         [Display(Name = "İş/İstek Durum")]

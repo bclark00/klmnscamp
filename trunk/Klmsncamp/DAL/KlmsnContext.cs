@@ -80,6 +80,16 @@ namespace Klmsncamp.Models
 
         public DbSet<WorkshopPermission> WorkshopPermissions { get; set; }
 
+        public DbSet<MaterialCategory> MaterialCategories { get; set; }
+        
+        public DbSet<Material> Materials { get; set; }
+        
+        public DbSet<MaterialGroup> MaterialGroups { get; set; }
+
+        public DbSet<MaterialType> MaterialTypes { get; set; }
+
+        public DbSet<MaterialFile> MaterialFiles { get; set; }
+
         public ObjectContext KlmsnObjectContext
         {
             get { return ((IObjectContextAdapter)this).ObjectContext; }
@@ -125,6 +135,14 @@ namespace Klmsncamp.Models
             modelBuilder.Entity<SurveyTemplate>().HasRequired(a => a.RequestType).WithMany().HasForeignKey(u => u.RequestTypeID).WillCascadeOnDelete(false);
 
             modelBuilder.Entity<SurveyTable>().HasRequired(a => a.RequestIssue).WithMany().HasForeignKey(u => u.RequestIssueID).WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<Material>().HasRequired(a => a.MaterialCategory).WithMany().HasForeignKey(u => u.MaterialCategoryID).WillCascadeOnDelete(false);
+            modelBuilder.Entity<Material>().HasRequired(a => a.ValidationState).WithMany().HasForeignKey(u => u.ValidationStateID).WillCascadeOnDelete(false);
+
+
         }
+
+
+        
     }
 }
