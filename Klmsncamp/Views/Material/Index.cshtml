@@ -27,7 +27,34 @@
         <td>
         @{Html.RenderPartial("MaterialCategoryTreeListView", ViewBag.MaterialCategories as IEnumerable<Klmsncamp.Models.MaterialCategory>);}
         </td>
-        <td><div style="margin: 10px 0 10px 10px;">..içerik..</div></td>
+        <td>
+        <div style="margin: 10px 0 10px 10px;">
+        @{ Html.Telerik().Grid(Model)
+                .Name("Material").TableHtmlAttributes(new {style="text-align: left;"})
+                .HtmlAttributes(new { style = "width: 1024px; margin-left: auto; margin-right: auto;" })
+                .Columns(columns =>
+                {
+                    
+                    columns.Bound(o => o.MaterialCodeNum).Width(100).Title("Kodu");
+                    columns.Bound(o => o.Description).Width(320).Title("Açıklama");
+                    columns.Bound(o => o.RackLocation).Width(320).Title("Yeri");
+                    columns.Bound(o => o.ComponentModel).Width(100).Title("Model");
+                    columns.Bound(o => o.MaterialType.Description).Width(120).Title("Tipi");
+
+                })
+                .DetailView(detailView => detailView.Template(o => GridDetailTemplate(this,o)))                                
+                //.DetailView(ChildsDetailView => ChildsDetailView.Template(o => ChildsDetailViewTemplate(this, o)))
+                .Scrollable(scrolling => scrolling.Enabled(true).Height(500))
+                .Sortable(sorting => sorting.Enabled(true).OrderBy(o => { o.Add("MaterialCodeNum").Ascending(); }))
+                .Filterable(filtering => filtering.Enabled(true))
+                .Groupable(grouping => grouping.Enabled(true))
+                .Resizable(resizing => resizing.Columns(true))
+                .Footer(true)
+                .Localizable("tr-TR")
+                .Render();
+         }
+        </div>
+        </td>
         </tr>
         </tbody>
         </table>
@@ -35,4 +62,36 @@
 
     })
     .Render();
+}
+
+@helper GridDetailTemplate(WebViewPage page, Klmsncamp.Models.Material o)
+{
+    Html.Telerik().TabStrip()
+    .Name("TabStrip_" + o.MaterialID)
+    .SelectedIndex(0)
+    .Items(items =>
+    {
+        items.Add().Text("Malzemeye Ait Dosyalar").Content(@<text>
+        @(Html.Telerik().Grid(o.MaterialFiles)
+            .Name("MaterialFiles_" + o.MaterialID)
+            .Columns(columns =>
+            {
+                columns.Bound(e => e.MaterialFileDescription).Title("Açıklama").Width(350);
+                columns.Bound(e => e.MaterialFileID).Title("Boyut");
+
+            })
+            .Pageable()
+        )
+        </text>);
+        items.Add().Text("Malzeme Detay Bilgileri").Content(@<text>
+                        <table>
+                        <tbody>
+                        <tr><td>Markası : @o.CorporateAccount.Title</td><td>Lokasyon : @o.Location.Description</td><td>Grubu : @o.MaterialGroup.Description</td></tr>
+                        <tr><td colspan="3">Notlar : @o.Note</td></tr>
+                        </tbody></table>
+                        )
+                        </text>);
+    }).Render();
+   
+    
 }
