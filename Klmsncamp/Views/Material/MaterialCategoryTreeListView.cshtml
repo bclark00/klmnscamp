@@ -1,0 +1,35 @@
+﻿@using Telerik.Web.Mvc.UI
+@model IEnumerable<Klmsncamp.Models.MaterialCategory>
+<script type="text/javascript">
+    function treeView() {
+        return $('#TreeView').data('tTreeView');
+    }
+
+    function OnTreeNodeSelect(e) {
+         xidx = treeView().getItemValue(e.item);
+         //alert(xidx);
+         //alert("@Url.Action("Edit", "Material", new { cat_id = "" })/"+xidx);
+         var link="@Url.Action("Index", "Material", new { cat_id = -666})";
+         link = link.replace("-666",xidx);
+         window.location.href=link;
+    }
+</script>
+<div style="margin: 10px 0 10px 10px; border: 1px solid olive;">    
+    @(Html.Telerik().TreeView()
+    .Name("TreeView").ExpandAll(true).ShowLines(true).
+    Effects(fx => fx.Toggle().Opacity().OpenDuration(200).CloseDuration(300)).ClientEvents(events => events.OnSelect("OnTreeNodeSelect"))
+    .BindTo(Model, mappings =>
+    {
+        mappings.For<Klmsncamp.Models.MaterialCategory>(binding => binding
+                .ItemDataBound((l_item, materialcategory) =>
+                {
+                    l_item.Text = materialcategory.Description;
+                    l_item.Value = materialcategory.ParentMaterialCategoryID.ToString();
+
+                })
+                .Children(materialcategory => materialcategory.MaterialCategoryChilds));
+
+    })
+                                
+    )
+</div>

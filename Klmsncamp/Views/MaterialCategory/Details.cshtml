@@ -1,0 +1,30 @@
+﻿@model Klmsncamp.Models.MaterialCategory
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<fieldset>
+    <legend>MaterialCategory</legend>
+
+    <div class="display-label">Description</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Description)
+    </div>
+
+    <div class="display-label">ParentMaterialCategory</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.ParentMaterialCategory.Description)
+    </div>
+
+    <div class="display-label">ValidationState</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.ValidationState.Description)
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.MaterialCategoryID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

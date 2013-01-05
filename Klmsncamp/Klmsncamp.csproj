@@ -163,6 +163,8 @@
     <Compile Include="Controllers\CalendarController.cs" />
     <Compile Include="Controllers\CorporateAccountController.cs" />
     <Compile Include="Controllers\CorporateTypeController.cs" />
+    <Compile Include="Controllers\MaterialCategoryController.cs" />
+    <Compile Include="Controllers\MaterialController.cs" />
     <Compile Include="Controllers\ParameterSettingController.cs" />
     <Compile Include="Controllers\PaymentController.cs" />
     <Compile Include="Controllers\InventoryController.cs" />
@@ -202,6 +204,11 @@
     <Compile Include="Models\LogRequestIssueDetail.cs" />
     <Compile Include="Models\MaintenanceNode.cs" />
     <Compile Include="App_Data\MyMembershipProvider.cs" />
+    <Compile Include="Models\Material.cs" />
+    <Compile Include="Models\MaterialCategory.cs" />
+    <Compile Include="Models\MaterialFile.cs" />
+    <Compile Include="Models\MaterialGroup.cs" />
+    <Compile Include="Models\MaterialType.cs" />
     <Compile Include="Models\Module.cs" />
     <Compile Include="Models\ParameterSetting.cs" />
     <Compile Include="Models\Payment.cs" />
@@ -1146,6 +1153,17 @@
     <Content Include="Views\WorkshopPermission\Delete.cshtml" />
     <Content Include="Views\RequestIssue\Search.cshtml" />
     <Content Include="Views\RequestIssue\SearchResult.cshtml" />
+    <Content Include="Views\MaterialCategory\Index.cshtml" />
+    <Content Include="Views\MaterialCategory\Details.cshtml" />
+    <Content Include="Views\MaterialCategory\Create.cshtml" />
+    <Content Include="Views\MaterialCategory\Edit.cshtml" />
+    <Content Include="Views\MaterialCategory\Delete.cshtml" />
+    <Content Include="Views\Material\Index.cshtml" />
+    <Content Include="Views\Material\Details.cshtml" />
+    <Content Include="Views\Material\Create.cshtml" />
+    <Content Include="Views\Material\Edit.cshtml" />
+    <Content Include="Views\Material\Delete.cshtml" />
+    <Content Include="Views\Material\MaterialCategoryTreeListView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_GlobalResources\EditorLocalization.en-US.resx">

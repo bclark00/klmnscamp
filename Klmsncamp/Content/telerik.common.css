@@ -1728,7 +1728,7 @@ div.t-treeview
 {
     display: inline-block;
     *display: inline;
-    zoom: 1;
+    zoom: 1.3;
     vertical-align: top;
 }
 
