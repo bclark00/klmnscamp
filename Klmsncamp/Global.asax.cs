@@ -24,11 +24,17 @@ namespace Klmsncamp
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
-            routes.MapRoute(
-                "Default", // Route name
-                "{controller}/{action}/{id}", // URL with parameters
-                new { controller = "Home", action = "Index", id = UrlParameter.Optional } // Parameter defaults
-            );
+			//routes.MapRoute(
+			//    "Default", // Route name
+			//    "{controller}/{action}/{id}", // URL with parameters
+			//    new { controller = "Home", action = "Index", id = UrlParameter.Optional } // Parameter defaults
+			//);
+
+			routes.MapRoute(
+			 "Default", // Route name
+			 "{controller}/{action}/{id}", // URL with parameters
+			 new { controller = "Account", action = "LogOn", id = UrlParameter.Optional } // Parameter defaults
+		 );
         }
 
         protected void Application_Start()
@@ -37,8 +43,8 @@ namespace Klmsncamp
 
             RegisterGlobalFilters(GlobalFilters.Filters);
             RegisterRoutes(RouteTable.Routes);
-            Database.SetInitializer<KlmsnContext>(new KlmsnInitializer());
-            //Database.SetInitializer<KlmsnContext>(null);
+           // Database.SetInitializer<KlmsnContext>(new KlmsnInitializer());
+            Database.SetInitializer<KlmsnContext>(null);
         }
     }
 }

@@ -65,8 +65,9 @@ namespace Klmsncamp.Controllers
 
         //
         // GET: /Account/Register
+	
         [Authorize]
-        public ActionResult Register()
+		public ActionResult Register()
         {
             ViewBag.UserResetID = new SelectList(db.Users, "UserID", "FullName");
             return View();

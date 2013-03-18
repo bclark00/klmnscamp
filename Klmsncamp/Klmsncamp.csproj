@@ -148,8 +148,9 @@
     <Reference Include="System.EnterpriseServices">
       <Private>True</Private>
     </Reference>
-    <Reference Include="Telerik.Web.Mvc">
-      <HintPath>..\..\..\..\..\..\..\Program Files\Telerik\Extensions for ASP.NET MVC Q2 2011\Binaries\Mvc3\Telerik.Web.Mvc.dll</HintPath>
+    <Reference Include="Telerik.Web.Mvc, Version=2013.1.219.235, Culture=neutral, PublicKeyToken=121fae78165ba3d4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\Downloads\Telerik_Extensions_for_ASPNET_MVC_2013_1_219_OpenSource\Binaries\Mvc3\Telerik.Web.Mvc.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -196,6 +197,7 @@
     <Compile Include="Models\CorporateAccount.cs" />
     <Compile Include="Models\CorporateType.cs" />
     <Compile Include="Models\CustomPermission.cs" />
+    <Compile Include="Models\DownloadModel.cs" />
     <Compile Include="Models\Inventory.cs" />
     <Compile Include="Models\InventoryOwnership.cs" />
     <Compile Include="Models\Location.cs" />
@@ -995,6 +997,7 @@
     <Content Include="Scripts\jquery-1.5.1-vsdoc.js" />
     <Content Include="Scripts\jquery-1.5.1.js" />
     <Content Include="Scripts\jquery-1.5.1.min.js" />
+    <Content Include="Scripts\jquery-1.7.1.min.js" />
     <Content Include="Scripts\jquery-ui-1.8.11.js" />
     <Content Include="Scripts\jquery-ui-1.8.11.min.js" />
     <Content Include="Scripts\jquery-ui.min.js" />
@@ -1006,11 +1009,40 @@
     <Content Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Scripts\JScriptDownload.js" />
     <Content Include="Scripts\modernizr-1.7.js" />
     <Content Include="Scripts\modernizr-1.7.min.js" />
+    <Content Include="Scripts\telerik.all.min.js" />
+    <Content Include="Scripts\telerik.autocomplete.min.js" />
+    <Content Include="Scripts\telerik.calendar.min.js" />
+    <Content Include="Scripts\telerik.chart.min.js" />
+    <Content Include="Scripts\telerik.combobox.min.js" />
     <Content Include="Scripts\telerik.common.js" />
+    <Content Include="Scripts\telerik.common.min.js" />
+    <Content Include="Scripts\telerik.datepicker.min.js" />
+    <Content Include="Scripts\telerik.datetimepicker.min.js" />
+    <Content Include="Scripts\telerik.draganddrop.min.js" />
+    <Content Include="Scripts\telerik.editor.min.js" />
     <Content Include="Scripts\telerik.examples.min.js" />
+    <Content Include="Scripts\telerik.grid.editing.min.js" />
+    <Content Include="Scripts\telerik.grid.filtering.min.js" />
+    <Content Include="Scripts\telerik.grid.grouping.min.js" />
+    <Content Include="Scripts\telerik.grid.min.js" />
+    <Content Include="Scripts\telerik.grid.reordering.min.js" />
+    <Content Include="Scripts\telerik.grid.resizing.min.js" />
+    <Content Include="Scripts\telerik.imagebrowser.min.js" />
+    <Content Include="Scripts\telerik.list.min.js" />
     <Content Include="Scripts\telerik.menu.js" />
+    <Content Include="Scripts\telerik.menu.min.js" />
+    <Content Include="Scripts\telerik.panelbar.min.js" />
+    <Content Include="Scripts\telerik.slider.min.js" />
+    <Content Include="Scripts\telerik.splitter.min.js" />
+    <Content Include="Scripts\telerik.tabstrip.min.js" />
+    <Content Include="Scripts\telerik.textbox.min.js" />
+    <Content Include="Scripts\telerik.timepicker.min.js" />
+    <Content Include="Scripts\telerik.treeview.min.js" />
+    <Content Include="Scripts\telerik.upload.min.js" />
+    <Content Include="Scripts\telerik.window.min.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -1050,6 +1082,7 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="App_Data\UploadedFiles\Report1.pdf" />
     <None Include="Content\images\copy document.psd" />
     <None Include="Content\images\file_types.psd" />
     <None Include="Content\images\printer.psd" />

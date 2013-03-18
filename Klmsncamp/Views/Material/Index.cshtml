@@ -1,97 +1,149 @@
 ﻿@using Telerik.Web.Mvc.UI
 @model IEnumerable<Klmsncamp.Models.Material>
-
 @{
-    ViewBag.Title = "Malzemeler";
+	ViewBag.Title = "Malzemeler";
 }
-
 <script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
 <script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+<script type="text/javascript">
+						$(document).ready(function () {
+							$("#txtDegerArama").change(function () {
+								var deger = $("#txtDegerArama").val();
+								document.location = "/Material/Arama/?deger=" + deger + "&kategoriID="+ @ViewBag.kategoriID;
+							});
+						});
+					
+</script>
 @{ Html.Telerik().TabStrip()
-    .Name("TabStrip")
-    .HtmlAttributes(new { style = "height: 100%" })
-    .Effects(fx =>
-    {
-        fx.Toggle();
-        fx.Opacity();
-        fx.OpenDuration(200).CloseDuration(200);
-    })
-    .Items(tabstrip =>
-    {
-    tabstrip.Add()
-    .Text("Tanımlamalar")
-    .Content(@<text>
-        <table>
-        <tbody>
-        <tr>
-        <td>
-        @{Html.RenderPartial("MaterialCategoryTreeListView", ViewBag.MaterialCategories as IEnumerable<Klmsncamp.Models.MaterialCategory>);}
-        </td>
-        <td>
-        <div style="margin: 10px 0 10px 10px;">
-        @{ Html.Telerik().Grid(Model)
-                .Name("Material").TableHtmlAttributes(new {style="text-align: left;"})
-                .HtmlAttributes(new { style = "width: 1024px; margin-left: auto; margin-right: auto;" })
-                .Columns(columns =>
-                {
-                    
-                    columns.Bound(o => o.MaterialCodeNum).Width(100).Title("Kodu");
-                    columns.Bound(o => o.Description).Width(320).Title("Açıklama");
-                    columns.Bound(o => o.RackLocation).Width(320).Title("Yeri");
-                    columns.Bound(o => o.ComponentModel).Width(100).Title("Model");
-                    columns.Bound(o => o.MaterialType.Description).Width(120).Title("Tipi");
+	.Name("TabStrip")
+	.HtmlAttributes(new { style = "height: 100%" })
+	.Effects(fx =>
+	{
+		fx.Toggle();
+		fx.Opacity();
+		fx.OpenDuration(200).CloseDuration(200);
+	})
+	.Items(tabstrip =>
+	{
+		tabstrip.Add()
+		.Text("Tanımlamalar")
+		.Content(@<text>
+	<table>
+		<tbody>
+			<tr>
+				<td>
+					@{Html.RenderPartial("MaterialCategoryTreeListView", ViewBag.MaterialCategories as IEnumerable<Klmsncamp.Models.MaterialCategory>);}
+				</td>
+				<td>
+					@if (@Model.ToList().Count != 0)
+	 {
+		 if (@ViewBag.kategoriID == "1")
+		 {
+						<div style="margin-left: 15px;">
+							Genel Arama : @Html.TextBox("txtDegerArama")
+						</div>
+		 }
+		 else
+		 {
+						<div style="margin-left: 15px;">
+							@Model.First().MaterialCategory.Description Arama : @Html.TextBox("txtDegerArama")
+						</div>
+		 }
+	 }
+					<div style="margin: 10px 0 10px 10px;">
+						@{
+		  
+							var pagerStyleFlags = new[] 
+    { 
+        new { Key = "pageInput", Value = GridPagerStyles.PageInput },
+        new { Key = "nextPrevious", Value = GridPagerStyles.NextPrevious },
+        new { Key = "numeric", Value = GridPagerStyles.Numeric },
+        new { Key = "pageSize", Value = GridPagerStyles.PageSizeDropDown }
+    };
 
-                })
-                .DetailView(detailView => detailView.Template(o => GridDetailTemplate(this,o)))                                
-                //.DetailView(ChildsDetailView => ChildsDetailView.Template(o => ChildsDetailViewTemplate(this, o)))
-                .Scrollable(scrolling => scrolling.Enabled(true).Height(500))
-                .Sortable(sorting => sorting.Enabled(true).OrderBy(o => { o.Add("MaterialCodeNum").Ascending(); }))
-                .Filterable(filtering => filtering.Enabled(true))
-                .Groupable(grouping => grouping.Enabled(true))
-                .Resizable(resizing => resizing.Columns(true))
-                .Footer(true)
-                .Localizable("tr-TR")
-                .Render();
-         }
-        </div>
-        </td>
-        </tr>
-        </tbody>
-        </table>
-    </text>).Selected(true);
+							GridPagerStyles pagerStyles = GridPagerStyles.NextPreviousAndNumeric;
 
-    })
-    .Render();
+							foreach (var itemStyle in pagerStyleFlags)
+							{
+								pagerStyles |= itemStyle.Value;
+							}
+
+							Html.Telerik().Grid(Model)
+								.Name("Material").TableHtmlAttributes(new { style = "text-align: left;" })
+								.HtmlAttributes(new { style = "width: 1024px; margin-left: auto; margin-right: auto;" })
+								.Columns(columns =>
+								{
+
+									columns.Bound(o => o.MaterialCodeNum).Width(100).Title("Seri No");
+									columns.Bound(o => o.Description).Width(100).Title("Değer");
+									columns.Bound(o => o.RackLocation).Width(100).Title("Yer");
+									columns.Bound(o => o.ComponentModel).Width(100).Title("Fiziksel Yapı");
+									columns.Bound(o => o.MaterialCategory.Description).Width(100).Title("Kategori");
+									columns.Bound(o => o.Note).Width(100).Title("Note");
+
+									//columns.Bound(o => o.MaterialType.Description).Width(120).Title("Kategori");
+
+								})
+								.DetailView(detailView => detailView.Template(o => GridDetailTemplate(this, o)))
+								//.DetailView(ChildsDetailView => ChildsDetailView.Template(o => ChildsDetailViewTemplate(this, o)))
+								.Scrollable(scrolling => scrolling.Enabled(true).Height(500))
+								.Sortable(sorting => sorting.Enabled(true).OrderBy(o => { o.Add("MaterialCodeNum").Ascending(); }))
+								.Filterable(filtering => filtering.Enabled(true))
+								.Groupable(grouping => grouping.Enabled(true))
+								.Resizable(resizing => resizing.Columns(true))
+								//.Pageable(pagingg => pagingg.Style(pagerStyles))
+								.Pageable(paging => paging.PageSize(20).Style(GridPagerStyles.NextPreviousAndNumeric).Position(GridPagerPosition.Both))
+								.Footer(true)
+								.Localizable("tr-TR")
+								.Render();
+						}
+					</div>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	</text>).Selected(true);
+
+	})
+	.Render();
 }
-
 @helper GridDetailTemplate(WebViewPage page, Klmsncamp.Models.Material o)
-{
-    Html.Telerik().TabStrip()
-    .Name("TabStrip_" + o.MaterialID)
-    .SelectedIndex(0)
-    .Items(items =>
-    {
-        items.Add().Text("Malzemeye Ait Dosyalar").Content(@<text>
-        @(Html.Telerik().Grid(o.MaterialFiles)
-            .Name("MaterialFiles_" + o.MaterialID)
-            .Columns(columns =>
-            {
-                columns.Bound(e => e.MaterialFileDescription).Title("Açıklama").Width(350);
-                columns.Bound(e => e.MaterialFileID).Title("Boyut");
+	{
+		Html.Telerik().TabStrip()
+		.Name("TabStrip_" + o.MaterialID)
+		.SelectedIndex(0)
+		.Items(items =>
+		{
+			items.Add().Text("Malzemeye Ait Dosyalar").Content(@<text>
+	@(Html.Telerik().Grid(o.MaterialFiles)
+			.Name("MaterialFiles_" + o.MaterialID)
+			.Columns(columns =>
+			{
+				columns.Bound(e => e.MaterialFileDescription).Title("Açıklama").Width(350);
+				columns.Bound(e => e.MaterialFileID).Title("Boyut");
 
-            })
-            .Pageable()
-        )
-        </text>);
-        items.Add().Text("Malzeme Detay Bilgileri").Content(@<text>
-                        <table>
-                        <tbody>
-                        <tr><td>Markası : @o.CorporateAccount.Title</td><td>Lokasyon : @o.Location.Description</td><td>Grubu : @o.MaterialGroup.Description</td></tr>
-                        <tr><td colspan="3">Notlar : @o.Note</td></tr>
-                        </tbody></table>
-                        )
-                        </text>);
-    }).Render();
+			})
+			.Pageable()
+		)
+	</text>);
+			items.Add().Text("Malzeme Detay Bilgileri").Content(@<text>
+	<table>
+		<tbody>
+			<tr>
+				<td>@*Markası : @o.CorporateAccount.Title</td><td>Lokasyon : @o.Location.Description</td><td>Grubu : @o.MaterialGroup.Description*@
+				</td>
+			</tr>
+			<tr>
+				<td colspan="3">
+					Notlar : @o.Note
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	)
+	</text>);
+		}).Render();
    
     
 }
+@{ Html.Telerik().ScriptRegistrar().Globalization(true); }

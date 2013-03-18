@@ -1,239 +1,242 @@
 ﻿@using Telerik.Web.Mvc.UI
 @using Klmsncamp.Models
 @{
-    ParameterSetting pr = new ParameterSetting();
-    ViewBag.BannerFileName = pr.BannerFileName;
-    ViewBag.BannerOverlayString = pr.BannerOverlayString;
+	ParameterSetting pr = new ParameterSetting();
+	ViewBag.BannerFileName = pr.BannerFileName;
+	ViewBag.BannerOverlayString = pr.BannerOverlayString;
 
-    UserRepository usrep = new UserRepository();
-    ViewBag.IsTakipModulu = usrep.HasModuleAccess(HttpContext.Current.User.Identity.Name, 1);
-    ViewBag.MalzemeModulu = usrep.HasModuleAccess(HttpContext.Current.User.Identity.Name, 2);
+	UserRepository usrep = new UserRepository();
+	ViewBag.IsTakipModulu = usrep.HasModuleAccess(HttpContext.Current.User.Identity.Name, 1);
+	ViewBag.MalzemeModulu = usrep.HasModuleAccess(HttpContext.Current.User.Identity.Name, 2);
     
 }
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head profile="http://gmpg.org/xfn/11">
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>@ViewBag.Title</title>
-    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/form.css")" />
-    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/base.css")" />
-    <!--<link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/klimasannavmenu.css")" />-->
-    <script src="@Url.Content("~/Scripts/jquery-1.5.1.min.js")" type="text/javascript"></script>
-    @Html.Telerik().StyleSheetRegistrar().DefaultGroup(group => group.Add("telerik.common.css").Add("telerik.windows7.css"))
-                                                            <!--group.Add("telerik.common.css").Add("telerik.default.css").Add("telerik.office2010blue.css").Add("telerik.windows7.css")-->
-    @RenderSection("script", false)
-    <script type="text/javascript">        function gettext(txt) { return txt }</script>
-    <style type="text/css">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>@ViewBag.Title</title>
+	<link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/form.css")" />
+	<link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/base.css")" />
+	<!--<link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/klimasannavmenu.css")" />-->
+
+	<script src="@Url.Content("~/Scripts/jquery-1.5.1.min.js")" type="text/javascript"></script>
+
+	@Html.Telerik().StyleSheetRegistrar().DefaultGroup(group => group.Add("telerik.common.css").Add("telerik.windows7.css"))
+	<!--group.Add("telerik.common.css").Add("telerik.default.css").Add("telerik.office2010blue.css").Add("telerik.windows7.css")-->
+	@RenderSection("script", false)
+	<script type="text/javascript">		function gettext(txt) { return txt }</script>
+	<style type="text/css">
 #Menu .t-content { background-color: #edf9fe; color: #333; } .product-list { padding:
 0; margin: 0; } .product { text-align: center; list-style: none; display: inline-block;
 *display: inline; zoom: 1; margin: 10px; padding: 5px; border: 2px solid #ccc; -moz-border-radius:
 4px; -webkit-border-radius: 4px; border-radius: 4px; background: #fff; } </style>
 </head>
 <body>
-    <div id="userx" align="right" style="font-size: 12px; margin-top: 5px; margin-bottom: 3px;">
-        @Html.Partial("_LogOnPartial")
-    </div>
-    @{ Html.Telerik().Menu()
-        .Name("Menu")
-        .Items(menu =>
-        {
-            if (ViewBag.IsTakipModulu)
-            {
-            
-                menu.Add()
-                .Text("Arıza/İş Bildirimleri ")
-                .Content(@<text>
-                <ul class="product-list">
-                    <li class="product">
-                        <img src="@Url.Content("~/Content/Coquette/add_to_folder.png")" alt="Yeni Proje Girişi" />
-                        <p>
-                            @Html.ActionLink("Yeni Proje", "Create", "Project", null, null)
-                        </p>
-                    </li>
-                    <li class="product">
-                        <img src="@Url.Content("~/Content/Coquette/folder.png")" alt="Proje Listesi" />
-                        <p>
-                            @Html.ActionLink("Proje Listesi", "Index", "Project", null, null)
-                        </p>
-                    </li>
-                    <li class="product">
-                        <img src="@Url.Content("~/Content/Milky/44.png")" alt="Yeni Arıza Bildirimi" />
-                        <p>
-                            @Html.ActionLink("Arıza / İş Planı Oluştur", "Create", "RequestIssue", null, null)
-                        </p>
-                    </li>
-                    <li class="product">
-                        <img src="@Url.Content("~/Content/Coquette/folder_full.png")" alt="İş Listesi" />
-                        <p>
-                            @Html.ActionLink("İş Listesi", "Index", "RequestIssue", new { show = "A", page = 1 }, null)
-                        </p>
-                    </li>
-                    <li class="product">
-                        <img src="@Url.Content("~/Content/Coquette/comments.png")" alt="İş Listesi" />
-                        <p>
-                            @Html.ActionLink("Anketler", "Index", "SurveyTable", null, null)
-                        </p>
-                    </li>
-                    @if (User.IsInRole("moderators") || User.IsInRole("administrator"))
-                    {
-                        <li class="product">
-                            <img src="@Url.Content("~/Content/Coquette/attachment.png")" alt="İş Listesi" />
-                            <p>
-                                @Html.ActionLink("Ödemeler / Fatura Kaydı", "Index", "Payment", null, null)
-                            </p>
-                        </li>
-                        <li class="product">
-                            <img src="@Url.Content("~/Content/Coquette/calendar_empty.png")" alt="İş Listesi" />
-                            <p>
-                                @Html.ActionLink("Takvim", "Index", "Calendar", null, null)
-                            </p>
-                        </li>
-                        <li style="background-color: transparent; border: none;" class="product">&nbsp;</li>
-                    }
-                </ul>
-                </text>);
-            }
-            if (ViewBag.IsTakipModulu)
-            {
-                menu.Add()
-                    .Text("İş Listesi Arama")
-                    .Content(@<text>
-                <ul class="product-list">
-                    <li class="product">
-                        <img src="@Url.Content("~/Content/Coquette/mail_search.png")" alt="İş Listesi" />
-                        <p>
-                            @Html.ActionLink("Detaylı Ara", "Search", "RequestIssue", null, null)
-                        </p> 
-                    </li>
-                    <li class="product" style="width: 130px;">
-                        <img src="@Url.Content("~/Content/Coquette/search.png")" alt="İş Listesi" /><p >&nbsp;</p>
-                        <div style=" margin-left: 10px; display: inline;">
-                            @using (Html.BeginForm("Find", "RequestIssue", FormMethod.Get, new { style = "float: left; text-align: center; width: 30px;" }))
-                            {
-                                @Html.ActionLink("İş No ", "Index", "Home", null, null)<text>:&nbsp;</text>@Html.TextBox("Rqid", null, new { size = "10" })<text>&nbsp;<input
-                                    type="submit" style="margin: 0; padding: 0;" value="Git" name="Go" /></text>
-                            }
-                        </div> 
-                    </li>
-                </ul>
-                </text>);
-            }
-            if (ViewBag.IsTakipModulu)
-            {
-                
-            
-            menu.Add()
-                .Text("Raporlama")
-                .Content(@<text>
-                <ul class="product-list">
-                    <li class="product">
-                        <img src="@Url.Content("~/Content/Coquette/download.png")" alt="İş Raporlama"/>
-                        <p>
-                            @Html.ActionLink("Arızalar / İş Bildirimleri", "Report", "RequestIssue", null, null)
-                        </p>
-                    </li>
-                    <li class="product">
-                        <img src="@Url.Content("~/Content/Coquette/page_process.png")" alt="Cihaz Raporlama"/>
-                        <p>
-                            @Html.ActionLink("Cihazlar ve Demirbaşlar", "Index", "Home", null, null)
-                        </p>
-                    </li>
-                </ul>
-                </text>);
-            }
-                if (ViewBag.MalzemeModulu)
-                {
-                    menu.Add()
-                        .Text("Malzeme Yerleşim Planı")
-                        .Content(@<text>
-                        <ul class="product-list">
-                            <li class="product">
-                                <img src="@Url.Content("~/Content/Coquette/tag_blue.png")" alt="Cihaz Raporlama"/>
-                                <p>
-                                    @Html.ActionLink("Malzemeler Dizini ", "Index", "Material", null, null)
-                                </p>
-                            </li>
-                        </ul>    
-                        </text>);
-                }
-                if (User.IsInRole("moderators") || User.IsInRole("administrators"))
-                {
-                    menu.Add()
-                        .Text("Sabitler ve Tanımlamalar")
-                        .Content(@<text>
-                        <ul class="product-list">
-                            <li class="product">
-                                <table>
-                                    <tbody>
-                                        <tr>
-                                            <td rowspan="2">
-                                                <img src="@Url.Content("~/Content/images/settings.jpg")" alt="Ayarlar"/>
-                                            </td>
-                                            <td>@Html.ActionLink("Geçerlilik Durumları", "Index", "ValidationState", null, null)
-                                            </td>
-                                            <td>@Html.ActionLink("İşletme Birimi Tanımları", "Index", "Workshop", null, null)
-                                            </td>
-                                            <td>@Html.ActionLink("Departman Tanımları", "Index", "Location", null, null)
-                                            </td>
-                                            <td>@Html.ActionLink("Personel Tanımları", "Index", "Personnel", null, null)
-                                            </td>
-                                            <td>@Html.ActionLink("Arıza Bildirim Durumları", "Index", "RequestState", null, null)
-                                            </td>
-                                            <td>@Html.ActionLink("Arıza Bildirim Tipleri", "Index", "RequestType", null, null)
-                                            </td>
-                                            <td>@Html.ActionLink("Anket Taslak Tanımları", "Index", "SurveyTemplate", null, null)
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>@Html.ActionLink("Aidiyet Tanımları", "Index", "InventoryOwnership", null, null)
-                                            </td>
-                                            <td>@Html.ActionLink("Cihaz Bilgileri", "Index", "Inventory", null, null)
-                                            </td>
-                                            <td>@Html.ActionLink("Firma Tipleri", "Index", "CorporateType", null, null)
-                                            </td>
-                                            <td>@Html.ActionLink("Firma Bilgileri", "Index", "CorporateAccount", null, null)
-                                            </td>
-                                            <td>@Html.ActionLink("Yeni Kullanıcı Oluştur", "Register", "Account", null, null)
-                                            </td>
-                                            <td colspan="2">@Html.ActionLink("Uygulama Parametreleri", "Index", "ParameterSetting", null, null)
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </li>
-                        </ul>
-                        </text>);
-                }
-                    menu.Add()
-                        .Text("Hakkında").Action("About", "Home")
-                        .Content(@<text>
-                <div style="width: 700px; height: 150px; z-index: 0; position: relative;">
-                    <img width="700px" height="150px" src="@Url.Content("~/Content/images/" + @ViewBag.BannerFileName)"
+	<div id="userx" align="right" style="font-size: 12px; margin-top: 5px; margin-bottom: 3px;">
+		@Html.Partial("_LogOnPartial")
+	</div>
+	@{ Html.Telerik().Menu()
+		.Name("Menu")
+		.Items(menu =>
+		{
+			if (ViewBag.IsTakipModulu)
+			{
+
+				menu.Add()
+				.Text("Arıza/İş Bildirimleri ")
+				.Content(@<text>
+		<ul class="product-list">
+			<li class="product">
+				<img src="@Url.Content("~/Content/Coquette/add_to_folder.png")" alt="Yeni Proje Girişi" />
+				<p>
+					@Html.ActionLink("Yeni Proje", "Create", "Project", null, null)
+				</p>
+			</li>
+			<li class="product">
+				<img src="@Url.Content("~/Content/Coquette/folder.png")" alt="Proje Listesi" />
+				<p>
+					@Html.ActionLink("Proje Listesi", "Index", "Project", null, null)
+				</p>
+			</li>
+			<li class="product">
+				<img src="@Url.Content("~/Content/Milky/44.png")" alt="Yeni Arıza Bildirimi" />
+				<p>
+					@Html.ActionLink("Arıza / İş Planı Oluştur", "Create", "RequestIssue", null, null)
+				</p>
+			</li>
+			<li class="product">
+				<img src="@Url.Content("~/Content/Coquette/folder_full.png")" alt="İş Listesi" />
+				<p>
+					@Html.ActionLink("İş Listesi", "Index", "RequestIssue", new { show = "A", page = 1 }, null)
+				</p>
+			</li>
+			<li class="product">
+				<img src="@Url.Content("~/Content/Coquette/comments.png")" alt="İş Listesi" />
+				<p>
+					@Html.ActionLink("Anketler", "Index", "SurveyTable", null, null)
+				</p>
+			</li>
+			@if (User.IsInRole("moderators") || User.IsInRole("administrator"))
+   {
+				<li class="product">
+					<img src="@Url.Content("~/Content/Coquette/attachment.png")" alt="İş Listesi" />
+					<p>
+						@Html.ActionLink("Ödemeler / Fatura Kaydı", "Index", "Payment", null, null)
+					</p>
+				</li>
+				<li class="product">
+					<img src="@Url.Content("~/Content/Coquette/calendar_empty.png")" alt="İş Listesi" />
+					<p>
+						@Html.ActionLink("Takvim", "Index", "Calendar", null, null)
+					</p>
+				</li>
+				<li style="background-color: transparent; border: none;" class="product">&nbsp;</li>
+   }
+		</ul>
+		</text>);
+			}
+			if (ViewBag.IsTakipModulu)
+			{
+				menu.Add()
+					.Text("İş Listesi Arama")
+					.Content(@<text>
+		<ul class="product-list">
+			<li class="product">
+				<img src="@Url.Content("~/Content/Coquette/mail_search.png")" alt="İş Listesi" />
+				<p>
+					@Html.ActionLink("Detaylı Ara", "Search", "RequestIssue", null, null)
+				</p>
+			</li>
+			<li class="product" style="width: 130px;">
+				<img src="@Url.Content("~/Content/Coquette/search.png")" alt="İş Listesi" /><p>
+					&nbsp;</p>
+				<div style="margin-left: 10px; display: inline;">
+					@using (Html.BeginForm("Find", "RequestIssue", FormMethod.Get, new { style = "float: left; text-align: center; width: 30px;" }))
+	 {
+						@Html.ActionLink("İş No ", "Index", "Home", null, null)<text>:&nbsp;</text>@Html.TextBox("Rqid", null, new { size = "10" })<text>&nbsp;<input
+							type="submit" style="margin: 0; padding: 0;" value="Git" name="Go" /></text>
+	 }
+				</div>
+			</li>
+		</ul>
+		</text>);
+			}
+			if (ViewBag.IsTakipModulu)
+			{
+
+
+				menu.Add()
+					.Text("Raporlama")
+					.Content(@<text>
+		<ul class="product-list">
+			<li class="product">
+				<img src="@Url.Content("~/Content/Coquette/download.png")" alt="İş Raporlama"/>
+				<p>
+					@Html.ActionLink("Arızalar / İş Bildirimleri", "Report", "RequestIssue", null, null)
+				</p>
+			</li>
+			<li class="product">
+				<img src="@Url.Content("~/Content/Coquette/page_process.png")" alt="Cihaz Raporlama"/>
+				<p>
+					@Html.ActionLink("Cihazlar ve Demirbaşlar", "Index", "Home", null, null)
+				</p>
+			</li>
+		</ul>
+		</text>);
+			}
+			if (ViewBag.MalzemeModulu)
+			{
+				menu.Add()
+					.Text("Malzeme Yerleşim Planı")
+					.Content(@<text>
+		<ul class="product-list">
+			<li class="product">
+				<img src="@Url.Content("~/Content/Coquette/tag_blue.png")" alt="Cihaz Raporlama"/>
+				<p>
+					@Html.ActionLink("Malzemeler Dizini ", "Index", "Material", null, null)
+				</p>
+			</li>
+		</ul>
+		</text>);
+			}
+			if (User.IsInRole("moderators") || User.IsInRole("administrators"))
+			{
+				menu.Add()
+					.Text("Sabitler ve Tanımlamalar")
+					.Content(@<text>
+		<ul class="product-list">
+			<li class="product">
+				<table>
+					<tbody>
+						<tr>
+							<td rowspan="2">
+								<img src="@Url.Content("~/Content/images/settings.jpg")" alt="Ayarlar"/>
+							</td>
+							<td>@Html.ActionLink("Geçerlilik Durumları", "Index", "ValidationState", null, null)
+							</td>
+							<td>@Html.ActionLink("İşletme Birimi Tanımları", "Index", "Workshop", null, null)
+							</td>
+							<td>@Html.ActionLink("Departman Tanımları", "Index", "Location", null, null)
+							</td>
+							<td>@Html.ActionLink("Personel Tanımları", "Index", "Personnel", null, null)
+							</td>
+							<td>@Html.ActionLink("Arıza Bildirim Durumları", "Index", "RequestState", null, null)
+							</td>
+							<td>@Html.ActionLink("Arıza Bildirim Tipleri", "Index", "RequestType", null, null)
+							</td>
+							<td>@Html.ActionLink("Anket Taslak Tanımları", "Index", "SurveyTemplate", null, null)
+							</td>
+						</tr>
+						<tr>
+							<td>@Html.ActionLink("Aidiyet Tanımları", "Index", "InventoryOwnership", null, null)
+							</td>
+							<td>@Html.ActionLink("Cihaz Bilgileri", "Index", "Inventory", null, null)
+							</td>
+							<td>@Html.ActionLink("Firma Tipleri", "Index", "CorporateType", null, null)
+							</td>
+							<td>@Html.ActionLink("Firma Bilgileri", "Index", "CorporateAccount", null, null)
+							</td>
+							<td>@Html.ActionLink("Yeni Kullanıcı Oluştur", "Register", "Account", null, null)
+							</td>
+							<td colspan="2">@Html.ActionLink("Uygulama Parametreleri", "Index", "ParameterSetting", null, null)
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</li>
+		</ul>
+		</text>);
+			}
+			menu.Add()
+				.Text("Hakkında").Action("About", "Home")
+				.Content(@<text>
+		<div style="width: 700px; height: 150px; z-index: 0; position: relative;">
+			<img width="700px" height="150px" src="@Url.Content("~/Content/images/" + @ViewBag.BannerFileName)"
                 alt="Bize Ulaşın" />
-                    <div>
-                        <div style="top: 35px; font-size: small; font-weight: bold; z-index: 1; position: absolute;
-                            padding-left: 520px; text-align: right;">
-                            @Html.Raw(ViewBag.BannerOverlayString)
-                        </div>
-                    </div>
-                </div>
-                </text>);
-                })
-                .Render();
-    }
-    <div class="page">
-        <div id="main">
-            @RenderBody()
-        </div>
-        <div id="footer">
-        </div>
-    </div>
-    @(Html.Telerik().ScriptRegistrar().jQuery(false)
-                     .DefaultGroup(group => group
-                                         .Add("telerik.examples.min.js")
-                         .Compress(true)).OnDocumentReady(
-                     @<text> prettyPrint();
-    </text>)
-    )
+			<div>
+				<div style="top: 35px; font-size: small; font-weight: bold; z-index: 1; position: absolute;
+					padding-left: 520px; text-align: right;">
+					@Html.Raw(ViewBag.BannerOverlayString)
+				</div>
+			</div>
+		</div>
+		</text>);
+		})
+				.Render();
+	}
+	<div class="page">
+		<div id="main">
+			@RenderBody()
+		</div>
+		<div id="footer">
+		</div>
+	</div>
+	@(Html.Telerik().ScriptRegistrar().jQuery(false)
+					 .DefaultGroup(group => group
+										 .Add("telerik.examples.min.js")
+						 .Compress(true)).OnDocumentReady(
+					 @<text> prettyPrint();
+	</text>)
+	)
 </body>
 </html>

@@ -1,5 +1,6 @@
-﻿@{
-    ViewBag.Title = "Hakkında";
+﻿@model IEnumerable<Klmsncamp.Models.FileNames>
+@{
+	ViewBag.Title = "Hakkında";
 }
 <br />
 <marquee behavior="scroll" direction="up" scrollamount="3" height="350" style="text-align: center;">
@@ -10,6 +11,35 @@
         <img alt="mvc3" src="@Url.Content("~/Content/images/mvc3logo.gif")" /><br />
         <img alt="visualstudio2010" src="@Url.Content("~/Content/images/vs2010.png")" /><br />
         <img alt="Telerik Mvc3 extensions" src="@Url.Content("~/Content/images/TelerikBanner.png")" /><br />
-
+	@* <input type="file" id="SheetContentPlaceHolder_FileUpload1" onchange="readURL(this);" />*@	
 </marquee>
 <hr />
+@using (Html.BeginForm("Upload", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+	@Html.Label("lblDosyaEkle", "Dosya Ekle :")
+	<input type="file" id="fileUploadDosyaEkle" name="file" />
+	<input type="submit" value="Kaydet" />
+}
+
+<table>
+<tr>
+<th>
+FieldIF
+</th>
+<th>
+FieldName
+</th>
+</tr>
+
+@foreach (var item in Model)
+{
+	<tr>
+	<td>@Html.DisplayFor(modelItem=>item.FileID)</td>
+	<td>@Html.DisplayFor(modelItem=>item.FileName)</td>
+	<td>@Html.ActionLink("Download", "Download", new { id=item.FileID})</td>
+	</tr>
+	
+}
+
+
+</table>
