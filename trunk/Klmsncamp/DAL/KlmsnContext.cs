@@ -48,7 +48,7 @@ namespace Klmsncamp.Models
 
         public DbSet<Role> Roles { get; set; }
 
-        public IEnumerable<RequestType> RequestIE { get; set; }
+       // public IEnumerable<RequestType> RequestIE { get; set; }
 
         public DbSet<Payment> Payments { get; set; }
 

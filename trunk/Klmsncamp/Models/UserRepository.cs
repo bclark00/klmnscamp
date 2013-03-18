@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Web;
 using System.Web.Security;
+using Klmsncamp.Models;
 
 namespace Klmsncamp.Models
 {
@@ -28,11 +29,12 @@ namespace Klmsncamp.Models
                 user.LastLoginDate = DateTime.Now;
 
                 db.Users.Add(user);
-                db.SaveChanges();
+				db.Entry(user).State = System.Data.EntityState.Added;
+				db.SaveChanges();
 
-                var user_role = db.Roles.Find(3);
-                user_role.Users.Add(user);
-                db.SaveChanges();
+				var user_role = db.Roles.Find(3);
+				user_role.Users.Add(user);
+				db.SaveChanges();
 
                 return GetUser(username);
             }

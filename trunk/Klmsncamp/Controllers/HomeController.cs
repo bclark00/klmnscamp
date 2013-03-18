@@ -21,116 +21,154 @@ using Klmsncamp.ViewModels;
 
 namespace Klmsncamp.Controllers
 {
-    public class HomeController : Controller
-    {
-        private KlmsnContext db = new KlmsnContext();
+	public class HomeController : Controller
+	{
+		private KlmsnContext db = new KlmsnContext();
 
-        public ActionResult Index(string err)
-        {
-            if (err == "404")
-            {
-                ViewBag.ErrMessage = "Aradığınız Arıza no bulunamadı..";
-            }
+		public ActionResult Index(string err)
+		{
+			if (err == "404")
+			{
+				ViewBag.ErrMessage = "Aradığınız Arıza no bulunamadı..";
+			}
 
-            ViewBag.WelcomeString = db.ParameterSettings.AsNoTracking().Where(i => i.ParameterSettingID == 11).SingleOrDefault().ParameterValue;
-            return View();
-        }
+			ViewBag.WelcomeString = db.ParameterSettings.AsNoTracking().Where(i => i.ParameterSettingID == 11).SingleOrDefault().ParameterValue;
+			return View();
+		}
 
-        public ActionResult About()
-        {
-            ViewBag.MarqueeString = db.ParameterSettings.AsNoTracking().Where(i => i.ParameterSettingID == 13).SingleOrDefault().ParameterValue;
-            return View();
-        }
 
-        public ActionResult WeatherWidget()
-        {
-            //string _location = Request.QueryString["location"];
-            //string _metric = Request.QueryString["metric"];
+		Klmsncamp.Models.DownloadModel downloadModel;
+		public HomeController()
+		{
+			downloadModel = new DownloadModel();
+		} 
 
-            ////string _url = string.Format("http://rainmeter.accu-weather.com/widget/rainmeter/weather-data.asp?location={0}&metric={1}", _location, _metric);
-            //string _url = string.Format("http://wwwa.accuweather.com/adcbin/forecastfox/weather_data.asp?location={0}&metric={1}", _location, _metric);
+		public ActionResult About()
+		{
+			//ViewBag.MarqueeString = db.ParameterSettings.AsNoTracking().Where(i => i.ParameterSettingID == 13).SingleOrDefault().ParameterValue;
 
-            //string _xml = DownloadWebPage(_url);
+			List<Klmsncamp.Models.FileNames> list = downloadModel.GetFiles();
+			return View(list);
+		}
 
-            //XmlDocument _xmlDocument = new XmlDocument();
-            //_xmlDocument.LoadXml(_xml);
+		public FileResult Download(string id)
+		{
+			int fid = Convert.ToInt32(id);
+			string filePath = (from f in downloadModel.GetFiles() where f.FileID == fid select f.FilePath).First();
+		string contentType = "application/pdf";
 
-            //XmlNamespaceManager _mgr = new XmlNamespaceManager(_xmlDocument.NameTable);
-            //_mgr.AddNamespace("pf", _xmlDocument.DocumentElement.NamespaceURI);
+		return File(filePath, contentType);
+		}
 
-            Weather _weather = new Weather();
+	[HttpPost]
+		public ActionResult Upload(HttpPostedFileBase file)
+		{
+			if (file != null && file.ContentLength > 0)
+			{
+				string extension = System.IO.Path.GetExtension(file.FileName);
+				int index = file.FileName.IndexOf(".");
+				string fileName = Path.GetFileName(file.FileName.Substring(0, index) + "-" + Guid.NewGuid().ToString().Substring(0, 3).Replace(".", "-") + extension);
 
-            //_weather.city =
-            //    _xmlDocument.SelectSingleNode("/pf:adc_database/pf:local/pf:city", _mgr).InnerText;
-            //_weather.curr_temp = Convert.ToInt32(
-            //    _xmlDocument.SelectSingleNode("/pf:adc_database/pf:currentconditions/pf:temperature", _mgr).InnerText);
-            //_weather.curr_text =
-            //    _xmlDocument.SelectSingleNode("/pf:adc_database/pf:currentconditions/pf:weathertext", _mgr).InnerText;
-            //_weather.curr_icon = Convert.ToInt32(
-            //    _xmlDocument.SelectSingleNode("/pf:adc_database/pf:currentconditions/pf:weathericon", _mgr).InnerText);
+				string path = Path.Combine(Server.MapPath("~/App_Data/UploadedFiles"), fileName);
+				file.SaveAs(path);
+			}
 
-            //XmlNodeList _xmlNodeList = _xmlDocument.SelectNodes("/pf:adc_database/pf:forecast/pf:day", _mgr);
-            //int _day = _xmlNodeList.Count;
-            //int i = 0;
-            //foreach (XmlNode _dayItem in _xmlNodeList)
-            //{
-            //    Forecast _forecast = new Forecast();
 
-            //    _forecast.day_date = _dayItem["obsdate"].InnerXml;
-            //    _forecast.day_text = _dayItem.SelectSingleNode("pf:daytime", _mgr)["txtshort"].InnerXml;
-            //    _forecast.day_icon =
-            //        Convert.ToInt32(_dayItem.SelectSingleNode("pf:daytime", _mgr)["weathericon"].InnerXml);
-            //    _forecast.day_htemp =
-            //        Convert.ToInt32(_dayItem.SelectSingleNode("pf:daytime", _mgr)["hightemperature"].InnerXml);
-            //    _forecast.day_ltemp =
-            //        Convert.ToInt32(_dayItem.SelectSingleNode("pf:daytime", _mgr)["lowtemperature"].InnerXml);
+			List<Klmsncamp.Models.FileNames> list = downloadModel.GetFiles();
+			return View("About",list);
+			
+		}
 
-            //    _weather.forecast.Add(_forecast);
 
-            //    i++;
-            //    // 5 day forecast
-            //    if (i == 5) break;
-            //}
+		public ActionResult WeatherWidget()
+		{
+			//string _location = Request.QueryString["location"];
+			//string _metric = Request.QueryString["metric"];
 
-            var viewModel = new WJson();
-            viewModel.Json = Newtonsoft.Json.JsonConvert.SerializeObject(_weather);
-            return Json(_weather, JsonRequestBehavior.AllowGet);
-        }
+			////string _url = string.Format("http://rainmeter.accu-weather.com/widget/rainmeter/weather-data.asp?location={0}&metric={1}", _location, _metric);
+			//string _url = string.Format("http://wwwa.accuweather.com/adcbin/forecastfox/weather_data.asp?location={0}&metric={1}", _location, _metric);
 
-        public string DownloadWebPage(string Url)
-        {
-            // Open a connection
-            HttpWebRequest WebRequestObject = (HttpWebRequest)HttpWebRequest.Create(Url);
+			//string _xml = DownloadWebPage(_url);
 
-            // You can also specify additional header values like
-            // the user agent or the referer:
-            WebRequestObject.UserAgent = ".NET Framework/2.0";
-            WebRequestObject.Referer = "http://www.example.com/";
+			//XmlDocument _xmlDocument = new XmlDocument();
+			//_xmlDocument.LoadXml(_xml);
 
-            // Request response:
-            WebResponse Response = WebRequestObject.GetResponse();
+			//XmlNamespaceManager _mgr = new XmlNamespaceManager(_xmlDocument.NameTable);
+			//_mgr.AddNamespace("pf", _xmlDocument.DocumentElement.NamespaceURI);
 
-            // Open data stream:
-            Stream WebStream = Response.GetResponseStream();
+			Weather _weather = new Weather();
 
-            // Create reader object:
-            StreamReader Reader = new StreamReader(WebStream);
+			//_weather.city =
+			//    _xmlDocument.SelectSingleNode("/pf:adc_database/pf:local/pf:city", _mgr).InnerText;
+			//_weather.curr_temp = Convert.ToInt32(
+			//    _xmlDocument.SelectSingleNode("/pf:adc_database/pf:currentconditions/pf:temperature", _mgr).InnerText);
+			//_weather.curr_text =
+			//    _xmlDocument.SelectSingleNode("/pf:adc_database/pf:currentconditions/pf:weathertext", _mgr).InnerText;
+			//_weather.curr_icon = Convert.ToInt32(
+			//    _xmlDocument.SelectSingleNode("/pf:adc_database/pf:currentconditions/pf:weathericon", _mgr).InnerText);
 
-            // Read the entire stream content:
-            string PageContent = Reader.ReadToEnd();
+			//XmlNodeList _xmlNodeList = _xmlDocument.SelectNodes("/pf:adc_database/pf:forecast/pf:day", _mgr);
+			//int _day = _xmlNodeList.Count;
+			//int i = 0;
+			//foreach (XmlNode _dayItem in _xmlNodeList)
+			//{
+			//    Forecast _forecast = new Forecast();
 
-            // Cleanup
-            Reader.Close();
-            WebStream.Close();
-            Response.Close();
+			//    _forecast.day_date = _dayItem["obsdate"].InnerXml;
+			//    _forecast.day_text = _dayItem.SelectSingleNode("pf:daytime", _mgr)["txtshort"].InnerXml;
+			//    _forecast.day_icon =
+			//        Convert.ToInt32(_dayItem.SelectSingleNode("pf:daytime", _mgr)["weathericon"].InnerXml);
+			//    _forecast.day_htemp =
+			//        Convert.ToInt32(_dayItem.SelectSingleNode("pf:daytime", _mgr)["hightemperature"].InnerXml);
+			//    _forecast.day_ltemp =
+			//        Convert.ToInt32(_dayItem.SelectSingleNode("pf:daytime", _mgr)["lowtemperature"].InnerXml);
 
-            return PageContent;
-        }
+			//    _weather.forecast.Add(_forecast);
 
-        protected override void Dispose(bool disposing)
-        {
-            db.Dispose();
-            base.Dispose(disposing);
-        }
-    }
+			//    i++;
+			//    // 5 day forecast
+			//    if (i == 5) break;
+			//}
+
+			var viewModel = new WJson();
+			viewModel.Json = Newtonsoft.Json.JsonConvert.SerializeObject(_weather);
+			return Json(_weather, JsonRequestBehavior.AllowGet);
+		}
+
+		public string DownloadWebPage(string Url)
+		{
+			// Open a connection
+			HttpWebRequest WebRequestObject = (HttpWebRequest)HttpWebRequest.Create(Url);
+
+			// You can also specify additional header values like
+			// the user agent or the referer:
+			WebRequestObject.UserAgent = ".NET Framework/2.0";
+			WebRequestObject.Referer = "http://www.example.com/";
+
+			// Request response:
+			WebResponse Response = WebRequestObject.GetResponse();
+
+			// Open data stream:
+			Stream WebStream = Response.GetResponseStream();
+
+			// Create reader object:
+			StreamReader Reader = new StreamReader(WebStream);
+
+			// Read the entire stream content:
+			string PageContent = Reader.ReadToEnd();
+
+			// Cleanup
+			Reader.Close();
+			WebStream.Close();
+			Response.Close();
+
+			return PageContent;
+		}
+
+		protected override void Dispose(bool disposing)
+		{
+			db.Dispose();
+			base.Dispose(disposing);
+		}
+	}
 }
