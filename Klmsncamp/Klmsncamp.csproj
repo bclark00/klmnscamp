@@ -148,9 +148,9 @@
     <Reference Include="System.EnterpriseServices">
       <Private>True</Private>
     </Reference>
-    <Reference Include="Telerik.Web.Mvc, Version=2013.1.219.235, Culture=neutral, PublicKeyToken=121fae78165ba3d4, processorArchitecture=MSIL">
+    <Reference Include="Telerik.Web.Mvc, Version=2013.1.219.340, Culture=neutral, PublicKeyToken=121fae78165ba3d4, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\Downloads\Telerik_Extensions_for_ASPNET_MVC_2013_1_219_OpenSource\Binaries\Mvc3\Telerik.Web.Mvc.dll</HintPath>
+      <HintPath>..\..\..\..\..\Desktop\Telerik.Web.Mvc.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
