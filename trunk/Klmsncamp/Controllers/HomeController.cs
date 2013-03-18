@@ -41,7 +41,7 @@ namespace Klmsncamp.Controllers
 		public HomeController()
 		{
 			downloadModel = new DownloadModel();
-		} 
+		}
 
 		public ActionResult About()
 		{
@@ -51,16 +51,19 @@ namespace Klmsncamp.Controllers
 			return View(list);
 		}
 
-		public FileResult Download(string id)
+		public FileContentResult Download(string id)
 		{
 			int fid = Convert.ToInt32(id);
-			string filePath = (from f in downloadModel.GetFiles() where f.FileID == fid select f.FilePath).First();
-		string contentType = "application/pdf";
+			FileNames file = downloadModel.GetFiles().FirstOrDefault(s => s.FileID == fid);
+			string fileName = file.FileName;
+			string contentType = file.FileContentType;
+			string filePath = file.FilePath;
+			byte[] fileByte = file.FileByte;
 
-		return File(filePath, contentType);
+			return File(fileByte, contentType, fileName);
 		}
 
-	[HttpPost]
+		[HttpPost]
 		public ActionResult Upload(HttpPostedFileBase file)
 		{
 			if (file != null && file.ContentLength > 0)
@@ -68,15 +71,12 @@ namespace Klmsncamp.Controllers
 				string extension = System.IO.Path.GetExtension(file.FileName);
 				int index = file.FileName.IndexOf(".");
 				string fileName = Path.GetFileName(file.FileName.Substring(0, index) + "-" + Guid.NewGuid().ToString().Substring(0, 3).Replace(".", "-") + extension);
-
 				string path = Path.Combine(Server.MapPath("~/App_Data/UploadedFiles"), fileName);
 				file.SaveAs(path);
 			}
 
-
 			List<Klmsncamp.Models.FileNames> list = downloadModel.GetFiles();
-			return View("About",list);
-			
+			return View("About", list);
 		}
 
 
