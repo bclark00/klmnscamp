@@ -36,7 +36,7 @@
 	}
 
 </script>
-<div style="margin: 10px 0 10px 10px; border: 1px solid olive;">
+<div style="margin: 30px 0 10px 10px; border: 1px solid olive;">
 	@(Html.Telerik().TreeView()
 	.Name("TreeView").ExpandAll(true).ShowLines(true).
 			Effects(fx => fx.Toggle().Opacity().OpenDuration(200).CloseDuration(300)).ClientEvents(events => events.OnSelect("SecileniGoster"))
@@ -48,10 +48,8 @@
 					l_item.Text = materialcategory.Description;
 					l_item.Value = materialcategory.MaterialCategoryID.ToString();
 					//l_item.Value = materialcategory.ParentMaterialCategory.ToString();
-
 				})
 				.Children(materialcategory => materialcategory.MaterialCategoryChilds));
-
 	})
 
 	)
@@ -65,11 +63,8 @@
 				{
 					l_item.Text = materialcategory.Description;
 					l_item.Value = materialcategory.ParentMaterialCategoryID.ToString();
-
 				})
 				.Children(materialcategory => materialcategory.MaterialCategoryChilds));
-
 	})
-
 	)*@
 </div>

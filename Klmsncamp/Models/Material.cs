@@ -71,6 +71,7 @@ namespace Klmsncamp.Models
         
         public virtual ValidationState ValidationState { get; set; }
 
+		[MaxLength(120,ErrorMessage="Note Alanı 120 karakteri geçmemelidir.")]
         public string Note { get; set; }
 
         public virtual ICollection<MaterialFile> MaterialFiles { get; set; }

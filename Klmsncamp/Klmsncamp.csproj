@@ -232,6 +232,7 @@
     <Compile Include="Models\SurveyRecordType.cs" />
     <Compile Include="Models\SurveyTable.cs" />
     <Compile Include="Models\SurveyTemplate.cs" />
+    <Compile Include="Models\UploadedFile.cs" />
     <Compile Include="Models\UserIsApprovedCheckAttribute.cs" />
     <Compile Include="Models\WorkshopPermission.cs" />
     <Compile Include="RDLC\ProjectReport.cs">
@@ -1017,13 +1018,11 @@
     <Content Include="Scripts\telerik.calendar.min.js" />
     <Content Include="Scripts\telerik.chart.min.js" />
     <Content Include="Scripts\telerik.combobox.min.js" />
-    <Content Include="Scripts\telerik.common.js" />
     <Content Include="Scripts\telerik.common.min.js" />
     <Content Include="Scripts\telerik.datepicker.min.js" />
     <Content Include="Scripts\telerik.datetimepicker.min.js" />
     <Content Include="Scripts\telerik.draganddrop.min.js" />
     <Content Include="Scripts\telerik.editor.min.js" />
-    <Content Include="Scripts\telerik.examples.min.js" />
     <Content Include="Scripts\telerik.grid.editing.min.js" />
     <Content Include="Scripts\telerik.grid.filtering.min.js" />
     <Content Include="Scripts\telerik.grid.grouping.min.js" />
@@ -1032,7 +1031,6 @@
     <Content Include="Scripts\telerik.grid.resizing.min.js" />
     <Content Include="Scripts\telerik.imagebrowser.min.js" />
     <Content Include="Scripts\telerik.list.min.js" />
-    <Content Include="Scripts\telerik.menu.js" />
     <Content Include="Scripts\telerik.menu.min.js" />
     <Content Include="Scripts\telerik.panelbar.min.js" />
     <Content Include="Scripts\telerik.slider.min.js" />

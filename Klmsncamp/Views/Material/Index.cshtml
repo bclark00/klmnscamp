@@ -35,22 +35,22 @@
 					@{Html.RenderPartial("MaterialCategoryTreeListView", ViewBag.MaterialCategories as IEnumerable<Klmsncamp.Models.MaterialCategory>);}
 				</td>
 				<td>
-					@if (@Model.ToList().Count != 0)
-	 {
-		 if (@ViewBag.kategoriID == "1")
-		 {
-						<div style="margin-left: 15px;">
-							Genel Arama : @Html.TextBox("txtDegerArama")
-						</div>
-		 }
-		 else
-		 {
-						<div style="margin-left: 15px;">
-							@Model.First().MaterialCategory.Description Arama : @Html.TextBox("txtDegerArama")
-						</div>
-		 }
-	 }
-					<div style="margin: 10px 0 10px 10px;">
+					<div style="float: left; margin: 10px;">
+						<b>@Html.ActionLink("Yeni Ekle", "Create", "Material")</b></div>
+					<div style="float: left; margin: 0px 5px 0px 540px;">
+						@if (@Model.ToList().Count != 0)
+	  {
+		  if (@ViewBag.kategoriID == "1")
+		  {
+							<b>Genel Arama : @Html.TextBox("txtDegerArama")</b>
+		  }
+		  else
+		  {
+							<b>@Model.First().MaterialCategory.Description Arama: @Html.TextBox("txtDegerArama", "", new { style = "width:220px;" })</b>
+		  }
+	  }
+					</div>
+					<div style="margin: 30px 0 10px 10px;">
 						@{
 		  
 							var pagerStyleFlags = new[] 
@@ -73,6 +73,7 @@
 								.HtmlAttributes(new { style = "width: 1024px; margin-left: auto; margin-right: auto;" })
 								.Columns(columns =>
 								{
+									@columns.Template(o => EditDelete(o)).Width(100);
 
 									columns.Bound(o => o.MaterialCodeNum).Width(100).Title("Seri No");
 									columns.Bound(o => o.Description).Width(100).Title("Değer");
@@ -80,7 +81,6 @@
 									columns.Bound(o => o.ComponentModel).Width(100).Title("Fiziksel Yapı");
 									columns.Bound(o => o.MaterialCategory.Description).Width(100).Title("Kategori");
 									columns.Bound(o => o.Note).Width(100).Title("Note");
-
 									//columns.Bound(o => o.MaterialType.Description).Width(120).Title("Kategori");
 
 								})
@@ -91,8 +91,8 @@
 								.Filterable(filtering => filtering.Enabled(true))
 								.Groupable(grouping => grouping.Enabled(true))
 								.Resizable(resizing => resizing.Columns(true))
-								//.Pageable(pagingg => pagingg.Style(pagerStyles))
-								.Pageable(paging => paging.PageSize(20).Style(GridPagerStyles.NextPreviousAndNumeric).Position(GridPagerPosition.Both))
+								.Pageable(pagingg => pagingg.Style(pagerStyles))
+								//.Pageable(paging => paging.PageSize(20).Style(GridPagerStyles.NextPreviousAndNumeric).Position(GridPagerPosition.Both))
 								.Footer(true)
 								.Localizable("tr-TR")
 								.Render();
@@ -107,6 +107,20 @@
 	})
 	.Render();
 }
+@helper EditDelete(Klmsncamp.Models.Material material)
+	{
+@*<b>Grl</b>*@
+	@Html.ActionLink("Düzenle", "Edit", "Material", new { id = material.MaterialID }, null)
+	<b>&nbsp;|&nbsp;</b>
+	@Html.ActionLink("Sil", "Delete", "Material", new { id = material.MaterialID }, null)
+	
+}
+@helper DownloadDelete(Klmsncamp.Models.MaterialFile materialFile)
+	{
+	@Html.ActionLink("İndir", "DownloadMaterialFile", "Material", new { fileId = materialFile.MaterialFileID }, null)
+	<b>&nbsp;|&nbsp;</b>
+	@Html.ActionLink("Sil", "DeleteMaterialFileFromIndex", "Material", new { fileId = materialFile.MaterialFileID, materailCategoryId = materialFile.Material.MaterialCategoryID }, null)
+}
 @helper GridDetailTemplate(WebViewPage page, Klmsncamp.Models.Material o)
 	{
 		Html.Telerik().TabStrip()
@@ -119,11 +133,17 @@
 			.Name("MaterialFiles_" + o.MaterialID)
 			.Columns(columns =>
 			{
-				columns.Bound(e => e.MaterialFileDescription).Title("Açıklama").Width(350);
-				columns.Bound(e => e.MaterialFileID).Title("Boyut");
-
+				//@columns.Template(e => DownloadDelete(e)).Width(60);
+				//columns.Bound(e => e.MaterialFileName).Title("Dosya Adı").Width(200);			
+				//columns.Bound(e => e.MaterialFileDescription).Title("Açıklama").Width(200);
+				//columns.Bound(e => e.MaterialFileSize).Title("Boyut (byte)").Width(50);
+				@columns.Template(e => DownloadDelete(e)).Width(80);
+				columns.Bound(e => e.MaterialFileName).Title("Dosya Adı");
+				columns.Bound(e => e.MaterialFileDescription).Title("Açıklama");
+				columns.Bound(e => e.MaterialFileSize).Title("Boyut (byte)");
 			})
 			.Pageable()
+			.Resizable(resizing => resizing.Columns(true))
 		)
 	</text>);
 			items.Add().Text("Malzeme Detay Bilgileri").Content(@<text>
@@ -140,10 +160,7 @@
 			</tr>
 		</tbody>
 	</table>
-	)
 	</text>);
 		}).Render();
-   
-    
 }
 @{ Html.Telerik().ScriptRegistrar().Globalization(true); }

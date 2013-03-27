@@ -334,14 +334,16 @@
 
                             <td style="vertical-align: middle; text-align: left;">
                                
-                                        <input type="button" class="default" value="Ekle" onclick="javascript: addInput();"
-                                            id="addfile" /><br />
+                                        <input type="button" class="default" value="Ekle" onclick="javascript: addInput();" id="addfile" /><br />
                                     @foreach (var xfileitem in this.Model.RequestIssueFiles)
                                     {
-                                        @Html.ActionLink("(Sil)", "DeleteRequestIssueFile", new { id = xfileitem.RequestIssueFileID, rqid = this.Model.RequestIssueID, show = ViewBag.show, page = ViewBag.page }) <text>&nbsp;|&nbsp;</text> @Html.ActionLink(xfileitem.RequestIssueFileName + " (indir)", "DownloadRequestIssueFile", new { id = xfileitem.RequestIssueFileID })<text>&nbsp;(</text>@asMb(xfileitem.RequestIssueFileSize)@:&nbsp;Mb)<br />
+                                        @Html.ActionLink("(Sil)", "DeleteRequestIssueFile", new { id = xfileitem.RequestIssueFileID, rqid = this.Model.RequestIssueID, show = ViewBag.show, page = ViewBag.page })													<text>
+										&nbsp;|&nbsp;
+										</text>
+										 @Html.ActionLink(xfileitem.RequestIssueFileName + " (indir)", "DownloadRequestIssueFile", new { id = xfileitem.RequestIssueFileID })
+										 <text>&nbsp;(</text>@asMb(xfileitem.RequestIssueFileSize)@:&nbsp;Mb)<br />
 
                                     }
-                                
                                 <br />
                                 <div id="add-file-field">
                                 </div>
@@ -354,7 +356,6 @@
                                     @foreach (var xfileitem in this.Model.RequestIssueFiles)
                                     {
                                         <li>@Html.ActionLink(xfileitem.RequestIssueFileName + " (indir)", "DownloadRequestIssueFile", new { id = xfileitem.RequestIssueFileID })&nbsp;(@asMb(xfileitem.RequestIssueFileSize)&nbsp;Mb)</li>
-
                                     }
                                 </ul>
                             </td>

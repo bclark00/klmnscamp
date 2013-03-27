@@ -1,4 +1,37 @@
-﻿@model IEnumerable<Klmsncamp.Models.FileNames>
+﻿@using Telerik.Web.Mvc.UI
+@model IEnumerable<Klmsncamp.Models.UploadedFile>
+<script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/chosen.jquery.js")" type="text/javascript"></script>
+<script type="text/javascript">
+	//	function TimePickerSet24h() {
+	//		var picker = $("#StartDate").data("tDateTimePicker");
+	//		picker.timeView.format = "HH:mm";
+	//		picker.timeView.bind();
+	//	}
+	//	function EndTimePickerSet24h() {
+	//		var picker = $("#EndDate").data("tDateTimePicker");
+	//		picker.timeView.format = "HH:mm";
+	//		picker.timeView.bind();
+	//	}
+	function onLocationChange(e) {
+		var combo = $("#InventoryID").data("tComboBox");
+		combo.value("");
+		combo.reload();
+	}
+
+	function onInventoryDataBinding(e) {
+		var combo = $("#LocationID").data("tComboBox");
+		e.data = $.extend({}, e.data, { LocationID: combo.value() });
+	}
+</script>
+<link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/chosen.css")" />
+@{ Html.Telerik().ScriptRegistrar()
+		.OnDocumentReady(@<text> $(".chzn-select").chosen(); $(".chzn-select-deselect").chosen({allow_single_deselect:
+	true }); /*("#chzn-select-corp").chosen(); $("#chzn-select-deselect-corp").chosen({allow_single_deselect:
+	true }); $("#chzn-select-corp").chosen(); $("#chzn-select-deselect-corp").chosen({allow_single_deselect:
+	true });*/
+	</text>); }
 @{
 	ViewBag.Title = "Hakkında";
 }
@@ -11,32 +44,79 @@
         <img alt="mvc3" src="@Url.Content("~/Content/images/mvc3logo.gif")" /><br />
         <img alt="visualstudio2010" src="@Url.Content("~/Content/images/vs2010.png")" /><br />
         <img alt="Telerik Mvc3 extensions" src="@Url.Content("~/Content/images/TelerikBanner.png")" /><br />
-	@* <input type="file" id="SheetContentPlaceHolder_FileUpload1" onchange="readURL(this);" />*@	
+	@* <input type="file" id="SheetContentPlaceHolder_FileUpload1" onchange="readURL(this);" />*@
+	
 </marquee>
 <hr />
-@using (Html.BeginForm("Upload", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
-{
-	@Html.Label("lblDosyaEkle", "Dosya Ekle :")
-	<input type="file" id="fileUploadDosyaEkle" name="file" />
-	<input type="submit" value="Kaydet" />
-}
+<div style="margin-left: 150px;">
+	@using (Html.BeginForm("Upload", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+ {
+		<table>
+			<tr>
+				<td>@Html.Label("lblDosyaEkle", "Dosya Ekle :")
+				</td>
+				<td>
+					<input type="file" id="fileUploadDosyaEkle1" name="files" />
+					<br />
+					<input type="file" id="fileUploadDosyaEkle2" name="files" />
+					<br />
+					<input type="file" id="fileUploadDosyaEkle3" name="files" />
+				</td>
+			</tr>
+			<tr>
+				<td>@Html.Label("lblDosyaAciklamasi", "Açıklama :")
+				</td>
+				<td>
+					@Html.TextArea("Aciklama", new { cols = "40", rows = "4" })
+				</td>
+				@*<td>
+					<textarea id="txtHedef" cols="60" rows="4" name="Hedef"></textarea>
+				</td>*@
+			</tr>
+			<tr>
+				<td>@Html.Label("lblMail", "Mail Gonderilicek Kişiler :")
+				</td>
+				<td>@Html.ListBox("Users", null, new { @class = "chzn-select", style = "width:250px;" })
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<input type="submit" value="Kaydet" style="float: right;" />
+				</td>
+			</tr>
+		</table>
+		
+	// @Html.DropDownList("Users", String.Empty)
+	 //@Html.ListBox("Users", null, new { @class = "chzn-select", style = "width:250px; height:25px" })
 
+
+ }</div>
 <table>
-<tr>
-<th>
-FieldIF
-</th>
-<th>
-FieldName
-</th>
-</tr>
-
-@foreach (var item in Model)
-{
 	<tr>
-	<td>@Html.DisplayFor(modelItem=>item.FileID)</td>
-	<td>@Html.DisplayFor(modelItem=>item.FileName)</td>
-	<td>@Html.ActionLink("Download", "Download", new { id=item.FileID})</td>
+		<th>
+		</th>
+		<th>
+			Klasör Adı
+		</th>
+		<th>
+			Açıklama
+		</th>
 	</tr>
-}
+	@foreach (var item in Model)
+ {
+		<tr>
+			<td style="margin: 5px;">@Html.DisplayFor(modelItem => item.ID)
+			</td>
+			<td style="margin: 5px;">@Html.DisplayFor(modelItem => item.FileName)
+			</td>
+			<td style="margin: 5px;">@Html.DisplayFor(m => item.Description)
+			</td>
+			<td style="margin: 5px;">@Html.ActionLink("Download", "Download", new { id = item.ID })
+			</td>
+			<td style="margin: 5px;">@Html.ActionLink("Remove", "Remove", new { id = item.ID })
+			</td>
+		</tr>
+ }
 </table>
+@*
+<textarea rows="4" name="Description" id="Description" data-val-required="Zorunlu Alan" data-val="true" cols="60"></textarea>*@
