@@ -90,6 +90,8 @@ namespace Klmsncamp.Models
 
         public DbSet<MaterialFile> MaterialFiles { get; set; }
 
+		public DbSet<UploadedFile> UploadedFiles { get; set; }
+
         public ObjectContext KlmsnObjectContext
         {
             get { return ((IObjectContextAdapter)this).ObjectContext; }

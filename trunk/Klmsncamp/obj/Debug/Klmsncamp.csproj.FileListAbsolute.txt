@@ -193,6 +193,7 @@ C:\Users\Hp\Documents\Visual Studio 2010\Projects\Project2Klmsan\Klmsncamp\bin\S
 C:\Users\Hp\Documents\Visual Studio 2010\Projects\Project2Klmsan\Klmsncamp\bin\System.Web.WebPages.dll
 C:\Users\Hp\Documents\Visual Studio 2010\Projects\Project2Klmsan\Klmsncamp\bin\System.Xml.dll
 C:\Users\Hp\Documents\Visual Studio 2010\Projects\Project2Klmsan\Klmsncamp\bin\System.Xml.Linq.dll
+C:\Users\Hp\Documents\Visual Studio 2010\Projects\Project2Klmsan\Klmsncamp\bin\Telerik.Web.Mvc.dll
 C:\Users\Hp\Documents\Visual Studio 2010\Projects\Project2Klmsan\Klmsncamp\bin\EntityFramework.xml
 C:\Users\Hp\Documents\Visual Studio 2010\Projects\Project2Klmsan\Klmsncamp\bin\Microsoft.ReportViewer.WebForms.xml
 C:\Users\Hp\Documents\Visual Studio 2010\Projects\Project2Klmsan\Klmsncamp\bin\Newtonsoft.Json.pdb
@@ -202,6 +203,4 @@ C:\Users\Hp\Documents\Visual Studio 2010\Projects\Project2Klmsan\Klmsncamp\bin\S
 C:\Users\Hp\Documents\Visual Studio 2010\Projects\Project2Klmsan\Klmsncamp\bin\System.Web.Helpers.xml
 C:\Users\Hp\Documents\Visual Studio 2010\Projects\Project2Klmsan\Klmsncamp\obj\Debug\Klmsncamp.dll
 C:\Users\Hp\Documents\Visual Studio 2010\Projects\Project2Klmsan\Klmsncamp\obj\Debug\Klmsncamp.pdb
-C:\Users\Hp\Documents\Visual Studio 2010\Projects\Project2Klmsan\Klmsncamp\bin\Telerik.Web.Mvc.xml
-C:\Users\Hp\Documents\Visual Studio 2010\Projects\Project2Klmsan\Klmsncamp\bin\Telerik.Web.Mvc.dll
 C:\Users\Hp\Documents\Visual Studio 2010\Projects\Project2Klmsan\Klmsncamp\obj\Debug\Klmsncamp.csprojResolveAssemblyReference.cache

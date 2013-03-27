@@ -18,6 +18,7 @@ using System.Xml;
 using Klmsncamp.DAL;
 using Klmsncamp.Models;
 using Klmsncamp.ViewModels;
+using System.Net.Mail;
 
 namespace Klmsncamp.Controllers
 {
@@ -46,36 +47,108 @@ namespace Klmsncamp.Controllers
 		public ActionResult About()
 		{
 			//ViewBag.MarqueeString = db.ParameterSettings.AsNoTracking().Where(i => i.ParameterSettingID == 13).SingleOrDefault().ParameterValue;
+			//List<Klmsncamp.Models.FileNames> list = downloadModel.GetFiles();
 
-			List<Klmsncamp.Models.FileNames> list = downloadModel.GetFiles();
+			//ViewBag.InventoryID = new SelectList(db.Inventories, "InventoryID", "Description");
+
+			//	ViewBag.CorporateAccountID = new MultiSelectList(db.CorporateAccounts, "CorporateAccountID", "Title", project.CorporateAccounts.Select(p => p.CorporateAccountID).ToList());
+
+			ViewBag.Users = new MultiSelectList(db.Users.ToList(), "Email", "UserName");
+			ViewBag.UserList = new MultiSelectList(db.Users.ToList(), "Email", "UserName");
+			List<UploadedFile> list = db.UploadedFiles.Where(s => s.IsActive == true).ToList();
 			return View(list);
 		}
 
 		public FileContentResult Download(string id)
 		{
 			int fid = Convert.ToInt32(id);
-			FileNames file = downloadModel.GetFiles().FirstOrDefault(s => s.FileID == fid);
-			string fileName = file.FileName;
-			string contentType = file.FileContentType;
-			string filePath = file.FilePath;
-			byte[] fileByte = file.FileByte;
+			//FileNames file = downloadModel.GetFiles().FirstOrDefault(s => s.FileID == fid);
+			//string fileName = file.FileName;
+			//string contentType = file.FileContentType;
+			//string filePath = file.FilePath;
 
-			return File(fileByte, contentType, fileName);
+			UploadedFile selectedFile = db.UploadedFiles.FirstOrDefault(s => s.ID == fid);
+			byte[] fileByte = System.IO.File.ReadAllBytes(selectedFile.FilePath);
+			return File(fileByte, selectedFile.FileContentType, selectedFile.FileName);
 		}
 
-		[HttpPost]
-		public ActionResult Upload(HttpPostedFileBase file)
+		public ActionResult Remove(string id)
 		{
-			if (file != null && file.ContentLength > 0)
+			int secilenId = Convert.ToInt32(id);
+			UploadedFile secilenFile = db.UploadedFiles.FirstOrDefault(s => s.ID == secilenId);
+			secilenFile.IsActive = false;
+			db.SaveChanges();
+
+			List<UploadedFile> list = db.UploadedFiles.Where(s => s.IsActive == true).ToList();
+			ViewBag.Users = new MultiSelectList(db.Users.ToList(), "Email", "UserName");
+			return View("About", list);
+		}
+
+
+		[HttpPost]
+		public ActionResult Upload(IEnumerable<HttpPostedFileBase> files, string Aciklama, FormCollection formcollection, string UserList, string Users)
+		{
+			string sd = formcollection["Aciklama"].ToString();
+			//string Email = formcollection["UserList"].ToString();
+			//int userID = int.Parse(formcollection["UserList"]);
+			string mailGonderilecekler = formcollection["Users"].ToString();
+			string[] mails = mailGonderilecekler.Split(new string[] { "," }, StringSplitOptions.RemoveEmptyEntries);
+
+			foreach (var file in files)
 			{
-				string extension = System.IO.Path.GetExtension(file.FileName);
-				int index = file.FileName.IndexOf(".");
-				string fileName = Path.GetFileName(file.FileName.Substring(0, index) + "-" + Guid.NewGuid().ToString().Substring(0, 3).Replace(".", "-") + extension);
-				string path = Path.Combine(Server.MapPath("~/App_Data/UploadedFiles"), fileName);
-				file.SaveAs(path);
+				if (file != null && file.ContentLength > 0)
+				{
+					try
+					{
+						string extension = System.IO.Path.GetExtension(file.FileName);
+						int index = file.FileName.IndexOf(".");
+						string fileName = Path.GetFileName(file.FileName.Substring(0, index) + "-" + Guid.NewGuid().ToString().Substring(0, 4).Replace(".", "-") + extension);
+						string path = Path.Combine(Server.MapPath("~/App_Data/UploadedFiles"), fileName);
+
+						UploadedFile uf = new UploadedFile();
+						uf.FileName = fileName;
+						uf.FilePath = path;
+						uf.Description = Aciklama;
+						uf.IsActive = true;
+						uf.FileContentType = file.ContentType;
+
+						db.UploadedFiles.Add(uf);
+						db.SaveChanges();
+
+						file.SaveAs(path);
+					}
+					catch (Exception ex)
+					{
+						throw ex;
+					}
+				} 
+			}
+			try
+			{
+				System.Net.Mail.MailMessage mail = new System.Net.Mail.MailMessage("musa.fedakar@arelektronik.com", mails[0]);
+
+				for (int i = 1; i < mails.Length; i++)
+				{
+					mail.CC.Add(mails[i]);
+				}
+
+				mail.Subject = "Ar Elektronik Bilgilendirme";
+				mail.Body = Aciklama;
+
+				SmtpClient client = new SmtpClient("mail.arelektronik.com", 587);
+				client.Credentials = new NetworkCredential("musa.fedakar@arelektronik.com", "M123456f.");
+				client.Send(mail);
+				client.Dispose();
+				mail.Dispose();
+			}
+			catch (Exception ex)
+			{
+				throw ex;
 			}
 
-			List<Klmsncamp.Models.FileNames> list = downloadModel.GetFiles();
+			List<UploadedFile> list = db.UploadedFiles.Where(s => s.IsActive == true).ToList();
+			//List<Klmsncamp.Models.FileNames> list = downloadModel.GetFiles();
+			ViewBag.Users = new MultiSelectList(db.Users.ToList(), "Email", "UserName");
 			return View("About", list);
 		}
 

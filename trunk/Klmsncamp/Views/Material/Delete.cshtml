@@ -1,78 +1,158 @@
 ﻿@model Klmsncamp.Models.Material
-
 @{
-    ViewBag.Title = "Delete";
+	ViewBag.Title = "Delete";
 }
-
-<h2>Delete</h2>
-
-<h3>Are you sure you want to delete this?</h3>
-<fieldset>
-    <legend>Material</legend>
-
-    <div class="display-label">Description</div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.Description)
-    </div>
-
-    <div class="display-label">MaterialCodeNum</div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.MaterialCodeNum)
-    </div>
-
-    <div class="display-label">Location</div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.Location.Description)
-    </div>
-
-    <div class="display-label">CorporateAccount</div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.CorporateAccount.Title)
-    </div>
-
-    <div class="display-label">ComponentModel</div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.ComponentModel)
-    </div>
-
-    <div class="display-label">ParentMaterial</div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.ParentMaterial.Description)
-    </div>
-
-    <div class="display-label">MaterialCategory</div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.MaterialCategory.Description)
-    </div>
-
-    <div class="display-label">MaterialGroup</div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.MaterialGroup.Description)
-    </div>
-
-    <div class="display-label">MaterialType</div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.MaterialType.Description)
-    </div>
-
-    <div class="display-label">RackLocation</div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.RackLocation)
-    </div>
-
-    <div class="display-label">ValidationState</div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.ValidationState.Description)
-    </div>
-
-    <div class="display-label">Note</div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.Note)
-    </div>
-</fieldset>
-@using (Html.BeginForm()) {
-    <p>
-        <input type="submit" value="Delete" /> |
-        @Html.ActionLink("Back to List", "Index")
-    </p>
-}
+<div align="center" style="width: 640px; margin-left: auto; margin-right: auto; margin-top: 30px;">
+	<h3>
+		Silmek İstediğinize Emin Misiniz?
+	</h3>
+	<table style="border: 1px solid #EEEEEE">
+		<tr>
+			<td>
+				<div class="display-label">
+					Description</div>
+			</td>
+			<td>
+				<div class="display-field">
+					@Html.DisplayFor(model => model.Description)
+				</div>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<div class="display-label">
+					MaterialCodeNum</div>
+			</td>
+			<td>
+				<div class="display-field">
+					@Html.DisplayFor(model => model.MaterialCodeNum)
+				</div>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<div class="display-label">
+					Location</div>
+				<td>
+					<div class="display-field">
+						@Html.DisplayFor(model => model.Location.Description)
+					</div>
+				</td>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<div class="display-label">
+					CorporateAccount</div>
+			</td>
+			<td>
+				<div class="display-field">
+					@Html.DisplayFor(model => model.CorporateAccount.Title)
+				</div>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<div class="display-label">
+					ComponentModel</div>
+			</td>
+			<div class="display-field">
+				@Html.DisplayFor(model => model.ComponentModel)
+			</div>
+			<td>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<div class="display-label">
+					ParentMaterial</div>
+			</td>
+			<td>
+				<div class="display-field">
+					@Html.DisplayFor(model => model.ParentMaterial.Description)
+				</div>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<div class="display-label">
+					MaterialCategory</div>
+			</td>
+			<td>
+				<div class="display-field">
+					@Html.DisplayFor(model => model.MaterialCategory.Description)
+				</div>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<div class="display-label">
+					MaterialGroup</div>
+			</td>
+			<td>
+				<div class="display-field">
+					@Html.DisplayFor(model => model.MaterialGroup.Description)
+				</div>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<div class="display-label">
+					MaterialType</div>
+			</td>
+			<td>
+				<div class="display-field">
+					@Html.DisplayFor(model => model.MaterialType.Description)
+				</div>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<div class="display-label">
+					RackLocation</div>
+			</td>
+			<td>
+				<div class="display-field">
+					@Html.DisplayFor(model => model.RackLocation)
+				</div>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<div class="display-label">
+					ValidationState</div>
+			</td>
+			<td>
+				<div class="display-field">
+					@Html.DisplayFor(model => model.ValidationState.Description)
+				</div>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<div class="display-label">
+					Note</div>
+			</td>
+			<td>
+				<div class="display-field">
+					@Html.DisplayFor(model => model.Note)
+				</div>
+			</td>
+		</tr>
+		<tfoot>
+			<tr>
+				<td colspan="2" style="text-align: right;">
+					@using (Html.BeginForm())
+	 {
+						<p style="float: left; margin-top: 7px;">
+							@Html.ActionLink("Back to List", "Index")
+						</p>	
+						<p>
+							<input type="submit" value="Delete" />
+						</p>
+	 }
+				</td>
+			</tr>
+		</tfoot>
+	</table>
+</div>
