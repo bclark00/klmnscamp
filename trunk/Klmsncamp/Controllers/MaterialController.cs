@@ -19,6 +19,10 @@ namespace Klmsncamp.Controllers
 
 		public ViewResult Index(string ID)
 		{
+			ViewBag.Sevko = "ŞEVKET KISMETLİ";
+
+			TempData["Sevko"] = "Temp Data ŞEVKO";
+
 			List<Material> list = db.Materials.ToList();
 			int secilenID = Convert.ToInt32(ID);
 

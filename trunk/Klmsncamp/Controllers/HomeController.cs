@@ -46,7 +46,9 @@ namespace Klmsncamp.Controllers
 
 		public ActionResult About()
 		{
-			//ViewBag.MarqueeString = db.ParameterSettings.AsNoTracking().Where(i => i.ParameterSettingID == 13).SingleOrDefault().ParameterValue;
+			//var tempData = TempData["Sevko"];
+			//var viewBag = ViewBag.Sevko;
+			ViewBag.MarqueeString = db.ParameterSettings.AsNoTracking().Where(i => i.ParameterSettingID == 13).SingleOrDefault().ParameterValue;
 			//List<Klmsncamp.Models.FileNames> list = downloadModel.GetFiles();
 
 			//ViewBag.InventoryID = new SelectList(db.Inventories, "InventoryID", "Description");
