@@ -17,12 +17,13 @@ namespace Klmsncamp.Controllers
 		//
 		// GET: /Material/
 
+    
 		public ViewResult Index(string ID)
 		{
-			ViewBag.Sevko = "ŞEVKET KISMETLİ";
+            //ViewBag.Sevko = "ŞEVKET KISMETLİ";
 
-			TempData["Sevko"] = "Temp Data ŞEVKO";
-
+            //TempData["Sevko"] = "Temp Data ŞEVKO";
+            //deger = "Dolu Geldi";
 			List<Material> list = db.Materials.ToList();
 			int secilenID = Convert.ToInt32(ID);
 

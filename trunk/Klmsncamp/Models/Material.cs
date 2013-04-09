@@ -18,7 +18,7 @@ namespace Klmsncamp.Models
         [MaxLength(20, ErrorMessage = "En çok 20 karakter olabilir")]
         public string MaterialCodeNum { get; set; }
 
-        [Display(Name = "Lokasyon")]
+        [Display(Name = "LokasyonID")]
         public int? LocationID { get; set; }
 
         [Display(Name = "Lokasyon")]
@@ -35,6 +35,7 @@ namespace Klmsncamp.Models
         public string ComponentModel { get; set; }
 
         [ForeignKey("ParentMaterial")]
+        [Display(Name="Ana Malzeme")]
         public int? ParentMaterialID { get; set; }
 
         public virtual Material ParentMaterial { get; set; }

@@ -50,7 +50,8 @@
 				<tr>
 					<td>
 						<div class="editor-label">
-							@Html.LabelFor(model => model.LocationID, "Location")
+							@*@Html.LabelFor(model => model.LocationID, "Location")*@
+                            @Html.LabelFor(model => model.LocationID)
 						</div>
 					</td>
 					<td>
@@ -63,7 +64,7 @@
 				<tr>
 					<td>
 						<div class="editor-label">
-							@Html.LabelFor(model => model.CorporateAccountID, "CorporateAccount")
+							@Html.LabelFor(model => model.CorporateAccountID)
 						</div>
 					</td>
 					<td>
@@ -89,7 +90,7 @@
 				<tr>
 					<td>
 						<div class="editor-label">
-							@Html.LabelFor(model => model.ParentMaterialID, "ParentMaterial")
+							@Html.LabelFor(model => model.ParentMaterialID)
 						</div>
 					</td>
 					<td>
@@ -102,7 +103,7 @@
 				<tr>
 					<td>
 						<div class="editor-label">
-							@Html.LabelFor(model => model.MaterialCategoryID, "MaterialCategory")
+							@Html.LabelFor(model => model.MaterialCategoryID)
 						</div>
 					</td>
 					<td>
@@ -115,7 +116,7 @@
 				<tr>
 					<td>
 						<div class="editor-label">
-							@Html.LabelFor(model => model.MaterialGroupID, "MaterialGroup")
+							@Html.LabelFor(model => model.MaterialGroupID)
 						</div>
 					</td>
 					<td>
@@ -128,7 +129,7 @@
 				<tr>
 					<td>
 						<div class="editor-label">
-							@Html.LabelFor(model => model.MaterialTypeID, "MaterialType")
+							@Html.LabelFor(model => model.MaterialTypeID)
 						</div>
 					</td>
 					<td>
@@ -154,7 +155,7 @@
 				<tr>
 					<td>
 						<div class="editor-label">
-							@Html.LabelFor(model => model.ValidationStateID, "ValidationState")
+							@Html.LabelFor(model => model.ValidationStateID)
 						</div>
 					</td>
 					<td>
@@ -182,10 +183,10 @@
 				<tr>
 					<td colspan="2" style="text-align: right;">
 						<p style="float: left; margin-top: 7px;">
-							@Html.ActionLink("Back to List", "Index")
+							@Html.ActionLink("Listeye Geri Dön", "Index")
 						</p>
 						<p>
-							<input type="submit" value="Create" />
+							<input type="submit" value="Kaydet" />
 						</p>
 					</td>
 				</tr>
