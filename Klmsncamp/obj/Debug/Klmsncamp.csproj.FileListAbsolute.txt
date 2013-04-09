@@ -203,4 +203,92 @@ C:\Users\Hp\Documents\Visual Studio 2010\Projects\Project2Klmsan\Klmsncamp\bin\S
 C:\Users\Hp\Documents\Visual Studio 2010\Projects\Project2Klmsan\Klmsncamp\bin\System.Web.Helpers.xml
 C:\Users\Hp\Documents\Visual Studio 2010\Projects\Project2Klmsan\Klmsncamp\obj\Debug\Klmsncamp.dll
 C:\Users\Hp\Documents\Visual Studio 2010\Projects\Project2Klmsan\Klmsncamp\obj\Debug\Klmsncamp.pdb
-C:\Users\Hp\Documents\Visual Studio 2010\Projects\Project2Klmsan\Klmsncamp\obj\Debug\Klmsncamp.csprojResolveAssemblyReference.cache
+C:\Users\Hp\Documents\Visual Studio 2010\Projects\Project2Klmsan\Klmsncamp\bin\PusherRESTDotNet.dll
+C:\Users\Hp\Desktop\Project2KlmsanYEDEK\Klmsncamp\bin\Klmsncamp.dll
+C:\Users\Hp\Desktop\Project2KlmsanYEDEK\Klmsncamp\bin\Klmsncamp.pdb
+C:\Users\Hp\Desktop\Project2KlmsanYEDEK\Klmsncamp\bin\CrystalDecisions.CrystalReports.Engine.dll
+C:\Users\Hp\Desktop\Project2KlmsanYEDEK\Klmsncamp\bin\CrystalDecisions.ReportSource.dll
+C:\Users\Hp\Desktop\Project2KlmsanYEDEK\Klmsncamp\bin\CrystalDecisions.Shared.dll
+C:\Users\Hp\Desktop\Project2KlmsanYEDEK\Klmsncamp\bin\EntityFramework.dll
+C:\Users\Hp\Desktop\Project2KlmsanYEDEK\Klmsncamp\bin\Microsoft.CSharp.dll
+C:\Users\Hp\Desktop\Project2KlmsanYEDEK\Klmsncamp\bin\Microsoft.ReportViewer.Common.dll
+C:\Users\Hp\Desktop\Project2KlmsanYEDEK\Klmsncamp\bin\Microsoft.ReportViewer.WebForms.dll
+C:\Users\Hp\Desktop\Project2KlmsanYEDEK\Klmsncamp\bin\Newtonsoft.Json.dll
+C:\Users\Hp\Desktop\Project2KlmsanYEDEK\Klmsncamp\bin\System.ComponentModel.DataAnnotations.dll
+C:\Users\Hp\Desktop\Project2KlmsanYEDEK\Klmsncamp\bin\System.Configuration.dll
+C:\Users\Hp\Desktop\Project2KlmsanYEDEK\Klmsncamp\bin\System.Data.DataSetExtensions.dll
+C:\Users\Hp\Desktop\Project2KlmsanYEDEK\Klmsncamp\bin\System.Data.dll
+C:\Users\Hp\Desktop\Project2KlmsanYEDEK\Klmsncamp\bin\System.Data.Entity.dll
+C:\Users\Hp\Desktop\Project2KlmsanYEDEK\Klmsncamp\bin\System.dll
+C:\Users\Hp\Desktop\Project2KlmsanYEDEK\Klmsncamp\bin\System.Drawing.dll
+C:\Users\Hp\Desktop\Project2KlmsanYEDEK\Klmsncamp\bin\System.EnterpriseServices.dll
+C:\Users\Hp\Desktop\Project2KlmsanYEDEK\Klmsncamp\bin\System.Runtime.Serialization.dll
+C:\Users\Hp\Desktop\Project2KlmsanYEDEK\Klmsncamp\bin\System.Security.dll
+C:\Users\Hp\Desktop\Project2KlmsanYEDEK\Klmsncamp\bin\System.Web.Abstractions.dll
+C:\Users\Hp\Desktop\Project2KlmsanYEDEK\Klmsncamp\bin\System.Web.ApplicationServices.dll
+C:\Users\Hp\Desktop\Project2KlmsanYEDEK\Klmsncamp\bin\System.Web.dll
+C:\Users\Hp\Desktop\Project2KlmsanYEDEK\Klmsncamp\bin\System.Web.DynamicData.dll
+C:\Users\Hp\Desktop\Project2KlmsanYEDEK\Klmsncamp\bin\System.Web.Entity.dll
+C:\Users\Hp\Desktop\Project2KlmsanYEDEK\Klmsncamp\bin\System.Web.Extensions.dll
+C:\Users\Hp\Desktop\Project2KlmsanYEDEK\Klmsncamp\bin\System.Web.Helpers.dll
+C:\Users\Hp\Desktop\Project2KlmsanYEDEK\Klmsncamp\bin\System.Web.Mvc.dll
+C:\Users\Hp\Desktop\Project2KlmsanYEDEK\Klmsncamp\bin\System.Web.Routing.dll
+C:\Users\Hp\Desktop\Project2KlmsanYEDEK\Klmsncamp\bin\System.Web.Services.dll
+C:\Users\Hp\Desktop\Project2KlmsanYEDEK\Klmsncamp\bin\System.Web.WebPages.dll
+C:\Users\Hp\Desktop\Project2KlmsanYEDEK\Klmsncamp\bin\System.Xml.dll
+C:\Users\Hp\Desktop\Project2KlmsanYEDEK\Klmsncamp\bin\System.Xml.Linq.dll
+C:\Users\Hp\Desktop\Project2KlmsanYEDEK\Klmsncamp\bin\EntityFramework.xml
+C:\Users\Hp\Desktop\Project2KlmsanYEDEK\Klmsncamp\bin\Microsoft.ReportViewer.WebForms.xml
+C:\Users\Hp\Desktop\Project2KlmsanYEDEK\Klmsncamp\bin\Newtonsoft.Json.pdb
+C:\Users\Hp\Desktop\Project2KlmsanYEDEK\Klmsncamp\bin\Newtonsoft.Json.xml
+C:\Users\Hp\Desktop\Project2KlmsanYEDEK\Klmsncamp\bin\System.Web.Mvc.xml
+C:\Users\Hp\Desktop\Project2KlmsanYEDEK\Klmsncamp\bin\System.Web.WebPages.xml
+C:\Users\Hp\Desktop\Project2KlmsanYEDEK\Klmsncamp\bin\System.Web.Helpers.xml
+C:\Users\Hp\Desktop\Project2KlmsanYEDEK\Klmsncamp\obj\Debug\Klmsncamp.dll
+C:\Users\Hp\Desktop\Project2KlmsanYEDEK\Klmsncamp\obj\Debug\Klmsncamp.pdb
+C:\Users\Hp\Desktop\Project2KlmsanYEDEK\Klmsncamp\obj\Debug\Klmsncamp.csprojResolveAssemblyReference.cache
+C:\Users\Hp\Desktop\Project2KlmsanYEDEK - Copy\Klmsncamp\bin\Klmsncamp.dll
+C:\Users\Hp\Desktop\Project2KlmsanYEDEK - Copy\Klmsncamp\bin\Klmsncamp.pdb
+C:\Users\Hp\Desktop\Project2KlmsanYEDEK - Copy\Klmsncamp\bin\CrystalDecisions.CrystalReports.Engine.dll
+C:\Users\Hp\Desktop\Project2KlmsanYEDEK - Copy\Klmsncamp\bin\CrystalDecisions.ReportSource.dll
+C:\Users\Hp\Desktop\Project2KlmsanYEDEK - Copy\Klmsncamp\bin\CrystalDecisions.Shared.dll
+C:\Users\Hp\Desktop\Project2KlmsanYEDEK - Copy\Klmsncamp\bin\EntityFramework.dll
+C:\Users\Hp\Desktop\Project2KlmsanYEDEK - Copy\Klmsncamp\bin\Microsoft.CSharp.dll
+C:\Users\Hp\Desktop\Project2KlmsanYEDEK - Copy\Klmsncamp\bin\Microsoft.ReportViewer.Common.dll
+C:\Users\Hp\Desktop\Project2KlmsanYEDEK - Copy\Klmsncamp\bin\Microsoft.ReportViewer.WebForms.dll
+C:\Users\Hp\Desktop\Project2KlmsanYEDEK - Copy\Klmsncamp\bin\Newtonsoft.Json.dll
+C:\Users\Hp\Desktop\Project2KlmsanYEDEK - Copy\Klmsncamp\bin\System.ComponentModel.DataAnnotations.dll
+C:\Users\Hp\Desktop\Project2KlmsanYEDEK - Copy\Klmsncamp\bin\System.Configuration.dll
+C:\Users\Hp\Desktop\Project2KlmsanYEDEK - Copy\Klmsncamp\bin\System.Data.DataSetExtensions.dll
+C:\Users\Hp\Desktop\Project2KlmsanYEDEK - Copy\Klmsncamp\bin\System.Data.dll
+C:\Users\Hp\Desktop\Project2KlmsanYEDEK - Copy\Klmsncamp\bin\System.Data.Entity.dll
+C:\Users\Hp\Desktop\Project2KlmsanYEDEK - Copy\Klmsncamp\bin\System.dll
+C:\Users\Hp\Desktop\Project2KlmsanYEDEK - Copy\Klmsncamp\bin\System.Drawing.dll
+C:\Users\Hp\Desktop\Project2KlmsanYEDEK - Copy\Klmsncamp\bin\System.EnterpriseServices.dll
+C:\Users\Hp\Desktop\Project2KlmsanYEDEK - Copy\Klmsncamp\bin\System.Runtime.Serialization.dll
+C:\Users\Hp\Desktop\Project2KlmsanYEDEK - Copy\Klmsncamp\bin\System.Security.dll
+C:\Users\Hp\Desktop\Project2KlmsanYEDEK - Copy\Klmsncamp\bin\System.Web.Abstractions.dll
+C:\Users\Hp\Desktop\Project2KlmsanYEDEK - Copy\Klmsncamp\bin\System.Web.ApplicationServices.dll
+C:\Users\Hp\Desktop\Project2KlmsanYEDEK - Copy\Klmsncamp\bin\System.Web.dll
+C:\Users\Hp\Desktop\Project2KlmsanYEDEK - Copy\Klmsncamp\bin\System.Web.DynamicData.dll
+C:\Users\Hp\Desktop\Project2KlmsanYEDEK - Copy\Klmsncamp\bin\System.Web.Entity.dll
+C:\Users\Hp\Desktop\Project2KlmsanYEDEK - Copy\Klmsncamp\bin\System.Web.Extensions.dll
+C:\Users\Hp\Desktop\Project2KlmsanYEDEK - Copy\Klmsncamp\bin\System.Web.Helpers.dll
+C:\Users\Hp\Desktop\Project2KlmsanYEDEK - Copy\Klmsncamp\bin\System.Web.Mvc.dll
+C:\Users\Hp\Desktop\Project2KlmsanYEDEK - Copy\Klmsncamp\bin\System.Web.Routing.dll
+C:\Users\Hp\Desktop\Project2KlmsanYEDEK - Copy\Klmsncamp\bin\System.Web.Services.dll
+C:\Users\Hp\Desktop\Project2KlmsanYEDEK - Copy\Klmsncamp\bin\System.Web.WebPages.dll
+C:\Users\Hp\Desktop\Project2KlmsanYEDEK - Copy\Klmsncamp\bin\System.Xml.dll
+C:\Users\Hp\Desktop\Project2KlmsanYEDEK - Copy\Klmsncamp\bin\System.Xml.Linq.dll
+C:\Users\Hp\Desktop\Project2KlmsanYEDEK - Copy\Klmsncamp\bin\EntityFramework.xml
+C:\Users\Hp\Desktop\Project2KlmsanYEDEK - Copy\Klmsncamp\bin\Microsoft.ReportViewer.WebForms.xml
+C:\Users\Hp\Desktop\Project2KlmsanYEDEK - Copy\Klmsncamp\bin\Newtonsoft.Json.xml
+C:\Users\Hp\Desktop\Project2KlmsanYEDEK - Copy\Klmsncamp\bin\System.Web.Mvc.xml
+C:\Users\Hp\Desktop\Project2KlmsanYEDEK - Copy\Klmsncamp\bin\System.Web.WebPages.xml
+C:\Users\Hp\Desktop\Project2KlmsanYEDEK - Copy\Klmsncamp\bin\System.Web.Helpers.xml
+C:\Users\Hp\Desktop\Project2KlmsanYEDEK - Copy\Klmsncamp\obj\Debug\Klmsncamp.dll
+C:\Users\Hp\Desktop\Project2KlmsanYEDEK - Copy\Klmsncamp\obj\Debug\Klmsncamp.pdb
+C:\Users\Hp\Desktop\Project2KlmsanYEDEK - Copy\Klmsncamp\bin\PusherClientDotNet.dll
+C:\Users\Hp\Desktop\Project2KlmsanYEDEK - Copy\Klmsncamp\bin\PusherRESTDotNet.dll
+C:\Users\Hp\Desktop\Project2KlmsanYEDEK - Copy\Klmsncamp\bin\WebSocket4Net.dll
+C:\Users\Hp\Desktop\Project2KlmsanYEDEK - Copy\Klmsncamp\obj\Debug\Klmsncamp.csprojResolveAssemblyReference.cache

@@ -44,8 +44,10 @@ namespace Klmsncamp.Controllers
 			downloadModel = new DownloadModel();
 		}
 
+     
 		public ActionResult About()
 		{
+            
 			//var tempData = TempData["Sevko"];
 			//var viewBag = ViewBag.Sevko;
 			ViewBag.MarqueeString = db.ParameterSettings.AsNoTracking().Where(i => i.ParameterSettingID == 13).SingleOrDefault().ParameterValue;

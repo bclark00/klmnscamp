@@ -133,10 +133,6 @@
 			.Name("MaterialFiles_" + o.MaterialID)
 			.Columns(columns =>
 			{
-				//@columns.Template(e => DownloadDelete(e)).Width(60);
-				//columns.Bound(e => e.MaterialFileName).Title("Dosya Adı").Width(200);			
-				//columns.Bound(e => e.MaterialFileDescription).Title("Açıklama").Width(200);
-				//columns.Bound(e => e.MaterialFileSize).Title("Boyut (byte)").Width(50);
 				@columns.Template(e => DownloadDelete(e)).Width(80);
 				columns.Bound(e => e.MaterialFileName).Title("Dosya Adı");
 				columns.Bound(e => e.MaterialFileDescription).Title("Açıklama");

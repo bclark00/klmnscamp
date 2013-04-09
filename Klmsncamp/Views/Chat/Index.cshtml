@@ -1,0 +1,109 @@
+﻿@{
+	ViewBag.Title = "Index";
+}
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+<script type="text/javascript" src="http://js.pusher.com/2.0/pusher.min.js"></script>
+<script type="text/javascript" src="pusher-realtime-chat-widget/src/js/PusherChatWidget.js"></script>
+<div id="wrapper" style="width:650px;margin:20px auto;">
+	<div id="upperPanel">
+		<div>
+			<ul id="messages" class="plainlist" itemid="@HttpContext.Current.User.Identity.Name" style="background-color:#d8ebf3; list-style-type:none;">
+                @*<li style="border-bottom:dashed; border-bottom-color:grey;border-bottom-width:2px; font-size:medium; margin:5px;">TRYTYTRYTR</li>*@
+			</ul>
+		</div>
+		<div class="friends" style="font-size:large; background-color: coral;">
+          
+          <ul>
+              
+          </ul>
+        </div>
+        <div id ="UserCount"></div>
+     
+	</div>
+    
+	<div id="bottomPanel">
+		<textarea style="width:645px; height:95px;" id="chatMessage"></textarea>
+        <br />
+		<input id="chatSubmitMessage" type="submit" value="Gönder" style="margin-left: 2px;" /><br />
+	</div>
+</div>
+<script type="text/javascript">
+
+    $(function () {
+
+        var pusher = new window.Pusher('0b7eeff567653e170094');
+        var socketId = pusher.connection.socket_id;
+        var channel = pusher.subscribe('presence-channel');
+       
+        var membersCount = channel.members.count;
+        channel.bind('message_received', function (data) {
+            if (data.message != null) {
+                $("#messages").append('<li style="border-bottom:dashed; border-bottom-color:grey;border-bottom-width:2px; font-size:medium; padding:6px;">' + '<b>' + data.user + ':</b>' + ' ' + data.message + ' &nbsp;&nbsp;&nbsp;&nbsp;' + '<b>' + data.timestamp + '</b>' + '</li>');
+            }
+        });
+
+       
+
+        channel.bind('pusher:subscription_succeeded', function (members) {
+            var me = channel.members.me;
+            membersCount = channel.members.count;
+            var userId = me.id;
+            var userInfo = me.info;
+           
+            channel.members.each(function (member) {
+                
+                addMember(member);
+            });
+           // $("#activeMembers").append('<li>Online Kisi sayisi'+ membersCount +'</li><li>'+userId+' | '+userInfo                 +'</li>');
+        });
+
+     
+
+        $('#chatSubmitMessage').bind('click', function () {
+			$.post("/Chat/", { chatMessage: $('#chatMessage').val(), username: $('#messages').attr('itemid') });
+		});
+
+        channel.bind("pusher:member_added", function (member) {
+            addMember(member);
+        });
+        channel.bind("pusher:member_removed", function (member) {
+            removeMember(member);
+        });
+
+        function removeMember(member) {
+            $(".friends ul li[data-user-id='" + member.id + "']").remove();
+            membersCount = channel.members.count;
+        };
+
+        function addMember(member) {
+            membersCount = channel.members.count;
+            var enteredSite = new Date(member.info.timestamp);
+            
+            var now = new Date();
+            var one_min = 60 * 1000;
+            var timeOnSite = now - enteredSite;
+
+            if (timeOnSite < one_min + 1) {
+                timeOnSite = 0;
+            }
+            else {
+                timeOnSite = Math.round(timeOnSite / one_min);
+            }
+            //alert(timeOnSite);
+            //var Dakika_ = Math.round(timeOnSiteticks / one_min);
+            //alert(Dakika_);
+            //if (timeOnSite / one_min < 1) {
+            //    Dakika_ = 1;
+            //}
+
+            var li = $("<li data-user-id='" + member.id + "'>" + member.id + " here for " + timeOnSite +" mins </li>");
+            //var li = $("<li data-user-id='" + member.id + "'>" +
+            //                member.id + " here for ... mins </li>");
+            $(".friends ul").append(li);
+            $("#UserCount").text(membersCount);
+        };
+
+	});
+
+  
+</script>
