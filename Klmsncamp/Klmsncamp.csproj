@@ -871,6 +871,7 @@
     <Content Include="Content\Outlook\treeview-line.png" />
     <Content Include="Content\Outlook\treeview-nodes-rtl.png" />
     <Content Include="Content\Outlook\treeview-nodes.png" />
+    <Content Include="Content\Pusher\pusher-chat-widget.css" />
     <Content Include="Content\Simple\editor.png" />
     <Content Include="Content\Simple\imagebrowser.png" />
     <Content Include="Content\Simple\loading.gif" />
@@ -1062,6 +1063,8 @@
     <Content Include="Scripts\JScriptDownload.js" />
     <Content Include="Scripts\modernizr-1.7.js" />
     <Content Include="Scripts\modernizr-1.7.min.js" />
+    <Content Include="Scripts\Pusher\Math.uuid.js" />
+    <Content Include="Scripts\Pusher\PusherChatWidget.js" />
     <Content Include="Scripts\telerik.all.min.js" />
     <Content Include="Scripts\telerik.autocomplete.min.js" />
     <Content Include="Scripts\telerik.calendar.min.js" />
