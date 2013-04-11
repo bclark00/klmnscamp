@@ -1,31 +1,45 @@
 ﻿@{
-	ViewBag.Title = "Index";
+    ViewBag.Title = "Index";
 }
+<link href="../../Content/Pusher/pusher-chat-widget.css" rel="stylesheet" />
 <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
 <script type="text/javascript" src="http://js.pusher.com/2.0/pusher.min.js"></script>
+@* <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+  <script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>*@
+<script src="../../Scripts/Pusher/Math.uuid.js"></script>
+@*<script src="../../Scripts/Pusher/PusherChatWidget.js"></script>*@
 <script type="text/javascript" src="pusher-realtime-chat-widget/src/js/PusherChatWidget.js"></script>
-<div id="wrapper" style="width:650px;margin:20px auto;">
-	<div id="upperPanel">
-		<div>
-			<ul id="messages" class="plainlist" itemid="@HttpContext.Current.User.Identity.Name" style="background-color:#d8ebf3; list-style-type:none;">
-                @*<li style="border-bottom:dashed; border-bottom-color:grey;border-bottom-width:2px; font-size:medium; margin:5px;">TRYTYTRYTR</li>*@
-			</ul>
-		</div>
-		<div class="friends" style="font-size:large; background-color: coral;">
-          
-          <ul>
-              
-          </ul>
+
+<style type="text/css">
+    .liChat:hover {
+        cursor:pointer;
+    }
+</style>
+
+<div id="wrapper" style="width: 850px; margin: 20px auto;">
+
+    <div id="bottomPanel" style="border: 1px solid silver; width: 150px; float: right;">
+        <div id="UserCount" style="font-size: medium; background-color: #d4d4d4; text-align: center;"></div>
+        <div class="friends" style="font-size: large; background-color: #e8e8e8; text-align: center;">
+            <ul class="plainlist" style="font-size: medium;">
+
+            </ul>
         </div>
-        <div id ="UserCount"></div>
-     
-	</div>
-    
-	<div id="bottomPanel">
-		<textarea style="width:645px; height:95px;" id="chatMessage"></textarea>
-        <br />
-		<input id="chatSubmitMessage" type="submit" value="Gönder" style="margin-left: 2px;" /><br />
-	</div>
+    </div>
+  
+    <div id="upperPanel" style="width: 650px; float: left; border: 1px solid silver; background-color:#f5f5f5">
+        <ul id="messages" class="plainlist" itemid="@HttpContext.Current.User.Identity.Name" style="/*background-color:#d8ebf3;*/ list-style-type:none;">
+        </ul>
+    </div>
+
+    <textarea style="width: 643px; height: 95px;" id="chatMessage"></textarea>
+    <br />
+    <input id="chatSubmitMessage" class="chatSubmit" type="submit" value="Gönder" style="margin-left: 2px;" /><br />
+
+    <div id="helpChats" style="color:#000;">
+      
+    </div>
+
 </div>
 <script type="text/javascript">
 
@@ -34,34 +48,35 @@
         var pusher = new window.Pusher('0b7eeff567653e170094');
         var socketId = pusher.connection.socket_id;
         var channel = pusher.subscribe('presence-channel');
-       
+
         var membersCount = channel.members.count;
         channel.bind('message_received', function (data) {
             if (data.message != null) {
-                $("#messages").append('<li style="border-bottom:dashed; border-bottom-color:grey;border-bottom-width:2px; font-size:medium; padding:6px;">' + '<b>' + data.user + ':</b>' + ' ' + data.message + ' &nbsp;&nbsp;&nbsp;&nbsp;' + '<b>' + data.timestamp + '</b>' + '</li>');
+
+                //if (data.message.substring(0, 4) == '*41?') {
+                //    ajax.(/Chat/OpenPrivateChatModalWindow/id?4242)
+                //}
+
+                $("#messages").append('<li style="border-bottom:1px solid silver;font-size:medium; padding:6px;">' + '<b>' + data.user + ':</b>' + ' ' + data.message + ' &nbsp;&nbsp;&nbsp;&nbsp;' + '<b style="float:right;">' + data.timestamp + '</b>' + '</li>');
             }
         });
 
-       
+        $('#chatSubmitMessage').bind('click', function () {
+            $.post("/Chat/", { chatMessage: $('#chatMessage').val(), username: $('#messages').attr('itemid') });
+        });
 
         channel.bind('pusher:subscription_succeeded', function (members) {
             var me = channel.members.me;
             membersCount = channel.members.count;
             var userId = me.id;
             var userInfo = me.info;
-           
+
             channel.members.each(function (member) {
-                
+
                 addMember(member);
             });
-           // $("#activeMembers").append('<li>Online Kisi sayisi'+ membersCount +'</li><li>'+userId+' | '+userInfo                 +'</li>');
+            // $("#activeMembers").append('<li>Online Kisi sayisi'+ membersCount +'</li><li>'+userId+' | '+userInfo+'</li>');
         });
-
-     
-
-        $('#chatSubmitMessage').bind('click', function () {
-			$.post("/Chat/", { chatMessage: $('#chatMessage').val(), username: $('#messages').attr('itemid') });
-		});
 
         channel.bind("pusher:member_added", function (member) {
             addMember(member);
@@ -78,7 +93,7 @@
         function addMember(member) {
             membersCount = channel.members.count;
             var enteredSite = new Date(member.info.timestamp);
-            
+
             var now = new Date();
             var one_min = 60 * 1000;
             var timeOnSite = now - enteredSite;
@@ -96,14 +111,38 @@
             //    Dakika_ = 1;
             //}
 
-            var li = $("<li data-user-id='" + member.id + "'>" + member.id + " here for " + timeOnSite +" mins </li>");
-            //var li = $("<li data-user-id='" + member.id + "'>" +
-            //                member.id + " here for ... mins </li>");
+            var li = $("<li id='chat' onclick='Cikar(\""+member.id+"\");' class='liChat' style='border-bottom: 2px solid aliceblue; font-size:medium; padding:4px;'>" + member.id + "&nbsp;(" + timeOnSite + "dk)</li>");
+
             $(".friends ul").append(li);
-            $("#UserCount").text(membersCount);
+            $("#UserCount").text(membersCount + ' Online');
         };
+    });
 
-	});
 
-  
+    function Cikar(userName) {
+         
+        //$("#helpChats").append('<div class="pusher-chat-widget" id="' + Math.uuid(7) + '"><div class="pusher-chat-widget-header"><label for="nickname">' + userName + '</label><div class="dvCloseIco" onclick="PrivateChatKapat();"></div></div><div class="pusher-chat-widget-messages"><ul class="activity-stream"></ul></div><div class="pusher-chat-widget-input"><textarea name="message"></textarea><button class="pusher-chat-widget-send-btn">Send</button></div></div>');
+         
+        if ($("#" + userName).length>0) {
+            $("#" + userName).fadeIn(400);
+        }
+        else {
+           
+            $("#helpChats").append('<div class="pusher-chat-widget" id="' + userName + '"><div class="pusher-chat-widget-header"><label for="nickname">' + userName + '</label><div class="dvCloseIco" onclick="PrivateChatKapat(\'' + userName + '\');"></div></div><div class="pusher-chat-widget-messages"><ul class="activity-stream"></ul></div><div class="pusher-chat-widget-input"><textarea name="message"></textarea><button class="pusher-chat-widget-send-btn">Send</button></div></div>');
+        }
+        //$(".pusher-chat-widget").effect("bounce", "slow");
+     
+        //var pusher = new Pusher('49e26cb8e9dde3dfc009')
+        //pusher.subscribe('private-');
+        //var chatWidget = new PusherChatWidget(pusher, {
+        //    appendTo: '#helpChats'
+        //});
+    }
+    function PrivateChatKapat(user)
+    {
+     
+        
+         $("#" + user ).fadeOut(400);
+    }
+
 </script>
