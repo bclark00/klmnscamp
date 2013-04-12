@@ -112,24 +112,24 @@
             //}
 
             //todo: ajaxtan doldurulacak
-            var li = $("<li id='chat' onclick='Cikar(\""+member.id+"\");' class='liChat' style='border-bottom: 2px solid aliceblue; font-size:medium; padding:4px;'>" + member.id + "&nbsp;(" + timeOnSite + "dk)</li>");
-
+            var li = $("<li id='chat' onclick='PrivateChatAc(\""+channel.members.me.id+"\",\"" + member.id + "\");' class='liChat' style='border-bottom: 2px solid aliceblue; font-size:medium; padding:4px;'>" + member.id + "&nbsp;(" + timeOnSite + "dk)</li>");
+            //CreateModal(channel.members.me.id, member.id);
             $(".friends ul").append(li);
             $("#UserCount").text(membersCount + ' Online');
         };
     });
 
 
-    function Cikar(userName) {
+    function PrivateChatAc(username,targetuserName) {
          
-        //$("#helpChats").append('<div class="pusher-chat-widget" id="' + Math.uuid(7) + '"><div class="pusher-chat-widget-header"><label for="nickname">' + userName + '</label><div class="dvCloseIco" onclick="PrivateChatKapat();"></div></div><div class="pusher-chat-widget-messages"><ul class="activity-stream"></ul></div><div class="pusher-chat-widget-input"><textarea name="message"></textarea><button class="pusher-chat-widget-send-btn">Send</button></div></div>');
-         
-        if ($("#" + userName).length>0) {
-            $("#" + userName).fadeIn(400);
+     
+        if ($("#" + targetuserName).length>0) {
+            $("#" + targetuserName).fadeIn(400);
         }
         else {
-           
-            $("#helpChats").append('<div class="pusher-chat-widget" id="' + userName + '"><div class="pusher-chat-widget-header"><label for="nickname">' + userName + '</label><div class="dvCloseIco" onclick="PrivateChatKapat(\'' + userName + '\');"></div></div><div class="pusher-chat-widget-messages"><ul class="activity-stream"></ul></div><div class="pusher-chat-widget-input"><textarea name="message"></textarea><button class="pusher-chat-widget-send-btn">Send</button></div></div>');
+            CreateModal(username,targetuserName);
+        //    $("#helpChats").append('<div class="pusher-chat-widget" id="' + userName + '"><div class="pusher-chat-widget-header"><label for="nickname">' + userName + '</label><div class="dvCloseIco" onclick="PrivateChatKapat(\'' + userName + '\');"></div></div><div class="pusher-chat-widget-messages"><ul class="activity-stream"></ul></div><div class="pusher-chat-widget-input"><textarea name="message"></textarea><button class="pusher-chat-widget-send-btn">Send</button></div></div>');
+
         }
         //$(".pusher-chat-widget").effect("bounce", "slow");
      
@@ -141,9 +141,20 @@
     }
     function PrivateChatKapat(user)
     {
-     
-        
          $("#" + user ).fadeOut(400);
     }
 
+    function CreateModal(username,targetUsername) {
+        $.ajax({
+            url: '/Chat/_CreatePrivateChatModal',
+            data: 'fromUser=' + username + '&toUser=' +targetUsername,
+            type: "GET",
+            async: true,
+            success: function (cevap) {
+                $("#helpChats").append(cevap);
+
+            }
+        });
+        return false;
+    }
 </script>
