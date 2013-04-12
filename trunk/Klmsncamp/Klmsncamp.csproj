@@ -1248,6 +1248,7 @@
     <Content Include="Views\Material\Delete.cshtml" />
     <Content Include="Views\Material\MaterialCategoryTreeListView.cshtml" />
     <Content Include="Views\Chat\Index.cshtml" />
+    <Content Include="Views\Chat\_CreatePrivateChatModal.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_GlobalResources\EditorLocalization.en-US.resx">

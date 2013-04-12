@@ -1,0 +1,63 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+<link href="../../Content/Pusher/pusher-chat-widget.css" rel="stylesheet" />
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+<script type="text/javascript" src="http://js.pusher.com/2.0/pusher.min.js"></script>
+@* <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+  <script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>*@
+<script src="../../Scripts/Pusher/Math.uuid.js"></script>
+@*<script src="../../Scripts/Pusher/PusherChatWidget.js"></script>*@
+<script type="text/javascript" src="pusher-realtime-chat-widget/src/js/PusherChatWidget.js"></script>
+
+<style type="text/css">
+    .liChat:hover {
+        cursor:pointer;
+    }
+</style>
+
+      <div class="pusher-chat-widget" id="@ViewBag.MemberID">
+          <div class="pusher-chat-widget-header"><label for="nickname">@ViewBag.ChannelName</label>
+              <div class="dvCloseIco" onclick="PrivateChatKapat('@ViewBag.MemberID');"></div>
+
+          </div>
+          <div class="pusher-chat-widget-messages"><ul id="LiveActivity-@ViewBag.ChannelName" class="activity-stream"></ul></div>
+         
+           <div class="pusher-chat-widget-input">
+              <textarea id="privateChatMessage-@ViewBag.ChannelName" name="message"></textarea>
+             <button id="privateChatSubmitMessage-@ViewBag.ChannelName" onclick="sendMsg();" class="pusher-chat-widget-send-btn">Send</button> 
+
+          </div>
+
+      </div>
+    
+<script type="text/javascript">
+
+    $(function () {
+
+        var pusher = new window.Pusher('0b7eeff567653e170094');
+        var socketId = pusher.connection.socket_id;
+        var myChannel = '@ViewBag.ChannelName';
+        alert("Kanal setup : " + myChannel);
+        var channel = pusher.subscribe('@ViewBag.ChannelName');
+
+        channel.bind('message_received', function (data) {
+            
+            if (data.message != null) {
+                $('#LiveActivity-@ViewBag.ChannelName').append('<li><b>' + data.user + ':</b>' + ' ' + data.message + '</li>');
+            }
+        });
+        channel.bind('pusher:subscription_succeeded', function (members) {
+            alert("kanala girdi : " + myChannel);
+        });
+
+        
+    });
+
+    function sendMsg() {
+      
+        $.post("/Chat/PrivateMessage", { chatMessage: $('#privateChatMessage-@ViewBag.ChannelName').val(), username: '@ViewBag.Me', channelName: '@ViewBag.ChannelName' });
+       
+    }
+
+</script>
