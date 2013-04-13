@@ -59,15 +59,34 @@ namespace Klmsncamp.Controllers
             return View();
         }
 
+        public void PrivateMessageFormLoad(string chatMessage, string username, string ChannelName)
+        {
+            var now = DateTime.UtcNow;
+            ObjectPusherRequest request = new ObjectPusherRequest(
+               ChannelName,
+                "message_received",
+                new
+                {
+                    message = chatMessage,
+                    user = username,
+                    timestamp = now.ToShortDateString() + " " + now.ToShortTimeString()
+                });
+            // var socketID =HttpContext.Request["socket_id"].ToString();
+            //  Provider.Authenticate("presence-channel",request.SocketId.ToString());
+            Provider.Trigger(request);
+
+        
+        }
         
         public ActionResult _CreatePrivateChatModal(string fromUser, string toUser)
         {
             ArrayList list = new ArrayList { fromUser,toUser};
 
             IEnumerable<string> sortedArray = list.Cast<string>().OrderBy(str => str);
-             ViewBag.ChannelName = "private-"+sortedArray.ToArray()[0] + sortedArray.ToArray()[1] + "pChannel";
+            ViewBag.ChannelName = "private-"+sortedArray.ToArray()[0] + sortedArray.ToArray()[1] + "pChannel";
             ViewBag.MemberID = toUser;
             ViewBag.Me = fromUser;
+
             return PartialView();
         }
 	}
