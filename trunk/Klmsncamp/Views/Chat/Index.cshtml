@@ -5,9 +5,9 @@
 <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
 <script type="text/javascript" src="http://js.pusher.com/2.0/pusher.min.js"></script>
 @* <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
-  <script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>*@
+<script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
 <script src="../../Scripts/Pusher/Math.uuid.js"></script>
-@*<script src="../../Scripts/Pusher/PusherChatWidget.js"></script>*@
+<script src="../../Scripts/Pusher/PusherChatWidget.js"></script>*@
 <script type="text/javascript" src="pusher-realtime-chat-widget/src/js/PusherChatWidget.js"></script>
 
 <style type="text/css">
@@ -35,7 +35,7 @@
     <textarea style="width: 643px; height: 95px;" id="chatMessage"></textarea>
     <br />
     <input id="chatSubmitMessage" class="chatSubmit" type="submit" value="Gönder" style="margin-left: 2px;" /><br />
-
+   
     <div id="helpChats" style="color:#000;">
       
     </div>
@@ -52,10 +52,6 @@
         var membersCount = channel.members.count;
         channel.bind('message_received', function (data) {
             if (data.message != null) {
-
-                //if (data.message.substring(0, 4) == '*41?') {
-                //    ajax.(/Chat/OpenPrivateChatModalWindow/id?4242)
-                //}
 
                 $("#messages").append('<li style="border-bottom:1px solid silver;font-size:medium; padding:6px;">' + '<b>' + data.user + ':</b>' + ' ' + data.message + ' &nbsp;&nbsp;&nbsp;&nbsp;' + '<b style="float:right;">' + data.timestamp + '</b>' + '</li>');
             }
@@ -91,31 +87,34 @@
         };
 
         function addMember(member) {
-            membersCount = channel.members.count;
-            var enteredSite = new Date(member.info.timestamp);
 
-            var now = new Date();
-            var one_min = 60 * 1000;
-            var timeOnSite = now - enteredSite;
+            if ($("#" + member.id).length == 0) {
+                membersCount = channel.members.count;
+                var enteredSite = new Date(member.info.timestamp);
 
-            if (timeOnSite < one_min + 1) {
-                timeOnSite = 0;
+                var now = new Date();
+                var one_min = 60 * 1000;
+                var timeOnSite = now - enteredSite;
+
+                if (timeOnSite < one_min + 1) {
+                    timeOnSite = 0;
+                }
+                else {
+                    timeOnSite = Math.round(timeOnSite / one_min);
+                }
+                //alert(timeOnSite);
+                //var Dakika_ = Math.round(timeOnSiteticks / one_min);
+                //alert(Dakika_);
+                //if (timeOnSite / one_min < 1) {
+                //    Dakika_ = 1;
+                //}
+
+                //todo: ajaxtan doldurulacak
+                var li = $("<li id='chat' onclick='PrivateChatAc(\"" + channel.members.me.id + "\",\"" + member.id + "\");' class='liChat' style='border-bottom: 2px solid aliceblue; font-size:medium; padding:4px;'>" + member.id + "&nbsp;(" + timeOnSite + "dk)</li>");
+                CreateModal(channel.members.me.id, member.id);
+                $(".friends ul").append(li);
+                $("#UserCount").text(membersCount + ' Online');
             }
-            else {
-                timeOnSite = Math.round(timeOnSite / one_min);
-            }
-            //alert(timeOnSite);
-            //var Dakika_ = Math.round(timeOnSiteticks / one_min);
-            //alert(Dakika_);
-            //if (timeOnSite / one_min < 1) {
-            //    Dakika_ = 1;
-            //}
-
-            //todo: ajaxtan doldurulacak
-            var li = $("<li id='chat' onclick='PrivateChatAc(\""+channel.members.me.id+"\",\"" + member.id + "\");' class='liChat' style='border-bottom: 2px solid aliceblue; font-size:medium; padding:4px;'>" + member.id + "&nbsp;(" + timeOnSite + "dk)</li>");
-            //CreateModal(channel.members.me.id, member.id);
-            $(".friends ul").append(li);
-            $("#UserCount").text(membersCount + ' Online');
         };
     });
 
@@ -131,13 +130,7 @@
         //    $("#helpChats").append('<div class="pusher-chat-widget" id="' + userName + '"><div class="pusher-chat-widget-header"><label for="nickname">' + userName + '</label><div class="dvCloseIco" onclick="PrivateChatKapat(\'' + userName + '\');"></div></div><div class="pusher-chat-widget-messages"><ul class="activity-stream"></ul></div><div class="pusher-chat-widget-input"><textarea name="message"></textarea><button class="pusher-chat-widget-send-btn">Send</button></div></div>');
 
         }
-        //$(".pusher-chat-widget").effect("bounce", "slow");
-     
-        //var pusher = new Pusher('49e26cb8e9dde3dfc009')
-        //pusher.subscribe('private-');
-        //var chatWidget = new PusherChatWidget(pusher, {
-        //    appendTo: '#helpChats'
-        //});
+    
     }
     function PrivateChatKapat(user)
     {
@@ -149,12 +142,14 @@
             url: '/Chat/_CreatePrivateChatModal',
             data: 'fromUser=' + username + '&toUser=' +targetUsername,
             type: "GET",
-            async: true,
+            async: false,
             success: function (cevap) {
+               
                 $("#helpChats").append(cevap);
-
+                
             }
         });
         return false;
     }
 </script>
+   

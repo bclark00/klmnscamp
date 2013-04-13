@@ -4,19 +4,8 @@
 <link href="../../Content/Pusher/pusher-chat-widget.css" rel="stylesheet" />
 <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
 <script type="text/javascript" src="http://js.pusher.com/2.0/pusher.min.js"></script>
-@* <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
-  <script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>*@
-<script src="../../Scripts/Pusher/Math.uuid.js"></script>
-@*<script src="../../Scripts/Pusher/PusherChatWidget.js"></script>*@
-<script type="text/javascript" src="pusher-realtime-chat-widget/src/js/PusherChatWidget.js"></script>
 
-<style type="text/css">
-    .liChat:hover {
-        cursor:pointer;
-    }
-</style>
-
-      <div class="pusher-chat-widget" id="@ViewBag.MemberID">
+      <div class="pusher-chat-widget" id="@ViewBag.MemberID" style="display: none;">
           <div class="pusher-chat-widget-header"><label for="nickname">@ViewBag.ChannelName</label>
               <div class="dvCloseIco" onclick="PrivateChatKapat('@ViewBag.MemberID');"></div>
 
@@ -25,7 +14,7 @@
          
            <div class="pusher-chat-widget-input">
               <textarea id="privateChatMessage-@ViewBag.ChannelName" name="message"></textarea>
-             <button id="privateChatSubmitMessage-@ViewBag.ChannelName" onclick="sendMsg();" class="pusher-chat-widget-send-btn">Send</button> 
+             <input id="privateChatSubmitMessage-@ViewBag.ChannelName" class="pusher-chat-widget-send-btn" type="submit" value="Gönder"/>
 
           </div>
 
@@ -33,31 +22,53 @@
     
 <script type="text/javascript">
 
-    $(function () {
+        $(function () {
 
-        var pusher = new window.Pusher('0b7eeff567653e170094');
-        var socketId = pusher.connection.socket_id;
-        var myChannel = '@ViewBag.ChannelName';
-        alert("Kanal setup : " + myChannel);
-        var channel = pusher.subscribe('@ViewBag.ChannelName');
-
-        channel.bind('message_received', function (data) {
-            
-            if (data.message != null) {
-                $('#LiveActivity-@ViewBag.ChannelName').append('<li><b>' + data.user + ':</b>' + ' ' + data.message + '</li>');
-            }
-        });
-        channel.bind('pusher:subscription_succeeded', function (members) {
-            alert("kanala girdi : " + myChannel);
-        });
-
+           
+            var pusher = new window.Pusher('0b7eeff567653e170094');
+            var socketId = pusher.connection.socket_id;
+            var myChannel = '@ViewBag.ChannelName';
         
-    });
+            var channel = pusher.subscribe('@ViewBag.ChannelName');
 
-    function sendMsg() {
-      
-        $.post("/Chat/PrivateMessage", { chatMessage: $('#privateChatMessage-@ViewBag.ChannelName').val(), username: '@ViewBag.Me', channelName: '@ViewBag.ChannelName' });
+            channel.bind('message_received', function (data) {
+
+                if (data.message != null) {
+                    var _me = '@ViewBag.Me';
+
+                    $('#@ViewBag.MemberID').fadeIn(100);
+                    
+                    if (data.user == _me) {
+                        $('#LiveActivity-@ViewBag.ChannelName').append('<li><b>me:</b>' + ' ' + data.message + '</li>');
+                    }
+                    else {
+                        $('#LiveActivity-@ViewBag.ChannelName').append('<li><b>' + data.user + ':</b>' + ' ' + data.message + '</li>');
+                    }
+                }
+            });
+            channel.bind('pusher:subscription_succeeded', function (members) {
+                
+            });
+
+            channel.bind('pusher:subscription_error', function (status) {
+                alert("hata");
+                //if (status == 408 || status == 503) {
+                //    // retry?
+                //}
+            });
+
+            $('#privateChatSubmitMessage-@ViewBag.ChannelName').bind('click', function () {
+                $.post("/Chat/PrivateMessage", { chatMessage: $('#privateChatMessage-@ViewBag.ChannelName').val(), username: '@ViewBag.Me', channelName: '@ViewBag.ChannelName' });
+            });
+
+         
+        });
+
+        function sendMsg() {
+
+            $.post("/Chat/PrivateMessage", { chatMessage: $('#privateChatMessage-@ViewBag.ChannelName').val(), username: '@ViewBag.Me', channelName: '@ViewBag.ChannelName' });
+
+        }
+   
        
-    }
-
 </script>

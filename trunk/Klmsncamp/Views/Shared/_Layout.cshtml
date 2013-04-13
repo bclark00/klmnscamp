@@ -277,9 +277,6 @@
     @(Html.Telerik().ScriptRegistrar().jQuery(false)
                      .DefaultGroup(group => group
                                          .Add("telerik.all.min.js")
-                         .Compress(true)).OnDocumentReady(
-                     @<text> prettyPrint();
-	</text>)
-    )
+                         .Compress(true)))
 </body>
 </html>
