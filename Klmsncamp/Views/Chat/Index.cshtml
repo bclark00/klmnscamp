@@ -12,35 +12,35 @@
 
 <style type="text/css">
     .liChat:hover {
-        cursor:pointer;
+        cursor: pointer;
     }
 </style>
 
 <div id="wrapper" style="width: 850px; margin: 20px auto;">
 
-    <div id="bottomPanel" style="border: 1px solid silver; width: 150px; float: right;">
-        <div id="UserCount" style="font-size: medium; background-color: #d4d4d4; text-align: center;"></div>
-        <div class="friends" style="font-size: large; background-color: #e8e8e8; text-align: center;">
-            <ul class="plainlist" style="font-size: medium;">
+    <div id="dvLobi" style=" float: left;">
+        <div id="helpChats" style="color: #000;  float: right;margin-top:-12px;">
+        </div>
 
+        <div id="upperPanel" style="width: 510px; float: left; /*border: 1px solid silver;*/ background-color: #f5f5f5">
+            <ul id="messages" class="plainlist" itemid="@HttpContext.Current.User.Identity.Name" style="/*background-color:#d8ebf3;*/ list-style-type:none;">
             </ul>
         </div>
-    </div>
-  
-    <div id="upperPanel" style="width: 650px; float: left; border: 1px solid silver; background-color:#f5f5f5">
-        <ul id="messages" class="plainlist" itemid="@HttpContext.Current.User.Identity.Name" style="/*background-color:#d8ebf3;*/ list-style-type:none;">
-        </ul>
-    </div>
 
-    <textarea style="width: 643px; height: 95px;" id="chatMessage"></textarea>
-    <br />
-    <input id="chatSubmitMessage" class="chatSubmit" type="submit" value="Gönder" style="margin-left: 2px;" /><br />
-   
-    <div id="helpChats" style="color:#000;">
-      
+        <textarea style="width: 504px; height: 95px;" id="chatMessage"></textarea>
+        <br />
+        <input id="chatSubmitMessage" class="pusher-chat-widget-send-btn" type="submit" value="Gönder" style="margin-left: 2px;" /><br />
     </div>
 
 </div>
+
+<div id="bottomPanel" style="border: 1px solid silver; width: 150px;  float:right;">
+        <div id="UserCount" style="font-size: medium; background-color: #d4d4d4; text-align: center;"></div>
+        <div class="friends" style="font-size: large; background-color: #e8e8e8; text-align: center;">
+            <ul class="plainlist" style="font-size: medium;">
+            </ul>
+        </div>
+    </div>
 <script type="text/javascript">
 
     $(function () {
@@ -52,8 +52,10 @@
         var membersCount = channel.members.count;
         channel.bind('message_received', function (data) {
             if (data.message != null) {
-
                 $("#messages").append('<li style="border-bottom:1px solid silver;font-size:medium; padding:6px;">' + '<b>' + data.user + ':</b>' + ' ' + data.message + ' &nbsp;&nbsp;&nbsp;&nbsp;' + '<b style="float:right;">' + data.timestamp + '</b>' + '</li>');
+
+                $("#dvMenuChatWarning").css("background-color", "red");
+
             }
         });
 
@@ -102,16 +104,12 @@
                 else {
                     timeOnSite = Math.round(timeOnSite / one_min);
                 }
-                //alert(timeOnSite);
-                //var Dakika_ = Math.round(timeOnSiteticks / one_min);
-                //alert(Dakika_);
-                //if (timeOnSite / one_min < 1) {
-                //    Dakika_ = 1;
-                //}
 
-                //todo: ajaxtan doldurulacak
                 var li = $("<li id='chat' onclick='PrivateChatAc(\"" + channel.members.me.id + "\",\"" + member.id + "\");' class='liChat' style='border-bottom: 2px solid aliceblue; font-size:medium; padding:4px;'>" + member.id + "&nbsp;(" + timeOnSite + "dk)</li>");
-                CreateModal(channel.members.me.id, member.id);
+                if (channel.members.me.id != member.id) {
+                    CreateModal(channel.members.me.id, member.id);
+                }
+
                 $(".friends ul").append(li);
                 $("#UserCount").text(membersCount + ' Online');
             }
@@ -119,37 +117,33 @@
     });
 
 
-    function PrivateChatAc(username,targetuserName) {
-         
-     
-        if ($("#" + targetuserName).length>0) {
+    function PrivateChatAc(username, targetuserName) {
+
+        if ($("#" + targetuserName).length > 0) {
             $("#" + targetuserName).fadeIn(400);
         }
         else {
-            CreateModal(username,targetuserName);
-        //    $("#helpChats").append('<div class="pusher-chat-widget" id="' + userName + '"><div class="pusher-chat-widget-header"><label for="nickname">' + userName + '</label><div class="dvCloseIco" onclick="PrivateChatKapat(\'' + userName + '\');"></div></div><div class="pusher-chat-widget-messages"><ul class="activity-stream"></ul></div><div class="pusher-chat-widget-input"><textarea name="message"></textarea><button class="pusher-chat-widget-send-btn">Send</button></div></div>');
 
+            if (username != targetuserName) {
+                CreateModal(username, targetuserName);
+            }
         }
-    
     }
-    function PrivateChatKapat(user)
-    {
-         $("#" + user ).fadeOut(400);
+    function PrivateChatKapat(user) {
+        $("#" + user).fadeOut(400);
     }
 
-    function CreateModal(username,targetUsername) {
+    function CreateModal(username, targetUsername) {
         $.ajax({
             url: '/Chat/_CreatePrivateChatModal',
-            data: 'fromUser=' + username + '&toUser=' +targetUsername,
+            data: 'fromUser=' + username + '&toUser=' + targetUsername,
             type: "GET",
             async: false,
             success: function (cevap) {
-               
+
                 $("#helpChats").append(cevap);
-                
             }
         });
         return false;
     }
 </script>
-   
