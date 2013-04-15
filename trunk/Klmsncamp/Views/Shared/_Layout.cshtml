@@ -186,20 +186,19 @@
             {
 
                 menu.Add().Text("Chat").Content(
-            @<text>
-        <ul class="product-list">
-            <li class="product">
-                <img src="@Url.Content("~/Content/images/chat.png")" alt="Chat"/>
-                <p>
-                    @Html.ActionLink("Chat", "Index", "Chat", null, null)
-                </p>
-            </li>
-        </ul>
+        @<text>
+        <div id="dvMenuChatWarning">
+            <ul class="product-list">
+                <li class="product">
+                    <img src="@Url.Content("~/Content/images/chat.png")" alt="Chat"/>
+                    <p>
+                        @Html.ActionLink("Chat", "Index", "Chat", null, null)
+                    </p>
+                </li>
+            </ul>
+        </div>
         </text>
-
-
                     );
-
             }
 
 
@@ -267,6 +266,28 @@
         })
                 .Render();
     }
+
+
+    @*    <div id="dvChatMenu" style="float:right;border:1px solid black; width:50px;height:500px;">
+
+        
+
+        @Html.Telerik().Menu().Name("OnlineMenu").Items(items=>items.Add().Text("Online").Action("Index","Chat").Content(@<text>
+        
+        <div> Hayata lfglfgkjlfkj</div>
+        
+        
+        
+        </text>)).Orientation(MenuOrientation.Vertical);
+
+    </div>*@
+
+
+
+
+
+
+
     <div class="page">
         <div id="main">
             @RenderBody()

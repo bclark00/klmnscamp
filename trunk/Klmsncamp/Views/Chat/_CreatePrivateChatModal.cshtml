@@ -14,16 +14,13 @@
          
            <div class="pusher-chat-widget-input">
               <textarea id="privateChatMessage-@ViewBag.ChannelName" name="message"></textarea>
-             <input id="privateChatSubmitMessage-@ViewBag.ChannelName" class="pusher-chat-widget-send-btn" type="submit" value="Gönder"/>
-
+             <input id="privateChatSubmitMessage-@ViewBag.ChannelName" class="pusher-chat-widget-send-btn"  type="submit" value="Gönder" />
           </div>
-
       </div>
     
 <script type="text/javascript">
 
         $(function () {
-
            
             var pusher = new window.Pusher('0b7eeff567653e170094');
             var socketId = pusher.connection.socket_id;
@@ -34,6 +31,7 @@
             channel.bind('message_received', function (data) {
 
                 if (data.message != null) {
+
                     var _me = '@ViewBag.Me';
 
                     $('#@ViewBag.MemberID').fadeIn(100);
@@ -47,7 +45,6 @@
                 }
             });
             channel.bind('pusher:subscription_succeeded', function (members) {
-                
             });
 
             channel.bind('pusher:subscription_error', function (status) {
@@ -60,14 +57,10 @@
             $('#privateChatSubmitMessage-@ViewBag.ChannelName').bind('click', function () {
                 $.post("/Chat/PrivateMessage", { chatMessage: $('#privateChatMessage-@ViewBag.ChannelName').val(), username: '@ViewBag.Me', channelName: '@ViewBag.ChannelName' });
             });
-
-         
         });
 
         function sendMsg() {
-
             $.post("/Chat/PrivateMessage", { chatMessage: $('#privateChatMessage-@ViewBag.ChannelName').val(), username: '@ViewBag.Me', channelName: '@ViewBag.ChannelName' });
-
         }
    
        
