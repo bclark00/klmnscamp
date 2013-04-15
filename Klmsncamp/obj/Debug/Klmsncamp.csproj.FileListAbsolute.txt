@@ -291,4 +291,3 @@ C:\Users\Hp\Desktop\Project2KlmsanYEDEK - Copy\Klmsncamp\obj\Debug\Klmsncamp.pdb
 C:\Users\Hp\Desktop\Project2KlmsanYEDEK - Copy\Klmsncamp\bin\PusherClientDotNet.dll
 C:\Users\Hp\Desktop\Project2KlmsanYEDEK - Copy\Klmsncamp\bin\PusherRESTDotNet.dll
 C:\Users\Hp\Desktop\Project2KlmsanYEDEK - Copy\Klmsncamp\bin\WebSocket4Net.dll
-C:\Users\Hp\Desktop\Project2KlmsanYEDEK - Copy\Klmsncamp\obj\Debug\Klmsncamp.csprojResolveAssemblyReference.cache
