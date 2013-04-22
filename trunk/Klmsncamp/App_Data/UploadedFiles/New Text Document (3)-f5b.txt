@@ -1,0 +1,60 @@
+http://channel9.msdn.com/Series/mvcConf/mvcConf-2-Steve-Sanderson-MvcScaffolding
+20dk dan itibaren T4 templatelerin nasýl özelleþtirileceðini anlatýyor.
+
+
+Aydem ip
+http://95.0.107.58:8880/ZamanlanmisGorev/ZamanlanmisGorevlerim.aspx
+
+
+Optional Stored Procedure
+http://stackoverflow.com/questions/3415582/how-can-i-use-optional-parameters-in-a-t-sql-stored-procedure
+
+
+MVC
+http://aliozturk.ws/Makale/Mvc-3-Html-Helper-Function-Nedir#.UKu2CobAGkQ
+
+
+SOCKET makale adresi güzel bir anlatýmý var
+http://www.yazgelistir.com/makale/tcp-socket-programciligina-giris
+
+
+Chat yapma VÝDEO
+http://www.mehmetx.com/Makaleler/Asenkron-Socket-ile-TCP-Chat-Uygulamasi-Part-4/31
+http://www.mehmetx.com/Makaleler/Asenkron-Socket-ile-TCP-Chat-Uygulamasi-Part-1/28
+
+
+JQuery AJAX Anlatýmý Gayet Güzel
+http://www.eburhan.com/jquery-ve-ajax-islemleri/
+http://www.eburhan.com/jquery-ve-json-islemleri/
+
+
+TÝMER SINIFLARI ARASINDAKÝ FARKLAR
+http://www.enginpolat.com/net-framework-te-timer-classlari-arasindaki-farklar/
+
+
+MVC DE JQUERY AJAX KULLANIMI
+http://www.mehmetduran.com/Blog/Makale.html/Jquery-ve-Asp-net-MVC-ile-Ajax-Islemleri/341
+http://yakupbugra.com/2011/12/unobtrusive-ajax-kullanimi-asp-net-mvc-3.html
+http://www.kodhatasi.com/soru/814/aspnet-mvc-jquery-ajax-success-fonksiyonu-calismiyor
+http://www.slideshare.net/erdemergin/aspnet-mvc-ve-jquery-ile-sunucudan-json-verisi-okuma
+
+
+JQUERY DATA TABLE
+http://www.codeproject.com/Articles/194916/Enhancing-HTML-tables-using-a-JQuery-DataTables-pl
+http://www.codeproject.com/Articles/331855/jQuery-DataTables-Advanced-Filtering-in-ASP-NET-MV
+
+
+iTEXTSHARP
+http://www.tufanunlu.com/post/2010/02/24/iTextSharp-kullanc4b1mc4b1-Turkce-karakter-sorunu.aspx
+http://www.sebahattint.com/2010/09/08/c-pdf-olusturma-itextsharp-pdf-create/
+http://www.daltinkurt.com/Icerik/154/ASP-NET-ile-PDF-olusturma.aspx
+http://www.yazgelistir.com/makale/asp-net-ile-pdf-dosya-olusturmak
+https://groups.google.com/forum/?fromgroups=#!topic/jquery-turkish/FhGGZoKuWS8
+http://www.dotnetobject.com/Thread-Html-to-Pdf-conversion-in-asp-net-c
+http://pdfcrowd.com/web-html-to-pdf-net/
+
+
+JQUERY
+http://wecode.hubpages.com/hub/JQuery-Client-side-Validation-for-Text-inputs
+
+TH1710173

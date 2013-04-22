@@ -1,0 +1,34 @@
+
+insert into Obis.ObisCodes
+select Siralama,REPLACE(obiscode,'1.8.','2.8.'),Explanation+' Export',IsActive from obis.ObisCodes
+where Obiscode Like '1.8.%'
+
+
+select * from obis.ObisCodes where Explanation like '%T3%'
+
+select * from obis.ObisCodes where Explanation like '%13 Ay%'
+select * from obis.ObisCodes where Explanation like '%Reset Tarihi%'
+13 ?nceki Reset Tarihi
+
+update Obis.ObisCodes set IsActive=0 where Explanation like '%24 ?nceki Reset Tarihi%'
+
+T3 24 Ay  ?nceki 
+
+
+GMAÝL PROJE ÞÝFRESÝ----
+dj9PU3cw2Ek5
+
+
+MVC EXCEL
+http://www.telerik.com/support/kb/aspnet-mvc/grid/export-to-excel.aspx
+
+http://demos.telerik.com/aspnet-ajax/grid/examples/export/biffexport/defaultcs.aspx
+
+http://jsfiddle.net/lesson8/jWAJ7/
+
+JQUERY CHARTS
+http://www.highcharts.com/demo/line-ajax
+
+CHART ZOOM
+
+http://www.jqplot.com/deploy/dist/examples/zoom1.html
