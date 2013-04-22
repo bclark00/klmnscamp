@@ -1,70 +1,55 @@
 ﻿@using Telerik.Web.Mvc.UI
 @model IEnumerable<Klmsncamp.Models.MaterialCategory>
+
+
 <script type="text/javascript">
 
+    function treeView() {
+        return $('#TreeView').data('tTreeView');
+    }
 
+    //	    function OnTreeNodeSelect(e) {
+    //	         xidx = treeView().getItemValue(e.item);
+    //	         alert(xidx);
+    //	         //alert("@Url.Action("Edit", "Material", new { cat_id = "" })/"+xidx);
+    //	         var link="@Url.Action("Index", "Material", new { cat_id = -666 })";
+    //	         link = link.replace("-666",xidx);
+    //	         window.location.href=link;
+    //	    }
+    function SecileniGoster(e) {
 
-	function treeView() {
-		return $('#TreeView').data('tTreeView');
-	}
+        alert($('#TreeView'));
+        
+        kategori = $('#TreeView').data('tTreeView').getItemText(e.item);
+        alert('kategori :' + kategori);
+        secilenID = treeView().getItemValue(e.item);
+        alert('id :' + secilenID);
+        if (secilenID == 18 || secilenID == 19) {
+            return;
+        }
+        //kategori = treeView().getItemValue(e.item);
+        //alert(secilenID);
+        document.location = "/Material/Index/?ID=" + secilenID;
 
-	//	    function OnTreeNodeSelect(e) {
-	//	         xidx = treeView().getItemValue(e.item);
-	//	         alert(xidx);
-	//	         //alert("@Url.Action("Edit", "Material", new { cat_id = "" })/"+xidx);
-	//	         var link="@Url.Action("Index", "Material", new { cat_id = -666 })";
-	//	         link = link.replace("-666",xidx);
-	//	         window.location.href=link;
-	//	    }
-	function SecileniGoster(e) {
-
-		kategori = treeView().getItemText(e.item);
-		secilenID = treeView().getItemValue(e.item);
-
-		if (secilenID == 18 || secilenID == 19) {
-			return;
-		}
-
-		//kategori = treeView().getItemValue(e.item);
-		//alert(secilenID);
-		document.location = "/Material/Index/?ID=" + secilenID;
-		//$.ajax({
-		//url:'/Material/Index',
-		//data:'kategoriAdi='+kategori,
-		//type:'get'
-		//});
-	}
+    }
 
 </script>
 <div style="margin: 30px 0 10px 10px; border: 1px solid olive;">
-	@(Html.Telerik().TreeView()
-	.Name("TreeView").ExpandAll(true).ShowLines(true).
-			Effects(fx => fx.Toggle().Opacity().OpenDuration(200).CloseDuration(300)).ClientEvents(events => events.OnSelect("SecileniGoster"))
-	.BindTo(Model, mappings =>
-	{
-		mappings.For<Klmsncamp.Models.MaterialCategory>(binding => binding
-				.ItemDataBound((l_item, materialcategory) =>
-				{
-					l_item.Text = materialcategory.Description;
-					l_item.Value = materialcategory.MaterialCategoryID.ToString();
-					//l_item.Value = materialcategory.ParentMaterialCategory.ToString();
-				})
-				.Children(materialcategory => materialcategory.MaterialCategoryChilds));
-	})
+    @(Html.Telerik().TreeView()
+    .Name("TreeView").ExpandAll(true).ShowLines(true).
+            Effects(fx => fx.Toggle().Opacity().OpenDuration(200).CloseDuration(300)).ClientEvents(events => events.OnSelect("SecileniGoster"))
+    .BindTo(Model, mappings =>
+    {
+        mappings.For<Klmsncamp.Models.MaterialCategory>(binding => binding
+                .ItemDataBound((l_item, materialcategory) =>
+                {
+                    l_item.Text = materialcategory.Description;
+                    l_item.Value = materialcategory.MaterialCategoryID.ToString();
+                    //l_item.Value = materialcategory.ParentMaterialCategory.ToString();
+                })
+                .Children(materialcategory => materialcategory.MaterialCategoryChilds));
+    })
 
-	)
-	@*	@(Html.Telerik().TreeView()
-	.Name("TreeView").ExpandAll(true).ShowLines(true).
-	Effects(fx => fx.Toggle().Opacity().OpenDuration(200).CloseDuration(300)).ClientEvents(events => events.OnSelect("OnTreeNodeSelect"))
-	.BindTo(Model, mappings =>
-	{
-		mappings.For<Klmsncamp.Models.MaterialCategory>(binding => binding
-				.ItemDataBound((l_item, materialcategory) =>
-				{
-					l_item.Text = materialcategory.Description;
-					l_item.Value = materialcategory.ParentMaterialCategoryID.ToString();
-				})
-				.Children(materialcategory => materialcategory.MaterialCategoryChilds));
-	})
-	)*@
+    )
+   
 </div>

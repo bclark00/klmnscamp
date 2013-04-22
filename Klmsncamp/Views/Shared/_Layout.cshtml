@@ -15,16 +15,29 @@
 <head profile="http://gmpg.org/xfn/11">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>@ViewBag.Title</title>
+
+
     <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/form.css")" />
     <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/base.css")" />
     <!--<link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/klimasannavmenu.css")" />-->
+    @Html.Telerik().StyleSheetRegistrar().DefaultGroup(group => group.Add("telerik.common.css").Add("telerik.windows7.css"))
 
     <script src="@Url.Content("~/Scripts/jquery-1.7.1.min.js")" type="text/javascript"></script>
-
-    @Html.Telerik().StyleSheetRegistrar().DefaultGroup(group => group.Add("telerik.common.css").Add("telerik.windows7.css"))
+    
     <!--group.Add("telerik.common.css").Add("telerik.default.css").Add("telerik.office2010blue.css").Add("telerik.windows7.css")-->
     @RenderSection("script", false)
-    <script type="text/javascript">		function gettext(txt) { return txt }</script>
+
+ <link href="../../Content/Pusher/pusher-chat-widget.css" rel="stylesheet" />
+@*<script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>*@
+<script type="text/javascript" src="http://js.pusher.com/2.0/pusher.min.js"></script>
+<script type="text/javascript" src="pusher-realtime-chat-widget/src/js/PusherChatWidget.js"></script>
+
+
+
+
+    <script type="text/javascript">
+        function gettext(txt) { return txt }
+    </script>
     <style type="text/css">
         #Menu .t-content {
             background-color: #edf9fe;
@@ -51,6 +64,7 @@
             background: #fff;
         }
     </style>
+
 </head>
 <body>
     <div id="userx" align="right" style="font-size: 12px; margin-top: 5px; margin-bottom: 3px;">
@@ -145,8 +159,6 @@
             }
             if (ViewBag.IsTakipModulu)
             {
-
-
                 menu.Add()
                     .Text("Raporlama")
                     .Content(@<text>
@@ -267,27 +279,13 @@
                 .Render();
     }
 
+    <div id="dvChatMenu" style="float: right; z-index: 99; position: fixed; right: 0px; top: 55px;">
 
-    @*    <div id="dvChatMenu" style="float:right;border:1px solid black; width:50px;height:500px;">
-
-        
-
-        @Html.Telerik().Menu().Name("OnlineMenu").Items(items=>items.Add().Text("Online").Action("Index","Chat").Content(@<text>
-        
-        <div> Hayata lfglfgkjlfkj</div>
-        
-        
-        
-        </text>)).Orientation(MenuOrientation.Vertical);
-
-    </div>*@
-
-
-
-
-
-
-
+        @if (Request.IsAuthenticated)
+        {
+            @Html.Partial("_OnlineUsers")
+        }
+    </div>
     <div class="page">
         <div id="main">
             @RenderBody()
@@ -295,6 +293,11 @@
         <div id="footer">
         </div>
     </div>
+
+    @*<div id="helpChats" style="color: #000; float: left; margin-top: -12px; border:1px solid black;">*@
+    <div id="helpChats" style="color: #000; position: fixed; left: 0px; bottom: 0px;">
+    </div>
+
     @(Html.Telerik().ScriptRegistrar().jQuery(false)
                      .DefaultGroup(group => group
                                          .Add("telerik.all.min.js")

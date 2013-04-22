@@ -4,16 +4,19 @@
 <link href="../../Content/Pusher/pusher-chat-widget.css" rel="stylesheet" />
 <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
 <script type="text/javascript" src="http://js.pusher.com/2.0/pusher.min.js"></script>
+<script src="../../Scripts/Pusher/pusher-2.0.js"></script>
 
-      <div class="pusher-chat-widget" id="@ViewBag.MemberID" style="display: none;">
+
+      <div class="pusher-chat-widget" id="@ViewBag.MemberID" style="display: none; float:left;margin-left:5px;">
           <div class="pusher-chat-widget-header"><label for="nickname">@ViewBag.ChannelName</label>
               <div class="dvCloseIco" onclick="PrivateChatKapat('@ViewBag.MemberID');"></div>
-
           </div>
-          <div class="pusher-chat-widget-messages"><ul id="LiveActivity-@ViewBag.ChannelName" class="activity-stream"></ul></div>
+          <div class="pusher-chat-widget-messages">
+              <ul id="LiveActivity-@ViewBag.ChannelName" class="activity-stream"></ul>
+          </div>
          
            <div class="pusher-chat-widget-input">
-              <textarea id="privateChatMessage-@ViewBag.ChannelName" name="message"></textarea>
+              <textarea id="privateChatMessage-@ViewBag.ChannelName" style="font-size:inherit;" name="message"></textarea>
              <input id="privateChatSubmitMessage-@ViewBag.ChannelName" class="pusher-chat-widget-send-btn"  type="submit" value="Gönder" />
           </div>
       </div>
@@ -37,10 +40,10 @@
                     $('#@ViewBag.MemberID').fadeIn(100);
                     
                     if (data.user == _me) {
-                        $('#LiveActivity-@ViewBag.ChannelName').append('<li><b>me:</b>' + ' ' + data.message + '</li>');
+                        $('#LiveActivity-@ViewBag.ChannelName').append('<li style="font-size:medium;"><b>me:</b>' + ' ' + data.message + '</li>');
                     }
                     else {
-                        $('#LiveActivity-@ViewBag.ChannelName').append('<li><b>' + data.user + ':</b>' + ' ' + data.message + '</li>');
+                        $('#LiveActivity-@ViewBag.ChannelName').append('<li style="font-size:medium;"><b>' + data.user + ':</b>' + ' ' + data.message + '</li>');
                     }
                 }
             });

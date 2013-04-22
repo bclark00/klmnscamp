@@ -1064,6 +1064,7 @@
     <Content Include="Scripts\modernizr-1.7.js" />
     <Content Include="Scripts\modernizr-1.7.min.js" />
     <Content Include="Scripts\Pusher\Math.uuid.js" />
+    <Content Include="Scripts\Pusher\pusher-2.0.js" />
     <Content Include="Scripts\Pusher\PusherChatWidget.js" />
     <Content Include="Scripts\telerik.all.min.js" />
     <Content Include="Scripts\telerik.autocomplete.min.js" />
@@ -1251,6 +1252,7 @@
     <Content Include="Views\Material\MaterialCategoryTreeListView.cshtml" />
     <Content Include="Views\Chat\Index.cshtml" />
     <Content Include="Views\Chat\_CreatePrivateChatModal.cshtml" />
+    <Content Include="Views\Shared\_OnlineUsers.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_GlobalResources\EditorLocalization.en-US.resx">

@@ -59,24 +59,24 @@ namespace Klmsncamp.Controllers
             return View();
         }
 
-        public void PrivateMessageFormLoad(string chatMessage, string username, string ChannelName)
-        {
-            var now = DateTime.UtcNow;
-            ObjectPusherRequest request = new ObjectPusherRequest(
-               ChannelName,
-                "message_received",
-                new
-                {
-                    message = chatMessage,
-                    user = username,
-                    timestamp = now.ToShortDateString() + " " + now.ToShortTimeString()
-                });
-            // var socketID =HttpContext.Request["socket_id"].ToString();
-            //  Provider.Authenticate("presence-channel",request.SocketId.ToString());
-            Provider.Trigger(request);
+        //public void PrivateMessageFormLoad(string chatMessage, string username, string ChannelName)
+        //{
+        //    var now = DateTime.UtcNow;
+        //    ObjectPusherRequest request = new ObjectPusherRequest(
+        //       ChannelName,
+        //        "message_received",
+        //        new
+        //        {
+        //            message = chatMessage,
+        //            user = username,
+        //            timestamp = now.ToShortDateString() + " " + now.ToShortTimeString()
+        //        });
+        //    // var socketID =HttpContext.Request["socket_id"].ToString();
+        //    //  Provider.Authenticate("presence-channel",request.SocketId.ToString());
+        //    Provider.Trigger(request);
 
         
-        }
+        //}
         
         public ActionResult _CreatePrivateChatModal(string fromUser, string toUser)
         {
