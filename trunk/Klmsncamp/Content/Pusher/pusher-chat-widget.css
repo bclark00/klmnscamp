@@ -60,7 +60,7 @@
 }
 
 .pusher-chat-widget textarea {
-    width: 230px;
+    width: 225px;
     height: 40px;
 }
 
@@ -84,6 +84,8 @@
     border: 1px solid #CCC;
 }
 
+/*Sonradan Eklenenler*/
+
 .dvCloseIco {
 
     background-image: url("../../Content/Milky/116.png");
@@ -96,7 +98,7 @@
     margin-right:5px;
 }
 
-
+/*Bitti*/
 
 .pusher-chat-widget-footer {
     border-top: 1px solid #EBEBEB;
@@ -113,6 +115,10 @@
     min-height: 100px;
     max-height: 400px;
     margin-right: 10px;
+
+
+    font-size:medium;
+
 }
 
     .pusher-chat-widget ul.activity-stream li.waiting {

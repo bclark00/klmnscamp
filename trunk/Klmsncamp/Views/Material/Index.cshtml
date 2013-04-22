@@ -3,16 +3,40 @@
 @{
 	ViewBag.Title = "Malzemeler";
 }
+
 <script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
 <script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
 <script type="text/javascript">
-						$(document).ready(function () {
-							$("#txtDegerArama").change(function () {
-								var deger = $("#txtDegerArama").val();
-								document.location = "/Material/Arama/?deger=" + deger + "&kategoriID="+ @ViewBag.kategoriID;
-							});
-						});
-					
+    $(document).ready(function () {
+
+        $("#txtDegerArama").change(function () {
+            var deger = $("#txtDegerArama").val();
+            document.location = "/Material/Arama/?deger=" + deger + "&kategoriID=" + '@ViewBag.kategoriID';
+        });
+
+    });
+						
+    function treeView() {
+        return $('#TreeView').data('tTreeView');
+    }
+
+    
+    function SecileniGoster(e) {
+
+        
+        var secilenID = $(e.item).find("[name='itemValue']").serialize();
+        //kategori = $('#TreeView').data('tTreeView').getItemText(e.item);
+        //alert('kategori :' + kategori);
+        //secilenID = treeView().getItemValue(e.item);
+        //alert('id :' + secilenID);
+        if (secilenID == 18 || secilenID == 19) {
+            return;
+        }
+        //kategori = treeView().getItemValue(e.item);
+        //alert(secilenID);
+        document.location = "/Material/Index/?ID=" + secilenID;
+
+    }
 </script>
 @{ Html.Telerik().TabStrip()
 	.Name("TabStrip")
@@ -32,7 +56,27 @@
 		<tbody>
 			<tr>
 				<td>
-					@{Html.RenderPartial("MaterialCategoryTreeListView", ViewBag.MaterialCategories as IEnumerable<Klmsncamp.Models.MaterialCategory>);}
+					@*@{Html.RenderPartial("MaterialCategoryTreeListView", ViewBag.MaterialCategories as IEnumerable<Klmsncamp.Models.MaterialCategory>);}*@
+                    <div style="margin: 30px 0 10px 10px; border: 1px solid olive;">
+                        @(Html.Telerik().TreeView()
+                        .Name("TreeView").ExpandAll(true).ShowLines(true).
+                                Effects(fx => fx.Toggle().Opacity().OpenDuration(200).CloseDuration(300)).ClientEvents(events => events.OnSelect("SecileniGoster"))
+                        .BindTo(  ViewBag.MaterialCategories as IEnumerable<Klmsncamp.Models.MaterialCategory>, mappings =>
+                        {
+                            mappings.For<Klmsncamp.Models.MaterialCategory>(binding => binding
+                                    .ItemDataBound((l_item, materialcategory) =>
+                                    {
+                                        l_item.Text = materialcategory.Description;
+                                        l_item.Value = materialcategory.MaterialCategoryID.ToString();
+                                        //l_item.Value = materialcategory.ParentMaterialCategory.ToString();
+                                    })
+                                    .Children(materialcategory => materialcategory.MaterialCategoryChilds));
+                        })
+
+                        )
+   
+</div>
+
 				</td>
 				<td>
 					<div style="float: left; margin: 10px;">
@@ -160,3 +204,9 @@
 		}).Render();
 }
 @{ Html.Telerik().ScriptRegistrar().Globalization(true); }
+
+
+  <script type="text/javascript" src="../../Scripts/jquery-1.7.1.min.js"></script>
+    <script type="text/javascript" src="../../Scripts/Pusher/pusher-2.0.js"></script>
+    <script type="text/javascript" src="pusher-realtime-chat-widget/src/js/PusherChatWidget.js"></script>
+    <link href="../../Content/Pusher/pusher-chat-widget.css" rel="stylesheet" />

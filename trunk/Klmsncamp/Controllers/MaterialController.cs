@@ -24,8 +24,13 @@ namespace Klmsncamp.Controllers
 
             //TempData["Sevko"] = "Temp Data ŞEVKO";
             //deger = "Dolu Geldi";
+            int secilenID=1;
+            if (string.IsNullOrEmpty(ID))
+            {
+               ID = "1";
+            }
 			List<Material> list = db.Materials.ToList();
-			int secilenID = Convert.ToInt32(ID);
+			secilenID = Convert.ToInt32(ID.Replace("itemValue=",""));
 
 			ViewBag.kategoriID = ID;
 
