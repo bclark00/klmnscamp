@@ -15,15 +15,17 @@
 </style>
 @*<div id="helpChats" style="color: #000; float: left; margin-top: -12px;">
 </div>*@
-<div id="bottomPanel" style=" width: 150px; float: right; z-index:11;">
-         <div id="UserCount" onclick="ToggleUsers();" style="font-size: medium; background-color: #d4d4d4; text-align: center; border-bottom:3px solid aliceBlue; padding:3px;">
-         </div> 
+<div id="bottomPanel" style="width: 150px; float: right; z-index: 11;">
+    <div id="UserCount" onclick="ToggleUsers();" style="font-size: medium; background-color: #d4d4d4; text-align: center; border-bottom: 3px solid aliceBlue; padding: 3px;">
+    </div>
     <div class="friends" id="dvUserCount" style="font-size: large; background-color: #e8e8e8; text-align: center;">
-        <ul class="plainlist" style="font-size: medium;">
+        <ul class="plainlist" data-id="1" style="font-size: medium;">
         </ul>
+        @* <ul class="plainlist" style="font-size: medium;">
+        </ul>*@
     </div>
 </div>
-   
+
 
 <script type="text/javascript">
 
@@ -34,16 +36,16 @@
         var channel = pusher.subscribe('presence-channel');
 
         var membersCount = channel.members.count;
-        channel.bind('message_received', function (data) {
-            if (data.message != null) {
-                $("#messages").append('<li style="border-bottom:1px solid silver;font-size:medium; padding:6px;">' + '<b>' + data.user + ':</b>' + ' ' + data.message + ' &nbsp;&nbsp;&nbsp;&nbsp;' + '<b style="float:right;">' + data.timestamp + '</b>' + '</li>');
+        //channel.bind('message_received', function (data) {
+        //    if (data.message != null) {
+        //        $("#messages").append('<li style="border-bottom:1px solid silver;font-size:medium; padding:6px;" >' + '<b>' + data.user + ':</b>' + ' ' + data.message + ' &nbsp;&nbsp;&nbsp;&nbsp;' + '<b style="float:right;">' + data.timestamp + '</b>' + '</li>');
 
-            }
-        });
+        //    }
+        //});
 
-        $('#chatSubmitMessage').bind('click', function () {
-            $.post("/Chat/", { chatMessage: $('#chatMessage').val(), username: $('#messages').attr('itemid') });
-        });
+        //$('#chatSubmitMessage').bind('click', function () {
+        //    $.post("/Chat/", { chatMessage: $('#chatMessage').val(), username: $('#messages').attr('itemid') });
+        //});
 
         channel.bind('pusher:subscription_succeeded', function (members) {
             var me = channel.members.me;
@@ -52,30 +54,33 @@
             var userInfo = me.info;
 
             channel.members.each(function (member) {
-
-                addMember(member);
-               
+                  addMember(member);
             });
             // $("#activeMembers").append('<li>Online Kisi sayisi'+ membersCount +'</li><li>'+userId+' | '+userInfo+'</li>');
+        });
+
+
+        channel.bind("pusher:member_removed", function (member) {
+            removeMember(member);
         });
 
         channel.bind("pusher:member_added", function (member) {
             addMember(member);
             //document.location.reload();
         });
-        channel.bind("pusher:member_removed", function (member) {
-            removeMember(member);
-
-            //document.location.reload();
-        });
-
         function removeMember(member) {
-            $(".friends ul li[data-user-id='" + member.id + "']").remove();
+          
+            $("ul[data-id=1] li[data-li-id='" + member.id + "']").remove();
+            $("#" + member.id).remove();
             membersCount = channel.members.count;
+            $("#UserCount").text(membersCount + ' Online');
+
         };
 
         function addMember(member) {
 
+            var deger = document.getElementById("#" + member.id);
+            
             if ($("#" + member.id).length == 0) {
                 membersCount = channel.members.count;
                 var enteredSite = new Date(member.info.timestamp);
@@ -91,7 +96,8 @@
                     timeOnSite = Math.round(timeOnSite / one_min);
                 }
 
-                var li = $("<li id='chat' onclick='PrivateChatAc(\"" + channel.members.me.id + "\",\"" + member.id + "\");' class='liChat' style='border-bottom: 2px solid aliceblue; font-size:medium; padding:4px;'>" + member.id + "&nbsp;(" + timeOnSite + "dk)</li>");
+                var li = $("<li data-li-id='" + member.id + "' onclick='PrivateChatAc(\"" + channel.members.me.id + "\",\"" + member.id + "\");' class='liChat' style='border-bottom: 2px solid aliceblue; font-size:medium; padding:4px;'>" + member.id + "&nbsp;(" + timeOnSite + "dk)</li>");
+
                 if (channel.members.me.id != member.id) {
                     CreateModal(channel.members.me.id, member.id);
                 }

@@ -23,14 +23,14 @@
     @Html.Telerik().StyleSheetRegistrar().DefaultGroup(group => group.Add("telerik.common.css").Add("telerik.windows7.css"))
 
     <script src="@Url.Content("~/Scripts/jquery-1.7.1.min.js")" type="text/javascript"></script>
-    
+
     <!--group.Add("telerik.common.css").Add("telerik.default.css").Add("telerik.office2010blue.css").Add("telerik.windows7.css")-->
     @RenderSection("script", false)
 
- <link href="../../Content/Pusher/pusher-chat-widget.css" rel="stylesheet" />
-@*<script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>*@
-<script type="text/javascript" src="http://js.pusher.com/2.0/pusher.min.js"></script>
-<script type="text/javascript" src="pusher-realtime-chat-widget/src/js/PusherChatWidget.js"></script>
+    <link href="../../Content/Pusher/pusher-chat-widget.css" rel="stylesheet" />
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+    <script type="text/javascript" src="http://js.pusher.com/2.0/pusher.min.js"></script>
+    <script type="text/javascript" src="pusher-realtime-chat-widget/src/js/PusherChatWidget.js"></script>
 
 
 
@@ -279,13 +279,15 @@
                 .Render();
     }
 
-    <div id="dvChatMenu" style="float: right; z-index: 99; position: fixed; right: 0px; top: 55px;">
+    @if (Request.IsAuthenticated)
+    {
+        <div id="dvChatMenu" style="float: right; z-index: 99; position: fixed; right: 0px; top: 55px;">
 
-        @if (Request.IsAuthenticated)
-        {
-            @Html.Partial("_OnlineUsers")
-        }
-    </div>
+              @Html.Partial("_OnlineUsers")
+
+        </div> 
+    }
+
     <div class="page">
         <div id="main">
             @RenderBody()
@@ -294,7 +296,6 @@
         </div>
     </div>
 
-    @*<div id="helpChats" style="color: #000; float: left; margin-top: -12px; border:1px solid black;">*@
     <div id="helpChats" style="color: #000; position: fixed; left: 0px; bottom: 0px;">
     </div>
 
