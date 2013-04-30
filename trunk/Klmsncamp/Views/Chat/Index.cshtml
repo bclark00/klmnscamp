@@ -1,10 +1,10 @@
 ﻿@{
     ViewBag.Title = "Index";
 }
-<link href="../../Content/Pusher/pusher-chat-widget.css" rel="stylesheet" />
+@*<link href="../../Content/Pusher/pusher-chat-widget.css" rel="stylesheet" />
 <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
 <script type="text/javascript" src="http://js.pusher.com/2.0/pusher.min.js"></script>
-<script type="text/javascript" src="pusher-realtime-chat-widget/src/js/PusherChatWidget.js"></script>
+<script type="text/javascript" src="pusher-realtime-chat-widget/src/js/PusherChatWidget.js"></script>*@
 
 
 @* <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
@@ -34,22 +34,22 @@
     </div>
 </div>
 
-<div id="bottomPanel" style="border: 1px solid silver; width: 150px;  float:right;">
+@*<div id="bottomPanel" style="border: 1px solid silver; width: 150px;  float:right;">
         <div id="UserCount" style="font-size: medium; background-color: #d4d4d4; text-align: center;"></div>
         <div class="friends" style="font-size: large; background-color: #e8e8e8; text-align: center;">
             <ul class="plainlist" style="font-size: medium;">
             </ul>
         </div>
-    </div>
+    </div>*@
 <script type="text/javascript">
 
     $(function () {
 
-        var pusher = new window.Pusher('0b7eeff567653e170094');
-        var socketId = pusher.connection.socket_id;
-        var channel = pusher.subscribe('presence-channel');
+        //var pusher = new window.Pusher('0b7eeff567653e170094');
+        //var socketId = pusher.connection.socket_id;
+        //var channel = pusher.subscribe('presence-channel');
 
-        var membersCount = channel.members.count;
+        //var membersCount = channel.members.count;
         channel.bind('message_received', function (data) {
             if (data.message != null) {
                 $("#messages").append('<li style="border-bottom:1px solid silver;font-size:medium; padding:6px;">' + '<b>' + data.user + ':</b>' + ' ' + data.message + ' &nbsp;&nbsp;&nbsp;&nbsp;' + '<b style="float:right;">' + data.timestamp + '</b>' + '</li>');
@@ -61,87 +61,87 @@
             $.post("/Chat/", { chatMessage: $('#chatMessage').val(), username: $('#messages').attr('itemid') });
         });
 
-        channel.bind('pusher:subscription_succeeded', function (members) {
-            var me = channel.members.me;
-            membersCount = channel.members.count;
-            var userId = me.id;
-            var userInfo = me.info;
+        //channel.bind('pusher:subscription_succeeded', function (members) {
+        //    var me = channel.members.me;
+        //    membersCount = channel.members.count;
+        //    var userId = me.id;
+        //    var userInfo = me.info;
 
-            channel.members.each(function (member) {
+        //    channel.members.each(function (member) {
 
-                addMember(member);
-            });
-            // $("#activeMembers").append('<li>Online Kisi sayisi'+ membersCount +'</li><li>'+userId+' | '+userInfo+'</li>');
-        });
+        //        addMember(member);
+        //    });
+        //    // $("#activeMembers").append('<li>Online Kisi sayisi'+ membersCount +'</li><li>'+userId+' | '+userInfo+'</li>');
+        //});
 
-        channel.bind("pusher:member_added", function (member) {
-            addMember(member);
-        });
-        channel.bind("pusher:member_removed", function (member) {
-            removeMember(member);
-        });
+        //channel.bind("pusher:member_added", function (member) {
+        //    addMember(member);
+        //});
+        //channel.bind("pusher:member_removed", function (member) {
+        //    removeMember(member);
+        //});
 
-        function removeMember(member) {
-            $(".friends ul li[data-user-id='" + member.id + "']").remove();
-            membersCount = channel.members.count;
-        };
+        //function removeMember(member) {
+        //    $(".friends ul li[data-user-id='" + member.id + "']").remove();
+        //    membersCount = channel.members.count;
+        //};
 
-        function addMember(member) {
+        //function addMember(member) {
 
-            if ($("#" + member.id).length == 0) {
-                membersCount = channel.members.count;
-                var enteredSite = new Date(member.info.timestamp);
+        //    if ($("#" + member.id).length == 0) {
+        //        membersCount = channel.members.count;
+        //        var enteredSite = new Date(member.info.timestamp);
 
-                var now = new Date();
-                var one_min = 60 * 1000;
-                var timeOnSite = now - enteredSite;
+        //        var now = new Date();
+        //        var one_min = 60 * 1000;
+        //        var timeOnSite = now - enteredSite;
 
-                if (timeOnSite < one_min + 1) {
-                    timeOnSite = 0;
-                }
-                else {
-                    timeOnSite = Math.round(timeOnSite / one_min);
-                }
+        //        if (timeOnSite < one_min + 1) {
+        //            timeOnSite = 0;
+        //        }
+        //        else {
+        //            timeOnSite = Math.round(timeOnSite / one_min);
+        //        }
 
-                var li = $("<li id='chat' onclick='PrivateChatAc(\"" + channel.members.me.id + "\",\"" + member.id + "\");' class='liChat' style='border-bottom: 2px solid aliceblue; font-size:medium; padding:4px;'>" + member.id + "&nbsp;(" + timeOnSite + "dk)</li>");
-                if (channel.members.me.id != member.id) {
-                    CreateModal(channel.members.me.id, member.id);
-                }
+        //        var li = $("<li id='chat' onclick='PrivateChatAc(\"" + channel.members.me.id + "\",\"" + member.id + "\");' class='liChat' style='border-bottom: 2px solid aliceblue; font-size:medium; padding:4px;'>" + member.id + "&nbsp;(" + timeOnSite + "dk)</li>");
+        //        if (channel.members.me.id != member.id) {
+        //            CreateModal(channel.members.me.id, member.id);
+        //        }
 
-                $(".friends ul").append(li);
-                $("#UserCount").text(membersCount + ' Online');
-            }
-        };
+        //        $(".friends ul").append(li);
+        //        $("#UserCount").text(membersCount + ' Online');
+        //    }
+        //};
     });
 
 
-    function PrivateChatAc(username, targetuserName) {
+    //function PrivateChatAc(username, targetuserName) {
 
-        if ($("#" + targetuserName).length > 0) {
-            $("#" + targetuserName).fadeIn(400);
-        }
-        else {
+    //    if ($("#" + targetuserName).length > 0) {
+    //        $("#" + targetuserName).fadeIn(400);
+    //    }
+    //    else {
 
-            if (username != targetuserName) {
-                CreateModal(username, targetuserName);
-            }
-        }
-    }
-    function PrivateChatKapat(user) {
-        $("#" + user).fadeOut(400);
-    }
+    //        if (username != targetuserName) {
+    //            CreateModal(username, targetuserName);
+    //        }
+    //    }
+    //}
+    //function PrivateChatKapat(user) {
+    //    $("#" + user).fadeOut(400);
+    //}
 
-    function CreateModal(username, targetUsername) {
-        $.ajax({
-            url: '/Chat/_CreatePrivateChatModal',
-            data: 'fromUser=' + username + '&toUser=' + targetUsername,
-            type: "GET",
-            async: false,
-            success: function (cevap) {
+    //function CreateModal(username, targetUsername) {
+    //    $.ajax({
+    //        url: '/Chat/_CreatePrivateChatModal',
+    //        data: 'fromUser=' + username + '&toUser=' + targetUsername,
+    //        type: "GET",
+    //        async: false,
+    //        success: function (cevap) {
 
-                $("#helpChats").append(cevap);
-            }
-        });
-        return false;
-    }
+    //            $("#helpChats").append(cevap);
+    //        }
+    //    });
+    //    return false;
+    //}
 </script>

@@ -247,5 +247,10 @@ namespace Klmsncamp.Controllers
 			db.Dispose();
 			base.Dispose(disposing);
 		}
+
+        public ActionResult OnlineUser()
+        {
+            return PartialView("_OnlineUsers");
+        }
 	}
 }
