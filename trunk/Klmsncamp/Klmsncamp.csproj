@@ -1094,15 +1094,6 @@
     <Content Include="Scripts\telerik.treeview.min.js" />
     <Content Include="Scripts\telerik.upload.min.js" />
     <Content Include="Scripts\telerik.window.min.js" />
-    <Content Include="Web.config">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="Web.Debug.config">
-      <DependentUpon>Web.config</DependentUpon>
-    </Content>
-    <Content Include="Web.Release.config">
-      <DependentUpon>Web.config</DependentUpon>
-    </Content>
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
@@ -1253,6 +1244,13 @@
     <Content Include="Views\Chat\Index.cshtml" />
     <Content Include="Views\Chat\_CreatePrivateChatModal.cshtml" />
     <Content Include="Views\Shared\_OnlineUsers.cshtml" />
+    <Content Include="Web.config" />
+    <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_GlobalResources\EditorLocalization.en-US.resx">
