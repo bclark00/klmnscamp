@@ -1,345 +1,39 @@
-C:\Users\MUSAF\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\Klmsncamp.dll
-C:\Users\MUSAF\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\Klmsncamp.pdb
-C:\Users\MUSAF\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\EntityFramework.dll
-C:\Users\MUSAF\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\MvcPaging.dll
-C:\Users\MUSAF\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\Newtonsoft.Json.dll
-C:\Users\MUSAF\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\NPOI.dll
-C:\Users\MUSAF\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\PagedList.dll
-C:\Users\MUSAF\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\PagedList.Mvc.dll
-C:\Users\MUSAF\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\Telerik.Web.Mvc.dll
-C:\Users\MUSAF\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\EntityFramework.xml
-C:\Users\MUSAF\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\Newtonsoft.Json.pdb
-C:\Users\MUSAF\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\Newtonsoft.Json.xml
-C:\Users\MUSAF\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\PagedList.xml
-C:\Users\MUSAF\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\PagedList.Mvc.xml
-C:\Users\MUSAF\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\Telerik.Web.Mvc.xml
-C:\Users\MUSAF\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\obj\Debug\ResolveAssemblyReference.cache
-C:\Users\MUSAF\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\obj\Debug\Klmsncamp.dll
-C:\Users\MUSAF\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\obj\Debug\Klmsncamp.pdb
-C:\Users\sorhan\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\Klmsncamp.dll
-C:\Users\sorhan\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\Klmsncamp.pdb
-C:\Users\sorhan\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\CrystalDecisions.CrystalReports.Engine.dll
-C:\Users\sorhan\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\CrystalDecisions.ReportSource.dll
-C:\Users\sorhan\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\CrystalDecisions.Shared.dll
-C:\Users\sorhan\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\EntityFramework.dll
-C:\Users\sorhan\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\Microsoft.CSharp.dll
-C:\Users\sorhan\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\Microsoft.ReportViewer.Common.dll
-C:\Users\sorhan\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\Microsoft.ReportViewer.WebForms.dll
-C:\Users\sorhan\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\MvcPaging.dll
-C:\Users\sorhan\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\Newtonsoft.Json.dll
-C:\Users\sorhan\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\PagedList.dll
-C:\Users\sorhan\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\PagedList.Mvc.dll
-C:\Users\sorhan\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\System.ComponentModel.DataAnnotations.dll
-C:\Users\sorhan\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\System.Configuration.dll
-C:\Users\sorhan\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\System.Data.DataSetExtensions.dll
-C:\Users\sorhan\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\System.Data.dll
-C:\Users\sorhan\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\System.Data.Entity.dll
-C:\Users\sorhan\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\System.dll
-C:\Users\sorhan\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\System.Drawing.dll
-C:\Users\sorhan\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\System.EnterpriseServices.dll
-C:\Users\sorhan\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\System.Runtime.Serialization.dll
-C:\Users\sorhan\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\System.Security.dll
-C:\Users\sorhan\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\System.Web.Abstractions.dll
-C:\Users\sorhan\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\System.Web.ApplicationServices.dll
-C:\Users\sorhan\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\System.Web.dll
-C:\Users\sorhan\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\System.Web.DynamicData.dll
-C:\Users\sorhan\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\System.Web.Entity.dll
-C:\Users\sorhan\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\System.Web.Extensions.dll
-C:\Users\sorhan\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\System.Web.Helpers.dll
-C:\Users\sorhan\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\System.Web.Mvc.dll
-C:\Users\sorhan\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\System.Web.Routing.dll
-C:\Users\sorhan\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\System.Web.Services.dll
-C:\Users\sorhan\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\System.Web.WebPages.dll
-C:\Users\sorhan\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\System.Xml.dll
-C:\Users\sorhan\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\System.Xml.Linq.dll
-C:\Users\sorhan\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\EntityFramework.xml
-C:\Users\sorhan\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\Microsoft.ReportViewer.WebForms.xml
-C:\Users\sorhan\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\Newtonsoft.Json.pdb
-C:\Users\sorhan\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\Newtonsoft.Json.xml
-C:\Users\sorhan\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\PagedList.xml
-C:\Users\sorhan\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\PagedList.Mvc.xml
-C:\Users\sorhan\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\System.Web.Mvc.xml
-C:\Users\sorhan\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\System.Web.WebPages.xml
-C:\Users\sorhan\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\System.Web.Helpers.xml
-C:\Users\sorhan\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\obj\Debug\ResolveAssemblyReference.cache
-C:\Users\sorhan\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\obj\Debug\Klmsncamp.dll
-C:\Users\sorhan\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\obj\Debug\Klmsncamp.pdb
-C:\Users\SONY\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\Klmsncamp.dll
-C:\Users\SONY\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\Klmsncamp.pdb
-C:\Users\SONY\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\CrystalDecisions.CrystalReports.Engine.dll
-C:\Users\SONY\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\CrystalDecisions.ReportSource.dll
-C:\Users\SONY\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\CrystalDecisions.Shared.dll
-C:\Users\SONY\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\EntityFramework.dll
-C:\Users\SONY\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\Microsoft.CSharp.dll
-C:\Users\SONY\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\Microsoft.ReportViewer.Common.dll
-C:\Users\SONY\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\Microsoft.ReportViewer.WebForms.dll
-C:\Users\SONY\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\MvcPaging.dll
-C:\Users\SONY\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\Newtonsoft.Json.dll
-C:\Users\SONY\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\PagedList.dll
-C:\Users\SONY\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\PagedList.Mvc.dll
-C:\Users\SONY\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\System.ComponentModel.DataAnnotations.dll
-C:\Users\SONY\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\System.Configuration.dll
-C:\Users\SONY\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\System.Data.DataSetExtensions.dll
-C:\Users\SONY\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\System.Data.dll
-C:\Users\SONY\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\System.Data.Entity.dll
-C:\Users\SONY\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\System.dll
-C:\Users\SONY\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\System.Drawing.dll
-C:\Users\SONY\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\System.EnterpriseServices.dll
-C:\Users\SONY\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\System.Runtime.Serialization.dll
-C:\Users\SONY\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\System.Security.dll
-C:\Users\SONY\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\System.Web.Abstractions.dll
-C:\Users\SONY\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\System.Web.ApplicationServices.dll
-C:\Users\SONY\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\System.Web.dll
-C:\Users\SONY\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\System.Web.DynamicData.dll
-C:\Users\SONY\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\System.Web.Entity.dll
-C:\Users\SONY\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\System.Web.Extensions.dll
-C:\Users\SONY\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\System.Web.Helpers.dll
-C:\Users\SONY\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\System.Web.Mvc.dll
-C:\Users\SONY\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\System.Web.Routing.dll
-C:\Users\SONY\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\System.Web.Services.dll
-C:\Users\SONY\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\System.Web.WebPages.dll
-C:\Users\SONY\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\System.Xml.dll
-C:\Users\SONY\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\System.Xml.Linq.dll
-C:\Users\SONY\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\EntityFramework.xml
-C:\Users\SONY\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\Microsoft.ReportViewer.WebForms.xml
-C:\Users\SONY\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\Newtonsoft.Json.pdb
-C:\Users\SONY\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\Newtonsoft.Json.xml
-C:\Users\SONY\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\PagedList.xml
-C:\Users\SONY\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\PagedList.Mvc.xml
-C:\Users\SONY\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\System.Web.Mvc.xml
-C:\Users\SONY\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\System.Web.WebPages.xml
-C:\Users\SONY\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\System.Web.Helpers.xml
-C:\Users\SONY\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\obj\Debug\ResolveAssemblyReference.cache
-C:\Users\SONY\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\obj\Debug\Klmsncamp.dll
-C:\Users\SONY\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\obj\Debug\Klmsncamp.pdb
-C:\Users\bimmm\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\Klmsncamp.dll
-C:\Users\bimmm\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\Klmsncamp.pdb
-C:\Users\bimmm\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\CrystalDecisions.CrystalReports.Engine.dll
-C:\Users\bimmm\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\CrystalDecisions.ReportSource.dll
-C:\Users\bimmm\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\CrystalDecisions.Shared.dll
-C:\Users\bimmm\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\EntityFramework.dll
-C:\Users\bimmm\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\Microsoft.CSharp.dll
-C:\Users\bimmm\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\Microsoft.ReportViewer.Common.dll
-C:\Users\bimmm\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\Microsoft.ReportViewer.WebForms.dll
-C:\Users\bimmm\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\MvcPaging.dll
-C:\Users\bimmm\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\Newtonsoft.Json.dll
-C:\Users\bimmm\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\PagedList.dll
-C:\Users\bimmm\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\PagedList.Mvc.dll
-C:\Users\bimmm\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\System.ComponentModel.DataAnnotations.dll
-C:\Users\bimmm\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\System.Configuration.dll
-C:\Users\bimmm\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\System.Data.DataSetExtensions.dll
-C:\Users\bimmm\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\System.Data.dll
-C:\Users\bimmm\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\System.Data.Entity.dll
-C:\Users\bimmm\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\System.dll
-C:\Users\bimmm\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\System.Drawing.dll
-C:\Users\bimmm\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\System.EnterpriseServices.dll
-C:\Users\bimmm\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\System.Runtime.Serialization.dll
-C:\Users\bimmm\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\System.Security.dll
-C:\Users\bimmm\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\System.Web.Abstractions.dll
-C:\Users\bimmm\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\System.Web.ApplicationServices.dll
-C:\Users\bimmm\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\System.Web.dll
-C:\Users\bimmm\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\System.Web.DynamicData.dll
-C:\Users\bimmm\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\System.Web.Entity.dll
-C:\Users\bimmm\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\System.Web.Extensions.dll
-C:\Users\bimmm\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\System.Web.Helpers.dll
-C:\Users\bimmm\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\System.Web.Mvc.dll
-C:\Users\bimmm\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\System.Web.Routing.dll
-C:\Users\bimmm\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\System.Web.Services.dll
-C:\Users\bimmm\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\System.Web.WebPages.dll
-C:\Users\bimmm\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\System.Xml.dll
-C:\Users\bimmm\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\System.Xml.Linq.dll
-C:\Users\bimmm\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\EntityFramework.xml
-C:\Users\bimmm\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\Microsoft.ReportViewer.WebForms.xml
-C:\Users\bimmm\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\Newtonsoft.Json.pdb
-C:\Users\bimmm\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\Newtonsoft.Json.xml
-C:\Users\bimmm\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\PagedList.xml
-C:\Users\bimmm\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\PagedList.Mvc.xml
-C:\Users\bimmm\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\System.Web.Mvc.xml
-C:\Users\bimmm\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\System.Web.WebPages.xml
-C:\Users\bimmm\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\System.Web.Helpers.xml
-C:\Users\bimmm\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\obj\Debug\ResolveAssemblyReference.cache
-C:\Users\bimmm\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\obj\Debug\Klmsncamp.dll
-C:\Users\bimmm\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\obj\Debug\Klmsncamp.pdb
-C:\Users\Hp\Documents\Visual Studio 2010\Projects\Project2Klmsan\Klmsncamp\bin\Klmsncamp.dll
-C:\Users\Hp\Documents\Visual Studio 2010\Projects\Project2Klmsan\Klmsncamp\bin\Klmsncamp.pdb
-C:\Users\Hp\Documents\Visual Studio 2010\Projects\Project2Klmsan\Klmsncamp\bin\CrystalDecisions.CrystalReports.Engine.dll
-C:\Users\Hp\Documents\Visual Studio 2010\Projects\Project2Klmsan\Klmsncamp\bin\CrystalDecisions.ReportSource.dll
-C:\Users\Hp\Documents\Visual Studio 2010\Projects\Project2Klmsan\Klmsncamp\bin\CrystalDecisions.Shared.dll
-C:\Users\Hp\Documents\Visual Studio 2010\Projects\Project2Klmsan\Klmsncamp\bin\EntityFramework.dll
-C:\Users\Hp\Documents\Visual Studio 2010\Projects\Project2Klmsan\Klmsncamp\bin\Microsoft.CSharp.dll
-C:\Users\Hp\Documents\Visual Studio 2010\Projects\Project2Klmsan\Klmsncamp\bin\Microsoft.ReportViewer.Common.dll
-C:\Users\Hp\Documents\Visual Studio 2010\Projects\Project2Klmsan\Klmsncamp\bin\Microsoft.ReportViewer.WebForms.dll
-C:\Users\Hp\Documents\Visual Studio 2010\Projects\Project2Klmsan\Klmsncamp\bin\Newtonsoft.Json.dll
-C:\Users\Hp\Documents\Visual Studio 2010\Projects\Project2Klmsan\Klmsncamp\bin\System.ComponentModel.DataAnnotations.dll
-C:\Users\Hp\Documents\Visual Studio 2010\Projects\Project2Klmsan\Klmsncamp\bin\System.Configuration.dll
-C:\Users\Hp\Documents\Visual Studio 2010\Projects\Project2Klmsan\Klmsncamp\bin\System.Data.DataSetExtensions.dll
-C:\Users\Hp\Documents\Visual Studio 2010\Projects\Project2Klmsan\Klmsncamp\bin\System.Data.dll
-C:\Users\Hp\Documents\Visual Studio 2010\Projects\Project2Klmsan\Klmsncamp\bin\System.Data.Entity.dll
-C:\Users\Hp\Documents\Visual Studio 2010\Projects\Project2Klmsan\Klmsncamp\bin\System.dll
-C:\Users\Hp\Documents\Visual Studio 2010\Projects\Project2Klmsan\Klmsncamp\bin\System.Drawing.dll
-C:\Users\Hp\Documents\Visual Studio 2010\Projects\Project2Klmsan\Klmsncamp\bin\System.EnterpriseServices.dll
-C:\Users\Hp\Documents\Visual Studio 2010\Projects\Project2Klmsan\Klmsncamp\bin\System.Runtime.Serialization.dll
-C:\Users\Hp\Documents\Visual Studio 2010\Projects\Project2Klmsan\Klmsncamp\bin\System.Security.dll
-C:\Users\Hp\Documents\Visual Studio 2010\Projects\Project2Klmsan\Klmsncamp\bin\System.Web.Abstractions.dll
-C:\Users\Hp\Documents\Visual Studio 2010\Projects\Project2Klmsan\Klmsncamp\bin\System.Web.ApplicationServices.dll
-C:\Users\Hp\Documents\Visual Studio 2010\Projects\Project2Klmsan\Klmsncamp\bin\System.Web.dll
-C:\Users\Hp\Documents\Visual Studio 2010\Projects\Project2Klmsan\Klmsncamp\bin\System.Web.DynamicData.dll
-C:\Users\Hp\Documents\Visual Studio 2010\Projects\Project2Klmsan\Klmsncamp\bin\System.Web.Entity.dll
-C:\Users\Hp\Documents\Visual Studio 2010\Projects\Project2Klmsan\Klmsncamp\bin\System.Web.Extensions.dll
-C:\Users\Hp\Documents\Visual Studio 2010\Projects\Project2Klmsan\Klmsncamp\bin\System.Web.Helpers.dll
-C:\Users\Hp\Documents\Visual Studio 2010\Projects\Project2Klmsan\Klmsncamp\bin\System.Web.Mvc.dll
-C:\Users\Hp\Documents\Visual Studio 2010\Projects\Project2Klmsan\Klmsncamp\bin\System.Web.Routing.dll
-C:\Users\Hp\Documents\Visual Studio 2010\Projects\Project2Klmsan\Klmsncamp\bin\System.Web.Services.dll
-C:\Users\Hp\Documents\Visual Studio 2010\Projects\Project2Klmsan\Klmsncamp\bin\System.Web.WebPages.dll
-C:\Users\Hp\Documents\Visual Studio 2010\Projects\Project2Klmsan\Klmsncamp\bin\System.Xml.dll
-C:\Users\Hp\Documents\Visual Studio 2010\Projects\Project2Klmsan\Klmsncamp\bin\System.Xml.Linq.dll
-C:\Users\Hp\Documents\Visual Studio 2010\Projects\Project2Klmsan\Klmsncamp\bin\Telerik.Web.Mvc.dll
-C:\Users\Hp\Documents\Visual Studio 2010\Projects\Project2Klmsan\Klmsncamp\bin\EntityFramework.xml
-C:\Users\Hp\Documents\Visual Studio 2010\Projects\Project2Klmsan\Klmsncamp\bin\Microsoft.ReportViewer.WebForms.xml
-C:\Users\Hp\Documents\Visual Studio 2010\Projects\Project2Klmsan\Klmsncamp\bin\Newtonsoft.Json.pdb
-C:\Users\Hp\Documents\Visual Studio 2010\Projects\Project2Klmsan\Klmsncamp\bin\Newtonsoft.Json.xml
-C:\Users\Hp\Documents\Visual Studio 2010\Projects\Project2Klmsan\Klmsncamp\bin\System.Web.Mvc.xml
-C:\Users\Hp\Documents\Visual Studio 2010\Projects\Project2Klmsan\Klmsncamp\bin\System.Web.WebPages.xml
-C:\Users\Hp\Documents\Visual Studio 2010\Projects\Project2Klmsan\Klmsncamp\bin\System.Web.Helpers.xml
-C:\Users\Hp\Documents\Visual Studio 2010\Projects\Project2Klmsan\Klmsncamp\obj\Debug\Klmsncamp.dll
-C:\Users\Hp\Documents\Visual Studio 2010\Projects\Project2Klmsan\Klmsncamp\obj\Debug\Klmsncamp.pdb
-<<<<<<< .mine
-C:\Users\Hp\Documents\Visual Studio 2010\Projects\Project2Klmsan\Klmsncamp\bin\Telerik.Web.Mvc.xml
-C:\Users\Hp\Documents\Visual Studio 2010\Projects\Project2Klmsan\Klmsncamp\bin\Telerik.Web.Mvc.dll
-C:\Users\Hp\Documents\Visual Studio 2010\Projects\Project2Klmsan\Klmsncamp\obj\Debug\Klmsncamp.csprojResolveAssemblyReference.cache
-C:\Users\User\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\Klmsncamp.dll
-C:\Users\User\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\Klmsncamp.pdb
-C:\Users\User\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\CrystalDecisions.CrystalReports.Engine.dll
-C:\Users\User\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\CrystalDecisions.ReportSource.dll
-C:\Users\User\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\CrystalDecisions.Shared.dll
-C:\Users\User\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\EntityFramework.dll
-C:\Users\User\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\Microsoft.CSharp.dll
-C:\Users\User\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\Microsoft.ReportViewer.Common.dll
-C:\Users\User\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\Microsoft.ReportViewer.WebForms.dll
-C:\Users\User\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\Newtonsoft.Json.dll
-C:\Users\User\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\PagedList.dll
-C:\Users\User\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\System.ComponentModel.DataAnnotations.dll
-C:\Users\User\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\System.Configuration.dll
-C:\Users\User\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\System.Data.DataSetExtensions.dll
-C:\Users\User\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\System.Data.dll
-C:\Users\User\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\System.Data.Entity.dll
-C:\Users\User\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\System.dll
-C:\Users\User\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\System.Drawing.dll
-C:\Users\User\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\System.EnterpriseServices.dll
-C:\Users\User\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\System.Runtime.Serialization.dll
-C:\Users\User\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\System.Security.dll
-C:\Users\User\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\System.Web.Abstractions.dll
-C:\Users\User\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\System.Web.ApplicationServices.dll
-C:\Users\User\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\System.Web.dll
-C:\Users\User\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\System.Web.DynamicData.dll
-C:\Users\User\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\System.Web.Entity.dll
-C:\Users\User\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\System.Web.Extensions.dll
-C:\Users\User\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\System.Web.Helpers.dll
-C:\Users\User\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\System.Web.Mvc.dll
-C:\Users\User\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\System.Web.Routing.dll
-C:\Users\User\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\System.Web.Services.dll
-C:\Users\User\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\System.Web.WebPages.dll
-C:\Users\User\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\System.Xml.dll
-C:\Users\User\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\System.Xml.Linq.dll
-C:\Users\User\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\EntityFramework.xml
-C:\Users\User\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\Microsoft.ReportViewer.WebForms.xml
-C:\Users\User\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\Newtonsoft.Json.pdb
-C:\Users\User\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\Newtonsoft.Json.xml
-C:\Users\User\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\PagedList.xml
-C:\Users\User\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\System.Web.Mvc.xml
-C:\Users\User\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\System.Web.WebPages.xml
-C:\Users\User\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\System.Web.Helpers.xml
-C:\Users\User\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\obj\Debug\Klmsncamp.csprojResolveAssemblyReference.cache
-C:\Users\User\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\obj\Debug\Klmsncamp.dll
-C:\Users\User\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\obj\Debug\Klmsncamp.pdb
-=======
-C:\Users\Hp\Documents\Visual Studio 2010\Projects\Project2Klmsan\Klmsncamp\bin\PusherRESTDotNet.dll
-C:\Users\Hp\Desktop\Project2KlmsanYEDEK\Klmsncamp\bin\Klmsncamp.dll
-C:\Users\Hp\Desktop\Project2KlmsanYEDEK\Klmsncamp\bin\Klmsncamp.pdb
-C:\Users\Hp\Desktop\Project2KlmsanYEDEK\Klmsncamp\bin\CrystalDecisions.CrystalReports.Engine.dll
-C:\Users\Hp\Desktop\Project2KlmsanYEDEK\Klmsncamp\bin\CrystalDecisions.ReportSource.dll
-C:\Users\Hp\Desktop\Project2KlmsanYEDEK\Klmsncamp\bin\CrystalDecisions.Shared.dll
-C:\Users\Hp\Desktop\Project2KlmsanYEDEK\Klmsncamp\bin\EntityFramework.dll
-C:\Users\Hp\Desktop\Project2KlmsanYEDEK\Klmsncamp\bin\Microsoft.CSharp.dll
-C:\Users\Hp\Desktop\Project2KlmsanYEDEK\Klmsncamp\bin\Microsoft.ReportViewer.Common.dll
-C:\Users\Hp\Desktop\Project2KlmsanYEDEK\Klmsncamp\bin\Microsoft.ReportViewer.WebForms.dll
-C:\Users\Hp\Desktop\Project2KlmsanYEDEK\Klmsncamp\bin\Newtonsoft.Json.dll
-C:\Users\Hp\Desktop\Project2KlmsanYEDEK\Klmsncamp\bin\System.ComponentModel.DataAnnotations.dll
-C:\Users\Hp\Desktop\Project2KlmsanYEDEK\Klmsncamp\bin\System.Configuration.dll
-C:\Users\Hp\Desktop\Project2KlmsanYEDEK\Klmsncamp\bin\System.Data.DataSetExtensions.dll
-C:\Users\Hp\Desktop\Project2KlmsanYEDEK\Klmsncamp\bin\System.Data.dll
-C:\Users\Hp\Desktop\Project2KlmsanYEDEK\Klmsncamp\bin\System.Data.Entity.dll
-C:\Users\Hp\Desktop\Project2KlmsanYEDEK\Klmsncamp\bin\System.dll
-C:\Users\Hp\Desktop\Project2KlmsanYEDEK\Klmsncamp\bin\System.Drawing.dll
-C:\Users\Hp\Desktop\Project2KlmsanYEDEK\Klmsncamp\bin\System.EnterpriseServices.dll
-C:\Users\Hp\Desktop\Project2KlmsanYEDEK\Klmsncamp\bin\System.Runtime.Serialization.dll
-C:\Users\Hp\Desktop\Project2KlmsanYEDEK\Klmsncamp\bin\System.Security.dll
-C:\Users\Hp\Desktop\Project2KlmsanYEDEK\Klmsncamp\bin\System.Web.Abstractions.dll
-C:\Users\Hp\Desktop\Project2KlmsanYEDEK\Klmsncamp\bin\System.Web.ApplicationServices.dll
-C:\Users\Hp\Desktop\Project2KlmsanYEDEK\Klmsncamp\bin\System.Web.dll
-C:\Users\Hp\Desktop\Project2KlmsanYEDEK\Klmsncamp\bin\System.Web.DynamicData.dll
-C:\Users\Hp\Desktop\Project2KlmsanYEDEK\Klmsncamp\bin\System.Web.Entity.dll
-C:\Users\Hp\Desktop\Project2KlmsanYEDEK\Klmsncamp\bin\System.Web.Extensions.dll
-C:\Users\Hp\Desktop\Project2KlmsanYEDEK\Klmsncamp\bin\System.Web.Helpers.dll
-C:\Users\Hp\Desktop\Project2KlmsanYEDEK\Klmsncamp\bin\System.Web.Mvc.dll
-C:\Users\Hp\Desktop\Project2KlmsanYEDEK\Klmsncamp\bin\System.Web.Routing.dll
-C:\Users\Hp\Desktop\Project2KlmsanYEDEK\Klmsncamp\bin\System.Web.Services.dll
-C:\Users\Hp\Desktop\Project2KlmsanYEDEK\Klmsncamp\bin\System.Web.WebPages.dll
-C:\Users\Hp\Desktop\Project2KlmsanYEDEK\Klmsncamp\bin\System.Xml.dll
-C:\Users\Hp\Desktop\Project2KlmsanYEDEK\Klmsncamp\bin\System.Xml.Linq.dll
-C:\Users\Hp\Desktop\Project2KlmsanYEDEK\Klmsncamp\bin\EntityFramework.xml
-C:\Users\Hp\Desktop\Project2KlmsanYEDEK\Klmsncamp\bin\Microsoft.ReportViewer.WebForms.xml
-C:\Users\Hp\Desktop\Project2KlmsanYEDEK\Klmsncamp\bin\Newtonsoft.Json.pdb
-C:\Users\Hp\Desktop\Project2KlmsanYEDEK\Klmsncamp\bin\Newtonsoft.Json.xml
-C:\Users\Hp\Desktop\Project2KlmsanYEDEK\Klmsncamp\bin\System.Web.Mvc.xml
-C:\Users\Hp\Desktop\Project2KlmsanYEDEK\Klmsncamp\bin\System.Web.WebPages.xml
-C:\Users\Hp\Desktop\Project2KlmsanYEDEK\Klmsncamp\bin\System.Web.Helpers.xml
-C:\Users\Hp\Desktop\Project2KlmsanYEDEK\Klmsncamp\obj\Debug\Klmsncamp.dll
-C:\Users\Hp\Desktop\Project2KlmsanYEDEK\Klmsncamp\obj\Debug\Klmsncamp.pdb
-C:\Users\Hp\Desktop\Project2KlmsanYEDEK\Klmsncamp\obj\Debug\Klmsncamp.csprojResolveAssemblyReference.cache
-C:\Users\Hp\Desktop\Project2KlmsanYEDEK - Copy\Klmsncamp\bin\Klmsncamp.dll
-C:\Users\Hp\Desktop\Project2KlmsanYEDEK - Copy\Klmsncamp\bin\Klmsncamp.pdb
-C:\Users\Hp\Desktop\Project2KlmsanYEDEK - Copy\Klmsncamp\bin\CrystalDecisions.CrystalReports.Engine.dll
-C:\Users\Hp\Desktop\Project2KlmsanYEDEK - Copy\Klmsncamp\bin\CrystalDecisions.ReportSource.dll
-C:\Users\Hp\Desktop\Project2KlmsanYEDEK - Copy\Klmsncamp\bin\CrystalDecisions.Shared.dll
-C:\Users\Hp\Desktop\Project2KlmsanYEDEK - Copy\Klmsncamp\bin\EntityFramework.dll
-C:\Users\Hp\Desktop\Project2KlmsanYEDEK - Copy\Klmsncamp\bin\Microsoft.CSharp.dll
-C:\Users\Hp\Desktop\Project2KlmsanYEDEK - Copy\Klmsncamp\bin\Microsoft.ReportViewer.Common.dll
-C:\Users\Hp\Desktop\Project2KlmsanYEDEK - Copy\Klmsncamp\bin\Microsoft.ReportViewer.WebForms.dll
-C:\Users\Hp\Desktop\Project2KlmsanYEDEK - Copy\Klmsncamp\bin\Newtonsoft.Json.dll
-C:\Users\Hp\Desktop\Project2KlmsanYEDEK - Copy\Klmsncamp\bin\System.ComponentModel.DataAnnotations.dll
-C:\Users\Hp\Desktop\Project2KlmsanYEDEK - Copy\Klmsncamp\bin\System.Configuration.dll
-C:\Users\Hp\Desktop\Project2KlmsanYEDEK - Copy\Klmsncamp\bin\System.Data.DataSetExtensions.dll
-C:\Users\Hp\Desktop\Project2KlmsanYEDEK - Copy\Klmsncamp\bin\System.Data.dll
-C:\Users\Hp\Desktop\Project2KlmsanYEDEK - Copy\Klmsncamp\bin\System.Data.Entity.dll
-C:\Users\Hp\Desktop\Project2KlmsanYEDEK - Copy\Klmsncamp\bin\System.dll
-C:\Users\Hp\Desktop\Project2KlmsanYEDEK - Copy\Klmsncamp\bin\System.Drawing.dll
-C:\Users\Hp\Desktop\Project2KlmsanYEDEK - Copy\Klmsncamp\bin\System.EnterpriseServices.dll
-C:\Users\Hp\Desktop\Project2KlmsanYEDEK - Copy\Klmsncamp\bin\System.Runtime.Serialization.dll
-C:\Users\Hp\Desktop\Project2KlmsanYEDEK - Copy\Klmsncamp\bin\System.Security.dll
-C:\Users\Hp\Desktop\Project2KlmsanYEDEK - Copy\Klmsncamp\bin\System.Web.Abstractions.dll
-C:\Users\Hp\Desktop\Project2KlmsanYEDEK - Copy\Klmsncamp\bin\System.Web.ApplicationServices.dll
-C:\Users\Hp\Desktop\Project2KlmsanYEDEK - Copy\Klmsncamp\bin\System.Web.dll
-C:\Users\Hp\Desktop\Project2KlmsanYEDEK - Copy\Klmsncamp\bin\System.Web.DynamicData.dll
-C:\Users\Hp\Desktop\Project2KlmsanYEDEK - Copy\Klmsncamp\bin\System.Web.Entity.dll
-C:\Users\Hp\Desktop\Project2KlmsanYEDEK - Copy\Klmsncamp\bin\System.Web.Extensions.dll
-C:\Users\Hp\Desktop\Project2KlmsanYEDEK - Copy\Klmsncamp\bin\System.Web.Helpers.dll
-C:\Users\Hp\Desktop\Project2KlmsanYEDEK - Copy\Klmsncamp\bin\System.Web.Mvc.dll
-C:\Users\Hp\Desktop\Project2KlmsanYEDEK - Copy\Klmsncamp\bin\System.Web.Routing.dll
-C:\Users\Hp\Desktop\Project2KlmsanYEDEK - Copy\Klmsncamp\bin\System.Web.Services.dll
-C:\Users\Hp\Desktop\Project2KlmsanYEDEK - Copy\Klmsncamp\bin\System.Web.WebPages.dll
-C:\Users\Hp\Desktop\Project2KlmsanYEDEK - Copy\Klmsncamp\bin\System.Xml.dll
-C:\Users\Hp\Desktop\Project2KlmsanYEDEK - Copy\Klmsncamp\bin\System.Xml.Linq.dll
-C:\Users\Hp\Desktop\Project2KlmsanYEDEK - Copy\Klmsncamp\bin\EntityFramework.xml
-C:\Users\Hp\Desktop\Project2KlmsanYEDEK - Copy\Klmsncamp\bin\Microsoft.ReportViewer.WebForms.xml
-C:\Users\Hp\Desktop\Project2KlmsanYEDEK - Copy\Klmsncamp\bin\Newtonsoft.Json.xml
-C:\Users\Hp\Desktop\Project2KlmsanYEDEK - Copy\Klmsncamp\bin\System.Web.Mvc.xml
-C:\Users\Hp\Desktop\Project2KlmsanYEDEK - Copy\Klmsncamp\bin\System.Web.WebPages.xml
-C:\Users\Hp\Desktop\Project2KlmsanYEDEK - Copy\Klmsncamp\bin\System.Web.Helpers.xml
-C:\Users\Hp\Desktop\Project2KlmsanYEDEK - Copy\Klmsncamp\obj\Debug\Klmsncamp.dll
-C:\Users\Hp\Desktop\Project2KlmsanYEDEK - Copy\Klmsncamp\obj\Debug\Klmsncamp.pdb
-C:\Users\Hp\Desktop\Project2KlmsanYEDEK - Copy\Klmsncamp\bin\PusherClientDotNet.dll
-C:\Users\Hp\Desktop\Project2KlmsanYEDEK - Copy\Klmsncamp\bin\PusherRESTDotNet.dll
-C:\Users\Hp\Desktop\Project2KlmsanYEDEK - Copy\Klmsncamp\bin\WebSocket4Net.dll
-C:\Users\Hp\Desktop\Project2KlmsanYEDEK - Copy\Klmsncamp\obj\Debug\Klmsncamp.csprojResolveAssemblyReference.cache
->>>>>>> .r94
+c:\users\User\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\Klmsncamp.dll
+c:\users\User\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\Klmsncamp.pdb
+c:\users\User\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\CrystalDecisions.CrystalReports.Engine.dll
+c:\users\User\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\CrystalDecisions.ReportSource.dll
+c:\users\User\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\CrystalDecisions.Shared.dll
+c:\users\User\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\EntityFramework.dll
+c:\users\User\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\Microsoft.CSharp.dll
+c:\users\User\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\PagedList.dll
+c:\users\User\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\System.ComponentModel.DataAnnotations.dll
+c:\users\User\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\System.Configuration.dll
+c:\users\User\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\System.Data.DataSetExtensions.dll
+c:\users\User\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\System.Data.dll
+c:\users\User\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\System.Data.Entity.dll
+c:\users\User\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\System.dll
+c:\users\User\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\System.Drawing.dll
+c:\users\User\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\System.EnterpriseServices.dll
+c:\users\User\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\System.Runtime.Serialization.dll
+c:\users\User\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\System.Security.dll
+c:\users\User\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\System.Web.Abstractions.dll
+c:\users\User\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\System.Web.ApplicationServices.dll
+c:\users\User\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\System.Web.dll
+c:\users\User\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\System.Web.DynamicData.dll
+c:\users\User\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\System.Web.Entity.dll
+c:\users\User\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\System.Web.Extensions.dll
+c:\users\User\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\System.Web.Helpers.dll
+c:\users\User\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\System.Web.Mvc.dll
+c:\users\User\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\System.Web.Routing.dll
+c:\users\User\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\System.Web.Services.dll
+c:\users\User\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\System.Web.WebPages.dll
+c:\users\User\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\System.Xml.dll
+c:\users\User\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\System.Xml.Linq.dll
+c:\users\User\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\EntityFramework.xml
+c:\users\User\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\PagedList.xml
+c:\users\User\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\System.Web.Mvc.xml
+c:\users\User\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\System.Web.WebPages.xml
+c:\users\User\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\bin\System.Web.Helpers.xml
+c:\users\User\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\obj\Debug\Klmsncamp.csprojResolveAssemblyReference.cache
+c:\users\User\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\obj\Debug\Klmsncamp.dll
+c:\users\User\Documents\Visual Studio 2010\Projects\Klmsncamp\Klmsncamp\obj\Debug\Klmsncamp.pdb
