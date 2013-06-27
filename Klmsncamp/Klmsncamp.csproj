@@ -1245,6 +1245,7 @@
     <Content Include="Views\Chat\_CreatePrivateChatModal.cshtml" />
     <Content Include="Views\Shared\_OnlineUsers.cshtml" />
     <Content Include="Web.config" />
+    <None Include="Properties\PublishProfiles\Profile1.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
